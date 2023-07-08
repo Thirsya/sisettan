@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>{{ config('app.name') }} - Login</title>
+    <title>{{ config('app.name') }} - Login2</title>
 
     <!-- General CSS Files -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -28,54 +28,55 @@
                     <div
                         class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
                         <div class="login-brand">
-                            <H1>Lelang Sewa</H1>
+                            <h1>Lelang Sewa</h1>
                         </div>
-                        <div class="card card-primary" style="width: 460px;">
-                            <div class="card-header">
-                                <H5>Silahkan pilih tahun lelang terlebih dahulu !</H5>
-                            </div>
+                        <div class="card card-primary">
                             <div class="card-body">
                                 @if (session('status'))
                                     <div class="alert alert-success" role="alert">
                                         {{ session('status') }}
                                     </div>
                                 @endif
-                                <form method="POST" class="needs-validation" novalidate="">
+                                <form action="{{ route('login') }}" method="POST" class="needs-validation"
+                                    novalidate="">
                                     @csrf
-                                    <div class="form-group col-md-6 col-12">
-                                        <select class="form-control select2 @error('jenis_kelamin') is-invalid @enderror" name="jenis_kelamin"
-                                            id="dropdown-item">
-                                            <option value="">Tahun Lelang</option>
-                                            <option value="L">2019</option>
-                                            <option value="P">2020</option>
-                                            <option value="L">2021</option>
-                                            <option value="P">2022</option>
-                                        </select>
-                                        @error('jenis_kelamin')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
+                                    <div class="btn-group" style="padding-bottom: 25px; width:300px;">
+                                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Tahun Lelang
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <li><a class="dropdown-item" href="#">2019</a></li>
+                                            <li><a class="dropdown-item" href="#">2020</a></li>
+                                            <li><a class="dropdown-item" href="#">2021</a></li>
+                                            <li><a class="dropdown-item" href="#">2022</a></li>
+                                        </div>      
                                     </div>
                                     <div class="form-group">
                                         <input type="username" name="username" value="{{ old('username') }}"
                                             class="form-control @error('username') is-invalid @enderror"
-                                            placeholder="Username" id="username" style="display: none;">
+                                            placeholder="Username">
                                         @error('username')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
                                     <div class="form-group">
+                                        <!-- <div class="d-block">
+                                            <div class="float-right">
+                                                <a href="/forgot-password" class="text-small">
+                                                    Forgot Password?
+                                                </a>
+                                            </div>
+                                        </div> -->
+                                        <!-- <label class="font-weight-bold text-uppercase">Password</label> -->
                                         <input type="password" name="password"
                                             class="form-control @error('password') is-invalid @enderror"
-                                            placeholder="Password" id="password" style="display: none;">
+                                            placeholder="Password">
                                         @error('password')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    <div class="btn-group" style="padding-bottom: 25px; width:410px; display: none;" id="dropdownKelurahan">
-                                        <button type="button" class="btn btn-primary dropdown-toggle"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <div class="btn-group" style="padding-bottom: 25px; width:300px;">
+                                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             Kelurahan
                                         </button>
                                         <div class="dropdown-menu dropdown-menu-right">
@@ -83,17 +84,19 @@
                                             <li><a class="dropdown-item" href="#">2020</a></li>
                                             <li><a class="dropdown-item" href="#">2021</a></li>
                                             <li><a class="dropdown-item" href="#">2022</a></li>
-                                        </div>
+                                        </div>      
                                     </div>
                                     <div class="form-group">
-                                        <button id="masuk" type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4"
-                                            style="display: none;">
+                                        <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
                                             Masuk
                                         </button>
                                     </div>
                                 </form>
                             </div>
                         </div>
+                        <!-- <div class="mt-5 text-muted text-center">
+                            Don't have an account? <a href="/register">Create One</a>
+                        </div> -->
                         <div class="simple-footer">
                             Copyright &copy; Stisla 2018
                         </div>
@@ -123,20 +126,6 @@
     <script src="../assets/js/custom.js"></script>
 
     <!-- Page Specific JS File -->
-    <script>
-        var dropdownItems = document.querySelectorAll('.dropdown-item');
-        Array.from(dropdownItems).forEach(function(item) {
-            item.addEventListener('click', function() {
-                var username = document.getElementById('username');
-                var password = document.getElementById('password');
-                var dropdownKelurahan = document.getElementById('dropdownKelurahan');
-                var masuk = document.getElementById('masuk');
-                username.style.display = 'block';
-                password.style.display = 'block';
-                dropdownKelurahan.style.display = 'block';
-                masuk.style.display = 'block';
-            });
-        });
-    </script>
 </body>
+
 </html>
