@@ -32,7 +32,8 @@
                         </div>
                         <div class="card card-primary">
                             <div class="card-header">
-                                <p style="font-family: 'Roboto', sans-serif; font-size: 14px; font-weight: bold;">Silahkan pilih tahun lelang terlebih dahulu !</p>
+                                <p style="font-family: 'Roboto', sans-serif; font-size: 14px; font-weight: bold;">
+                                    Silahkan pilih tahun lelang terlebih dahulu !</p>
                             </div>
                             <div class="card-body">
                                 @if (session('status'))
@@ -40,7 +41,8 @@
                                         {{ session('status') }}
                                     </div>
                                 @endif
-                                <form method="POST" class="needs-validation" novalidate="">
+                                <form action="{{ route('login') }}" method="POST" class="needs-validation"
+                                    novalidate="">
                                     @csrf
                                     <div class="form-group">
                                         <select class="form-control select2"

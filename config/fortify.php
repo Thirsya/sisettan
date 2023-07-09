@@ -46,7 +46,7 @@ return [
     |
     */
 
-    'username' => 'email',
+    'username' => 'username', // Set the custom username field
 
     'email' => 'email',
 
@@ -132,6 +132,7 @@ return [
     */
 
     'features' => [
+        'username' => true,
         Features::registration(),
         Features::resetPasswords(),
         Features::emailVerification(),

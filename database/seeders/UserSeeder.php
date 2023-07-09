@@ -8,25 +8,22 @@ use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
+
     public function run()
     {
         User::create([
+            'username' => "superadmin",
             'name' => "SuperAdmin",
             'email' => "superadmin@gmail.com",
             'password' => Hash::make('password'),
             'email_verified_at' => now(),
         ]);
         User::create([
+            'username' => "user",
             'name' => "user",
             'email' => "user@gmail.com",
             'password' => Hash::make('password'),
             'email_verified_at' => now(),
         ]);
-        // User::factory()->count(10)->create();
     }
 }
