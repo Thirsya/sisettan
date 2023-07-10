@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             TahunSeeder::class,
             KecamatanSeeder::class,
+            KelurahanSeeder::class,
         ]);
     }
 }

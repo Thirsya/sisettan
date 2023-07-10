@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DemoController;
 use App\Http\Controllers\KecamatanController;
+use App\Http\Controllers\KelurahanController;
 use App\Http\Controllers\Menu\MenuGroupController;
 use App\Http\Controllers\Menu\MenuItemController;
 use App\Http\Controllers\RoleAndPermission\AssignPermissionController;
@@ -67,5 +68,6 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::prefix('master-data')->group(function () {
         Route::resource('tahun', TahunController::class);
         Route::resource('kecamatan', KecamatanController::class);
+        Route::resource('kelurahan', KelurahanController::class);
     });
 });
