@@ -24,7 +24,7 @@
                                         {{ $kecamatan->kecamatan }}</option>
                                 @endforeach
                             </select>
-                            @error('kecamatan')
+                            @error('id_kecamatan')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>

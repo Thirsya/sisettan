@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_kecamatan');
             $table->string('kelurahan')->unique()->nullable();;
 
-            $table->foreign('id_kecamatan')->references('id')->on('kecamatans');
+            $table->foreign('id_kecamatan')->references('id')->on('kecamatans')->restrictOnDelete();
             $table->timestamps();
         });
     }

@@ -85,9 +85,17 @@ class KecamatanController extends Controller
      */
     public function destroy(Kecamatan $kecamatan)
     {
-        $kecamatan->delete();
-
-        return redirect()->route('kecamatan.index')
-            ->with('success', 'Kecamatan deleted successfully.');
+        try {
+            $kecamatan->delete();
+            return redirect()->route('kecamatan.index')->with('success', 'Hapus Data Kecamatan Sukses');
+        } catch (\Illuminate\Database\QueryException $e) {
+            $error_code = $e->errorInfo[1];
+            if ($error_code == 1451) {
+                return redirect()->route('kecamatan.index')
+                    ->with('error', 'Tidak Dapat Menghapus Kecamatan Yang Masih Digunakan Oleh Kolom Lain');
+            } else {
+                return redirect()->route('kecamatan.index')->with('success', 'Hapus Data Kecamatan Sukses');
+            }
+        }
     }
 }

@@ -13,7 +13,7 @@ class StorekelurahanRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,18 @@ class StorekelurahanRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'kelurahan' => 'required|unique:kelurahans,kelurahan|regex:/^[a-zA-Z]+$/u',
+            'id_kecamatan' => 'required'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'id_kecamatan.required' => 'Kecamatan Wajib Diisi',
+            'kelurahan.required' => 'Kelurahan Wajib Diisi',
+            'kelurahan.unique' => 'Kelurahan Sudah Ada',
+            'kelurahan.regex' => 'Kelurahan tidak boleh karakter @!_?',
         ];
     }
 }

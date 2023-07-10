@@ -72,13 +72,12 @@ class KelurahanController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreKelurahanRequest $request)
     {
-        $request->validate([
-            'kelurahan' => 'required|unique:kelurahans',
+        Kelurahan::create([
+            'kelurahan' => $request->kelurahan,
+            'id_kecamatan' => $request->id_kecamatan,
         ]);
-
-        Kelurahan::create($request->all());
 
         return redirect()->route('kelurahan.index')
             ->with('success', 'Kelurahan created successfully.');
@@ -127,9 +126,17 @@ class KelurahanController extends Controller
      */
     public function destroy(Kelurahan $kelurahan)
     {
-        $kelurahan->delete();
-
-        return redirect()->route('kelurahan.index')
-            ->with('success', 'Kelurahan deleted successfully.');
+        try {
+            $kelurahan->delete();
+            return redirect()->route('kelurahan.index')->with('success', 'Hapus Data Kelurahan Sukses');
+        } catch (\Illuminate\Database\QueryException $e) {
+            $error_code = $e->errorInfo[1];
+            if ($error_code == 1451) {
+                return redirect()->route('kelurahan.index')
+                    ->with('error', 'Tidak Dapat Menghapus Kelurahan Yang Masih Digunakan Oleh Kolom Lain');
+            } else {
+                return redirect()->route('kelurahan.index')->with('success', 'Hapus Data Kelurahan Sukses');
+            }
+        }
     }
 }
