@@ -36,7 +36,7 @@
                             <label>Kelurahan</label>
                             <input type="text" id="kelurahan" name="kelurahan"
                                 class="form-control @error('kelurahan') is-invalid @enderror "
-                                placeholder="Masukan Kelurahan" value="{{ old('kelurahan', $kecamatans->kelurahan) }}"
+                                placeholder="Masukan Kelurahan" value="{{ old('kelurahan', $kelurahan->kelurahan) }}"
                                 data-id="input_kelurahan" autocomplete="off">
                             @error('kelurahan')
                                 <div class="invalid-feedback">

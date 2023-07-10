@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Kecamatan;
 use App\Models\Kelurahan;
+use App\Http\Requests\StoreKelurahanRequest;
+use App\Http\Requests\UpdateKelurahanRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -108,18 +110,14 @@ class KelurahanController extends Controller
         );
     }
 
-    public function update(Request $request, Kelurahan $kelurahan)
+    public function update(UpdateKelurahanRequest $request, Kelurahan $kelurahan)
     {
-        $kelurahan = Kelurahan::all();
-        $request->validate([
-            'kelurahan' => 'required|unique:kelurahans,kelurahan,' . $kelurahan->id,
-        ]);
-
         $kelurahan->update($request->all());
 
         return redirect()->route('kelurahan.index')
             ->with('success', 'Kelurahan updated successfully.');
     }
+
 
     /**
      * Remove the specified resource from storage.

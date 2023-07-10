@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdatekelurahanRequest extends FormRequest
+class UpdateKelurahanRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,18 +13,18 @@ class UpdatekelurahanRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, mixed>
+     * @return array
      */
     public function rules()
     {
         return [
-            //
+            'kelurahan' => 'required|unique:kelurahans,kelurahan,' . $this->kelurahan->id,
         ];
     }
 }
