@@ -60,7 +60,8 @@ class KelurahanController extends Controller
      */
     public function create()
     {
-        return view('kelurahans.create');
+        $kecamatans=Kecamatan::all();
+        return view('master data.kelurahan.create')->with(['kecamatans'=> $kecamatans]);
     }
 
     /**
@@ -89,7 +90,7 @@ class KelurahanController extends Controller
      */
     public function show(Kelurahan $kelurahan)
     {
-        return view('kelurahans.show', compact('kelurahan'));
+        return view('master data.kelurahan.show', compact('kelurahan'));
     }
 
     /**
@@ -100,18 +101,16 @@ class KelurahanController extends Controller
      */
     public function edit(Kelurahan $kelurahan)
     {
-        return view('kelurahans.edit', compact('kelurahan'));
+        $kecamatans = Kecamatan::all();
+        return view('master data.kelurahan.edit')->with(
+            ['kelurahan' => $kelurahan,
+            'kecamatans' => $kecamatans]
+        );
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Kelurahan  $kelurahan
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Kelurahan $kelurahan)
     {
+        $kelurahan = Kelurahan::all();
         $request->validate([
             'kelurahan' => 'required|unique:kelurahans,kelurahan,' . $kelurahan->id,
         ]);
