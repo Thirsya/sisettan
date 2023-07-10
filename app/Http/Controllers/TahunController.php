@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Http\Controllers\Controller;
 use App\Models\Tahun;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -16,54 +16,32 @@ class TahunController extends Controller
         $this->middleware('permission:tahun.edit')->only('edit', 'update');
         $this->middleware('permission:tahun.destroy')->only('destroy');
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    public function index(Request $request)
     {
-        $tahuns = DB::table('tahuns')->paginate(5);
+        $tahuns = DB::table('tahuns')
+            ->when($request->input('tahun'), function ($query, $tahuns) {
+                return $query->where('tahun', 'like', '%' . $tahuns . '%');
+            })->paginate(5);
         return view('master data.tahun.index', compact('tahuns'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        return view('tahuns.create');
+        return view('master data.tahun.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        $request->validate([
-            'tahun' => 'required|unique:tahuns',
+        Tahun::create([
+            'tahun' => $request->tahun,
         ]);
-
-        Tahun::create($request->all());
-
-        return redirect()->route('tahuns.index')
-            ->with('success', 'Tahun created successfully.');
+        return redirect()->route('tahun.index')->with('success', 'Tambah Data Barang Sukses');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Tahun  $tahun
-     * @return \Illuminate\Http\Response
-     */
     public function show(Tahun $tahun)
     {
-        return view('tahuns.show', compact('tahun'));
+        return view('tahun.show', compact('tahun'));
     }
 
     /**
@@ -74,7 +52,9 @@ class TahunController extends Controller
      */
     public function edit(Tahun $tahun)
     {
-        return view('tahuns.edit', compact('tahun'));
+        return view('master data.tahun.edit')->with([
+            'tahun' => $tahun
+        ]);
     }
 
     /**
@@ -92,7 +72,7 @@ class TahunController extends Controller
 
         $tahun->update($request->all());
 
-        return redirect()->route('tahuns.index')
+        return redirect()->route('tahun.index')
             ->with('success', 'Tahun updated successfully.');
     }
 
@@ -106,7 +86,7 @@ class TahunController extends Controller
     {
         $tahun->delete();
 
-        return redirect()->route('tahuns.index')
+        return redirect()->route('tahun.index')
             ->with('success', 'Tahun deleted successfully.');
     }
 }
