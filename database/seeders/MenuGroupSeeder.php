@@ -37,7 +37,12 @@ class MenuGroupSeeder extends Seeder
                     'name' => 'Menu Management',
                     'icon' => 'fas fa-bars',
                     'permisison_name' => 'menu.management',
-                ]
+                ],
+                [
+                    'name' => 'Master Data',
+                    'icon' => 'fas fa-tachometer-alt',
+                    'permission_name' => 'master.data',
+                ],
             ]
         );
     }
