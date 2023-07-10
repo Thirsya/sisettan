@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kecamatan;
 use App\Models\Kelurahan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -22,10 +23,34 @@ class KelurahanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $kelurahans = DB::table('kelurahans')->paginate(10);
-        return view('master data.kelurahan.index', compact('kelurahans'));
+        $kecamatans = Kecamatan::all();
+        $kelurahans = $request->input('kelurahans');
+        $kelurahans = DB::table('kelurahans')
+            ->select(
+                'kelurahans.id',
+                'kelurahans.id_kecamatan',
+                'kelurahans.kelurahan',
+                'kecamatans.kecamatan',
+            )
+            ->leftJoin('kecamatans', 'kelurahans.id_kecamatan', '=', 'kecamatans.id')
+            ->when($request->input('kelurahans'), function ($query, $kelurahans) {
+                return $query->where('kelurahans', 'like', '%' . $kelurahans . '%');
+            })
+            ->when($request->input('kecamatans'), function ($query, $kecamatans) {
+                return $query->whereIn('kelurahans.id_kecamatan', $kecamatans);
+            })
+            ->orderBy('kelurahans.id_kecamatan', 'asc')
+            ->paginate(5);
+        $kecamatanSelected = $request->input('kecamatan');
+        return view('master data.kelurahan.index')->with([
+            'kelurahans' => $kelurahans,
+            'kecamatan' => $kecamatans,
+            'kecamatanSelected' => $kecamatanSelected,
+            'kelurahan' => $kelurahans,
+        ]);
+
     }
 
     /**

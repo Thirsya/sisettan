@@ -79,7 +79,7 @@
                                         @foreach ($kelurahans as $key => $kelurahan)
                                             <tr>
                                                 <td>{{ ($kelurahans->currentPage() - 1) * $kelurahans->perPage() + $key + 1 }}</td>
-                                                <td>{{ $kelurahan->id_kecamatan}}</td>
+                                                <td>{{ $kelurahan->kecamatan}}</td>
                                                 <td>{{ $kelurahan->kelurahan }}</td>
                                                 <td class="text-right">
                                                     <div class="d-flex justify-content-end">
