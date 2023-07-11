@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreTahunRequest;
+use App\Http\Requests\UpdateTahunRequest;
 use App\Models\Tahun;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -31,7 +33,7 @@ class TahunController extends Controller
         return view('master data.tahun.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreTahunRequest $request)
     {
         Tahun::create([
             'tahun' => $request->tahun,
@@ -64,7 +66,7 @@ class TahunController extends Controller
      * @param  \App\Models\Tahun  $tahun
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tahun $tahun)
+    public function update(UpdateTahunRequest $request, Tahun $tahun)
     {
         $request->validate([
             'tahun' => 'required|unique:tahuns,tahun,' . $tahun->id,

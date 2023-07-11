@@ -13,18 +13,23 @@ class UpdateKecamatanRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, mixed>
-     */
     public function rules()
     {
+        $id = $this->route('kecamatan')->id;
         return [
-            //
+            'kecamatan' => 'required|regex:/^[a-zA-Z]+$/u|unique:kecamatans,kecamatan,' . $id
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'kecamatan.required' => 'Kecamatan Wajib Diisi',
+            'kecamatan.unique' => 'Kecamatan Sudah Ada',
+            'kecamatan.regex' => 'Kecamatan tidak boleh karakter @!_?',
         ];
     }
 }

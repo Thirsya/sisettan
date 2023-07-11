@@ -13,18 +13,22 @@ class StoreKecamatanRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, mixed>
-     */
     public function rules()
     {
         return [
-            //
+            'kecamatan' => 'required|unique:kecamatans,kecamatan|regex:/^[a-zA-Z]+$/u',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'kecamatan.required' => 'Kecamatan Wajib Diisi',
+            'kecamatan.unique' => 'Kecamatan Sudah Ada',
+            'kecamatan.regex' => 'Kecamatan tidak boleh karakter @!_?',
         ];
     }
 }

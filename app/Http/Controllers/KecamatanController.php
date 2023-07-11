@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreKecamatanRequest;
+use App\Http\Requests\UpdateKecamatanRequest;
 use App\Models\Kecamatan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -28,7 +30,7 @@ class KecamatanController extends Controller
         return view('master data.kecamatan.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreKecamatanRequest $request)
     {
         Kecamatan::create([
             'kecamatan' => $request->kecamatan,
@@ -65,7 +67,7 @@ class KecamatanController extends Controller
      * @param  \App\Models\Kecamatan  $kecamatan
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Kecamatan $kecamatan)
+    public function update(UpdateKecamatanRequest $request, Kecamatan $kecamatan)
     {
         $request->validate([
             'kecamatan' => 'required|unique:kecamatans,kecamatan,' . $kecamatan->id,
