@@ -56,9 +56,9 @@
                                 <form id="search" method="GET" action="{{ route('kelurahan.index') }}">
                                     <div class="form-row">
                                         <div class="form-group col-md-4">
-                                            <label for="role">kelurahan</label>
-                                            <input type="text" name="name" class="form-control" id="name"
-                                                placeholder="kelurahan Name">
+                                            <label for="role">Kelurahan</label>
+                                            <input type="text" name="kelurahan" class="form-control" id="kelurahan"
+                                                placeholder="Nama Kelurahan / Kecamatan">
                                         </div>
                                     </div>
                                     <div class="text-right">
@@ -106,10 +106,6 @@
                                 </div>
                             </div>
                         </div>
-
-
-
-
                     </div>
                 </div>
             </div>

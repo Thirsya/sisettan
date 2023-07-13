@@ -57,8 +57,8 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-4">
                                             <label for="role">Tahun</label>
-                                            <input type="text" name="name" class="form-control" id="name"
-                                                placeholder="tahun Name">
+                                            <input type="text" name="tahun" class="form-control" id="tahun"
+                                                placeholder="Tahun">
                                         </div>
                                     </div>
                                     <div class="text-right">

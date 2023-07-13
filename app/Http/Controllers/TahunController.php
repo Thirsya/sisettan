@@ -22,9 +22,10 @@ class TahunController extends Controller
     public function index(Request $request)
     {
         $tahuns = DB::table('tahuns')
-            ->when($request->input('tahun'), function ($query, $tahuns) {
-                return $query->where('tahun', 'like', '%' . $tahuns . '%');
-            })->paginate(5);
+            ->when($request->input('tahun'), function ($query, $tahun) {
+                return $query->where('tahun', 'like', '%' . $tahun . '%');
+            })
+            ->paginate(10);
         return view('master data.tahun.index', compact('tahuns'));
     }
 
@@ -46,12 +47,6 @@ class TahunController extends Controller
         return view('tahun.show', compact('tahun'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Tahun  $tahun
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Tahun $tahun)
     {
         return view('master data.tahun.edit')->with([
@@ -59,13 +54,6 @@ class TahunController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Tahun  $tahun
-     * @return \Illuminate\Http\Response
-     */
     public function update(UpdateTahunRequest $request, Tahun $tahun)
     {
         $request->validate([
@@ -78,12 +66,6 @@ class TahunController extends Controller
             ->with('success', 'Tahun updated successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Tahun  $tahun
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Tahun $tahun)
     {
         $tahun->delete();

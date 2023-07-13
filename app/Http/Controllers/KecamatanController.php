@@ -19,9 +19,13 @@ class KecamatanController extends Controller
         $this->middleware('permission:kecamatan.destroy')->only('destroy');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $kecamatans = DB::table('kecamatans')->paginate(5);
+        $kecamatans = DB::table('kecamatans')
+            ->when($request->input('kecamatan'), function ($query, $kecamatan) {
+                return $query->where('kecamatan', 'like', '%' . $kecamatan . '%');
+            })
+            ->paginate(10);
         return view('master data.kecamatan.index', compact('kecamatans'));
     }
 
@@ -38,35 +42,16 @@ class KecamatanController extends Controller
         return redirect()->route('kecamatan.index')->with('success', 'Tambah Data Barang Sukses');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Kecamatan  $kecamatan
-     * @return \Illuminate\Http\Response
-     */
     public function show(Kecamatan $kecamatan)
     {
         return view('master data.kecamatan.show', compact('kecamatan'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Kecamatan  $kecamatan
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Kecamatan $kecamatan)
     {
         return view('master data.kecamatan.edit', compact('kecamatan'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Kecamatan  $kecamatan
-     * @return \Illuminate\Http\Response
-     */
     public function update(UpdateKecamatanRequest $request, Kecamatan $kecamatan)
     {
         $request->validate([
@@ -79,12 +64,6 @@ class KecamatanController extends Controller
             ->with('success', 'Kecamatan updated successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Kecamatan  $kecamatan
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Kecamatan $kecamatan)
     {
         try {

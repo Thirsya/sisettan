@@ -56,9 +56,9 @@
                                 <form id="search" method="GET" action="{{ route('kecamatan.index') }}">
                                     <div class="form-row">
                                         <div class="form-group col-md-4">
-                                            <label for="role">kecamatan</label>
-                                            <input type="text" name="name" class="form-control" id="name"
-                                                placeholder="kecamatan Name">
+                                            <label for="role">Kecamatan</label>
+                                            <input type="text" name="kecamatan" class="form-control" id="kecamatan"
+                                                placeholder="Group Kecamatan">
                                         </div>
                                     </div>
                                     <div class="text-right">
