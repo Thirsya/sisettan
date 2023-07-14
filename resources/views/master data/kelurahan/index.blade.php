@@ -25,7 +25,8 @@
                         <div class="card-header">
                             <h4>Kelurahan List</h4>
                             <div class="card-header-action">
-                                <a class="btn btn-icon icon-left btn-primary" href="{{ route('kelurahan.create') }}">Create New
+                                <a class="btn btn-icon icon-left btn-primary" href="{{ route('kelurahan.create') }}">Create
+                                    New
                                     Kelurahan</a>
                                 <a class="btn btn-info btn-primary active import">
                                     <i class="fa fa-download" aria-hidden="true"></i>
@@ -56,9 +57,22 @@
                                 <form id="search" method="GET" action="{{ route('kelurahan.index') }}">
                                     <div class="form-row">
                                         <div class="form-group col-md-4">
+                                            <label for="role">Kecamatan</label>
+                                            <select class="form-control select2" name="kecamatan[]" multiple
+                                                data-id="select-Kecamatan" id="kecamatan">
+                                                <option value="">Pilih Kecamatan </option>
+                                                @foreach ($kecamatans as $kecamatan)
+                                                    <option value="{{ $kecamatan->id }}"
+                                                        {{ (is_array(old('kecamatan')) && in_array($kecamatan->id, old('kecamatan'))) || (isset($kecamatanSelected) && in_array($kecamatan->id, $kecamatanSelected)) ? 'selected' : '' }}>
+                                                        {{ $kecamatan->kecamatan }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
                                             <label for="role">Kelurahan</label>
                                             <input type="text" name="kelurahan" class="form-control" id="kelurahan"
-                                                placeholder="Nama Kelurahan / Kecamatan">
+                                                placeholder="Nama Kelurahan" value="{{ $kelurahan }}">
                                         </div>
                                     </div>
                                     <div class="text-right">
@@ -78,8 +92,9 @@
                                         </tr>
                                         @foreach ($kelurahans as $key => $kelurahan)
                                             <tr>
-                                                <td>{{ ($kelurahans->currentPage() - 1) * $kelurahans->perPage() + $key + 1 }}</td>
-                                                <td>{{ $kelurahan->kecamatan}}</td>
+                                                <td>{{ ($kelurahans->currentPage() - 1) * $kelurahans->perPage() + $key + 1 }}
+                                                </td>
+                                                <td>{{ $kelurahan->kecamatan }}</td>
                                                 <td>{{ $kelurahan->kelurahan }}</td>
                                                 <td class="text-right">
                                                     <div class="d-flex justify-content-end">
@@ -113,6 +128,7 @@
     </section>
 @endsection
 @push('customScript')
+    <script src="/assets/js/select2.min.js"></script>
     <script>
         $(document).ready(function() {
             $('.import').click(function(event) {
@@ -136,4 +152,5 @@
 @endpush
 
 @push('customStyle')
+    <link rel="stylesheet" href="/assets/css/select2.min.css">
 @endpush

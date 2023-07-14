@@ -25,17 +25,19 @@ class KelurahanController extends Controller
         $kecamatans = Kecamatan::all();
         $kelurahanName = $request->input('kelurahan');
         $kecamatanIds = $request->input('kecamatan');
+        $kelurahan = $request->input('kelurahan');
 
         $query = Kelurahan::select('kelurahans.id', 'kelurahans.id_kecamatan', 'kelurahans.kelurahan', 'kecamatans.kecamatan')
             ->leftJoin('kecamatans', 'kelurahans.id_kecamatan', '=', 'kecamatans.id')
-            ->when($kelurahanName, function ($query, $kelurahanName) {
-                return $query->where('kelurahans.kelurahan', 'like', '%' . $kelurahanName . '%');
+            ->when($request->input('kelurahan'), function ($query, $kelurahan) {
+                return $query->where('kelurahans.kelurahan', 'like', '%' . $kelurahan . '%');
             })
-            ->when($kecamatanIds, function ($query, $kecamatanIds) {
-                return $query->whereIn('kelurahans.id_kecamatan', $kecamatanIds);
+            ->when($request->input('kecamatan'), function ($query, $kecamatan) {
+                return $query->whereIn('kelurahans.id_kecamatan', $kecamatan);
             })
             ->orderBy('kelurahans.id_kecamatan', 'asc')
             ->paginate(5);
+        $kecamatanSelected = $request->input('kecamatan');
 
         $query->appends(['kelurahan' => $kelurahanName, 'kecamatan' => $kecamatanIds]);
 
@@ -44,6 +46,8 @@ class KelurahanController extends Controller
             'kecamatans' => $kecamatans,
             'kelurahanName' => $kelurahanName,
             'kecamatanIds' => $kecamatanIds,
+            'kecamatanSelected' => $kecamatanSelected,
+            'kelurahan' => $kelurahan,
         ]);
     }
 
