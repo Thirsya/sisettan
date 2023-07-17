@@ -84,6 +84,12 @@ class MenuItemSeeder extends Seeder
                     'permission_name' => 'kelurahan.index',
                     'menu_group_id' => 5,
                 ],
+                [
+                    'name' => 'Daerah Lelang',
+                    'route' => 'master-data/daerah',
+                    'permission_name' => 'daerah.index',
+                    'menu_group_id' => 5,
+                ],
             ]
         );
     }
