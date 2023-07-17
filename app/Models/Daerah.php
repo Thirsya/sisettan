@@ -11,10 +11,10 @@ class Daerah extends Model
     protected $table = 'daerahs';
     protected $fillable = ['id_kecamatan', 'id_kelurahan', 'tanggal_lelang'];
 
-    // public function kecamatan()
-    // {
-    //     return $this->belongsTo(Kecamatan::class, 'id_kecamatan');
-    // }
+    public function kecamatan()
+    {
+        return $this->belongsTo(Kecamatan::class, 'id_kecamatan');
+    }
 
     public function kelurahan()
     {

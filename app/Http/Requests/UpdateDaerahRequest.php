@@ -13,7 +13,11 @@ class UpdateDaerahRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        $id = $this->route('daerah')->id;
+        return [
+            'daerah' => 'required|regex:/^[a-zA-Z]+$/u|unique:daerahs,daerah,' . $id,
+            'id_kecamatan' => 'required'
+        ];
     }
 
     /**

@@ -83,13 +83,13 @@ class DaerahController extends Controller
     public function update(UpdateDaerahRequest $request, Daerah $daerah)
     {
         $request->validate([
-            'daerah' => 'required|unique:daerahs,daerah,' . $daerah->id,
+            'tanggal_lelang' => 'required' . $daerah->id,
         ]);
 
         $daerah->update($request->all());
 
         return redirect()->route('daerah.index')
-            ->with('success', 'Daerah updated successfully.');
+            ->with('success', 'Daerah Lelang updated successfully.');
     }
 
     public function destroy(Daerah $daerah)

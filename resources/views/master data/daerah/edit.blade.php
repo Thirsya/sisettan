@@ -51,10 +51,10 @@
                         </div>
                         <div class="form-group">
                             <label>Tanggal Lelang</label>
-                            <input type="date" id="daerah" name="daerah"
+                            <input type="date" id="tanggal_lelang" name="tanggal_lelang"
                                 class="form-control @error('daerah') is-invalid @enderror "
-                                placeholder="Masukan Tanggal Lelang" value="{{ old('daerah', $daerah->daerah) }}"
-                                data-id="input_daerah" autocomplete="off">
+                                placeholder="Masukan Tanggal Lelang" value="{{ old('daerah', $daerah->tanggal_lelang) }}"
+                                data-id="input_tanggal_lelang" autocomplete="off">
                             @error('daerah')
                                 <div class="invalid-feedback">
                                     {{ $message }}

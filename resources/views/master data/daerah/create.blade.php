@@ -17,7 +17,7 @@
                         <div class="form-group">
                             <label>Kecamatan</label>
                             <select class="form-control select2 @error('id_kecamatan') is-invalid @enderror"
-                                name="id_kecamatan" data-id="select-jenis-barang" id="id_kecamatan">
+                                name="id_kecamatan" data-id="select-kecamatan" id="id_kecamatan">
                                 <option value="">Piih Kecamatan</option>
                                 @foreach ($kecamatans as $kecamatan)
                                     <option value="{{ $kecamatan->id }}">
@@ -33,7 +33,7 @@
                         <div class="form-group">
                             <label>Kelurahan</label>
                             <select class="form-control select2 @error('id_kelurahan') is-invalid @enderror"
-                                name="id_kelurahan" data-id="select-jenis-barang" id="id_kelurahan">
+                                name="id_kelurahan" data-id="select-kelurahan" id="id_kelurahan">
                                 <option value="">Piih kelurahan</option>
                                 @foreach ($kelurahans as $kelurahan)
                                     <option value="{{ $kelurahan->id }}">
@@ -47,11 +47,11 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label>Tanggal</label>
-                            <input type="date" id="daerah" name="daerah"
-                                class="form-control @error('daerah') is-invalid @enderror"
-                                placeholder="Masukan daerah" autocomplete="off">
-                            @error('daerah')
+                            <label>Tanggal Lelang</label>
+                            <input type="date" id="tanggal_lelang" name="tanggal_lelang"
+                                class="form-control @error('tanggal_lelang') is-invalid @enderror"
+                                placeholder="Masukan Tanggal Lelang" autocomplete="off">
+                            @error('tanggal_lelang')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>

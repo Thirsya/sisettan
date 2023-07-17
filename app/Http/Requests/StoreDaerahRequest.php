@@ -13,7 +13,7 @@ class StoreDaerahRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,9 @@ class StoreDaerahRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'tanggal_lelang' => 'required',
+            'id_kelurahan' => 'required',
+            'id_kecamatan' => 'required'
         ];
     }
 }
