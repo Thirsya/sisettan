@@ -98,6 +98,10 @@ class KelurahanSeeder extends Seeder
                     'id_kecamatan' => '2',
                 ],
                 [
+                    'kelurahan' => 'Pesantren',
+                    'id_kecamatan' => '2',
+                ],
+                [
                     'kelurahan' => 'Blabak',
                     'id_kecamatan' => '2',
                 ],
@@ -115,6 +119,14 @@ class KelurahanSeeder extends Seeder
                 ],
                 [
                     'kelurahan' => 'Gayam',
+                    'id_kecamatan' => '3',
+                ],
+                [
+                    'kelurahan' => 'Mojoroto',
+                    'id_kecamatan' => '3',
+                ],
+                [
+                    'kelurahan' => 'Pojok',
                     'id_kecamatan' => '3',
                 ],
             ]

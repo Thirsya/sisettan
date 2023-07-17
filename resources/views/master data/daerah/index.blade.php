@@ -80,7 +80,9 @@
                                         @foreach ($daerahs as $key => $daerah)
                                             <tr>
                                                 <td>{{ ($daerahs->currentPage() - 1) * $daerahs->perPage() + $key + 1 }}</td>
-                                                <td>{{ $daerah->daerah }}</td>
+                                                <td>{{ $daerah->kecamatan }}</td>
+                                                <td>{{ $daerah->kelurahan}}</td>
+                                                <td>{{ $daerah->tanggal_lelang }}</td>
                                                 <td class="text-right">
                                                     <div class="d-flex justify-content-end">
                                                         <a href="{{ route('daerah.edit', $daerah->id) }}"

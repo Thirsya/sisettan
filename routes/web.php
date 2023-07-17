@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\DaerahLelangController;
+use App\Http\Controllers\DaerahController;
 use App\Http\Controllers\DemoController;
 use App\Http\Controllers\KecamatanController;
 use App\Http\Controllers\KelurahanController;
@@ -70,6 +70,6 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::resource('tahun', TahunController::class);
         Route::resource('kecamatan', KecamatanController::class);
         Route::resource('kelurahan', KelurahanController::class);
-        Route::resource('daerah', DaerahLelangController::class);
+        Route::resource('daerah', DaerahController::class);
     });
 });

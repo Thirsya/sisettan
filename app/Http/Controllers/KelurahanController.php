@@ -35,7 +35,7 @@ class KelurahanController extends Controller
             ->when($request->input('kecamatan'), function ($query, $kecamatan) {
                 return $query->whereIn('kelurahans.id_kecamatan', $kecamatan);
             })
-            ->orderBy('kelurahans.id_kecamatan', 'asc')
+            // ->orderBy('kelurahans.id_kecamatan', 'asc')
             ->paginate(5);
         $kecamatanSelected = $request->input('kecamatan');
 

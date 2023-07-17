@@ -57,6 +57,7 @@
                                         @error('jenis_kelamin')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
+                                                
                                             </div>
                                         @enderror
                                     </div>
