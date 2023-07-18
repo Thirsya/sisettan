@@ -33,12 +33,12 @@
                         <div class="form-group">
                             <label>Kelurahan</label>
                             <select class="form-control select2 @error('id_kelurahan') is-invalid @enderror"
-                                name="id_kelurahan" data-id="select-kelurahan" id="id_kelurahan">
+                                name="id_kelurahan" data-id="select-kelurahan" id="id_kelurahan" disabled="disable">
                                 <option value="">Piih kelurahan</option>
-                                @foreach ($kelurahans as $kelurahan)
+                                {{-- @foreach ($kelurahans as $kelurahan)
                                     <option value="{{ $kelurahan->id }}">
                                         {{ $kelurahan->kelurahan }}</option>
-                                @endforeach
+                                @endforeach --}}
                             </select>
                             @error('id_kelurahan')
                                 <div class="invalid-feedback">
@@ -69,6 +69,38 @@
 @endsection
 @push('customScript')
     <script src="/assets/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+        // When the value of the Kecamatan dropdown changes
+        $('#id_kecamatan').change(function() {
+            if ($(this).val() == '') {
+                    $('#id_kelurahan').attr('disabled', true);
+                } else {
+                    $('#id_kelurahan').removeAttr('disabled', false);
+                }
+            var kecamatanId = $(this).val(); // Get the selected kecamatan ID
+
+            // Make an AJAX request to fetch the kelurahans based on the selected kecamatan
+            $.ajax({
+            url: '{{route('getKelurahans')}}', // Replace with your actual route URL to fetch kelurahans
+            type: 'GET',
+            data: { kecamatan_id: kecamatanId },
+            success: function(response) {
+                // Clear the existing kelurahan options
+                $('#id_kelurahan').empty();
+                $('#id_kecamatan').html('<option value="">Pilih Kecamatan</option>');
+                // Add the new kelurahan options
+                $.each(response.kelurahans, function(key, kelurahan) {
+                $('#id_kelurahan').append('<option value="' + kelurahan.id + '">' + kelurahan.kelurahan + '</option>');
+                });
+            },
+            error: function(xhr) {
+                console.log(xhr.responseText); // Handle the error if any
+            }
+            });
+        });
+        });
+    </script>
 @endpush
 
 @push('customStyle')

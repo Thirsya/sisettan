@@ -71,5 +71,6 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::resource('kecamatan', KecamatanController::class);
         Route::resource('kelurahan', KelurahanController::class);
         Route::resource('daerah', DaerahController::class);
+        Route::get('/getKelurahans', [DaerahController::class, 'getKelurahans'])->name('getKelurahans');
     });
 });

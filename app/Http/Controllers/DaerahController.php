@@ -105,4 +105,14 @@ class DaerahController extends Controller
             }
         }
     }
+
+    public function getKelurahans(Request $request)
+    {
+        // $kecamatanId = $request->input('kecamatan_id');
+
+        // Fetch the kelurahans based on the selected kecamatan
+        $kelurahans = Kelurahan::all()->where('id_kecamatan', $request->kecamatan_id);
+
+        return response()->json(['kelurahans' => $kelurahans]);
+    }
 }
