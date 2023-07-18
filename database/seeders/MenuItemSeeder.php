@@ -31,6 +31,24 @@ class MenuItemSeeder extends Seeder
                     'menu_group_id' => 2,
                 ],
                 [
+                    'name' => 'Jabatan List',
+                    'route' => 'user-management/jabatan',
+                    'permission_name' => 'jabatan.index',
+                    'menu_group_id' => 2,
+                ],
+                [
+                    'name' => 'Pejabat List',
+                    'route' => 'user-management/pejabat',
+                    'permission_name' => 'pejabat.index',
+                    'menu_group_id' => 2,
+                ],
+                [
+                    'name' => 'OPD List',
+                    'route' => 'user-management/opd',
+                    'permission_name' => 'opd.index',
+                    'menu_group_id' => 2,
+                ],
+                [
                     'name' => 'Role List',
                     'route' => 'role-and-permission/role',
                     'permission_name' => 'role.index',

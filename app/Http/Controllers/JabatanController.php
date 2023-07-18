@@ -26,12 +26,12 @@ class JabatanController extends Controller
                 return $query->where('jabatan', 'like', '%' . $jabatan . '%');
             })
             ->paginate(10);
-        return view('jabatan.index', compact('jabatans'));
+        return view('users.jabatan.index', compact('jabatans'));
     }
 
     public function create()
     {
-        return view('jabatan.create');
+        return view('users.jabatan.create');
     }
 
     public function store(StoreJabatanRequest $request)
@@ -44,12 +44,12 @@ class JabatanController extends Controller
 
     public function show(Jabatan $jabatan)
     {
-        return view('jabatan.show', compact('jabatan'));
+        return view('users.jabatan.show', compact('jabatan'));
     }
 
     public function edit(Jabatan $jabatan)
     {
-        return view('jabatan.edit', compact('jabatan'));
+        return view('users.jabatan.edit', compact('jabatan'));
     }
 
     public function update(UpdateJabatanRequest $request, Jabatan $jabatan)

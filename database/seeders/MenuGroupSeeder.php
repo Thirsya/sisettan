@@ -40,8 +40,8 @@ class MenuGroupSeeder extends Seeder
                 ],
                 [
                     'name' => 'Master Data',
-                    'icon' => 'fas fa-tachometer-alt',
-                    'permission_name' => 'master.data',
+                    'icon' => 'fas fa-bars',
+                    'permisison_name' => 'master.data',
                 ],
             ]
         );

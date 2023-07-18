@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Daerah;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -23,6 +22,7 @@ class DatabaseSeeder extends Seeder
             JabatanSeeder::class,
             PejabatSeeder::class,
             DaerahSeeder::class,
+            OpdSeeder::class,
         ]);
     }
 }

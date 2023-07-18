@@ -2,10 +2,13 @@
 
 use App\Http\Controllers\DaerahController;
 use App\Http\Controllers\DemoController;
+use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\KecamatanController;
 use App\Http\Controllers\KelurahanController;
 use App\Http\Controllers\Menu\MenuGroupController;
 use App\Http\Controllers\Menu\MenuItemController;
+use App\Http\Controllers\OpdController;
+use App\Http\Controllers\PejabatController;
 use App\Http\Controllers\RoleAndPermission\AssignPermissionController;
 use App\Http\Controllers\RoleAndPermission\AssignUserToRoleController;
 use App\Http\Controllers\RoleAndPermission\ExportPermissionController;
@@ -35,6 +38,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::post('import', [UserController::class, 'import'])->name('user.import');
         Route::get('export', [UserController::class, 'export'])->name('user.export');
         Route::get('demo', DemoController::class)->name('user.demo');
+        Route::resource('jabatan', JabatanController::class);
+        Route::resource('pejabat', PejabatController::class);
+        Route::resource('opd', OpdController::class);
     });
 
     Route::prefix('menu-management')->group(function () {

@@ -94,6 +94,21 @@ class RoleAndPermissionSeeder extends Seeder
         Permission::create(['name' => 'daerah.edit']);
         Permission::create(['name' => 'daerah.destroy']);
 
+        Permission::create(['name' => 'jabatan.index']);
+        Permission::create(['name' => 'jabatan.create']);
+        Permission::create(['name' => 'jabatan.edit']);
+        Permission::create(['name' => 'jabatan.destroy']);
+
+        Permission::create(['name' => 'pejabat.index']);
+        Permission::create(['name' => 'pejabat.create']);
+        Permission::create(['name' => 'pejabat.edit']);
+        Permission::create(['name' => 'pejabat.destroy']);
+
+        Permission::create(['name' => 'opd.index']);
+        Permission::create(['name' => 'opd.create']);
+        Permission::create(['name' => 'opd.edit']);
+        Permission::create(['name' => 'opd.destroy']);
+
         // create roles
         $roleUser = Role::create(['name' => 'user']);
         $roleUser->givePermissionTo([
