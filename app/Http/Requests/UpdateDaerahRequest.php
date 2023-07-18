@@ -15,8 +15,9 @@ class UpdateDaerahRequest extends FormRequest
     {
         $id = $this->route('daerah')->id;
         return [
-            'daerah' => 'required|regex:/^[a-zA-Z]+$/u|unique:daerahs,daerah,' . $id,
-            'id_kecamatan' => 'required'
+            'tanggal_lelang' => 'required',
+            'id_kecamatan' => 'required',
+            'id_kelurahan' => 'required'
         ];
     }
 
