@@ -108,6 +108,18 @@ class MenuItemSeeder extends Seeder
                     'permission_name' => 'daerah.index',
                     'menu_group_id' => 5,
                 ],
+                [
+                    'name' => 'Pendaftar Lelang',
+                    'route' => 'lelang/daftar',
+                    'permission_name' => 'daftar.index',
+                    'menu_group_id' => 6,
+                ],
+                // [
+                //     'name' => 'Penawaran',
+                //     'route' => 'lelang/penawaran',
+                //     'permission_name' => 'penawaran.index',
+                //     'menu_group_id' => 6,
+                // ],
             ]
         );
     }

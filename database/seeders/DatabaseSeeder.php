@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             OpdSeeder::class,
             PejabatSeeder::class,
             DaerahSeeder::class,
+            DaftarSeeder::class,
         ]);
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DaerahController;
+use App\Http\Controllers\DaftarController;
 use App\Http\Controllers\DemoController;
 use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\KecamatanController;
@@ -78,5 +79,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::resource('kelurahan', KelurahanController::class);
         Route::resource('daerah', DaerahController::class);
         Route::get('/getKelurahans', [DaerahController::class, 'getKelurahans'])->name('getKelurahans');
+    });
+    Route::prefix('lelang')->group(function () {
+        Route::resource('daftar', DaftarController::class);
     });
 });

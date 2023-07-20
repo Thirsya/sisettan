@@ -17,7 +17,7 @@
                         <div class="form-group">
                             <label>Kecamatan</label>
                             <select class="form-control select2 @error('id_kecamatan') is-invalid @enderror"
-                                name="id_kecamatan" data-id="select-jenis-barang" id="id_kecamatan">
+                                name="id_kecamatan" data-id="select-kecamatan" id="id_kecamatan">
                                 <option value="">Piih Kecamatan</option>
                                 @foreach ($kecamatans as $kecamatan)
                                     <option value="{{ $kecamatan->id }}">

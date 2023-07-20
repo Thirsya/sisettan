@@ -43,6 +43,11 @@ class MenuGroupSeeder extends Seeder
                     'icon' => 'fas fa-bars',
                     'permisison_name' => 'master.data',
                 ],
+                [
+                    'name' => 'Lelang',
+                    'icon' => 'fas fa-bars',
+                    'permisison_name' => 'lelang',
+                ],
             ]
         );
     }
