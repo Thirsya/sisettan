@@ -39,6 +39,11 @@ class MenuGroupSeeder extends Seeder
                     'permisison_name' => 'menu.management',
                 ],
                 [
+                    'name' => 'Pejabat',
+                    'icon' => 'fas fa-users',
+                    'permission_name' => 'user.management',
+                ],
+                [
                     'name' => 'Master Data',
                     'icon' => 'fas fa-bars',
                     'permisison_name' => 'master.data',

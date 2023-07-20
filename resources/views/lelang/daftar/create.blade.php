@@ -56,7 +56,7 @@
                             <label>Nomor Kartu Keluarga</label>
                             <input type="text" id="no_kk" name="no_kk"
                                 class="form-control @error('no_kk') is-invalid @enderror"
-                                placeholder="Masukan Nomor Kartu Keluarga" autocomplete="off">
+                                placeholder="Masukan No. Kartu Keluarga" autocomplete="off">
                             @error('no_kk')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -69,6 +69,17 @@
                                 class="form-control @error('alamat') is-invalid @enderror"
                                 placeholder="Masukan Alamat" autocomplete="off">
                             @error('alamat')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label>Nomor WP</label>
+                            <input type="text" id="no_wp" name="no_wp"
+                                class="form-control @error('no_wp') is-invalid @enderror"
+                                placeholder="Masukan Nomor WP" autocomplete="off">
+                            @error('no_wp')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>

@@ -23,8 +23,15 @@ class UpdateDaftarRequest extends FormRequest
      */
     public function rules()
     {
+        $id = $this->route('daftar')->id;
         return [
-            //
+            'no_urut' => 'required',
+            'id_kelurahan' => 'required',
+            'nama' => 'required',
+            'alamat' => 'required',
+            'no_kk' => 'required',
+            'no_wp',
+            'tgl_perjanjian' => 'required',
         ];
     }
 }

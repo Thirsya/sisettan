@@ -31,24 +31,6 @@ class MenuItemSeeder extends Seeder
                     'menu_group_id' => 2,
                 ],
                 [
-                    'name' => 'Jabatan List',
-                    'route' => 'user-management/jabatan',
-                    'permission_name' => 'jabatan.index',
-                    'menu_group_id' => 2,
-                ],
-                [
-                    'name' => 'Pejabat List',
-                    'route' => 'user-management/pejabat',
-                    'permission_name' => 'pejabat.index',
-                    'menu_group_id' => 2,
-                ],
-                [
-                    'name' => 'OPD List',
-                    'route' => 'user-management/opd',
-                    'permission_name' => 'opd.index',
-                    'menu_group_id' => 2,
-                ],
-                [
                     'name' => 'Role List',
                     'route' => 'role-and-permission/role',
                     'permission_name' => 'role.index',
@@ -85,41 +67,53 @@ class MenuItemSeeder extends Seeder
                     'menu_group_id' => 4,
                 ],
                 [
+                    'name' => 'Jabatan List',
+                    'route' => 'user-management/jabatan',
+                    'permission_name' => 'jabatan.index',
+                    'menu_group_id' => 5,
+                ],
+                [
+                    'name' => 'Pejabat List',
+                    'route' => 'user-management/pejabat',
+                    'permission_name' => 'pejabat.index',
+                    'menu_group_id' => 5,
+                ],
+                [
+                    'name' => 'OPD List',
+                    'route' => 'user-management/opd',
+                    'permission_name' => 'opd.index',
+                    'menu_group_id' => 5,
+                ],
+                [
                     'name' => 'Tahun',
                     'route' => 'master-data/tahun',
                     'permission_name' => 'tahun.index',
-                    'menu_group_id' => 5,
+                    'menu_group_id' => 6,
                 ],
                 [
                     'name' => 'Kecamatan',
                     'route' => 'master-data/kecamatan',
                     'permission_name' => 'kecamatan.index',
-                    'menu_group_id' => 5,
+                    'menu_group_id' => 6,
                 ],
                 [
                     'name' => 'Kelurahan',
                     'route' => 'master-data/kelurahan',
                     'permission_name' => 'kelurahan.index',
-                    'menu_group_id' => 5,
+                    'menu_group_id' => 6,
                 ],
                 [
                     'name' => 'Daerah Lelang',
                     'route' => 'master-data/daerah',
                     'permission_name' => 'daerah.index',
-                    'menu_group_id' => 5,
+                    'menu_group_id' => 6,
                 ],
                 [
                     'name' => 'Pendaftar Lelang',
                     'route' => 'lelang/daftar',
                     'permission_name' => 'daftar.index',
-                    'menu_group_id' => 6,
+                    'menu_group_id' => 7,
                 ],
-                // [
-                //     'name' => 'Penawaran',
-                //     'route' => 'lelang/penawaran',
-                //     'permission_name' => 'penawaran.index',
-                //     'menu_group_id' => 6,
-                // ],
             ]
         );
     }

@@ -24,7 +24,13 @@ class StoreDaftarRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'no_urut' => 'required',
+            'id_kelurahan' => 'required',
+            'nama' => 'required',
+            'alamat' => 'required',
+            'no_kk' => 'required',
+            'no_wp',
+            'tgl_perjanjian' => 'required',
         ];
     }
 }

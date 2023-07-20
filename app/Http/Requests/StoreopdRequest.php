@@ -24,7 +24,8 @@ class StoreopdRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'no_opd' => 'required',
+            'nama_opd' => 'required',
         ];
     }
 }

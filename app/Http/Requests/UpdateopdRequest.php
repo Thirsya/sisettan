@@ -23,8 +23,10 @@ class UpdateopdRequest extends FormRequest
      */
     public function rules()
     {
+        $id = $this->route('opd')->id;
         return [
-            //
+            'no_opd' => 'required',
+            'nama_opd' => 'required',
         ];
     }
 }

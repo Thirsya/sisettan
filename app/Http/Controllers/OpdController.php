@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreOPDRequest;
-use App\Http\Requests\UpdateOPDRequest;
+use App\Http\Requests\StoreopdRequest;
+use App\Http\Requests\UpdateopdRequest;
 use App\Models\OPD;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -52,19 +52,13 @@ class OPDController extends Controller
         return view('users.opd.edit', compact('opd'))->with(
             ['no_opd' => $opd,
              'nama_opd' => $opd]
-        );;
+        );
     }
 
     public function update(UpdateopdRequest $request, Opd $opd)
     {
-        $request->validate([
-            'opd' => 'required|unique:opds,opd,' . $opd->id,
-        ]);
-
-        $opd->update($request->all());
-
-        return redirect()->route('opd.index')
-            ->with('success', 'OPD updated successfully.');
+        $opd->update($request->validated());
+        return redirect()->route('opd.index')->with('success', 'OPD updated successfully.');
     }
 
     public function destroy(Opd $opd)
