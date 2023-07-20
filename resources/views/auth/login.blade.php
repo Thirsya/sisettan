@@ -45,19 +45,17 @@
                                     novalidate="">
                                     @csrf
                                     <div class="form-group">
-                                        <select class="form-control select2"
-                                            @error('jenis_kelamin') is-invalid @enderror name="tahun_lelang"
-                                            id="dropdown-item">
+                                        <select class="form-control select2" @error('tahun_lelang') is-invalid @enderror
+                                            name="tahun_lelang" id="dropdown-item">
                                             <option value="">Tahun Lelang</option>
-                                            <option value="1">2019</option>
-                                            <option value="2">2020</option>
-                                            <option value="3">2021</option>
-                                            <option value="4">2022</option>
+                                            @foreach ($tahun as $item)
+                                                <option value="{{ $item->id }}">{{ $item->tahun }}</option>
+                                            @endforeach
                                         </select>
                                         @error('jenis_kelamin')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
-                                                
+
                                             </div>
                                         @enderror
                                     </div>
@@ -80,11 +78,19 @@
                                     <div class="form-group" id="dropdownKelurahan" style="display: none;">
                                         <select class="form-control select2"
                                             @error('jenis_kelamin') is-invalid @enderror name="kelurahan">
-                                            <option value="">Kelurahan</option>
-                                            <option value="1">2019</option>
-                                            <option value="2">2020</option>
-                                            <option value="3">2021</option>
-                                            <option value="4">2022</option>
+                                            <option value="">Pilih Kelurahan</option>
+                                            @foreach ($daerah->groupBy('id_kecamatan') as $kecamatanGroup)
+                                                <optgroup label="Kec.{{ $kecamatanGroup[0]->kecamatan }}">
+                                                    @foreach ($kecamatanGroup as $d)
+                                                        <option value="{{ $d->id }}">
+                                                            [Kel.{{ $d->kelurahan }}] -
+                                                            tgl:
+                                                            {{ \Carbon\Carbon::parse($d->tanggal_lelang)->format('d/m/Y') }}
+                                                        </option>
+                                                    @endforeach
+                                                </optgroup>
+                                            @endforeach
+
                                         </select>
                                         @error('jenis_kelamin')
                                             <div class="invalid-feedback">

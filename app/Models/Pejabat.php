@@ -10,7 +10,7 @@ class Pejabat extends Model
     use HasFactory;
     protected $table = 'pejabats';
     protected $fillable = [
-        'nama_pejabat', 'id_jabatan', 'nip_pejabat', 'no_sk'
+        'nama_pejabat', 'id_jabatan', 'id_opd','nip_pejabat', 'no_sk'
     ];
 
     public function pejabat()

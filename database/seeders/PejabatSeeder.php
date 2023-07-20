@@ -20,12 +20,14 @@ class PejabatSeeder extends Seeder
                 [
                     'nama_pejabat' => 'ARIEF CHOLISUDIN Y,S.STP,MM',
                     'id_jabatan' => '1',
+                    'id_opd' => '1',
                     'nip_pejabat' => '19800727 199912 1 002',
                     'no_sk' => '119'
                 ],
                 [
                     'nama_pejabat' => 'WIDIOANTORO, S.Sos, M.Si',
                     'id_jabatan' => '1',
+                    'id_opd' => '2',
                     'nip_pejabat' => '19731205 199302 1 001',
                     'no_sk' => '119'
                 ],

@@ -12,13 +12,13 @@ return new class extends Migration
         Schema::create('pejabats', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_jabatan');
-            // $table->unsignedBigInteger('id_opd');
+            $table->unsignedBigInteger('id_opd');
             $table->string('nama_pejabat')->unique()->nullable();;
             $table->string('nip_pejabat');
             $table->string('no_sk');
 
             $table->foreign('id_jabatan')->references('id')->on('jabatans');
-            // $table->foreign('id_opd')->references('id')->on('opds');
+            $table->foreign('id_opd')->references('id')->on('opds');
             $table->timestamps();
         });
     }

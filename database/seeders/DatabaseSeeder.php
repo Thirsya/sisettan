@@ -20,9 +20,9 @@ class DatabaseSeeder extends Seeder
             KecamatanSeeder::class,
             KelurahanSeeder::class,
             JabatanSeeder::class,
+            OpdSeeder::class,
             PejabatSeeder::class,
             DaerahSeeder::class,
-            OpdSeeder::class,
         ]);
     }
 }

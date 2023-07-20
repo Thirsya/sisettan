@@ -49,10 +49,13 @@ class OPDController extends Controller
 
     public function edit(Opd $opd)
     {
-        return view('users.opd.edit', compact('opd'));
+        return view('users.opd.edit', compact('opd'))->with(
+            ['no_opd' => $opd,
+             'nama_opd' => $opd]
+        );;
     }
 
-    public function update(UpdateOPDRequest $request, Opd $opd)
+    public function update(UpdateopdRequest $request, Opd $opd)
     {
         $request->validate([
             'opd' => 'required|unique:opds,opd,' . $opd->id,

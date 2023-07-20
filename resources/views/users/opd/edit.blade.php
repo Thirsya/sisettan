@@ -16,14 +16,28 @@
                         @csrf
                         @method('PUT')
                         <div class="form-group">
-                            <label>OPD</label>
-                            <input type="text" id="opd" name="opd"
+                            <label>Nomor OPD</label>
+                            <input type="text" id="no_opd" name="no_opd"
                                 class="form-control
-                                @error('opd') is-invalid @enderror"
-                                placeholder="Masukan opd"
-                                value="{{ old('opd', $opd->opd) }}" data-id="input_opd"
+                                @error('no_opd') is-invalid @enderror"
+                                placeholder="Masukan no_opd"
+                                value="{{ old('no_opd', $no_opd->no_opd) }}" data-id="input_no_opd"
                                 autocomplete="off">
-                            @error('opd')
+                            @error('no_opd')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label>Nama OPD</label>
+                            <input type="text" id="nama_opd" name="nama_opd"
+                                class="form-control
+                                @error('nama_opd') is-invalid @enderror"
+                                placeholder="Masukan nama_opd"
+                                value="{{ old('nama_opd', $nama_opd->nama_opd) }}" data-id="input_nama_opd"
+                                autocomplete="off">
+                            @error('nama_opd')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
