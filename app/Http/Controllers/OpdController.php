@@ -36,10 +36,8 @@ class OPDController extends Controller
 
     public function store(StoreopdRequest $request)
     {
-        Opd::create([
-            'opd' => $request->opd,
-        ]);
-        return redirect()->route('opd.index')->with('success', 'Tambah Data OPD Sukses');
+        Opd::create($request->validated());
+        return redirect()->route('opd.index')->with('success', 'OPD created successfully.');
     }
 
     public function show(Opd $opd)

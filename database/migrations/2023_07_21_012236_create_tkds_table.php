@@ -13,15 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('daftars', function (Blueprint $table) {
+        Schema::create('tkds', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_kelurahan');
-            $table->string('no_urut');
-            $table->string('nama');
-            $table->string('alamat');
-            $table->string('no_kk');
-            $table->string('no_wp')->nullable();
-            $table->date('tgl_perjanjian')->nullable();
+            $table->string('bidang');
+            $table->string('letak');
+            $table->string('bukti');
+            $table->string('harga_dasar');
+            $table->string('luas');
+            $table->string('keterangan')->nullable();
+            $table->string('nop')->nullable();
 
             $table->foreign('id_kelurahan')->references('id')->on('kelurahans');
             $table->timestamps();
@@ -35,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('daftars');
+        Schema::dropIfExists('tkds');
     }
 };

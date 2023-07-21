@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             PejabatSeeder::class,
             DaerahSeeder::class,
             DaftarSeeder::class,
+            TkdSeeder::class,
         ]);
     }
 }

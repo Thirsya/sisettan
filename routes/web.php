@@ -19,6 +19,7 @@ use App\Http\Controllers\RoleAndPermission\ImportRoleController;
 use App\Http\Controllers\RoleAndPermission\PermissionController;
 use App\Http\Controllers\RoleAndPermission\RoleController;
 use App\Http\Controllers\TahunController;
+use App\Http\Controllers\TkdController;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
 use App\Http\Controllers\UserController;
@@ -82,5 +83,6 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     });
     Route::prefix('lelang')->group(function () {
         Route::resource('daftar', DaftarController::class);
+        Route::resource('tkd', TkdController::class);
     });
 });
