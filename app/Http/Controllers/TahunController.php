@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ImportTahunRequest;
 use App\Http\Requests\StoreTahunRequest;
 use App\Http\Requests\UpdateTahunRequest;
+use App\Exports\TahunsExport;
+use App\Imports\TahunsImport;
 use App\Models\Tahun;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TahunController extends Controller
 {
@@ -72,5 +76,16 @@ class TahunController extends Controller
 
         return redirect()->route('tahun.index')
             ->with('success', 'Tahun deleted successfully.');
+    }
+
+    public function import(ImportTahunRequest $request)
+    {
+        Excel::import(new TahunsImport, $request->file('import-file')->store('import-files'));
+        return redirect()->route('tahun.index')->with('success', 'Tambahkan Data Tahun Sukses diimport');
+    }
+
+    public function export()
+    {
+        return Excel::download(new TahunsExport, 'Tahun.xlsx');
     }
 }

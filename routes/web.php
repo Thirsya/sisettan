@@ -76,7 +76,10 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::put('assign-user/{user}', [AssignUserToRoleController::class, 'update'])->name('assign.user.update');
     });
     Route::prefix('master-data')->group(function () {
+        Route::post('tahun/import', [TahunController::class, 'import'])->name('tahun.import');
+        Route::get('tahun/export', [TahunController::class, 'export'])->name('tahun.export');
         Route::resource('tahun', TahunController::class);
+
         Route::resource('kecamatan', KecamatanController::class);
         Route::resource('kelurahan', KelurahanController::class);
         Route::resource('daerah', DaerahController::class);
