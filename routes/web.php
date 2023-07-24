@@ -10,6 +10,7 @@ use App\Http\Controllers\Menu\MenuGroupController;
 use App\Http\Controllers\Menu\MenuItemController;
 use App\Http\Controllers\OpdController;
 use App\Http\Controllers\PejabatController;
+use App\Http\Controllers\PenawaranController;
 use App\Http\Controllers\RoleAndPermission\AssignPermissionController;
 use App\Http\Controllers\RoleAndPermission\AssignUserToRoleController;
 use App\Http\Controllers\RoleAndPermission\ExportPermissionController;
@@ -84,5 +85,6 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::prefix('lelang')->group(function () {
         Route::resource('daftar', DaftarController::class);
         Route::resource('tkd', TkdController::class);
+        Route::resource('penawaran', PenawaranController::class);
     });
 });

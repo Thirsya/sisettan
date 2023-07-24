@@ -4,7 +4,7 @@
     <!-- Main Content -->
     <section class="section">
         <div class="section-header">
-            <h1>Harga Dasar List</h1>
+            <h1>Penawaran List</h1>
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
                 <div class="breadcrumb-item"><a href="#">Components</a></div>
@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="section-body">
-            <h2 class="section-title">Harga Dasar Management</h2>
+            <h2 class="section-title">Penawaran Management</h2>
 
             <div class="row">
                 <div class="col-12">
@@ -23,19 +23,19 @@
                 <div class="col-12">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h4>Harga Dasar List</h4>
+                            <h4>Penawaran List</h4>
                             <div class="card-header-action">
-                                <a class="btn btn-icon icon-left btn-primary" href="{{ route('tkd.create') }}">Create New
-                                    Harga Dasar</a>
+                                <a class="btn btn-icon icon-left btn-primary" href="{{ route('penawaran.create') }}">Create New
+                                    Penawaran</a>
                                 <a class="btn btn-info btn-primary active import">
                                     <i class="fa fa-download" aria-hidden="true"></i>
-                                    Import Harga Dasar</a>
+                                    Import Penawaran</a>
                                 <a class="btn btn-info btn-primary active" href="#">
                                     <i class="fa fa-upload" aria-hidden="true"></i>
-                                    Export Harga Dasar</a>
+                                    Export Penawaran</a>
                                 <a class="btn btn-info btn-primary active search">
                                     <i class="fa fa-search" aria-hidden="true"></i>
-                                    Search Harga Dasar</a>
+                                    Search Penawaran</a>
                             </div>
                         </div>
                         <div class="card-body">
@@ -53,17 +53,17 @@
                                 </div>
                             </div>
                             <div class="show-search mb-3" style="display: none">
-                                <form id="search" method="GET" action="{{ route('tkd.index') }}">
+                                <form id="search" method="GET" action="{{ route('penawaran.index') }}">
                                     <div class="form-row">
                                         <div class="form-group col-md-4">
-                                            <label for="role">Harga Dasar</label>
-                                            <input type="text" name="tkd" class="form-control" id="tkd"
-                                                placeholder="Group tkd">
+                                            <label for="role">Penawaran</label>
+                                            <input type="text" name="penawaran" class="form-control" id="penawaran"
+                                                placeholder="Group penawaran">
                                         </div>
                                     </div>
                                     <div class="text-right">
                                         <button class="btn btn-primary mr-1" type="submit">Submit</button>
-                                        <a class="btn btn-secondary" href="{{ route('tkd.index') }}">Reset</a>
+                                        <a class="btn btn-secondary" href="{{ route('penawaran.index') }}">Reset</a>
                                     </div>
                                 </form>
                             </div>
@@ -72,35 +72,26 @@
                                     <tbody>
                                         <tr>
                                             <th>No</th>
-                                            <th>Letak</th>
-                                            <th>Bidang</th>
-                                            <th>Kelurahan</th>
-                                            <th>Bukti</th>
-                                            <th>Luas</th>
+                                            <th>Pendaftar</th>
                                             <th>Harga Dasar</th>
+                                            <th>Penawaran</th>
                                             <th>Keterangan</th>
-                                            <th>Nop</th>
                                             <th class="text-right">Action</th>
                                         </tr>
-                                        @foreach ($tkds as $key => $tkd)
+                                        @foreach ($penawarans as $key => $penawaran)
                                             <tr>
-                                                {{-- <td>{{ ($tkds->currentPage() - 1) * $tkds->perPage() + $key + 1 }}</td> --}}
-                                                <td>{{ $tkd->id}}</td>
-                                                <td>{{ $tkd->letak}}</td>
-                                                <td>{{ $tkd->bidang}}</td>
-                                                <td>{{ $tkd->kelurahan}}</td>
-                                                <td>{{ $tkd->bukti}}</td>
-                                                <td>{{ $tkd->luas}}</td>
-                                                <td>{{ $tkd->harga_dasar}}</td>
-                                                <td>{{ $tkd->keterangan}}</td>
-                                                <td>{{ $tkd->nop}}</td>
+                                                <td>{{ ($penawarans->currentPage() - 1) * $penawarans->perPage() + $key + 1 }}</td>
+                                                <td>{{ $penawaran->id_daftar}}</td>
+                                                <td>{{ $penawaran->id_tkd}}</td>
+                                                <td>{{ $penawaran->nilai_penawaran}}</td>
+                                                <td>{{ $penawaran->keterangan}}</td>
                                                 <td class="text-right">
                                                     <div class="d-flex justify-content-end">
-                                                        <a href="{{ route('tkd.edit', $tkd->id) }}"
+                                                        <a href="{{ route('penawaran.edit', $penawaran->id) }}"
                                                             class="btn btn-sm btn-info btn-icon "><i
                                                                 class="fas fa-edit"></i>
                                                             Edit</a>
-                                                        <form action="{{ route('tkd.destroy', $tkd->id) }}"
+                                                        <form action="{{ route('penawaran.destroy', $penawaran->id) }}"
                                                             method="POST" class="ml-2">
                                                             <input type="hidden" name="_method" value="DELETE">
                                                             <input type="hidden" name="_token"
@@ -115,7 +106,7 @@
                                     </tbody>
                                 </table>
                                 <div class="d-flex justify-content-center">
-                                    {{ $tkds->withQueryString()->links() }}
+                                    {{ $penawarans->withQueryString()->links() }}
                                 </div>
                             </div>
                         </div>
