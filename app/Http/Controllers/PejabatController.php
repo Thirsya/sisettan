@@ -6,6 +6,7 @@ use App\Models\Pejabat;
 use App\Http\Requests\StorePejabatRequest;
 use App\Http\Requests\UpdatePejabatRequest;
 use App\Models\Jabatan;
+use App\Models\Opd;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -56,17 +57,15 @@ class PejabatController extends Controller
 
     public function create()
     {
-        return view('users.pejabat.create');
+        $jabatans = Jabatan::all();
+        $opds = Opd::all();
+        return view('users.pejabat.create')->with(['jabatans'=> $jabatans, 'opds' => $opds]);
     }
 
     public function store(StorePejabatRequest $request)
     {
-        Pejabat::create([
-            'nama' => $request->nama,
-            'jabatan' => $request->jabatan,
-        ]);
-
-        return redirect()->route('pejabat.index')->with('success', 'Data Pejabat berhasil ditambahkan.');
+        Pejabat::create($request->validated());
+        return redirect()->route('pejabat.index')->with('success', 'Pejabat created successfully.');
     }
 
     public function show(Pejabat $pejabat)
@@ -76,17 +75,16 @@ class PejabatController extends Controller
 
     public function edit(Pejabat $pejabat)
     {
-        return view('users.pejabat.edit', compact('pejabat'));
+        $jabatans = Jabatan::all();
+        $opds = Opd::all();
+        return view('users.pejabat.edit', compact('pejabat'))->with(['jabatans'=> $jabatans, 'opds' => $opds]);
     }
 
     public function update(UpdatePejabatRequest $request, Pejabat $pejabat)
     {
-        $pejabat->update([
-            'nama' => $request->nama,
-            'jabatan' => $request->jabatan,
-        ]);
-
-        return redirect()->route('pejabat.index')->with('success', 'Data Pejabat berhasil diperbarui.');
+        $pejabat->update($request->all());
+        return redirect()->route('pejabat.index')
+            ->with('success', 'Pejabat updated successfully.');
     }
 
     public function destroy(Pejabat $pejabat)
@@ -98,7 +96,7 @@ class PejabatController extends Controller
             $error_code = $e->errorInfo[1];
             if ($error_code == 1451) {
                 return redirect()->route('pejabat.index')
-                    ->with('error', 'Tidak Dapat Menghapus Pejabat Yang Masih Digunakan Oleh Kolom Lain');
+                    ->with('error', 'Tidak Dapat Menghapus pejabat Yang Masih Digunakan Oleh Kolom Lain');
             } else {
                 return redirect()->route('pejabat.index')->with('success', 'Hapus Data Pejabat Sukses');
             }

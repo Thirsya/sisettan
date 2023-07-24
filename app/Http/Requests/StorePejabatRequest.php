@@ -24,9 +24,10 @@ class StorePejabatRequest extends FormRequest
     public function rules()
     {
         return [
-            'pejabat' => 'required|unique:pejabats,pejabat|regex:/^[a-zA-Z]+$/u',
+            'nama_pejabat' => 'required|unique:pejabats,nama_pejabat',
             'id_jabatan' => 'required',
-            'nip_pejabat' => 'required|regex:/^[0-9]+$/u',
+            'id_opd' => 'required',
+            'nip_pejabat' => 'required',
             'no_sk' => 'required',
         ];
     }
@@ -35,13 +36,10 @@ class StorePejabatRequest extends FormRequest
     {
         return [
             'jabatan_id.required' => 'Nama Jabatan Wajib Diisi',
-            'pejabat.required' => 'Pejabat Wajib Diisi',
-            'pejabat.unique' => 'Pejabat Sudah Ada',
-            'pejabat.regex' => 'Pejabat tidak boleh karakter @!_? dan angka',
+            'nama_pejabat.required' => 'Nama Pejabat Wajib Diisi',
+            'nama_pejabat.unique' => 'Nama Pejabat Sudah Ada',
             'nip_pejabat.required' => 'NIP Pejabat Wajib Diisi',
-            'nip_pejabat.regex' => 'NIP Pejabat tidak boleh karakter @!_? dan angka',
             'no_sk.required' => 'No SK Wajib Diisi',
-            'no_sk.regex' => 'No SK tidak boleh karakter @!_? dan angka',
         ];
     }
 }
