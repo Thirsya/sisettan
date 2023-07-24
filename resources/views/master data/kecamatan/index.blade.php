@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="section-body">
-            <h2 class="section-title">kecamatan Management</h2>
+            <h2 class="section-title">Kecamatan Management</h2>
 
             <div class="row">
                 <div class="col-12">
@@ -23,32 +23,46 @@
                 <div class="col-12">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h4>kecamatan List</h4>
+                            <h4>Kecamatan List</h4>
                             <div class="card-header-action">
                                 <a class="btn btn-icon icon-left btn-primary" href="{{ route('kecamatan.create') }}">Create New
-                                    kecamatan</a>
+                                    Kecamatan</a>
                                 <a class="btn btn-info btn-primary active import">
                                     <i class="fa fa-download" aria-hidden="true"></i>
-                                    Import kecamatan</a>
-                                <a class="btn btn-info btn-primary active" href="#">
+                                    Import Kecamatan</a>
+                                <a class="btn btn-info btn-primary active" href="{{ route('kecamatan.export') }}"
+                                    data-id="export">
                                     <i class="fa fa-upload" aria-hidden="true"></i>
-                                    Export kecamatan</a>
+                                    Export Kecamatan</a>
                                 <a class="btn btn-info btn-primary active search">
                                     <i class="fa fa-search" aria-hidden="true"></i>
-                                    Search kecamatan</a>
+                                    Search Kecamatan</a>
                             </div>
                         </div>
                         <div class="card-body">
-                            <div class="show-import" style="display: none">
+                            <div class="show-import mb-4" style="display: none">
+                                @error('import-file')
+                                    <div class="invalid-feedback d-flex mb-10" role="alert">
+                                        <div class="alert_alert-dange_mt-1_mb-1">
+                                            {{ $message }}
+                                        </div>
+                                    </div>
+                                @enderror
                                 <div class="custom-file">
-                                    <form action="#" method="post" enctype="multipart/form-data">
-                                        {{ csrf_field() }}
-                                        <label class="custom-file-label" for="file-upload">Choose File</label>
-                                        <input type="file" id="file-upload" class="custom-file-input" name="import_file">
+                                    <form action="{{ route('kecamatan.import') }}" method="POST"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        @method('POST')
+                                        <label
+                                            class="custom-file-label @error('import-file', 'ImportKecamatanRequest') is-invalid @enderror"
+                                            for="file-upload">Choose File</label>
+                                        <input type="file" id="file-upload" class="custom-file-input" name="import-file"
+                                            data-id="send-import">
                                         <br /> <br />
                                         <div class="footer text-right">
-                                            <button class="btn btn-primary">Import File</button>
+                                            <button class="btn btn-primary" data-id="submit-import">Import File</button>
                                         </div>
+
                                     </form>
                                 </div>
                             </div>
@@ -72,7 +86,7 @@
                                     <tbody>
                                         <tr>
                                             <th>No</th>
-                                            <th>kecamatan</th>
+                                            <th>Kecamatan</th>
                                             <th class="text-right">Action</th>
                                         </tr>
                                         @foreach ($kecamatans as $key => $kecamatan)

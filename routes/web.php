@@ -80,7 +80,10 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::get('tahun/export', [TahunController::class, 'export'])->name('tahun.export');
         Route::resource('tahun', TahunController::class);
 
+        Route::post('kecamatan/import', [KecamatanController::class, 'import'])->name('kecamatan.import');
+        Route::get('kecamatan/export', [KecamatanController::class, 'export'])->name('kecamatan.export');
         Route::resource('kecamatan', KecamatanController::class);
+
         Route::resource('kelurahan', KelurahanController::class);
         Route::resource('daerah', DaerahController::class);
         Route::get('/getKelurahans', [DaerahController::class, 'getKelurahans'])->name('getKelurahans');

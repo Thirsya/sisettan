@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreKecamatanRequest;
 use App\Http\Requests\UpdateKecamatanRequest;
+use App\Http\Requests\ImportKecamatanRequest;
 use App\Models\Kecamatan;
+use App\Exports\KecamatansExport;
+use App\Imports\KecamatansImport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class KecamatanController extends Controller
 {
@@ -78,5 +82,16 @@ class KecamatanController extends Controller
                 return redirect()->route('kecamatan.index')->with('success', 'Hapus Data Kecamatan Sukses');
             }
         }
+    }
+
+    public function import(ImportKecamatanRequest $request)
+    {
+        Excel::import(new KecamatansImport, $request->file('import-file')->store('import-files'));
+        return redirect()->route('kecamatan.index')->with('success', 'Tambahkan Data Kecamatan Sukses diimport');
+    }
+
+    public function export()
+    {
+        return Excel::download(new KecamatansExport, 'Kecamatan.xlsx');
     }
 }
