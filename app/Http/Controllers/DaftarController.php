@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\DaftarsExport;
+use App\Http\Requests\ImportDaftarRequest;
 use App\Models\Daftar;
 use App\Http\Requests\StoreDaftarRequest;
 use App\Http\Requests\UpdateDaftarRequest;
+use App\Imports\DaftarsImport;
 use App\Models\Kelurahan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DaftarController extends Controller
 {
@@ -85,5 +89,16 @@ class DaftarController extends Controller
     {
         $daftar->delete();
         return redirect()->route('daftar.index')->with('success', 'Daftar deleted successfully.');
+    }
+
+    public function import(ImportDaftarRequest $request)
+    {
+        Excel::import(new DaftarsImport, $request->file('import-file')->store('import-files'));
+        return redirect()->route('daftar.index')->with('success', 'Tambahkan Data Daftar Sukses diimport');
+    }
+
+    public function export()
+    {
+        return Excel::download(new DaftarsExport, 'Daftar.xlsx');
     }
 }
