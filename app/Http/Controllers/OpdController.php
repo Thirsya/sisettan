@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\OpdsExport;
+use App\Http\Requests\ImportOpdRequest;
 use App\Http\Requests\StoreopdRequest;
 use App\Http\Requests\UpdateopdRequest;
+use App\Imports\OpdsImport;
 use App\Models\OPD;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -73,5 +77,16 @@ class OPDController extends Controller
                 return redirect()->route('opd.index')->with('success', 'Hapus Data OPD Sukses');
             }
         }
+    }
+
+    public function import(ImportOpdRequest $request)
+    {
+        Excel::import(new OpdsImport, $request->file('import-file')->store('import-files'));
+        return redirect()->route('opd.index')->with('success', 'Tambahkan Data OPD Sukses diimport');
+    }
+
+    public function export()
+    {
+        return Excel::download(new OpdsExport, 'OPD.xlsx');
     }
 }
