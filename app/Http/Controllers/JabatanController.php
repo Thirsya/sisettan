@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\JabatansExport;
 use App\Http\Requests\StoreJabatanRequest;
 use App\Http\Requests\UpdateJabatanRequest;
 use App\Models\Jabatan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\ImportJabatanRequest;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\JabatansImport;
 
 class JabatanController extends Controller
 {
@@ -78,5 +82,16 @@ class JabatanController extends Controller
                 return redirect()->route('jabatan.index')->with('success', 'Hapus Data Jabatan Sukses');
             }
         }
+    }
+
+    public function import(ImportJabatanRequest $request)
+    {
+        Excel::import(new JabatansImport, $request->file('import-file')->store('import-files'));
+        return redirect()->route('jabatan.index')->with('success', 'Tambahkan Data Jabatan Sukses diimport');
+    }
+
+    public function export()
+    {
+        return Excel::download(new JabatansExport, 'Jabatan.xlsx');
     }
 }
