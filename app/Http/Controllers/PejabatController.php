@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\PejabatsExport;
+use App\Http\Requests\ImportPejabatRequest;
 use App\Models\Pejabat;
 use App\Http\Requests\StorePejabatRequest;
 use App\Http\Requests\UpdatePejabatRequest;
+use App\Imports\PejabatsImport;
 use App\Models\Jabatan;
 use App\Models\Opd;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PejabatController extends Controller
 {
@@ -101,5 +105,16 @@ class PejabatController extends Controller
                 return redirect()->route('pejabat.index')->with('success', 'Hapus Data Pejabat Sukses');
             }
         }
+    }
+
+    public function import(ImportPejabatRequest $request)
+    {
+        Excel::import(new PejabatsImport, $request->file('import-file')->store('import-files'));
+        return redirect()->route('pejabat.index')->with('success', 'Tambahkan Data Pejabat Sukses diimport');
+    }
+
+    public function export()
+    {
+        return Excel::download(new PejabatsExport, 'Pejabat.xlsx');
     }
 }

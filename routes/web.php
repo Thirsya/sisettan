@@ -46,6 +46,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::get('jabatan/export', [JabatanController::class, 'export'])->name('jabatan.export');
         Route::resource('jabatan', JabatanController::class);
 
+        Route::post('pejabat/import', [PejabatController::class, 'import'])->name('pejabat.import');
+        Route::get('pejabat/export', [PejabatController::class, 'export'])->name('pejabat.export');
         Route::resource('pejabat', PejabatController::class);
 
         Route::post('opd/import', [OpdController::class, 'import'])->name('opd.import');
