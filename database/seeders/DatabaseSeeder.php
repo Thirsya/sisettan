@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
             KelurahanSeeder::class,
             JabatanSeeder::class,
             OpdSeeder::class,
-            PejabatSeeder::class,
+            // PejabatSeeder::class,
             DaerahSeeder::class,
             DaftarSeeder::class,
             TkdSeeder::class,

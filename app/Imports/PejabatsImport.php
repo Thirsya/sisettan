@@ -19,14 +19,13 @@ class PejabatsImport implements ToModel, WithHeadingRow, WithUpserts
     public function __construct()
     {
         $this->jabatans = Jabatan::select('id', 'jabatan')->get();
-        $this->opds = Opd::select('id', 'no_opd', 'nama_opd')->get();
+        $this->opds = Opd::select('id', 'nama_opd')->get();
     }
 
     public function model(array $row)
     {
         $jabatan = $this->jabatans->where('jabatan', $row['jabatan'])->first();
         $opd = $this->opds->where('nama_opd', $row['opd'])->first();
-        $opd = $this->opds->where('no_opd', $row['no_opd'])->first();
         return new Pejabat([
             'id_jabatan' => $jabatan->id ?? null,
             'id_opd' => $opd->id ?? null,
