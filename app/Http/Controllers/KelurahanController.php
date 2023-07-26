@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\KelurahansExport;
+use App\Http\Requests\ImportKelurahanRequest;
 use App\Models\Kecamatan;
 use App\Models\Kelurahan;
 use App\Http\Requests\StoreKelurahanRequest;
 use App\Http\Requests\UpdateKelurahanRequest;
+use App\Imports\KelurahansImport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class KelurahanController extends Controller
 {
@@ -104,5 +108,16 @@ class KelurahanController extends Controller
                 return redirect()->route('kelurahan.index')->with('success', 'Hapus Data Kelurahan Sukses');
             }
         }
+    }
+
+    public function import(ImportKelurahanRequest $request)
+    {
+        Excel::import(new KelurahansImport, $request->file('import-file')->store('import-files'));
+        return redirect()->route('kelurahan.index')->with('success', 'Tambahkan Data Kelurahan Sukses diimport');
+    }
+
+    public function export()
+    {
+        return Excel::download(new KelurahansExport, 'Kelurahan.xlsx');
     }
 }

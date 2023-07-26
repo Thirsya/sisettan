@@ -31,7 +31,7 @@
                                 <a class="btn btn-info btn-primary active import">
                                     <i class="fa fa-download" aria-hidden="true"></i>
                                     Import Kelurahan</a>
-                                <a class="btn btn-info btn-primary active" href="#">
+                                <a class="btn btn-info btn-primary active" href="{{ route('kelurahan.export') }}" data-id="export">
                                     <i class="fa fa-upload" aria-hidden="true"></i>
                                     Export Kelurahan</a>
                                 <a class="btn btn-info btn-primary active search">
@@ -40,16 +40,29 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <div class="show-import" style="display: none">
+                            <div class="show-import mb-4" style="display: none">
+                                @error('import-file')
+                                    <div class="invalid-feedback d-flex mb-10" role="alert">
+                                        <div class="alert_alert-dange_mt-1_mb-1">
+                                            {{ $message }}
+                                        </div>
+                                    </div>
+                                @enderror
                                 <div class="custom-file">
-                                    <form action="#" method="post" enctype="multipart/form-data">
-                                        {{ csrf_field() }}
-                                        <label class="custom-file-label" for="file-upload">Choose File</label>
-                                        <input type="file" id="file-upload" class="custom-file-input" name="import_file">
+                                    <form action="{{ route('kelurahan.import') }}" method="POST"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        @method('POST')
+                                        <label
+                                            class="custom-file-label @error('import-file', 'ImportKelurahanRequest') is-invalid @enderror"
+                                            for="file-upload">Choose File</label>
+                                        <input type="file" id="file-upload" class="custom-file-input" name="import-file"
+                                            data-id="send-import">
                                         <br /> <br />
                                         <div class="footer text-right">
-                                            <button class="btn btn-primary">Import File</button>
+                                            <button class="btn btn-primary" data-id="submit-import">Import File</button>
                                         </div>
+
                                     </form>
                                 </div>
                             </div>
