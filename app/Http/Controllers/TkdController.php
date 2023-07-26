@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\TkdsExport;
+use App\Http\Requests\ImportTkdRequest;
 use App\Models\Tkd;
 use App\Http\Requests\StoreTkdRequest;
 use App\Http\Requests\UpdateTkdRequest;
+use App\Imports\TkdsImport;
 use App\Models\Kelurahan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TkdController extends Controller
 {
@@ -85,5 +89,16 @@ class TkdController extends Controller
     {
         $tkd->delete();
         return redirect()->route('tkd.index')->with('success', 'Tkd deleted successfully.');
+    }
+
+    public function import(ImportTkdRequest $request)
+    {
+        Excel::import(new TkdsImport, $request->file('import-file')->store('import-files'));
+        return redirect()->route('tkd.index')->with('success', 'Tambahkan Data TKD Sukses diimport');
+    }
+
+    public function export()
+    {
+        return Excel::download(new TkdsExport, 'TKD - Harga Dasar.xlsx');
     }
 }

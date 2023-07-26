@@ -102,6 +102,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::get('daftar/export', [DaftarController::class, 'export'])->name('daftar.export');
         Route::resource('daftar', DaftarController::class);
 
+        Route::post('tkd/import', [TkdController::class, 'import'])->name('tkd.import');
+        Route::get('tkd/export', [TkdController::class, 'export'])->name('tkd.export');
         Route::resource('tkd', TkdController::class);
         Route::resource('penawaran', PenawaranController::class);
     });
