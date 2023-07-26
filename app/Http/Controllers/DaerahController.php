@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\DaerahsExport;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ImportDaerahRequest;
 use App\Http\Requests\StoreDaerahRequest;
 use App\Http\Requests\UpdateDaerahRequest;
+use App\Imports\DaerahsImport;
 use App\Models\Daerah;
 use App\Models\Kecamatan;
 use App\Models\Kelurahan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DaerahController extends Controller
 {
@@ -114,5 +118,16 @@ class DaerahController extends Controller
         $kelurahans = Kelurahan::all()->where('id_kecamatan', $request->kecamatan_id);
 
         return response()->json(['kelurahans' => $kelurahans]);
+    }
+
+    public function import(ImportDaerahRequest $request)
+    {
+        Excel::import(new DaerahsImport, $request->file('import-file')->store('import-files'));
+        return redirect()->route('daerah.index')->with('success', 'Tambahkan Data Daerah Sukses diimport');
+    }
+
+    public function export()
+    {
+        return Excel::download(new DaerahsExport, 'Daerah.xlsx');
     }
 }
