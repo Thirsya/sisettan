@@ -64,8 +64,17 @@ class TkdController extends Controller
 
     public function store(StoreTkdRequest $request)
     {
-        Tkd::create($request->validated());
-        return redirect()->route('tkd.index')->with('success', 'Tkd created successfully.');
+        Tkd::create([
+            'id_kelurahan' => $request->id_kelurahan,
+            'bidang' => $request->bidang,
+            'letak' => $request->letak,
+            'bukti' => $request->bukti,
+            'harga_dasar' => $request->harga_dasar,
+            'luas' => $request->luas,
+            'keterangan' => $request->keterangan,
+            'nop' => $request->nop,
+        ]);
+        return redirect()->route('tkd.index')->with('success', 'Tambah Data TKD Sukses');
     }
 
     public function show(Tkd $tkd)

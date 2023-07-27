@@ -72,8 +72,10 @@
                                     <tbody>
                                         <tr>
                                             <th>No</th>
+                                            <th>Total Luas</th>
                                             <th>Pendaftar</th>
                                             <th>Harga Dasar</th>
+                                            <th>Luas Bidang</th>
                                             <th>Penawaran</th>
                                             <th>Keterangan</th>
                                             <th class="text-right">Action</th>
@@ -81,8 +83,10 @@
                                         @foreach ($penawarans as $key => $penawaran)
                                             <tr>
                                                 <td>{{ ($penawarans->currentPage() - 1) * $penawarans->perPage() + $key + 1 }}</td>
+                                                <td>{{ $penawaran->total_luas}}</td>
                                                 <td>{{ $penawaran->id_daftar}}</td>
-                                                <td>{{ $penawaran->id_tkd}}</td>
+                                                <td>{{ $penawaran->harga_dasar}}</td>
+                                                <td>{{ $penawaran->luas}}</td>
                                                 <td>{{ $penawaran->nilai_penawaran}}</td>
                                                 <td>{{ $penawaran->keterangan}}</td>
                                                 <td class="text-right">

@@ -18,6 +18,7 @@ class PenawaranSeeder extends Seeder
         // Penawaran::insert(
         //     [
         //         [
+        //             'total_luas' => '6216',
         //             'id_daftar' => '',
         //             'id_tkd' => '',
         //             'nilai_penawaran' => '',

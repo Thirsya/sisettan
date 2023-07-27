@@ -95,27 +95,27 @@
                         <div class="form-group">
                             <label>Keterangan</label>
                             <input type="text" id="keterangan" name="keterangan"
-                            class="form-control @error('tkd') is-invalid @enderror"
-                            placeholder="Masukkan Keterangan" value="{{ old('keterangan', $tkd->keterangan) }}"
-                            data-id="input_keterangan" autocomplete="off">
-                            @error('tkd')
-                              <div class="invalid-feedback">
-                                {{ $message }}
-                              </div>
+                                class="form-control @error('keterangan') is-invalid @enderror "
+                                placeholder="Masukan Keterangan" value="{{ old('keterangan', $tkd->keterangan) }}"
+                                data-id="input_keterangan" autocomplete="off">
+                            @error('keterangan')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
                             @enderror
-                          </div>
-                          <div class="form-group">
+                        </div>
+                        <div class="form-group">
                             <label>Nop</label>
                             <input type="text" id="nop" name="nop"
-                            class="form-control @error('tkd') is-invalid @enderror"
-                            placeholder="Masukkan Nop" value="{{ old('nop', $tkd->nop) }}"
-                            data-id="input_nop" autocomplete="off">
-                            @error('tkd')
-                              <div class="invalid-feedback">
-                                {{ $message }}
-                              </div>
+                                class="form-control @error('nop') is-invalid @enderror "
+                                placeholder="Masukan Nop" value="{{ old('nop', $tkd->nop) }}"
+                                data-id="input_nop" autocomplete="off">
+                            @error('nop')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
                             @enderror
-                          </div>
+                        </div>
 
                 </div>
                 <div class="card-footer text-right">

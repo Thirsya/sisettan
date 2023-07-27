@@ -32,6 +32,7 @@ class PenawaranController extends Controller
                 'penawarans.id_tkd',
                 'penawarans.nilai_penawaran',
                 'penawarans.keterangan',
+                'penawarans.total_luas',
                 'daftars.no_urut',
                 'daftars.nama',
                 'daftars.no_kk',
@@ -66,24 +67,41 @@ class PenawaranController extends Controller
 
     public function create()
     {
-        // Kode untuk menampilkan form tambah penawaran (jika diperlukan)
-        return view('penawaran.create');
+        $tkds = Tkd::all();
+        $daftars = Daftar::all();
+        return view('lelang.penawaran.create')->with(['tkds' => $tkds, 'daftars' => $daftars]);
     }
 
     public function store(StorePenawaranRequest $request)
     {
-        Penawaran::create($request->validated());
-        return redirect()->route('penawaran.index')->with('success', 'Penawaran created successfully.');
+        Penawaran::create([
+            'id_kecamatan' => $request->id_kecamatan,
+            'id_kelurahan' => $request->id_kelurahan,
+            'noba' => $request->noba,
+            'periode' => $request->periode,
+            'thn_sts' => $request->id_tahun,
+            'tanggal_lelang' => $request->tanggal_lelang,
+        ]);
+        return redirect()->route('penawaran.index')->with('success', 'Tambah Data Daerah Sukses');
     }
 
-    public function show(Penawaran $penawaran)
+    public function show(StorePenawaranRequest $request)
     {
-        return view('penawaran.show', compact('penawaran'));
+        Penawaran::create([
+            'total_luas' => $request->total_luas,
+            'id_daftar' => $request->id_daftar,
+            'id_tkd' => $request->id_tkd,
+            'nilai_penawaran' => $request->nilai_penawaran,
+            'keterangan' => $request->keterangan,
+        ]);
+        return redirect()->route('penawaran.index')->with('success', 'Tambah Data Penawaran Sukses');
     }
 
     public function edit(Penawaran $penawaran)
     {
-        return view('penawaran.edit', compact('penawaran'));
+        $tkds = Tkd::all();
+        $daftars = Daftar::all();
+        return view('lelang.penawaran.create')->with(['tkds' => $tkds, 'daftars' => $daftars]);
     }
 
     public function update(UpdatePenawaranRequest $request, Penawaran $penawaran)
