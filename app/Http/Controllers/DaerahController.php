@@ -11,6 +11,7 @@ use App\Imports\DaerahsImport;
 use App\Models\Daerah;
 use App\Models\Kecamatan;
 use App\Models\Kelurahan;
+use App\Models\Tahun;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -36,11 +37,16 @@ class DaerahController extends Controller
                 'daerahs.tanggal_lelang',
                 'daerahs.id_kelurahan',
                 'daerahs.id_kecamatan',
+                'daerahs.noba',
+                'daerahs.periode',
+                'daerahs.thn_sts',
                 'kelurahans.kelurahan',
                 'kecamatans.kecamatan',
+                'tahuns.tahun'
             )
             ->leftJoin('kecamatans', 'daerahs.id_kecamatan', '=', 'kecamatans.id')
             ->leftJoin('kelurahans', 'daerahs.id_kelurahan', '=', 'kelurahans.id')
+            ->leftJoin('tahuns', 'daerahs.thn_sts', '=', 'tahuns.id')
             ->when($request->input('kelurahan'), function ($query, $kelurahan) {
                 return $query->where('kelurahan', 'like', '%' . $kelurahan . '%');
             })
@@ -62,7 +68,8 @@ class DaerahController extends Controller
     {
         $kelurahans = Kelurahan::all();
         $kecamatans = Kecamatan::all();
-        return view('master data.daerah.create')->with(['kecamatans' => $kecamatans, 'kelurahans' => $kelurahans]);
+        $tahuns = Tahun::all();
+        return view('master data.daerah.create')->with(['kecamatans' => $kecamatans, 'kelurahans' => $kelurahans, 'tahuns' => $tahuns]);
     }
 
     public function store(StoreDaerahRequest $request)
@@ -70,6 +77,9 @@ class DaerahController extends Controller
         Daerah::create([
             'id_kecamatan' => $request->id_kecamatan,
             'id_kelurahan' => $request->id_kelurahan,
+            'noba' => $request->noba,
+            'periode' => $request->periode,
+            'thn_sts' => $request->id_tahun,
             'tanggal_lelang' => $request->tanggal_lelang,
         ]);
         return redirect()->route('daerah.index')->with('success', 'Tambah Data Daerah Sukses');
@@ -84,7 +94,8 @@ class DaerahController extends Controller
     {
         $kelurahans = Kelurahan::all();
         $kecamatans = Kecamatan::all();
-        return view('master data.daerah.edit', compact('daerah'))->with(['kecamatans' => $kecamatans, 'kelurahans' => $kelurahans]);
+        $tahuns = Tahun::all();
+        return view('master data.daerah.edit', compact('daerah'))->with(['kecamatans' => $kecamatans, 'kelurahans' => $kelurahans,  'tahuns' => $tahuns]);
     }
 
     public function update(UpdateDaerahRequest $request, Daerah $daerah)

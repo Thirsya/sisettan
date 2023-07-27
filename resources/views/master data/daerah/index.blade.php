@@ -87,6 +87,9 @@
                                             <th>No</th>
                                             <th>Kecamatan</th>
                                             <th>Kelurahan</th>
+                                            <th>Noba</th>
+                                            <th>Periode</th>
+                                            <th>Tahun Sts</th>
                                             <th>Tanggal</th>
                                             <th class="text-right">Action</th>
                                         </tr>
@@ -95,6 +98,9 @@
                                                 <td>{{ ($daerahs->currentPage() - 1) * $daerahs->perPage() + $key + 1 }}</td>
                                                 <td>{{ $daerah->kecamatan }}</td>
                                                 <td>{{ $daerah->kelurahan}}</td>
+                                                <td>{{ $daerah->noba}}</td>
+                                                <td>{{ $daerah->periode}}</td>
+                                                <td>{{ $daerah->tahun}}</td>
                                                 <td>{{ $daerah->tanggal_lelang }}</td>
                                                 <td class="text-right">
                                                     <div class="d-flex justify-content-end">

@@ -9,7 +9,7 @@ class Daerah extends Model
 {
     use HasFactory;
     protected $table = 'daerahs';
-    protected $fillable = ['id_kecamatan', 'id_kelurahan', 'tanggal_lelang'];
+    protected $fillable = ['id_kecamatan', 'id_kelurahan', 'tanggal_lelang', 'noba', 'periode', 'thn_sts'];
 
     public function kecamatan()
     {
@@ -19,5 +19,10 @@ class Daerah extends Model
     public function kelurahan()
     {
         return $this->belongsTo(Kelurahan::class, 'id_kelurahan');
+    }
+
+    public function tahun()
+    {
+        return $this->belongsTo(Tahun::class, 'id_tahun');
     }
 }

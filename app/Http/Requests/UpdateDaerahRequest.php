@@ -17,7 +17,10 @@ class UpdateDaerahRequest extends FormRequest
         return [
             'tanggal_lelang' => 'required',
             'id_kecamatan' => 'required',
-            'id_kelurahan' => 'required'
+            'id_kelurahan' => 'required',
+            'noba',
+            'periode',
+            'thn_sts'
         ];
     }
 

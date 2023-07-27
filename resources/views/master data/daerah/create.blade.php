@@ -43,6 +43,44 @@
                             @enderror
                         </div>
                         <div class="form-group">
+                            <label>Noba</label>
+                            <input type="text" id="noba" name="noba"
+                                class="form-control @error('noba') is-invalid @enderror"
+                                placeholder="Masukan Noba" autocomplete="off">
+                            @error('noba')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label>Periode</label>
+                            <input type="text" id="periode" name="periode"
+                                class="form-control @error('periode') is-invalid @enderror"
+                                placeholder="Masukan Periode" autocomplete="off">
+                            @error('periode')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label>Tahun</label>
+                            <select class="form-control select2 @error('id_tahun') is-invalid @enderror"
+                                name="id_tahun" data-id="select-tahun" id="id_tahun">
+                                <option value="">Piih Tahun</option>
+                                @foreach ($tahuns as $tahun)
+                                    <option value="{{ $tahun->id }}">
+                                        {{ $tahun->tahun }}</option>
+                                @endforeach
+                            </select>
+                            @error('id_tahun')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
                             <label>Tanggal Lelang</label>
                             <input type="date" id="tanggal_lelang" name="tanggal_lelang"
                                 class="form-control @error('tanggal_lelang') is-invalid @enderror"

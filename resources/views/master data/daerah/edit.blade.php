@@ -50,6 +50,47 @@
                             @enderror
                         </div>
                         <div class="form-group">
+                            <label>Noba</label>
+                            <input type="text" id="noba" name="noba"
+                                class="form-control @error('noba') is-invalid @enderror "
+                                placeholder="Masukan Noba" value="{{ old('noba', $daerah->noba) }}"
+                                data-id="input_noba" autocomplete="off">
+                            @error('noba')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label>Periode</label>
+                            <input type="text" id="periode" name="periode"
+                                class="form-control @error('periode') is-invalid @enderror "
+                                placeholder="Masukan Periode" value="{{ old('periode', $daerah->periode) }}"
+                                data-id="input_periode" autocomplete="off">
+                            @error('periode')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label>Tahun</label>
+                            <select class="form-control select2 @error('thn_sts') is-invalid @enderror"
+                                id="thn_sts" name="thn_sts" data-id="select-thn_sts">
+                                <option value="">Pilih Tahun</option>
+                                @foreach ($tahuns as $tahun)
+                                    <option @selected($tahun->id == $daerah->thn_sts) value="{{ $tahun->id }}">
+                                        {{ $tahun->tahun }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('thn_sts')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
                             <label>Tanggal Lelang</label>
                             <input type="date" id="tanggal_lelang" name="tanggal_lelang"
                                 class="form-control @error('daerah') is-invalid @enderror "

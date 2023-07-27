@@ -26,7 +26,10 @@ class StoreDaerahRequest extends FormRequest
         return [
             'tanggal_lelang' => 'required',
             'id_kelurahan' => 'required',
-            'id_kecamatan' => 'required'
+            'id_kecamatan' => 'required',
+            'noba',
+            'periode',
+            'thn_sts'
         ];
     }
 }
