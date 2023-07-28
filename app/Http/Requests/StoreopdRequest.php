@@ -28,4 +28,12 @@ class StoreopdRequest extends FormRequest
             'id_kecamatan' => 'required',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'no_opd.required' => 'Nomor OPD Wajib Diisi',
+            'id_kecamatan.required' => 'Nama OPD Wajib Diisi',
+        ];
+    }
 }

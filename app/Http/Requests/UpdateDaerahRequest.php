@@ -13,15 +13,7 @@ class UpdateDaerahRequest extends FormRequest
      */
     public function authorize()
     {
-        $id = $this->route('daerah')->id;
-        return [
-            'tanggal_lelang' => 'required',
-            'id_kecamatan' => 'required',
-            'id_kelurahan' => 'required',
-            'noba',
-            'periode',
-            'thn_sts'
-        ];
+        return true;
     }
 
     /**
@@ -31,8 +23,14 @@ class UpdateDaerahRequest extends FormRequest
      */
     public function rules()
     {
+        $id = $this->route('daerah')->id;
         return [
-            //
+            'tanggal_lelang' => 'required',
+            'id_kecamatan' => 'required',
+            'id_kelurahan' => 'required',
+            'noba',
+            'periode',
+            'thn_sts'
         ];
     }
 }

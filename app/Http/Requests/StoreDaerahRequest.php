@@ -27,9 +27,18 @@ class StoreDaerahRequest extends FormRequest
             'tanggal_lelang' => 'required',
             'id_kelurahan' => 'required',
             'id_kecamatan' => 'required',
-            'noba',
-            'periode',
-            'thn_sts'
+            'noba' => 'nullable',
+            'periode' => 'nullable',
+            'thn_sts' => 'nullable'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'tanggal_lelang.required' => 'Tanggal Lelang Wajib Diisi',
+            'id_kelurahan.required' => 'Kelurahan Wajib Diisi',
+            'id_kecamatan.required' => 'Kecamatan Wajib Diisi',
         ];
     }
 }

@@ -16,11 +16,6 @@ class StoreDaftarRequest extends FormRequest
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, mixed>
-     */
     public function rules()
     {
         return [
@@ -31,6 +26,18 @@ class StoreDaftarRequest extends FormRequest
             'no_kk' => 'required',
             'no_wp' => 'nullable',
             'tgl_perjanjian' => 'required',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'no_urut.required' => 'Nomor Urut Wajib Diisi',
+            'id_kelurahan.required' => 'Kelurahan Wajib Diisi',
+            'nama.required' => 'Nama Wajib Diisi',
+            'alamat.required' => 'Alamat Wajib Diisi',
+            'no_kk.required' => 'No.KK Wajib Diisi',
+            'tgl_perjanjian.required' => 'Tanggal Wajib Diisi',
         ];
     }
 }

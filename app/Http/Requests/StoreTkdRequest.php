@@ -25,8 +25,20 @@ class StoreTkdRequest extends FormRequest
             'bukti' => 'required',
             'luas' => 'required',
             'harga_dasar' => 'required',
-            'keterangan',
-            'nop',
+            'keterangan' => 'nullable',
+            'nop' => 'nullable',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'bidang.required' => 'Bidang Wajib Diisi',
+            'id_kelurahan.required' => 'Kelurahan Wajib Diisi',
+            'letak.required' => 'Letak Wajib Diisi',
+            'bukti.required' => 'Bukti Wajib Diisi',
+            'luas.required' => 'Luas Wajib Diisi',
+            'harga_dasar.required' => 'Harga Dasar Wajib Diisi',
         ];
     }
 }
