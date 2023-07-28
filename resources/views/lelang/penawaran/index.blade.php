@@ -84,7 +84,7 @@
                                             <tr>
                                                 <td>{{ ($penawarans->currentPage() - 1) * $penawarans->perPage() + $key + 1 }}</td>
                                                 <td>{{ $penawaran->total_luas}}</td>
-                                                <td>{{ $penawaran->id_daftar}}</td>
+                                                <td>{{ $penawaran->nama}}</td>
                                                 <td>{{ $penawaran->harga_dasar}}</td>
                                                 <td>{{ $penawaran->luas}}</td>
                                                 <td>{{ $penawaran->nilai_penawaran}}</td>
@@ -114,10 +114,6 @@
                                 </div>
                             </div>
                         </div>
-
-
-
-
                     </div>
                 </div>
             </div>

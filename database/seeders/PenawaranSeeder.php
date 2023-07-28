@@ -15,16 +15,23 @@ class PenawaranSeeder extends Seeder
      */
     public function run()
     {
-        // Penawaran::insert(
-        //     [
-        //         [
-        //             'total_luas' => '6216',
-        //             'id_daftar' => '',
-        //             'id_tkd' => '',
-        //             'nilai_penawaran' => '',
-        //             'keterangan' => '',
-        //         ],
-        //     ]
-        // );
+        Penawaran::insert(
+            [
+                [
+                    'total_luas' => '6216',
+                    'id_daftar' => '1',
+                    'id_tkd' => '1',
+                    'nilai_penawaran' => '65',
+                    'keterangan' => 'aa',
+                ],
+                [
+                    'total_luas' => '1000',
+                    'id_daftar' => '3',
+                    'id_tkd' => '3',
+                    'nilai_penawaran' => '55',
+                    'keterangan' => 'bismillah',
+                ],
+            ]
+        );
     }
 }

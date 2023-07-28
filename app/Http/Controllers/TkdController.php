@@ -41,7 +41,7 @@ class TkdController extends Controller
                 return $query->whereIn('tkds.id_kelurahan', $kelurahan);
             })
             // ->orderBy('tkds.id_kelurahan', 'asc')
-            ->paginate(10);
+            ->paginate(100);
         $kelurahanSelected = $request->input('kelurahan');
 
         $query->appends(['tkd' => $tkdName, 'kelurahan' => $kelurahanIds]);
