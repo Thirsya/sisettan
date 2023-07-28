@@ -25,7 +25,7 @@ class StoreopdRequest extends FormRequest
     {
         return [
             'no_opd' => 'required',
-            'nama_opd' => 'required',
+            'id_kecamatan' => 'required',
         ];
     }
 }

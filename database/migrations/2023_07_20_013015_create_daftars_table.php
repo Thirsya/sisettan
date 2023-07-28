@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('daftars', function (Blueprint $table) {
             $table->id();
+            $table->string('id_daftar')->nullable();
             $table->unsignedBigInteger('id_kelurahan');
             $table->string('no_urut');
             $table->string('nama');

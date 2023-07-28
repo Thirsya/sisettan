@@ -16,13 +16,15 @@ return new class extends Migration
         Schema::create('penawarans', function (Blueprint $table) {
             $table->id();
             $table->string('total_luas');
-            $table->unsignedBigInteger('id_daftar');
-            $table->unsignedBigInteger('id_tkd');
+            $table->unsignedBigInteger('idfk_daftar');
+            $table->string('id_daftar');
+            $table->unsignedBigInteger('idfk_tkd');
+            $table->string('id_tkd');
             $table->string('nilai_penawaran');
             $table->string('keterangan');
 
-            $table->foreign('id_daftar')->references('id')->on('daftars');
-            $table->foreign('id_tkd')->references('id')->on('tkds');
+            $table->foreign('idfk_daftar')->references('id')->on('daftars');
+            $table->foreign('idfk_tkd')->references('id')->on('tkds');
             $table->timestamps();
         });
     }

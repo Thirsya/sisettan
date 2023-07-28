@@ -26,7 +26,7 @@ class UpdateopdRequest extends FormRequest
         $id = $this->route('opd')->id;
         return [
             'no_opd' => 'required',
-            'nama_opd' => 'required',
+            'id_kecamatan' => 'required',
         ];
     }
 }

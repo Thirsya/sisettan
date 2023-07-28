@@ -16,7 +16,9 @@ return new class extends Migration
         Schema::create('opds', function (Blueprint $table) {
             $table->id();
             $table->string('no_opd');
-            $table->string('nama_opd');
+            $table->unsignedBigInteger('id_kecamatan');
+
+            $table->foreign('id_kecamatan')->references('id')->on('kecamatans')->restrictOnDelete();
             $table->timestamps();
         });
     }

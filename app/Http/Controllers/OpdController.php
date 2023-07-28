@@ -7,6 +7,7 @@ use App\Http\Requests\ImportOpdRequest;
 use App\Http\Requests\StoreopdRequest;
 use App\Http\Requests\UpdateopdRequest;
 use App\Imports\OpdsImport;
+use App\Models\Kecamatan;
 use App\Models\OPD;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
@@ -25,17 +26,39 @@ class OPDController extends Controller
 
     public function index(Request $request)
     {
-        $opds = DB::table('opds')
-            ->when($request->input('nama_opd'), function ($query, $opd) {
-                return $query->where('opd', 'like', '%' . $opd . '%');
+        $kecamatans = Kecamatan::all();
+        $opdName = $request->input('opd');
+        $kecamatanIds = $request->input('kecamatan');
+        $opd = $request->input('opd');
+
+        $query = Opd::select('opds.id', 'opds.id_kecamatan', 'opds.no_opd', 'kecamatans.kecamatan')
+            ->leftJoin('kecamatans', 'opds.id_kecamatan', '=', 'kecamatans.id')
+            ->when($request->input('opd'), function ($query, $opd) {
+                return $query->where('opds.opd', 'like', '%' . $opd . '%');
             })
+            ->when($request->input('kecamatan'), function ($query, $kecamatan) {
+                return $query->whereIn('opds.id_kecamatan', $kecamatan);
+            })
+            // ->orderBy('opds.id_kecamatan', 'asc')
             ->paginate(10);
-        return view('users.opd.index', compact('opds'));
+        $kecamatanSelected = $request->input('kecamatan');
+
+        $query->appends(['opd' => $opdName, 'kecamatan' => $kecamatanIds]);
+
+        return view('users.opd.index')->with([
+            'opds' => $query,
+            'kecamatans' => $kecamatans,
+            'opdName' => $opdName,
+            'kecamatanIds' => $kecamatanIds,
+            'kecamatanSelected' => $kecamatanSelected,
+            'opd' => $opd,
+        ]);
     }
 
     public function create()
     {
-        return view('users.opd.create');
+        $kecamatans=Kecamatan::all();
+        return view('users.opd.create')->with(['kecamatans'=> $kecamatans]);
     }
 
     public function store(StoreopdRequest $request)
@@ -51,9 +74,9 @@ class OPDController extends Controller
 
     public function edit(Opd $opd)
     {
+        $kecamatans=Kecamatan::all();
         return view('users.opd.edit', compact('opd'))->with(
-            ['no_opd' => $opd,
-             'nama_opd' => $opd]
+            ['no_opd' => $opd, 'nama_opd' => $opd, 'kecamatans'=> $kecamatans]
         );
     }
 

@@ -31,19 +31,21 @@
                         </div>
                         <div class="form-group">
                             <label>Nama OPD</label>
-                            <input type="text" id="nama_opd" name="nama_opd"
-                                class="form-control
-                                @error('nama_opd') is-invalid @enderror"
-                                placeholder="Masukan nama_opd"
-                                value="{{ old('nama_opd', $nama_opd->nama_opd) }}" data-id="input_nama_opd"
-                                autocomplete="off">
-                            @error('nama_opd')
+                            <select class="form-control select2 @error('id_kecamatan') is-invalid @enderror"
+                                id="id_kecamatan" name="id_kecamatan" data-id="select-id_kecamatan">
+                                <option value="">Pilih OPD</option>
+                                @foreach ($kecamatans as $kecamatan)
+                                    <option @selected($kecamatan->id == $opd->id_kecamatan) value="{{ $kecamatan->id }}">
+                                        {{ $kecamatan->kecamatan }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('id_kecamatan')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
                             @enderror
                         </div>
-                </div>
                 <div class="card-footer text-right">
                     <button class="btn btn-primary">Submit</button>
                     <a class="btn btn-secondary" href="{{ route('opd.index') }}">Cancel</a>

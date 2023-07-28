@@ -93,7 +93,7 @@
                                             <tr>
                                                 <td>{{ ($opds->currentPage() - 1) * $opds->perPage() + $key + 1 }}</td>
                                                 <td>{{ $opd->no_opd }}</td>
-                                                <td>{{ $opd->nama_opd }}</td>
+                                                <td>{{ $opd->kecamatan }}</td>
                                                 <td class="text-right">
                                                     <div class="d-flex justify-content-end">
                                                         <a href="{{ route('opd.edit', $opd->id) }}"

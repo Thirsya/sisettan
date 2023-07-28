@@ -9,5 +9,5 @@ class opd extends Model
 {
     use HasFactory;
     protected $table = 'opds';
-    protected $fillable = ['no_opd','nama_opd'];
+    protected $fillable = ['no_opd','id_kecamatan'];
 }

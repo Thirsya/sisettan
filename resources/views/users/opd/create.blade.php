@@ -27,10 +27,15 @@
                         </div>
                         <div class="form-group">
                             <label>Nama OPD</label>
-                            <input type="text" id="nama_opd" name="nama_opd"
-                                class="form-control @error('nama_opd') is-invalid @enderror"
-                                placeholder="Masukan Nama OPD" autocomplete="off">
-                            @error('nama_opd')
+                            <select class="form-control select2 @error('id_kecamatan') is-invalid @enderror"
+                                name="id_kecamatan" data-id="select-kecamatan" id="id_kecamatan">
+                                <option value="">Pilih OPD</option>
+                                @foreach ($kecamatans as $kecamatan)
+                                    <option value="{{ $kecamatan->id }}">
+                                        {{ $kecamatan->kecamatan }}</option>
+                                @endforeach
+                            </select>
+                            @error('id_kecamatan')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>

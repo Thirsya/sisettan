@@ -19,11 +19,11 @@ class OpdSeeder extends Seeder
             [
                 [
                     'no_opd' => '419.500',
-                    'nama_opd' => 'Kecamatan Kota'
+                    'id_kecamatan' => '1'
                 ],
                 [
                     'no_opd' => '419.600',
-                    'nama_opd' => 'Kecamatan Pesantren'
+                    'id_kecamatan' => '2'
                 ],
             ]
         );
