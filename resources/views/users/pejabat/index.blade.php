@@ -97,7 +97,7 @@
                                                 <td>{{ ($pejabats->currentPage() - 1) * $pejabats->perPage() + $key + 1 }}</td>
                                                 <td>{{ $pejabat->nama_pejabat }}</td>
                                                 <td>{{ $pejabat->jabatan }}</td>
-                                                <td>{{ $pejabat->nama_opd }}</td>
+                                                <td>{{ $pejabat->id_kecamatan }}</td>
                                                 <td>{{ $pejabat->nip_pejabat }}</td>
                                                 <td>{{ $pejabat->no_sk }}</td>
                                                 <td class="text-right">

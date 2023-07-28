@@ -28,7 +28,7 @@ class PejabatController extends Controller
     public function index(Request $request)
     {
         $jabatans = Jabatan::all();
-        $nama_opd = $request->input('nama_opd');
+        $id_kecamatan = $request->input('id_kecamatan');
         $pejabats = DB::table('pejabats')
             ->select(
                 'pejabats.id',
@@ -37,7 +37,7 @@ class PejabatController extends Controller
                 'pejabats.id_opd',
                 'pejabats.nip_pejabat',
                 'pejabats.no_sk',
-                'opds.nama_opd',
+                'opds.id_kecamatan',
                 'jabatans.jabatan',
             )
             ->leftJoin('jabatans', 'pejabats.id_jabatan', '=', 'jabatans.id')
@@ -55,7 +55,7 @@ class PejabatController extends Controller
             'pejabats' => $pejabats,
             'jabatans' => $jabatans,
             'jabatanSelected' => $jabatanSelected,
-            'nama_opd' => $nama_opd,
+            'id_kecamatan' => $id_kecamatan,
         ]);
     }
 

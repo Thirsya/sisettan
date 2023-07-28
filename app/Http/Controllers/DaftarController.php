@@ -62,11 +62,36 @@ class DaftarController extends Controller
         return view('lelang.daftar.create')->with(['kelurahans' => $kelurahans]);
     }
 
+
     public function store(StoreDaftarRequest $request)
     {
-        Daftar::create($request->validated());
+        // Mendapatkan semua data yang telah divalidasi
+        $validatedData = $request->validated();
+
+        // Mengambil id_kelurahan dan nomor urut
+        $id_kelurahan = $validatedData['id_kelurahan'];
+        $no_urut = $validatedData['no_urut'];
+
+        // Membuat id_daftar dari id_kelurahan dan no_urut
+        $id_daftar = $id_kelurahan . "P" .$no_urut;
+
+        // Memeriksa jika id_daftar sudah ada di database
+        while(Daftar::where('id_daftar', $id_daftar)->exists()) {
+            // Jika id_daftar sudah ada, tambahkan 1 ke no_urut dan buat id_daftar baru
+            $no_urut++;
+            $id_daftar = $id_kelurahan . $no_urut;
+        }
+
+        // Menambahkan id_daftar ke array validated data
+        $validatedData['id_daftar'] = $id_daftar;
+
+        // Membuat entri baru di database
+        Daftar::create($validatedData);
+
+        // Mengembalikan pengguna ke halaman index dengan pesan sukses
         return redirect()->route('daftar.index')->with('success', 'Daftar created successfully.');
     }
+
 
     public function show(Daftar $daftar)
     {

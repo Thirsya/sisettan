@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Daftar extends Model
 {
     protected $table = 'daftars';
-    protected $fillable = ['id_kelurahan', 'no_urut', 'nama', 'alamat', 'no_kk', 'no_wp', 'tgl_perjanjian'];
+    protected $fillable = ['id_daftar', 'id_kelurahan', 'no_urut', 'nama', 'alamat', 'no_kk', 'no_wp', 'tgl_perjanjian'];
 
     public function kelurahan()
     {
