@@ -33,8 +33,8 @@
                         <div class="form-group">
                             <label>Nomor Urut</label>
                             <input type="text" id="no_urut" name="no_urut"
-                                class="form-control @error('no_urut') is-invalid @enderror"
-                                placeholder="Masukan Nomor Urut" autocomplete="off">
+                                class="form-control @error('no_urut') is-invalid @enderror" placeholder="Masukan Nomor Urut"
+                                autocomplete="off" readonly>
                             @error('no_urut')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -44,8 +44,8 @@
                         <div class="form-group">
                             <label>Nama</label>
                             <input type="text" id="nama" name="nama"
-                                class="form-control @error('nama') is-invalid @enderror"
-                                placeholder="Masukan Nama" autocomplete="off">
+                                class="form-control @error('nama') is-invalid @enderror" placeholder="Masukan Nama"
+                                autocomplete="off">
                             @error('nama')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -66,8 +66,8 @@
                         <div class="form-group">
                             <label>Alamat</label>
                             <input type="text" id="alamat" name="alamat"
-                                class="form-control @error('alamat') is-invalid @enderror"
-                                placeholder="Masukan Alamat" autocomplete="off">
+                                class="form-control @error('alamat') is-invalid @enderror" placeholder="Masukan Alamat"
+                                autocomplete="off">
                             @error('alamat')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -77,8 +77,8 @@
                         <div class="form-group">
                             <label>Nomor WP</label>
                             <input type="text" id="no_wp" name="no_wp"
-                                class="form-control @error('no_wp') is-invalid @enderror"
-                                placeholder="Masukan Nomor WP" autocomplete="off">
+                                class="form-control @error('no_wp') is-invalid @enderror" placeholder="Masukan Nomor WP"
+                                autocomplete="off">
                             @error('no_wp')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -108,8 +108,29 @@
 @endsection
 @push('customScript')
     <script src="/assets/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#id_kelurahan').change(function() {
+                var id = $(this).val();
+
+                $.ajax({
+                    url: '{{ route('getLatestNoUrut') }}',
+                    data: {
+                        id: id
+                    },
+                    type: 'GET',
+                    success: function(response) {
+                        $('#no_urut').val(response);
+                    }
+                });
+            });
+        });
+    </script>
 @endpush
 
 @push('customStyle')
     <link rel="stylesheet" href="/assets/css/select2.min.css">
 @endpush
+
+
+create.blade.php

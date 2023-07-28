@@ -31,8 +31,17 @@ class DaftarController extends Controller
         $kelurahanIds = $request->input('kelurahan');
         $daftar = $request->input('daftar');
 
-        $query = daftar::select('daftars.id', 'daftars.id_kelurahan', 'daftars.no_urut', 'daftars.nama', 'daftars.alamat',
-        'daftars.no_kk', 'daftars.no_wp', 'daftars.tgl_perjanjian', 'kelurahans.kelurahan')
+        $query = daftar::select(
+            'daftars.id',
+            'daftars.id_kelurahan',
+            'daftars.no_urut',
+            'daftars.nama',
+            'daftars.alamat',
+            'daftars.no_kk',
+            'daftars.no_wp',
+            'daftars.tgl_perjanjian',
+            'kelurahans.kelurahan'
+        )
             ->leftJoin('kelurahans', 'daftars.id_kelurahan', '=', 'kelurahans.id')
             ->when($request->input('nama'), function ($query, $nama) {
                 return $query->where('daftars.nama', 'like', '%' . $nama . '%');
@@ -65,30 +74,20 @@ class DaftarController extends Controller
 
     public function store(StoreDaftarRequest $request)
     {
-        // Mendapatkan semua data yang telah divalidasi
         $validatedData = $request->validated();
+        $idKelurahan = $validatedData['id_kelurahan'];
+        $noUrut = $validatedData['no_urut'];
 
-        // Mengambil id_kelurahan dan nomor urut
-        $id_kelurahan = $validatedData['id_kelurahan'];
-        $no_urut = $validatedData['no_urut'];
+        $idDaftar = $idKelurahan . "P" . $noUrut;
 
-        // Membuat id_daftar dari id_kelurahan dan no_urut
-        $id_daftar = $id_kelurahan . "P" .$no_urut;
-
-        // Memeriksa jika id_daftar sudah ada di database
-        while(Daftar::where('id_daftar', $id_daftar)->exists()) {
-            // Jika id_daftar sudah ada, tambahkan 1 ke no_urut dan buat id_daftar baru
-            $no_urut++;
-            $id_daftar = $id_kelurahan . $no_urut;
+        while (Daftar::where('id_daftar', $idDaftar)->exists()) {
+            $noUrut++;
+            $idDaftar = $idKelurahan . $noUrut;
         }
+        $validatedData['id_daftar'] = $idDaftar;
 
-        // Menambahkan id_daftar ke array validated data
-        $validatedData['id_daftar'] = $id_daftar;
-
-        // Membuat entri baru di database
         Daftar::create($validatedData);
 
-        // Mengembalikan pengguna ke halaman index dengan pesan sukses
         return redirect()->route('daftar.index')->with('success', 'Daftar created successfully.');
     }
 
@@ -125,5 +124,14 @@ class DaftarController extends Controller
     public function export()
     {
         return Excel::download(new DaftarsExport, 'Daftar.xlsx');
+    }
+
+    public function getLatestNoUrut(Request $request)
+    {
+        $latestDaftar = Daftar::where('id_kelurahan', $request->id)
+            ->orderBy('no_urut', 'desc')
+            ->first();
+
+        return $latestDaftar ? $latestDaftar->no_urut + 1 : 1;
     }
 }
