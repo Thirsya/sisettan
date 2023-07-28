@@ -64,8 +64,13 @@ class TkdController extends Controller
 
     public function store(StoreTkdRequest $request)
     {
+        $id_kelurahan = $request->id_kelurahan;
+        $count = Tkd::where('id_kelurahan', $id_kelurahan)->count();
+        $id_tkd = $id_kelurahan . "S" . ($count + 1);
+
         Tkd::create([
-            'id_kelurahan' => $request->id_kelurahan,
+            'id_tkd' => $id_tkd,
+            'id_kelurahan' => $id_kelurahan,
             'bidang' => $request->bidang,
             'letak' => $request->letak,
             'bukti' => $request->bukti,
@@ -74,6 +79,7 @@ class TkdController extends Controller
             'keterangan' => $request->keterangan,
             'nop' => $request->nop,
         ]);
+
         return redirect()->route('tkd.index')->with('success', 'Tambah Data TKD Sukses');
     }
 
