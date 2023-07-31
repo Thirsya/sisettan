@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('penawarans', function (Blueprint $table) {
             $table->id();
             $table->string('id_penawaran')->nullable();
-            $table->string('total_luas');
+            // $table->string('total_luas');
             $table->unsignedBigInteger('idfk_daftar');
             $table->string('id_daftar');
             $table->unsignedBigInteger('idfk_tkd');

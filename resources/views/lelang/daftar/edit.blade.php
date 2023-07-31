@@ -35,10 +35,10 @@
                         <div class="form-group">
                             <label>Nomor Urut</label>
                             <input type="text" id="no_urut" name="no_urut"
-                                class="form-control @error('daftar') is-invalid @enderror "
-                                placeholder="Masukan Nomor Urut" value="{{ old('daftar', $daftar->no_urut) }}"
-                                data-id="input_no_urut" autocomplete="off">
-                            @error('daftar')
+                                class="form-control @error('no_urut') is-invalid @enderror" placeholder="Masukan Nomor Urut"
+                                value="{{ old('daftar', $daftar->no_urut) }}" data-id="input_no_urut"
+                                autocomplete="off" readonly>
+                            @error('no_urut')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
@@ -117,6 +117,24 @@
 @endsection
 @push('customScript')
     <script src="/assets/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#id_kelurahan').change(function() {
+                var id = $(this).val();
+
+                $.ajax({
+                    url: '{{ route('getLatestNoUrut') }}',
+                    data: {
+                        id: id
+                    },
+                    type: 'GET',
+                    success: function(response) {
+                        $('#no_urut').val(response);
+                    }
+                });
+            });
+        });
+    </script>
 @endpush
 
 @push('customStyle')

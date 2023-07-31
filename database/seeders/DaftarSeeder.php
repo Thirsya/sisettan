@@ -18,6 +18,7 @@ class DaftarSeeder extends Seeder
         Daftar::insert(
             [
                 [
+                    'id_daftar' => '8P1',
                     'id_kelurahan' => '8',
                     'no_urut' => '1',
                     'nama' => 'MOCH. YASJID',
@@ -27,6 +28,7 @@ class DaftarSeeder extends Seeder
                     'tgl_perjanjian' => '2022-09-30'
                 ],
                 [
+                    'id_daftar' => '8P2',
                     'id_kelurahan' => '8',
                     'no_urut' => '2',
                     'nama' => 'ROHADI',
@@ -36,6 +38,7 @@ class DaftarSeeder extends Seeder
                     'tgl_perjanjian' => '2022-09-30'
                 ],
                 [
+                    'id_daftar' => '8P3',
                     'id_kelurahan' => '8',
                     'no_urut' => '3',
                     'nama' => 'SUGITO',
@@ -45,6 +48,7 @@ class DaftarSeeder extends Seeder
                     'tgl_perjanjian' => '2022-09-30'
                 ],
                 [
+                    'id_daftar' => '8P4',
                     'id_kelurahan' => '8',
                     'no_urut' => '4',
                     'nama' => 'MUJIB',
@@ -54,6 +58,7 @@ class DaftarSeeder extends Seeder
                     'tgl_perjanjian' => '2022-10-13'
                 ],
                 [
+                    'id_daftar' => '8P5',
                     'id_kelurahan' => '8',
                     'no_urut' => '5',
                     'nama' => 'HERI SURYANTO',

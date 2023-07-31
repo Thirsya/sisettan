@@ -22,10 +22,10 @@ class DatabaseSeeder extends Seeder
             OpdSeeder::class,
             PejabatSeeder::class,
             KelurahanSeeder::class,
-            // DaerahSeeder::class,
+            DaerahSeeder::class,
             DaftarSeeder::class,
             TkdSeeder::class,
-            // PenawaranSeeder::class,
+            PenawaranSeeder::class,
         ]);
     }
 }

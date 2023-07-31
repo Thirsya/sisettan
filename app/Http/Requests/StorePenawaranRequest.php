@@ -19,7 +19,7 @@ class StorePenawaranRequest extends FormRequest
     public function rules()
     {
         return [
-            'total_luas' => 'required|unique:pejabats,nama_pejabat',
+            // 'total_luas' => 'required|unique:pejabats,nama_pejabat',
             'id_penawaran' => 'required',
             'idfk_daftar' => 'required',
             'id_daftar' => 'required',
