@@ -13,18 +13,20 @@ class StorePenawaranRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, mixed>
-     */
     public function rules()
     {
         return [
-            //
+            'total_luas' => 'required|unique:pejabats,nama_pejabat',
+            'id_penawaran' => 'required',
+            'idfk_daftar' => 'required',
+            'id_daftar' => 'required',
+            'idfk_tkd' => 'required',
+            'id_tkd' => 'required',
+            'nilai_penawarab' => 'required',
+            'keterangan' => 'nullable'
         ];
     }
 }

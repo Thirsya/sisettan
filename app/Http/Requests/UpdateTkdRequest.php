@@ -26,8 +26,8 @@ class UpdateTkdRequest extends FormRequest
             'bukti' => 'required',
             'luas' => 'required',
             'harga_dasar' => 'required',
-            'keterangan',
-            'nop',
+            'keterangan' => 'nullable',
+            'nop' => 'nullable',
         ];
     }
 }

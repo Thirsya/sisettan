@@ -29,15 +29,19 @@ class PenawaranController extends Controller
             ->select(
                 'penawarans.id',
                 'penawarans.id_daftar',
+                'penawarans.idfk_daftar',
                 'penawarans.id_tkd',
+                'penawarans.idfk_tkd',
                 'penawarans.nilai_penawaran',
                 'penawarans.keterangan',
                 'penawarans.total_luas',
+                'daftars.id_daftar',
                 'daftars.no_urut',
                 'daftars.nama',
                 'daftars.no_kk',
                 'daftars.no_wp',
                 'daftars.tgl_perjanjian',
+                'tkds.id_tkd',
                 'tkds.bidang',
                 'tkds.letak',
                 'tkds.bukti',
@@ -74,14 +78,23 @@ class PenawaranController extends Controller
 
     public function store(StorePenawaranRequest $request)
     {
+        $id_daftar = $request->id_daftar;
+        $id_tkd = $request->id_tkd;
+        $id_kelurahan_daftar = Daftar::find($id_daftar)->id_kelurahan;
+        $id_kelurahan_tkd = Tkd::find($id_tkd)->id_kelurahan;
+        $id_penawaran = $id_kelurahan_daftar . " X " . $id_kelurahan_tkd . $id_daftar . $id_tkd;
+
         Penawaran::create([
-            'id_kecamatan' => $request->id_kecamatan,
-            'id_kelurahan' => $request->id_kelurahan,
-            'noba' => $request->noba,
-            'periode' => $request->periode,
-            'thn_sts' => $request->id_tahun,
-            'tanggal_lelang' => $request->tanggal_lelang,
+            'id_penawaran' => $id_penawaran,
+            'total_luas' => $request->total_luas,
+            'idfk_daftar' => $request->idfk_daftar,
+            'id_daftar' => $id_daftar,
+            'idfk_tkd' => $request->idfk_tkd,
+            'id_tkd' => $id_tkd,
+            'nilai_penawaran' => $request->nilai_penawaran,
+            'keterangan' => $request->keterangan,
         ]);
+
         return redirect()->route('penawaran.index')->with('success', 'Tambah Data Daerah Sukses');
     }
 
