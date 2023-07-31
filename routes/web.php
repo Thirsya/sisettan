@@ -113,5 +113,6 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::get('tkd/export', [TkdController::class, 'export'])->name('tkd.export');
         Route::resource('tkd', TkdController::class);
         Route::resource('penawaran', PenawaranController::class);
+        Route::get('/getTkd', [PenawaranController::class, 'getTkd'])->name('getTkd');
     });
 });

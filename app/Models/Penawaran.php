@@ -11,13 +11,13 @@ class Penawaran extends Model
     protected $table = 'penawarans';
     protected $fillable = [
         'id_penawaran',
-        // 'total_luas',
+        'total_luas',
         'idfk_daftar',
         'id_daftar',
         'idfk_tkd',
         'id_tkd',
         'nilai_penawaran',
-        'keterangan'
+        'keterangan',
     ];
 
     public function daftar()

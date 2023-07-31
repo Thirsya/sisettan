@@ -21,7 +21,7 @@
                                 <option value="">Piih Pendaftar</option>
                                 @foreach ($daftars as $nama)
                                     <option value="{{ $nama->id }}">
-                                        {{ $nama->nama }}</option>
+                                        {{ $nama->nama }} - {{ $nama->id_daftar }}</option>
                                 @endforeach
                             </select>
                             @error('idfk_daftar')
@@ -30,26 +30,15 @@
                                 </div>
                             @enderror
                         </div>
-                        {{-- dibuat otomatis akan muncul setelah pilih pendaftar, tidak dapat di edit --}}
-                        <div class="form-group">
-                            <label>ID Pendaftar</label>
-                            <input type="text" id="id_daftar" name="id_daftar"
-                                class="form-control @error('id_daftar') is-invalid @enderror" placeholder="Masukan ID Daftar"
-                                autocomplete="off">
-                            @error('id_daftar')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
+
                         <div class="form-group">
                             <label>ID Harga Dasar</label>
-                            <select class="form-control select2 @error('idfk_tkd') is-invalid @enderror"
-                                name="idfk_tkd" data-id="select-tkd" id="idfk_tkd">
+                            <select class="form-control select2 @error('idfk_tkd') is-invalid @enderror" name="idfk_tkd"
+                                data-id="select-tkd" id="idfk_tkd">
                                 <option value="">Piih Harga Dasar</option>
                                 @foreach ($tkds as $id_tkd)
                                     <option value="{{ $id_tkd->id }}">
-                                        {{ $id_tkd->id_tkd }}</option>
+                                        {{ $id_tkd->bukti }}</option>
                                 @endforeach
                             </select>
                             @error('idfk_tkd')
@@ -60,10 +49,21 @@
                         </div>
                         <div class="form-group">
                             <label>Luas Bidang</label>
-                            <input type="text" id="id_tkd" name="id_tkd"
-                                class="form-control @error('id_tkd') is-invalid @enderror" placeholder="Masukan Luas Bidang"
-                                autocomplete="off">
-                            @error('id_tkd')
+                            <input type="text" id="luas" name="luas"
+                                class="form-control @error('luas') is-invalid @enderror" placeholder="Masukan Luas Bidang"
+                                autocomplete="off" readonly>
+                            @error('luas')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label>Harga Dasar</label>
+                            <input type="text" id="harga_dasar" name="harga_dasar"
+                                class="form-control @error('harga_dasar') is-invalid @enderror"
+                                placeholder="Masukan Harga_dasar Bidang" autocomplete="off" readonly>
+                            @error('harga_dasar')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
@@ -72,8 +72,8 @@
                         <div class="form-group">
                             <label>Nilai Penawaran</label>
                             <input type="text" id="nilai_penawaran" name="nilai_penawaran"
-                                class="form-control @error('nilai_penawaran') is-invalid @enderror" placeholder="Masukan Nilai Penawaran"
-                                autocomplete="off">
+                                class="form-control @error('nilai_penawaran') is-invalid @enderror"
+                                placeholder="Masukan Nilai Penawaran" autocomplete="off">
                             @error('nilai_penawaran')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -103,6 +103,29 @@
 @endsection
 @push('customScript')
     <script src="/assets/js/select2.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#idfk_tkd').change(function() {
+                var id = $(this).val();
+                if (id) {
+                    $.ajax({
+                        url: '{{ route('getTkd') }}',
+                        data: {
+                            id: id
+                        },
+                        type: 'GET',
+                        success: function(data) {
+                            $('#luas').val(data.luas);
+                            $('#harga_dasar').val(data.harga_dasar);
+                        }
+                    });
+                } else {
+                    $('#luas').val('');
+                    $('#harga_dasar').val('');
+                }
+            });
+        });
+    </script>
 @endpush
 
 @push('customStyle')

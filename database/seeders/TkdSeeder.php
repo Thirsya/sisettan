@@ -8,16 +8,13 @@ use Illuminate\Database\Seeder;
 
 class TkdSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
+
     public function run()
     {
         Tkd::insert(
             [
                 [
+                    'id_tkd' => '13S1',
                     'id_kelurahan' => '13',
                     'bidang' => '1',
                     'letak' => 'Kel Jamsaren',
@@ -28,6 +25,7 @@ class TkdSeeder extends Seeder
                     'nop' => null,
                 ],
                 [
+                    'id_tkd' => '13S10',
                     'id_kelurahan' => '13',
                     'bidang' => '2',
                     'letak' => 'Kel Jamsaren',
@@ -38,6 +36,7 @@ class TkdSeeder extends Seeder
                     'nop' => null,
                 ],
                 [
+                    'id_tkd' => null,
                     'id_kelurahan' => '13',
                     'bidang' => '1',
                     'letak' => 'Kel Jamsaren',
@@ -48,6 +47,7 @@ class TkdSeeder extends Seeder
                     'nop' => null,
                 ],
                 [
+                    'id_tkd' => null,
                     'id_kelurahan' => '13',
                     'bidang' => '2',
                     'letak' => 'Kel Jamsaren',
@@ -58,6 +58,7 @@ class TkdSeeder extends Seeder
                     'nop' => null,
                 ],
                 [
+                    'id_tkd' => null,
                     'id_kelurahan' => '13',
                     'bidang' => '3',
                     'letak' => 'Kel Jamsaren',
@@ -68,6 +69,7 @@ class TkdSeeder extends Seeder
                     'nop' => null,
                 ],
                 [
+                    'id_tkd' => null,
                     'id_kelurahan' => '14',
                     'bidang' => '1',
                     'letak' => 'Tempurejo',
@@ -78,6 +80,7 @@ class TkdSeeder extends Seeder
                     'nop' => null,
                 ],
                 [
+                    'id_tkd' => null,
                     'id_kelurahan' => '14',
                     'bidang' => '1',
                     'letak' => 'Blabak',
@@ -88,6 +91,7 @@ class TkdSeeder extends Seeder
                     'nop' => null,
                 ],
                 [
+                    'id_tkd' => null,
                     'id_kelurahan' => '14',
                     'bidang' => '1',
                     'letak' => 'Blabak',
@@ -98,6 +102,7 @@ class TkdSeeder extends Seeder
                     'nop' => null,
                 ],
                 [
+                    'id_tkd' => null,
                     'id_kelurahan' => '15',
                     'bidang' => '1',
                     'letak' => 'Kidul Omah',
@@ -108,6 +113,7 @@ class TkdSeeder extends Seeder
                     'nop' => null,
                 ],
                 [
+                    'id_tkd' => null,
                     'id_kelurahan' => '15',
                     'bidang' => '1',
                     'letak' => 'Kel. Tinalan',
@@ -118,6 +124,7 @@ class TkdSeeder extends Seeder
                     'nop' => null,
                 ],
                 [
+                    'id_tkd' => null,
                     'id_kelurahan' => '15',
                     'bidang' => '1',
                     'letak' => 'Belakang Gedung',
@@ -128,6 +135,7 @@ class TkdSeeder extends Seeder
                     'nop' => null,
                 ],
                 [
+                    'id_tkd' => null,
                     'id_kelurahan' => '16',
                     'bidang' => '1',
                     'letak' => 'Jambu/pagu',
@@ -138,6 +146,7 @@ class TkdSeeder extends Seeder
                     'nop' => null,
                 ],
                 [
+                    'id_tkd' => null,
                     'id_kelurahan' => '16',
                     'bidang' => '1',
                     'letak' => 'Gringging',
@@ -148,6 +157,7 @@ class TkdSeeder extends Seeder
                     'nop' => null,
                 ],
                 [
+                    'id_tkd' => null,
                     'id_kelurahan' => '16',
                     'bidang' => '1',
                     'letak' => 'Bawang',

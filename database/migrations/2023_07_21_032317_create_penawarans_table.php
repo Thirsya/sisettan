@@ -6,17 +6,13 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+
     public function up()
     {
         Schema::create('penawarans', function (Blueprint $table) {
             $table->id();
             $table->string('id_penawaran')->nullable();
-            // $table->string('total_luas');
+            $table->integer('total_luas')->nullable();
             $table->unsignedBigInteger('idfk_daftar');
             $table->string('id_daftar');
             $table->unsignedBigInteger('idfk_tkd');
@@ -30,11 +26,6 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('penawarans');

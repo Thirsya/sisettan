@@ -6,11 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class StorePenawaranRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
+
     public function authorize()
     {
         return true;
@@ -19,13 +15,11 @@ class StorePenawaranRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'total_luas' => 'required|unique:pejabats,nama_pejabat',
-            'id_penawaran' => 'required',
             'idfk_daftar' => 'required',
-            'id_daftar' => 'required',
             'idfk_tkd' => 'required',
-            'id_tkd' => 'required',
-            'nilai_penawarab' => 'required',
+            'luas' => 'required',
+            'harga_dasar' => 'required',
+            'nilai_penawaran' => 'required',
             'keterangan' => 'nullable'
         ];
     }

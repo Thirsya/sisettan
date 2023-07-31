@@ -25,7 +25,8 @@
                         <div class="card-header">
                             <h4>Penawaran List</h4>
                             <div class="card-header-action">
-                                <a class="btn btn-icon icon-left btn-primary" href="{{ route('penawaran.create') }}">Create New
+                                <a class="btn btn-icon icon-left btn-primary" href="{{ route('penawaran.create') }}">Create
+                                    New
                                     Penawaran</a>
                                 <a class="btn btn-info btn-primary active import">
                                     <i class="fa fa-download" aria-hidden="true"></i>
@@ -72,23 +73,26 @@
                                     <tbody>
                                         <tr>
                                             <th>No</th>
-                                            {{-- <th>Total Luas</th> --}}
+                                            <th>Total Luas</th>
                                             <th>Pendaftar</th>
-                                            <th>Harga Dasar</th>
+                                            <th>Alamat</th>
+                                            <th>Bukti HAK</th>
                                             <th>Luas Bidang</th>
-                                            <th>Penawaran</th>
-                                            <th>Keterangan</th>
+                                            <th>Harga Dasar</th>
+                                            <th>Harga Penawaran</th>
                                             <th class="text-right">Action</th>
                                         </tr>
                                         @foreach ($penawarans as $key => $penawaran)
                                             <tr>
-                                                <td>{{ ($penawarans->currentPage() - 1) * $penawarans->perPage() + $key + 1 }}</td>
-                                                {{-- <td>{{ $penawaran->total_luas}}</td> --}}
-                                                <td>{{ $penawaran->nama}}</td>
-                                                <td>{{ $penawaran->harga_dasar}}</td>
-                                                <td>{{ $penawaran->luas}}</td>
-                                                <td>{{ $penawaran->nilai_penawaran}}</td>
-                                                <td>{{ $penawaran->keterangan}}</td>
+                                                <td>{{ ($penawarans->currentPage() - 1) * $penawarans->perPage() + $key + 1 }}
+                                                </td>
+                                                <td>{{ $penawaran->total_luas }}</td>
+                                                <td>{{ $penawaran->nama }}</td>
+                                                <td>{{ $penawaran->alamat }}</td>
+                                                <td>{{ $penawaran->bukti }} {{ $penawaran->bidang }}</td>
+                                                <td>{{ $penawaran->luas }}</td>
+                                                <td>{{ $penawaran->harga_dasar }}</td>
+                                                <td>{{ $penawaran->nilai_penawaran }}</td>
                                                 <td class="text-right">
                                                     <div class="d-flex justify-content-end">
                                                         <a href="{{ route('penawaran.edit', $penawaran->id) }}"

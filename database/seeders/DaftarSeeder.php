@@ -8,11 +8,7 @@ use Illuminate\Database\Seeder;
 
 class DaftarSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
+
     public function run()
     {
         Daftar::insert(
@@ -68,6 +64,7 @@ class DaftarSeeder extends Seeder
                     'tgl_perjanjian' => '2022-09-07'
                 ],
                 [
+                    'id_daftar' => null,
                     'id_kelurahan' => '9',
                     'no_urut' => '1',
                     'nama' => 'SLAMET ROCHANI',
@@ -77,6 +74,7 @@ class DaftarSeeder extends Seeder
                     'tgl_perjanjian' => '2022-09-16'
                 ],
                 [
+                    'id_daftar' => null,
                     'id_kelurahan' => '9',
                     'no_urut' => '2',
                     'nama' => 'SAMSU HADI',
@@ -86,6 +84,7 @@ class DaftarSeeder extends Seeder
                     'tgl_perjanjian' => '2022-09-29'
                 ],
                 [
+                    'id_daftar' => null,
                     'id_kelurahan' => '9',
                     'no_urut' => '3',
                     'nama' => 'BONADI',
@@ -95,6 +94,7 @@ class DaftarSeeder extends Seeder
                     'tgl_perjanjian' => '2022-09-29'
                 ],
                 [
+                    'id_daftar' => null,
                     'id_kelurahan' => '9',
                     'no_urut' => '4',
                     'nama' => 'SUROSO',
@@ -104,6 +104,7 @@ class DaftarSeeder extends Seeder
                     'tgl_perjanjian' => null
                 ],
                 [
+                    'id_daftar' => null,
                     'id_kelurahan' => '9',
                     'no_urut' => '5',
                     'nama' => 'SUPIYAN',
@@ -113,6 +114,7 @@ class DaftarSeeder extends Seeder
                     'tgl_perjanjian' => null
                 ],
                 [
+                    'id_daftar' => null,
                     'id_kelurahan' => '10',
                     'no_urut' => '1',
                     'nama' => 'ERVIN BAPTIAS PRATAMA',
@@ -122,6 +124,7 @@ class DaftarSeeder extends Seeder
                     'tgl_perjanjian' => '2022-09-16'
                 ],
                 [
+                    'id_daftar' => null,
                     'id_kelurahan' => '10',
                     'no_urut' => '2',
                     'nama' => 'SRIATI`AH',
@@ -131,6 +134,7 @@ class DaftarSeeder extends Seeder
                     'tgl_perjanjian' => '2022-09-16'
                 ],
                 [
+                    'id_daftar' => null,
                     'id_kelurahan' => '10',
                     'no_urut' => '3',
                     'nama' => 'SABARODIN',
@@ -140,6 +144,7 @@ class DaftarSeeder extends Seeder
                     'tgl_perjanjian' => null
                 ],
                 [
+                    'id_daftar' => null,
                     'id_kelurahan' => '10',
                     'no_urut' => '4',
                     'nama' => 'SAHLAN',
@@ -149,6 +154,7 @@ class DaftarSeeder extends Seeder
                     'tgl_perjanjian' => '2022-09-16'
                 ],
                 [
+                    'id_daftar' => null,
                     'id_kelurahan' => '10',
                     'no_urut' => '5',
                     'nama' => 'SAMSUL ARIFIN',
@@ -158,6 +164,7 @@ class DaftarSeeder extends Seeder
                     'tgl_perjanjian' => null
                 ],
                 [
+                    'id_daftar' => null,
                     'id_kelurahan' => '11',
                     'no_urut' => '1',
                     'nama' => 'SUNARKO',
@@ -167,6 +174,7 @@ class DaftarSeeder extends Seeder
                     'tgl_perjanjian' => '2022-09-28'
                 ],
                 [
+                    'id_daftar' => null,
                     'id_kelurahan' => '11',
                     'no_urut' => '2',
                     'nama' => 'AGUS HERI SISWANTO',
@@ -176,6 +184,7 @@ class DaftarSeeder extends Seeder
                     'tgl_perjanjian' => '2022-09-28'
                 ],
                 [
+                    'id_daftar' => null,
                     'id_kelurahan' => '11',
                     'no_urut' => '3',
                     'nama' => 'IRIK WIBOWO',
@@ -185,6 +194,7 @@ class DaftarSeeder extends Seeder
                     'tgl_perjanjian' => '2022-09-28'
                 ],
                 [
+                    'id_daftar' => null,
                     'id_kelurahan' => '11',
                     'no_urut' => '4',
                     'nama' => 'EKO PURWOKO',
@@ -194,6 +204,7 @@ class DaftarSeeder extends Seeder
                     'tgl_perjanjian' => '2022-09-28'
                 ],
                 [
+                    'id_daftar' => null,
                     'id_kelurahan' => '11',
                     'no_urut' => '5',
                     'nama' => 'DAWUD',
@@ -203,6 +214,7 @@ class DaftarSeeder extends Seeder
                     'tgl_perjanjian' => '2022-09-28'
                 ],
                 [
+                    'id_daftar' => null,
                     'id_kelurahan' => '12',
                     'no_urut' => '1',
                     'nama' => 'MURTOMO',
@@ -212,6 +224,7 @@ class DaftarSeeder extends Seeder
                     'tgl_perjanjian' => '2022-09-23'
                 ],
                 [
+                    'id_daftar' => null,
                     'id_kelurahan' => '12',
                     'no_urut' => '2',
                     'nama' => 'SUARYANTO,SE',
@@ -221,6 +234,7 @@ class DaftarSeeder extends Seeder
                     'tgl_perjanjian' => '2022-09-23'
                 ],
                 [
+                    'id_daftar' => null,
                     'id_kelurahan' => '12',
                     'no_urut' => '3',
                     'nama' => 'DIDIK WAHYONO',
