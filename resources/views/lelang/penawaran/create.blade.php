@@ -103,6 +103,7 @@
 @endsection
 @push('customScript')
     <script src="/assets/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             $('#idfk_tkd').change(function() {
@@ -124,6 +125,8 @@
                     $('#harga_dasar').val('');
                 }
             });
+
+            $('#nilai_penawaran').mask('000,000,000,000,000', {reverse: true});
         });
     </script>
 @endpush

@@ -14,12 +14,13 @@ class TkdsExport implements FromCollection, WithHeadings, ShouldAutoSize
      */
     public function collection()
     {
-        return Tkd::Select('id_kelurahan', 'bidang', 'letak', 'bukti', 'harga_dasar', 'luas', 'keterangan', 'nop')->get();
+        return Tkd::Select('id_tkd', 'id_kelurahan', 'bidang', 'letak', 'bukti', 'harga_dasar', 'luas', 'keterangan', 'nop')->get();
     }
 
     public function headings(): array
     {
         return [
+            'Id Tkd',
             'Kelurahan',
             'Bidang',
             'Letak',

@@ -11,6 +11,7 @@ class TkdsImport implements ToModel, WithHeadingRow, WithUpserts
     public function model(array $row)
     {
         return new Tkd([
+            'id_tkd' => $row['id_tkd'],
             'bidang' => $row['bidang'],
             'letak' => $row['letak'],
             'id_kelurahan' => $row['kelurahan'],
