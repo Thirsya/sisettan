@@ -76,7 +76,7 @@
                                             <th>Total Luas</th>
                                             <th>Pendaftar</th>
                                             <th>Alamat</th>
-                                            <th>Bukti HAK</th>
+                                            <th>Bukti Hak</th>
                                             <th>Luas Bidang</th>
                                             <th>Harga Dasar</th>
                                             <th>Harga Penawaran</th>
@@ -89,7 +89,7 @@
                                                 <td>{{ $penawaran->total_luas }}</td>
                                                 <td>{{ $penawaran->nama }}</td>
                                                 <td>{{ $penawaran->alamat }}</td>
-                                                <td>{{ $penawaran->bukti }} {{ $penawaran->bidang }}</td>
+                                                <td>{{ $penawaran->bukti }} bidang {{ $penawaran->bidang }}</td>
                                                 <td>{{ $penawaran->luas }}</td>
                                                 <td>{{ $penawaran->harga_dasar }}</td>
                                                 <td>{{ $penawaran->nilai_penawaran }}</td>

@@ -3,42 +3,28 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h1>Tabel Penawaran</h1>
+            <h1>Table</h1>
         </div>
         <div class="section-body">
-            <h2 class="section-title">Ubah Penawaran</h2>
+            <h2 class="section-title">Tambah Penawaran</h2>
             <div class="card">
                 <div class="card-header">
-                    <h4>Ubah Tambah Data</h4>
+                    <h4>Validasi Tambah Data</h4>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('penawaran.update', $penawaran) }}" method="post">
+                    <form action="{{ route('penawaran.store') }}" method="post">
                         @csrf
-                        @method('PUT')
                         <div class="form-group">
                             <label>Pendaftar</label>
-                            <select class="form-control select2 @error('id_daftar') is-invalid @enderror"
-                                id="id_daftar" name="id_daftar" data-id="select-id_daftar">
-                                <option value="">Pilih Pendaftar</option>
-                                @foreach ($daftars as $daftar)
-                                    <option @selected($daftar->id == $daftar->id_daftar) value="{{ $daftar->id }}">
-                                        {{ $daftar->daftar }}
-                                    </option>
+                            <select class="form-control select2 @error('idfk_daftar') is-invalid @enderror"
+                                name="idfk_daftar" data-id="select-pendaftar" id="idfk_daftar">
+                                <option value="">Piih Pendaftar</option>
+                                @foreach ($daftars as $nama)
+                                    <option @selected($penawaran->id == $penawaran->id) value="{{ $nama->id }}">
+                                        {{ $nama->nama }} - {{ $nama->id_daftar }}</option>
                                 @endforeach
                             </select>
-                            @error('id_daftar')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label>ID Daftar</label>
-                            <input type="text" id="id_daftar" name="id_daftar"
-                                class="form-control @error('penawaran') is-invalid @enderror "
-                                placeholder="Masukan id_daftar" value="{{ old('penawaran', $penawaran->idfk_daftar) }}"
-                                data-id="input_id_daftar" autocomplete="off">
-                            @error('penawaran')
+                            @error('idfk_daftar')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
@@ -46,16 +32,15 @@
                         </div>
                         <div class="form-group">
                             <label>ID Harga Dasar</label>
-                            <select class="form-control select2 @error('harga_dasar') is-invalid @enderror"
-                                id="harga_dasar" name="harga_dasar" data-id="select-harga_dasar">
-                                <option value="">Pilih ID Harga Dasar</option>
-                                @foreach ($tkds as $tkd)
-                                    <option @selected($penawaran->id == $penawaran->id_tkd) value="{{ $penawaran->id_tkd }}">
-                                        {{ $penawaran->penawaran }}
-                                    </option>
+                            <select class="form-control select2 @error('idfk_tkd') is-invalid @enderror" name="idfk_tkd"
+                                data-id="select-tkd" id="idfk_tkd">
+                                <option value="">Piih Harga Dasar</option>
+                                @foreach ($tkds as $id_tkd)
+                                    <option @selected($penawaran->id == $penawaran->id) value="{{ $id_tkd->id }}">
+                                        {{ $id_tkd->bukti }}</option>
                                 @endforeach
                             </select>
-                            @error('harga_dasar')
+                            @error('idfk_tkd')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
@@ -63,11 +48,24 @@
                         </div>
                         <div class="form-group">
                             <label>Luas Bidang</label>
-                            <input type="text" id="luas_bidang" name="luas_bidang"
-                                class="form-control @error('penawaran') is-invalid @enderror "
-                                placeholder="Masukan Luas Bidang" value="{{ old('luas_bidang', $penawaran->id_tkd) }}"
-                                data-id="input_id_tkd" autocomplete="off">
-                            @error('penawaran')
+                            <input type="text" id="luas" name="luas"
+                                class="form-control @error('luas') is-invalid @enderror" placeholder="Masukan Luas Bidang"
+                                value="{{ old('penawaran', $penawaran->luas) }}" data-id="input_luas"
+                                autocomplete="off" readonly>
+                            @error('luas')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label>Harga Dasar</label>
+                            <input type="text" id="harga_dasar" name="harga_dasar"
+                                class="form-control @error('harga_dasar') is-invalid @enderror"
+                                placeholder="Masukan Harga_dasar Bidang"
+                                value="{{ old('penawaran', $penawaran->harga_dasar) }}" data-id="input_harga_dasar"
+                                autocomplete="off" readonly>
+                            @error('harga_dasar')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
@@ -76,9 +74,9 @@
                         <div class="form-group">
                             <label>Nilai Penawaran</label>
                             <input type="text" id="nilai_penawaran" name="nilai_penawaran"
-                                class="form-control @error('nilai_penawaran') is-invalid @enderror "
-                                placeholder="Masukan Nilai Penawaran" value="{{ old('nilai_penawaran', $penawaran->nilai_penawaran) }}"
-                                data-id="input_nilai_penawaran" autocomplete="off">
+                                class="form-control @error('nilai_penawaran') is-invalid @enderror"
+                                value="{{ old('penawaran', $penawaran->nilai_penawaran) }}" data-id="input_nilai_penawaran"
+                                placeholder="Masukan Nilai Penawaran" autocomplete="off">
                             @error('nilai_penawaran')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -88,9 +86,9 @@
                         <div class="form-group">
                             <label>Keterangan</label>
                             <input type="text" id="keterangan" name="keterangan"
-                                class="form-control @error('keterangan') is-invalid @enderror "
-                                placeholder="Masukan Keterangan" value="{{ old('keterangan', $penawaran->keterangan) }}"
-                                data-id="input_keterangan" autocomplete="off">
+                                class="form-control @error('keterangan') is-invalid @enderror"
+                                value="{{ old('penawaran', $penawaran->keterangan) }}" data-id="input_keterangan"
+                                placeholder="Masukan Keterangan" autocomplete="off">
                             @error('keterangan')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -99,8 +97,8 @@
                         </div>
                 </div>
                 <div class="card-footer text-right">
-                    <button class="btn btn-primary">Kirim</button>
-                    <a class="btn btn-secondary" href="{{ route('penawaran.index') }}">Batal</a>
+                    <button class="btn btn-primary">Submit</button>
+                    <a class="btn btn-secondary" href="{{ route('penawaran.index') }}">Cancel</a>
                 </div>
                 </form>
             </div>
@@ -109,6 +107,32 @@
 @endsection
 @push('customScript')
     <script src="/assets/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#idfk_tkd').change(function() {
+                var id = $(this).val();
+                if (id) {
+                    $.ajax({
+                        url: '{{ route('getTkd') }}',
+                        data: {
+                            id: id
+                        },
+                        type: 'GET',
+                        success: function(data) {
+                            $('#luas').val(data.luas);
+                            $('#harga_dasar').val(data.harga_dasar);
+                        }
+                    });
+                } else {
+                    $('#luas').val('');
+                    $('#harga_dasar').val('');
+                }
+            });
+
+            $('#nilai_penawaran').mask('000,000,000,000,000', {reverse: true});
+        });
+    </script>
 @endpush
 
 @push('customStyle')
