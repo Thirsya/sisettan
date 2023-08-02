@@ -14,12 +14,13 @@ class DaftarsExport implements FromCollection, WithHeadings, ShouldAutoSize
      */
     public function collection()
     {
-        return Daftar::Select('no_urut', 'nama', 'id_kelurahan', 'alamat', 'no_kk', 'no_wp', 'tgl_perjanjian')->get();
+        return Daftar::Select('id_daftar','no_urut', 'nama', 'id_kelurahan', 'alamat', 'no_kk', 'no_wp', 'tgl_perjanjian')->get();
     }
 
     public function headings(): array
     {
         return [
+            'Id Daftar',
             'Nomor Urut',
             'Nama',
             'Kelurahan',

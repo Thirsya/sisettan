@@ -21,11 +21,11 @@ class DatabaseSeeder extends Seeder
             JabatanSeeder::class,
             OpdSeeder::class,
             PejabatSeeder::class,
-            KelurahanSeeder::class,
-            DaerahSeeder::class,
-            DaftarSeeder::class,
-            TkdSeeder::class,
-            PenawaranSeeder::class,
+            // KelurahanSeeder::class,
+            // DaerahSeeder::class,
+            // DaftarSeeder::class,
+            // TkdSeeder::class,
+            // PenawaranSeeder::class,
         ]);
     }
 }
