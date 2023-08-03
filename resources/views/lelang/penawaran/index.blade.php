@@ -30,8 +30,8 @@
                                 <a class="btn btn-info btn-primary active import">
                                     <i class="fa fa-download" aria-hidden="true"></i>
                                     Import Penawaran</a>
-                                    <a class="btn btn-info btn-primary active" href="{{ route('penawaran.export') }}" data-id="export">
-                                        <i class="fa fa-upload" aria-hidden="true"></i>
+                                <a class="btn btn-info btn-primary active" href="{{ route('penawaran.export') }}" data-id="export">
+                                    <i class="fa fa-upload" aria-hidden="true"></i>
                                     Export Penawaran</a>
                                 <a class="btn btn-info btn-primary active search">
                                     <i class="fa fa-search" aria-hidden="true"></i>
