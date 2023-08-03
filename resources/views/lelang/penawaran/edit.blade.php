@@ -20,7 +20,7 @@
                                 name="idfk_daftar" data-id="select-pendaftar" id="idfk_daftar">
                                 <option value="">Piih Pendaftar</option>
                                 @foreach ($daftars as $nama)
-                                    <option @selected($penawaran->id == $penawaran->id) value="{{ $nama->id }}">
+                                    <option @selected($penawaran->idfk_daftar == $nama->id) value="{{ $nama->id }}">
                                         {{ $nama->nama }} - {{ $nama->id_daftar }}</option>
                                 @endforeach
                             </select>
@@ -36,7 +36,7 @@
                                 data-id="select-tkd" id="idfk_tkd">
                                 <option value="">Piih Harga Dasar</option>
                                 @foreach ($tkds as $id_tkd)
-                                    <option @selected($penawaran->id == $penawaran->id) value="{{ $id_tkd->id }}">
+                                    <option @selected($penawaran->idfk_tkd == $id_tkd->id) value="{{ $id_tkd->id }}">
                                         {{ $id_tkd->bukti }}</option>
                                 @endforeach
                             </select>
