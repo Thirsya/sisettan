@@ -91,7 +91,6 @@ class PenawaranController extends Controller
         ]);
     }
 
-
     public function store(StorePenawaranRequest $request)
     {
         $idDaftar = Daftar::where('id', $request->idfk_daftar)->pluck('id_daftar')->first();
@@ -118,7 +117,6 @@ class PenawaranController extends Controller
 
         return redirect()->route('penawaran.index')->with('success', 'Tambah Data Penawaran Sukses');
     }
-
 
     public function show(StorePenawaranRequest $request)
     {
@@ -160,5 +158,12 @@ class PenawaranController extends Controller
     public function export()
     {
         return Excel::download(new PenawaransExport, 'Penawaran.xlsx');
+    }
+
+    public function deleteAll()
+    {
+        Penawaran::truncate(); // Menghapus semua baris pada tabel
+
+        return redirect()->back()->with('success', 'Semua data berhasil dihapus.');
     }
 }

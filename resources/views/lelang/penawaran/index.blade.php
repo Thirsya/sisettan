@@ -25,13 +25,12 @@
                         <div class="card-header">
                             <h4>Penawaran List</h4>
                             <div class="card-header-action">
-                                <a class="btn btn-icon icon-left btn-primary" href="{{ route('penawaran.create') }}">Create
-                                    New Penawaran</a>
+                                <a class="btn btn-icon icon-left btn-primary" href="{{ route('penawaran.create') }}">Create New Penawaran</a>
                                 <a class="btn btn-info btn-primary active import">
                                     <i class="fa fa-download" aria-hidden="true"></i>
                                     Import Penawaran</a>
-                                <a class="btn btn-info btn-primary active" href="{{ route('penawaran.export') }}" data-id="export">
-                                    <i class="fa fa-upload" aria-hidden="true"></i>
+                                    <a class="btn btn-info btn-primary active" href="{{ route('penawaran.export') }}" data-id="export">
+                                        <i class="fa fa-upload" aria-hidden="true"></i>
                                     Export Penawaran</a>
                                 <a class="btn btn-info btn-primary active search">
                                     <i class="fa fa-search" aria-hidden="true"></i>
@@ -39,7 +38,16 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('penawaran.import') }}" method="POST"
+                            <div class="show-import mb-4" style="display: none">
+                                @error('import-file')
+                                    <div class="invalid-feedback d-flex mb-10" role="alert">
+                                        <div class="alert_alert-dange_mt-1_mb-1">
+                                            {{ $message }}
+                                        </div>
+                                    </div>
+                                @enderror
+                                <div class="custom-file">
+                                    <form action="{{ route('penawaran.import') }}" method="POST"
                                         enctype="multipart/form-data">
                                         @csrf
                                         @method('POST')
@@ -52,8 +60,9 @@
                                         <div class="footer text-right">
                                             <button class="btn btn-primary" data-id="submit-import">Import File</button>
                                         </div>
-
                                     </form>
+                                </div>
+                            </div>
                             <div class="show-search mb-3" style="display: none">
                                 <form id="search" method="GET" action="{{ route('penawaran.index') }}">
                                     <div class="form-row">
@@ -67,6 +76,15 @@
                                         <button class="btn btn-primary mr-1" type="submit">Submit</button>
                                         <a class="btn btn-secondary" href="{{ route('penawaran.index') }}">Reset</a>
                                     </div>
+                                </form>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <form action="{{ route('delete.all') }}"
+                                    method="POST" class="ml-2">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <input type="hidden" name="_token"
+                                        value="{{ csrf_token() }}">
+                                    <button class="btn btn-sm btn-danger btn-icon confirm-delete"></i> Delete All</button>
                                 </form>
                             </div>
                             <div class="table-responsive">
@@ -105,7 +123,7 @@
                                                             <input type="hidden" name="_method" value="DELETE">
                                                             <input type="hidden" name="_token"
                                                                 value="{{ csrf_token() }}">
-                                                            <button class="btn btn-sm btn-danger btn-icon confirm-delete">
+                                                            <button class="btn btn-sm btn-danger btn-icon confirm-delete" type="submit">
                                                                 <i class="fas fa-times"></i> Delete </button>
                                                         </form>
                                                     </div>

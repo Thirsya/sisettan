@@ -117,5 +117,6 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::get('penawaran/export', [PenawaranController::class, 'export'])->name('penawaran.export');
         Route::resource('penawaran', PenawaranController::class);
         Route::get('/getTkd', [PenawaranController::class, 'getTkd'])->name('getTkd');
+        Route::delete('/delete-all', [PenawaranController::class, 'deleteAll'])->name('delete.all');
     });
 });
