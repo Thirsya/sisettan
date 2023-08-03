@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\PenawaransExport;
+use App\Http\Requests\ImportPenawaranRequest;
 use App\Models\Penawaran;
 use App\Http\Requests\StorePenawaranRequest;
 use App\Http\Requests\UpdatePenawaranRequest;
+use App\Imports\PenawaransImport;
 use App\Models\Daftar;
 use App\Models\Tkd;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PenawaranController extends Controller
 {
@@ -142,11 +146,19 @@ class PenawaranController extends Controller
     }
 
     public function destroy(Penawaran $penawaran)
-    {   //ini
-        $id_daftar = $penawaran->id_daftar;
+    {
         $penawaran->delete();
-        //ini
-        $this->calculateTotalLuas($id_daftar);
         return redirect()->route('penawaran.index')->with('success', 'Penawaran deleted successfully.');
+    }
+
+    public function import(ImportPenawaranRequest $request)
+    {
+        Excel::import(new PenawaransImport, $request->file('import-file')->store('import-files'));
+        return redirect()->route('penawaran.index')->with('success', 'Tambahkan Data Penawaran Sukses diimport');
+    }
+
+    public function export()
+    {
+        return Excel::download(new PenawaransExport, 'Penawaran.xlsx');
     }
 }

@@ -112,6 +112,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::post('tkd/import', [TkdController::class, 'import'])->name('tkd.import');
         Route::get('tkd/export', [TkdController::class, 'export'])->name('tkd.export');
         Route::resource('tkd', TkdController::class);
+
+        Route::post('penawaran/import', [PenawaranController::class, 'import'])->name('penawaran.import');
+        Route::get('penawaran/export', [PenawaranController::class, 'export'])->name('penawaran.export');
         Route::resource('penawaran', PenawaranController::class);
         Route::get('/getTkd', [PenawaranController::class, 'getTkd'])->name('getTkd');
     });

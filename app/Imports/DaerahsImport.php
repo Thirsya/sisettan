@@ -11,14 +11,29 @@ class DaerahsImport implements ToModel, WithHeadingRow, WithUpserts
 {
     public function model(array $row)
     {
+        $tanggalLelang = $row['tanggal_lelang'];
+
+        if ($tanggalLelang === null) {
+            $formattedDate = null;
+        } else {
+            $formattedDate = $this->parseExcelDate($tanggalLelang);
+        }
         return new Daerah([
             'id_kecamatan' => $row['kecamatan'],
             'id_kelurahan' => $row['kelurahan'],
             'noba' => $row['noba'],
             'periode' => $row['periode'],
             'thn_sts' => $row['tahun_sts'],
-            'tanggal_lelang' => $row['tanggal_lelang'],
+            'tanggal_lelang' => $formattedDate
         ]);
+    }
+
+    private function parseExcelDate($excelDate)
+    {
+        $timestamp = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToTimestamp($excelDate);
+        $formattedDate = date('Y-m-d', $timestamp);
+
+        return $formattedDate;
     }
 
     public function uniqueBy()
