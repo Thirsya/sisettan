@@ -111,7 +111,7 @@ class PenawaranController extends Controller
         ]);
 
         $totalLuasTkd = Tkd::where('id', $penawaran->idfk_tkd)->sum('luas');
-        $totalLuasPenawaran = Penawaran::where('idfk_daftar', $penawaran->idfk_daftar)->sum('total_luas');
+        $totalLuasPenawaran = Penawaran::where('idfk_daftar', $penawaran->idfk_daftar)->value('total_luas');
         $newTotalLuas = $totalLuasTkd + $totalLuasPenawaran;
         Penawaran::where('idfk_daftar', $penawaran->idfk_daftar)->update(['total_luas' => $newTotalLuas]);
 
@@ -121,7 +121,6 @@ class PenawaranController extends Controller
     public function show(StorePenawaranRequest $request)
     {
         Penawaran::create([
-            // 'total_luas' => $request->total_luas,
             'id_daftar' => $request->id_daftar,
             'id_tkd' => $request->id_tkd,
             'nilai_penawaran' => $request->nilai_penawaran,
@@ -146,8 +145,19 @@ class PenawaranController extends Controller
     public function destroy(Penawaran $penawaran)
     {
         $penawaran->delete();
+
+        $totalLuasTkd = Tkd::where('id', $penawaran->idfk_tkd)->pluck('luas')->first();
+        $totalLuasPenawaran = Penawaran::where('idfk_daftar', $penawaran->idfk_daftar)->pluck('total_luas')->first();
+
+        if ($totalLuasTkd !== null && $totalLuasPenawaran !== null) {
+            $newTotalLuas = $totalLuasPenawaran - $totalLuasTkd;
+
+            Penawaran::where('idfk_daftar', $penawaran->idfk_daftar)->update(['total_luas' => $newTotalLuas]);
+        }
+
         return redirect()->route('penawaran.index')->with('success', 'Penawaran deleted successfully.');
     }
+
 
     public function import(ImportPenawaranRequest $request)
     {
