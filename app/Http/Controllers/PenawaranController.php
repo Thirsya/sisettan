@@ -29,6 +29,8 @@ class PenawaranController extends Controller
     {
         $tkds = Tkd::all();
         $harga_dasar = $request->input('harga_dasar');
+        // $tahunId = session('tahun_id');
+        $kelurahanId = session('kelurahan_id');
         $penawarans = DB::table('penawarans')
             ->select(
                 'penawarans.id',
@@ -63,7 +65,8 @@ class PenawaranController extends Controller
             ->when($request->input('bukti'), function ($query, $bukti) {
                 return $query->whereIn('daerah.jenis_barang_id', $bukti);
             })
-            // ->orderBy('daerah.kode_jbs', 'asc')
+            // ->whereYear('daftars.tgl_perjanjian', $tahunId)
+            ->where('daftars.id_kelurahan', $kelurahanId)
             ->paginate(10);
         $tkdSelected = $request->input('bukti');
         return view('lelang.penawaran.index')->with([

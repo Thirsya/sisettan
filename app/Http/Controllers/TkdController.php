@@ -30,9 +30,19 @@ class TkdController extends Controller
         $tkdName = $request->input('tkd');
         $kelurahanIds = $request->input('kelurahan');
         $tkd = $request->input('tkd');
-
-        $query = Tkd::select('tkds.id', 'tkds.id_kelurahan', 'tkds.bidang', 'tkds.letak', 'tkds.bukti',
-        'tkds.harga_dasar', 'tkds.luas', 'tkds.keterangan', 'tkds.nop', 'kelurahans.kelurahan')
+        $kelurahanId = session('kelurahan_id');
+        $query = Tkd::select(
+            'tkds.id',
+            'tkds.id_kelurahan',
+            'tkds.bidang',
+            'tkds.letak',
+            'tkds.bukti',
+            'tkds.harga_dasar',
+            'tkds.luas',
+            'tkds.keterangan',
+            'tkds.nop',
+            'kelurahans.kelurahan'
+        )
             ->leftJoin('kelurahans', 'tkds.id_kelurahan', '=', 'kelurahans.id')
             ->when($request->input('letak'), function ($query, $letak) {
                 return $query->where('tkds.letak', 'like', '%' . $letak . '%');
@@ -40,8 +50,9 @@ class TkdController extends Controller
             ->when($request->input('kelurahan'), function ($query, $kelurahan) {
                 return $query->whereIn('tkds.id_kelurahan', $kelurahan);
             })
+            ->where('tkds.id_kelurahan', $kelurahanId)
             // ->orderBy('tkds.id_kelurahan', 'asc')
-            ->paginate(100);
+            ->paginate(20);
         $kelurahanSelected = $request->input('kelurahan');
 
         $query->appends(['tkd' => $tkdName, 'kelurahan' => $kelurahanIds]);

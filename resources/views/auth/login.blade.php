@@ -49,7 +49,8 @@
                                             name="tahun_lelang" id="dropdown-item">
                                             <option value="">Tahun Lelang</option>
                                             @foreach ($tahun as $item)
-                                                <option value="{{ $item->id }}">{{ $item->tahun }}</option>
+                                                <option value="{{ $item->id }}" data-tahun="{{ $item->tahun }}">
+                                                    {{ $item->tahun }}</option>
                                             @endforeach
                                         </select>
                                         @error('jenis_kelamin')
@@ -76,23 +77,11 @@
                                         @enderror
                                     </div>
                                     <div class="form-group" id="dropdownKelurahan" style="display: none;">
-                                        <select class="form-control select2"
-                                            @error('jenis_kelamin') is-invalid @enderror name="kelurahan">
+                                        <select class="form-control select2" @error('kelurahan') is-invalid @enderror
+                                            name="kelurahan">
                                             <option value="">Pilih Kelurahan</option>
-                                            @foreach ($daerah->groupBy('id_kecamatan') as $kecamatanGroup)
-                                                <optgroup label="Kec.{{ $kecamatanGroup[0]->kecamatan }}">
-                                                    @foreach ($kecamatanGroup as $d)
-                                                        <option value="{{ $d->id }}">
-                                                            [Kel.{{ $d->kelurahan }}] -
-                                                            tgl:
-                                                            {{ \Carbon\Carbon::parse($d->tanggal_lelang)->format('d/m/Y') }}
-                                                        </option>
-                                                    @endforeach
-                                                </optgroup>
-                                            @endforeach
-
                                         </select>
-                                        @error('jenis_kelamin')
+                                        @error('kelurahan')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
@@ -149,10 +138,114 @@
                 masuk.style.display = 'block';
             });
         });
+        // });
     </script>
+    <script>
+        $(document).ready(function() {
+            $('#dropdown-item').on('change', function() {
+                var selectedYearId = $(this).find(':selected').data('tahun');
+                $('#dropdownKelurahan').on('change', function() {
+                    var selectedKelurahanId = $(this).find(':selected').data('id');
+                    console.log(selectedKelurahanId);
+                });
+                if (selectedYearId) {
 
+                    $.ajax({
+                        url: '{{ route('requestAjaxLogin') }}',
+                        type: 'GET',
+                        data: {
+                            'tahun_id': selectedYearId
+                        },
+                        success: function(data) {
+                            // console.log(data);
+                            var kelurahanDropdown = $('[name="kelurahan"]');
+                            kelurahanDropdown.empty();
+                            kelurahanDropdown.append(
+                                '<option value="">Pilih Kelurahan</option>');
 
-    <!-- Page Specific JS File -->
+                            var kecamatanGroups = {};
+
+                            data.forEach(function(daerah) {
+                                if (!kecamatanGroups[daerah.kecamatan]) {
+                                    kecamatanGroups[daerah.kecamatan] = [];
+                                }
+                                kecamatanGroups[daerah.kecamatan].push(daerah);
+                            });
+
+                            for (var kecamatan in kecamatanGroups) {
+                                var optgroup = $('<optgroup>').attr('label', 'Kec.' +
+                                    kecamatan);
+                                kecamatanGroups[kecamatan].forEach(function(daerah) {
+                                    var optionText = '[Kel.' + daerah.kelurahan +
+                                        '] - tgl:' + daerah.tanggal_lelang;
+                                    var option = $('<option>').attr('value', daerah.id)
+                                        .attr('data-id', daerah.id_kelurahan)
+                                        .text(optionText);
+                                    optgroup.append(option);
+                                });
+                                kelurahanDropdown.append(optgroup);
+                            }
+
+                            $('#dropdownKelurahan').show();
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            console.error("AJAX error: ", textStatus, errorThrown);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#masuk').on('click', function(e) {
+                e.preventDefault();
+
+                var selectedYearId = $('#dropdown-item').find(':selected').data('tahun');
+                var selectedKelurahanId = $('#dropdownKelurahan').find(':selected').data('id');
+
+                var usernameValue = $('#username').val();
+                var passwordValue = $('#password').val();
+                if (selectedYearId) {
+                    $.ajax({
+                        url: '{{ route('login') }}',
+                        type: 'POST',
+                        data: {
+                            '_token': '{{ csrf_token() }}',
+                            'username': usernameValue,
+                            'password': passwordValue,
+                        },
+                        success: function(response) {
+
+                            $.ajax({
+                                url: '{{ route('setSessionTahun') }}',
+                                type: 'POST',
+                                data: {
+                                    '_token': '{{ csrf_token() }}',
+                                    'tahun_id': selectedYearId,
+                                    'kelurahan_id': selectedKelurahanId,
+
+                                },
+                                success: function(response) {
+                                    console.log('Tahun disimpan dalam session:',
+                                        selectedYearId);
+                                    $('#masuk').unbind('click')
+                                        .click();
+                                },
+                                error: function(jqXHR, textStatus, errorThrown) {
+                                    console.error("AJAX error: ", textStatus,
+                                        errorThrown);
+                                }
+                            });
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            console.error("AJAX error: ", textStatus, errorThrown);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
     @stack('customScript')
 </body>
 

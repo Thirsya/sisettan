@@ -67,9 +67,9 @@
                                 <form id="search" method="GET" action="{{ route('penawaran.index') }}">
                                     <div class="form-row">
                                         <div class="form-group col-md-4">
-                                            <label for="role">Penawaran</label>
-                                            <input type="text" name="penawaran" class="form-control" id="penawaran"
-                                                placeholder="Group penawaran">
+                                            <label for="role">Pendaftar</label>
+                                            <input type="text" name="nama" class="form-control" id="nama"
+                                                placeholder="Group Nama">
                                         </div>
                                     </div>
                                     <div class="text-right">

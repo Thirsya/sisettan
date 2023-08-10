@@ -30,7 +30,8 @@ class DaftarController extends Controller
         $daftarName = $request->input('daftar');
         $kelurahanIds = $request->input('kelurahan');
         $daftar = $request->input('daftar');
-
+        // $tahunId = session('tahun_id');
+        $kelurahanId = session('kelurahan_id');
         $query = daftar::select(
             'daftars.id',
             'daftars.id_kelurahan',
@@ -49,7 +50,9 @@ class DaftarController extends Controller
             ->when($request->input('kelurahan'), function ($query, $kelurahan) {
                 return $query->whereIn('daftars.id_kelurahan', $kelurahan);
             })
-            // ->orderBy('daftars.id_kelurahan', 'asc')
+            // ->whereYear('daftars.tgl_perjanjian', $tahunId)
+            ->where('daftars.id_kelurahan', $kelurahanId)
+            ->orderByRaw("CAST(daftars.no_urut AS SIGNED) ASC")
             ->paginate(10);
         $kelurahanSelected = $request->input('kelurahan');
 

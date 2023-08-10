@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\DaerahController;
 use App\Http\Controllers\DaftarController;
 use App\Http\Controllers\DemoController;
@@ -25,11 +26,23 @@ use Illuminate\Support\Facades\Route;
 use App\Models\User;
 use App\Http\Controllers\UserController;
 use App\Models\Category;
-
+use Illuminate\Http\Request;
 
 Route::get('/', function () {
     return view('auth/login');
 });
+Route::get('/getDaerah', [AuthController::class, 'requestAjaxLogin'])->name('requestAjaxLogin');
+
+
+Route::post('/setSessionTahun', function (Request $request) {
+    $tahunId = $request->input('tahun_id');
+    $kelurahanID = $request->input('kelurahan_id');
+    session([
+        'tahun_id' => $tahunId,
+        'kelurahan_id' => $kelurahanID,
+    ]);
+    return response()->json(['message' => 'Tahun disimpan dalam sesi.']);
+})->name('setSessionTahun');
 
 Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('/dashboard', function () {
