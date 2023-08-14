@@ -18,7 +18,7 @@
                         <div class="form-group">
                             <label>Kelurahan</label>
                             <select class="form-control select2 @error('id_kelurahan') is-invalid @enderror"
-                                id="id_kelurahan" name="id_kelurahan" data-id="select-id_kelurahan">
+                                id="id_kelurahan" name="id_kelurahan_disabled" data-id="select-id_kelurahan" disabled>
                                 <option value="">Pilih Kelurahan</option>
                                 @foreach ($kelurahans as $kelurahan)
                                     <option @selected($kelurahan->id == $daftar->id_kelurahan) value="{{ $kelurahan->id }}">
