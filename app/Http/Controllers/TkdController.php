@@ -69,8 +69,12 @@ class TkdController extends Controller
 
     public function create()
     {
+        $kelurahanId = session('kelurahan_id');
         $kelurahans = Kelurahan::all();
-        return view('lelang.tkd.create')->with(['kelurahans' => $kelurahans]);
+        return view('lelang.tkd.create')->with([
+            'kelurahans' => $kelurahans,
+            'kelurahanId' => $kelurahanId,
+        ]);
     }
 
     public function store(StoreTkdRequest $request)

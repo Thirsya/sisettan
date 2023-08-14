@@ -17,13 +17,14 @@
                         <div class="form-group">
                             <label>Kelurahan</label>
                             <select class="form-control select2 @error('id_kelurahan') is-invalid @enderror"
-                                name="id_kelurahan" data-id="select-kelurahan" id="id_kelurahan">
+                            name="id_kelurahan_disabled" data-id="select-kelurahan" id="id_kelurahan" disabled>
                                 <option value="">Piih Kelurahan</option>
                                 @foreach ($kelurahans as $kelurahan)
-                                    <option value="{{ $kelurahan->id }}">
+                                <option @selected($kelurahan->id == $kelurahanId) value="{{ $kelurahan->id }}">
                                         {{ $kelurahan->kelurahan }}</option>
                                 @endforeach
                             </select>
+                            <input type="hidden" name="id_kelurahan" value="{{ $kelurahanId }}" />
                             @error('id_kelurahan')
                                 <div class="invalid-feedback">
                                     {{ $message }}
