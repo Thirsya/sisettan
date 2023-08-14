@@ -31,6 +31,7 @@
                                     {{ $message }}
                                 </div>
                             @enderror
+                            <input type="hidden" name="id_kelurahan" value="{{ $tkd->id_kelurahan}}">
                         </div>
                         <div class="form-group">
                             <label>Letak</label>

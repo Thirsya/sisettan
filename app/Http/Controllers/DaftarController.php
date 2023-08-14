@@ -136,7 +136,7 @@ class DaftarController extends Controller
     public function getLatestNoUrut(Request $request)
     {
         $latestDaftar = Daftar::where('id_kelurahan', $request->id)
-            ->orderBy('no_urut', 'desc')
+            ->orderByRaw("CAST(daftars.no_urut AS SIGNED) DESC")
             ->first();
 
         return $latestDaftar ? $latestDaftar->no_urut + 1 : 1;

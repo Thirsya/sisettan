@@ -110,19 +110,20 @@
 @push('customScript')
     <script src="/assets/js/select2.min.js"></script>
     <script>
-        $(document).ready(function() {
+        // $(document).ready(function() {
             var id = $('#id_kelurahan').val();
             $.ajax({
                 url: '{{ route('getLatestNoUrut') }}',
                 data: {
                     id: id
                 },
-                type: 'GET',
+                type: 'POST',
                 success: function(response) {
+                    console.log(response);
                     $('#no_urut').val(response);
                 }
             });
-        });
+        // });
     </script>
 @endpush
 

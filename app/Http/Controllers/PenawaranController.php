@@ -79,9 +79,14 @@ class PenawaranController extends Controller
 
     public function create()
     {
-        $tkds = Tkd::all();
-        $daftars = Daftar::all();
-        return view('lelang.penawaran.create')->with(['tkds' => $tkds, 'daftars' => $daftars]);
+        $kelurahanId = session('kelurahan_id');
+        $tkds = Tkd::where('id_kelurahan', $kelurahanId)->get();
+        $daftars = Daftar::where('id_kelurahan', $kelurahanId)->get();
+        return view('lelang.penawaran.create')->with([
+            'tkds' => $tkds,
+            'daftars' => $daftars,
+            'kelurahanId' => $kelurahanId,
+        ]);
     }
 
     public function getTkd(Request $request)
@@ -134,8 +139,9 @@ class PenawaranController extends Controller
 
     public function edit(Penawaran $penawaran)
     {
-        $tkds = Tkd::all();
-        $daftars = Daftar::all();
+        $kelurahanId = session('kelurahan_id');
+        $tkds = Tkd::where('id_kelurahan', $kelurahanId)->get();
+        $daftars = Daftar::where('id_kelurahan', $kelurahanId)->get();
         return view('lelang.penawaran.edit', compact('penawaran'))->with(['tkds' => $tkds, 'daftars' => $daftars]);
     }
 
