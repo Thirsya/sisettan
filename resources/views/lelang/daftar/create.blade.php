@@ -17,13 +17,14 @@
                         <div class="form-group">
                             <label>Kelurahan</label>
                             <select class="form-control select2 @error('id_kelurahan') is-invalid @enderror"
-                                name="id_kelurahan" data-id="select-kelurahan" id="id_kelurahan">
+                                name="id_kelurahan_disabled" data-id="select-kelurahan" id="id_kelurahan" disabled>
                                 <option value="">Piih Kelurahan</option>
                                 @foreach ($kelurahans as $kelurahan)
-                                    <option value="{{ $kelurahan->id }}">
+                                    <option @selected($kelurahan->id == $kelurahanId) value="{{ $kelurahan->id }}">
                                         {{ $kelurahan->kelurahan }}</option>
                                 @endforeach
                             </select>
+                            <input type="hidden" name="id_kelurahan" value="{{ $kelurahanId }}" />
                             @error('id_kelurahan')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -110,19 +111,16 @@
     <script src="/assets/js/select2.min.js"></script>
     <script>
         $(document).ready(function() {
-            $('#id_kelurahan').change(function() {
-                var id = $(this).val();
-
-                $.ajax({
-                    url: '{{ route('getLatestNoUrut') }}',
-                    data: {
-                        id: id
-                    },
-                    type: 'GET',
-                    success: function(response) {
-                        $('#no_urut').val(response);
-                    }
-                });
+            var id = $('#id_kelurahan').val();
+            $.ajax({
+                url: '{{ route('getLatestNoUrut') }}',
+                data: {
+                    id: id
+                },
+                type: 'GET',
+                success: function(response) {
+                    $('#no_urut').val(response);
+                }
             });
         });
     </script>
@@ -131,6 +129,3 @@
 @push('customStyle')
     <link rel="stylesheet" href="/assets/css/select2.min.css">
 @endpush
-
-
-create.blade.php

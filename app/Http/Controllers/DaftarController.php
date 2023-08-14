@@ -70,8 +70,12 @@ class DaftarController extends Controller
 
     public function create()
     {
+        $kelurahanId = session('kelurahan_id');
         $kelurahans = Kelurahan::all();
-        return view('lelang.daftar.create')->with(['kelurahans' => $kelurahans]);
+        return view('lelang.daftar.create')->with([
+            'kelurahans' => $kelurahans,
+            'kelurahanId' => $kelurahanId,
+        ]);
     }
 
 
