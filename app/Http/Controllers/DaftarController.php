@@ -145,9 +145,8 @@ class DaftarController extends Controller
 
     public function downloadTemplate()
     {
-        $templatePath = storage_path('app/public/templates/daftar_template.xlsx');
-
-        if (!Storage::exists('public/templates/daftar_template.xlsx')) {
+        $templatePath = public_path('Excel/templates/daftar_template.xlsx');
+        if (!file_exists($templatePath)) {
             return redirect()->route('daftar.index')->with('error', 'Template file not found.');
         }
 
