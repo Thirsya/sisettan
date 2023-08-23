@@ -12,6 +12,7 @@ use App\Models\Kelurahan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Storage;
 
 class DaftarController extends Controller
 {
@@ -140,5 +141,16 @@ class DaftarController extends Controller
             ->first();
 
         return $latestDaftar ? $latestDaftar->no_urut + 1 : 1;
+    }
+
+    public function downloadTemplate()
+    {
+        $templatePath = storage_path('app/public/templates/daftar_template.xlsx');
+
+        if (!Storage::exists('public/templates/daftar_template.xlsx')) {
+            return redirect()->route('daftar.index')->with('error', 'Template file not found.');
+        }
+
+        return response()->download($templatePath, 'daftar_template.xlsx');
     }
 }

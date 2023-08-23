@@ -57,11 +57,12 @@
                                             for="file-upload">Choose File</label>
                                         <input type="file" id="file-upload" class="custom-file-input" name="import-file"
                                             data-id="send-import">
+                                        <br/><br />
+                                            <a href="{{ route('daftar.download-template') }}" class="text">Unduh Template</a>
                                         <br /> <br />
                                         <div class="footer text-right">
                                             <button class="btn btn-primary" data-id="submit-import">Import File</button>
                                         </div>
-
                                     </form>
                                 </div>
                             </div>

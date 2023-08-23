@@ -104,7 +104,7 @@
                                                 <td>{{ $tkd->kelurahan}}</td>
                                                 <td>{{ $tkd->bukti}}</td>
                                                 <td>{{ $tkd->luas}}</td>
-                                                <td>{{ $tkd->harga_dasar}}</td>
+                                                <td>{{ 'Rp ' . number_format($tkd->harga_dasar, 0, ',', '.') }}</td>
                                                 <td>{{ $tkd->keterangan}}</td>
                                                 <td>{{ $tkd->nop}}</td>
                                                 <td class="text-right">

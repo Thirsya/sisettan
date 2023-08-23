@@ -132,7 +132,7 @@
     <script src="/assets/js/select2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
     <script type="text/javascript">
-            // Format mata uang saat pengguna mengetik di kolom "Nilai Penawaran"
+            // Format mata uang saat pengguna mengetik di kolom "Harga Dasar"
             $('#harga_dasar').mask('000,000,000,000,000', {reverse: true});
     </script>
 @endpush

@@ -94,7 +94,6 @@
                                             <th>No</th>
                                             <th>Total Luas</th>
                                             <th>Pendaftar</th>
-                                            <th>Alamat</th>
                                             <th>Bukti Hak</th>
                                             <th>Luas Bidang</th>
                                             <th>Harga Dasar</th>
@@ -107,11 +106,10 @@
                                                 </td>
                                                 <td>{{ $penawaran->total_luas }}</td>
                                                 <td>{{ $penawaran->nama }}</td>
-                                                <td>{{ $penawaran->alamat }}</td>
                                                 <td>{{ $penawaran->bukti }} bidang {{ $penawaran->bidang }}</td>
                                                 <td>{{ $penawaran->luas }}</td>
-                                                <td>{{ $penawaran->harga_dasar }}</td>
-                                                <td>{{ $penawaran->nilai_penawaran }}</td>
+                                                <td>{{ 'Rp ' . number_format($penawaran->harga_dasar, 0, ',', '.') }}</td>
+                                                <td>{{ 'Rp ' . number_format($penawaran->nilai_penawaran, 0, ',', '.') }}</td>
                                                 <td class="text-right">
                                                     <div class="d-flex justify-content-end">
                                                         <a href="{{ route('penawaran.edit', $penawaran->id) }}"
