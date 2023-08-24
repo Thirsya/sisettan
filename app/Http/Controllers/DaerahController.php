@@ -141,4 +141,14 @@ class DaerahController extends Controller
     {
         return Excel::download(new DaerahsExport, 'Daerah.xlsx');
     }
+
+    public function downloadTemplate()
+    {
+        $templatePath = public_path('Excel/templates/daerah_template.xlsx');
+        if (!file_exists($templatePath)) {
+            return redirect()->route('daerah.index')->with('error', 'Template file not found.');
+        }
+
+        return response()->download($templatePath, 'daerah_template.xlsx');
+    }
 }

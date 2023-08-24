@@ -37,6 +37,9 @@
                                 <a class="btn btn-info btn-primary active search">
                                     <i class="fa fa-search" aria-hidden="true"></i>
                                     Search Kelurahan</a>
+                                <a class="btn btn-info btn-primary active" href="{{ route('kelurahan.download-template') }}">
+                                    <i class="fa fa-upload" aria-hidden="true"></i>
+                                    Kelurahan Template</a>
                             </div>
                         </div>
                         <div class="card-body">

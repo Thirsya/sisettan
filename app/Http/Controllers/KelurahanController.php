@@ -120,4 +120,14 @@ class KelurahanController extends Controller
     {
         return Excel::download(new KelurahansExport, 'Kelurahan.xlsx');
     }
+
+    public function downloadTemplate()
+    {
+        $templatePath = public_path('Excel/templates/kelurahan_template.xlsx');
+        if (!file_exists($templatePath)) {
+            return redirect()->route('kelurahan.index')->with('error', 'Template file not found.');
+        }
+
+        return response()->download($templatePath, 'kelurahan_template.xlsx');
+    }
 }

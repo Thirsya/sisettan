@@ -106,10 +106,12 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::get('kecamatan/export', [KecamatanController::class, 'export'])->name('kecamatan.export');
         Route::resource('kecamatan', KecamatanController::class);
 
+        Route::get('kelurahan/download-template', [KelurahanController::class, 'downloadTemplate'])->name('kelurahan.download-template');
         Route::post('kelurahan/import', [KelurahanController::class, 'import'])->name('kelurahan.import');
         Route::get('kelurahan/export', [KelurahanController::class, 'export'])->name('kelurahan.export');
         Route::resource('kelurahan', KelurahanController::class);
 
+        Route::get('daerah/download-template', [DaerahController::class, 'downloadTemplate'])->name('daerah.download-template');
         Route::post('daerah/import', [DaerahController::class, 'import'])->name('daerah.import');
         Route::get('daerah/export', [DaerahController::class, 'export'])->name('daerah.export');
         Route::resource('daerah', DaerahController::class);

@@ -36,6 +36,9 @@
                                 <a class="btn btn-info btn-primary active search">
                                     <i class="fa fa-search" aria-hidden="true"></i>
                                     Search Daerah Lelang</a>
+                                <a class="btn btn-info btn-primary active" href="{{ route('daerah.download-template') }}">
+                                    <i class="fa fa-upload" aria-hidden="true"></i>
+                                    Daerah Template</a>
                             </div>
                         </div>
                         <div class="card-body">
