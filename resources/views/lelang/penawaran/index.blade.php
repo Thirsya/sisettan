@@ -104,10 +104,10 @@
                                             <tr>
                                                 <td>{{ ($penawarans->currentPage() - 1) * $penawarans->perPage() + $key + 1 }}
                                                 </td>
-                                                <td>{{ $penawaran->total_luas }}</td>
+                                                <td>{{ $penawaran->total_luas }} m<sup>2</sup></td>
                                                 <td>{{ $penawaran->nama }}</td>
                                                 <td>{{ $penawaran->bukti }} bidang {{ $penawaran->bidang }}</td>
-                                                <td>{{ $penawaran->luas }}</td>
+                                                <td>{{ $penawaran->luas }} m<sup>2</sup></td>
                                                 <td>{{ 'Rp ' . number_format($penawaran->harga_dasar, 0, ',', '.') }}</td>
                                                 <td>{{ 'Rp ' . number_format($penawaran->nilai_penawaran, 0, ',', '.') }}</td>
                                                 <td class="text-right">

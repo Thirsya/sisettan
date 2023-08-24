@@ -33,37 +33,6 @@
                         <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i
                                     class="fas fa-search"></i></a></li>
                     </ul>
-                    <ul class="navbar-nav mr-3">
-                        <div class="form-group">
-                            <select class="form-control select2" @error('tahun_lelang') is-invalid @enderror
-                                name="tahun_lelang" id="dropdown-item">
-                                <option value="">Tahun Lelang</option>
-                                @foreach ($tahun as $item)
-                                    <option value="{{ $item->id }}" data-tahun="{{ $item->tahun }}">
-                                        {{ $item->tahun }}</option>
-                                @endforeach
-                            </select>
-                            @error('jenis_kelamin')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-
-                                </div>
-                            @enderror
-                        </div>
-                    </ul>
-                    <ul class="navbar-nav mr-3">
-                        <div class="form-group" id="dropdownKelurahan" style="display: none;">
-                            <select class="form-control select2" @error('kelurahan') is-invalid @enderror
-                                name="kelurahan">
-                                <option value="">Pilih Kelurahan</option>
-                            </select>
-                            @error('kelurahan')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-                    </ul>
                 </form>
                     <li class="dropdown"><a href="#" data-toggle="dropdown"
                             class="nav-link dropdown-toggle nav-link-lg nav-link-user">
