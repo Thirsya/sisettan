@@ -185,4 +185,14 @@ class PenawaranController extends Controller
 
         return redirect()->back()->with('success', 'Semua data berhasil dihapus.');
     }
+
+    public function downloadTemplate()
+    {
+        $templatePath = public_path('Excel/templates/penawaran_template.xlsx');
+        if (!file_exists($templatePath)) {
+            return redirect()->route('penawaran.index')->with('error', 'Template file not found.');
+        }
+
+        return response()->download($templatePath, 'penawaran_template.xlsx');
+    }
 }

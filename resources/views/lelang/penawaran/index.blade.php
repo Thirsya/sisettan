@@ -35,6 +35,9 @@
                                 <a class="btn btn-info btn-primary active search">
                                     <i class="fa fa-search" aria-hidden="true"></i>
                                     Search Penawaran</a>
+                                <a class="btn btn-info btn-primary active" href="{{ route('penawaran.download-template') }}">
+                                    <i class="fa fa-upload" aria-hidden="true"></i>
+                                    Penawaran Template</a>
                             </div>
                         </div>
                         <div class="card-body">
