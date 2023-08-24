@@ -122,6 +122,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::resource('daftar', DaftarController::class);
         Route::post('/getLatestNoUrut', [DaftarController::class, 'getLatestNoUrut'])->name('getLatestNoUrut');
 
+        Route::get('tkd/download-template', [TkdController::class, 'downloadTemplate'])->name('tkd.download-template');
         Route::post('tkd/import', [TkdController::class, 'import'])->name('tkd.import');
         Route::get('tkd/export', [TkdController::class, 'export'])->name('tkd.export');
         Route::resource('tkd', TkdController::class);

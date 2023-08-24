@@ -131,4 +131,14 @@ class TkdController extends Controller
     {
         return Excel::download(new TkdsExport, 'TKD - Harga Dasar.xlsx');
     }
+
+    public function downloadTemplate()
+    {
+        $templatePath = public_path('Excel/templates/tkd_template.xlsx');
+        if (!file_exists($templatePath)) {
+            return redirect()->route('tkd.index')->with('error', 'Template file not found.');
+        }
+
+        return response()->download($templatePath, 'tkd_template.xlsx');
+    }
 }
