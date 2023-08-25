@@ -53,7 +53,7 @@
                                                     {{ $item->tahun }}</option>
                                             @endforeach
                                         </select>
-                                        @error('jenis_kelamin')
+                                        @error('tahun')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
 

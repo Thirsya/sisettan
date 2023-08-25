@@ -3,7 +3,7 @@
         <a href="index.html">{{ $title }}</a>
     </div>
     <div class="sidebar-brand sidebar-brand-sm">
-        <a href="index.html">St</a>
+        <a href="index.html">TKD</a>
     </div>
     <ul class="sidebar-menu">
         @foreach ($menuGroups as $item)
