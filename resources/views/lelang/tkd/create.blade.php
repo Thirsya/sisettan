@@ -88,9 +88,9 @@
                         </div>
                         <div class="form-group">
                             <label>Keterangan</label>
-                            <input type="text" id="keterangan" name="keterangan"
+                            <textarea id="keterangan" name="keterangan"
                                 class="form-control @error('keterangan') is-invalid @enderror"
-                                placeholder="Masukan Keterangan" autocomplete="off">
+                                placeholder="Masukkan Keterangan" autocomplete="off" rows="4"></textarea>
                             @error('keterangan')
                                 <div class="invalid-feedback">
                                     {{ $message }}

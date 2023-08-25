@@ -81,16 +81,21 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label>Keterangan</label>
-                            <input type="text" id="keterangan" name="keterangan"
+                            <label for="keterangan">Keterangan</label>
+                            <textarea id="keterangan" name="keterangan"
                                 class="form-control @error('keterangan') is-invalid @enderror"
-                                placeholder="Masukan Keterangan" autocomplete="off">
+                                placeholder="Masukkan Keterangan" rows="4" autocomplete="off">
+                                @error('keterangan')
+                                    {{ old('keterangan') }}
+                                @enderror
+                            </textarea>
                             @error('keterangan')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
                             @enderror
                         </div>
+
                 </div>
                 <div class="card-footer text-right">
                     <button class="btn btn-primary">Submit</button>

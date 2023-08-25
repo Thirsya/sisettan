@@ -37,9 +37,9 @@
                                 <a class="btn btn-info btn-primary active search">
                                     <i class="fa fa-search" aria-hidden="true"></i>
                                     Search Kelurahan</a>
-                                <a class="btn btn-info btn-primary active" href="{{ route('kelurahan.download-template') }}">
+                                {{-- <a class="btn btn-info btn-primary active" href="{{ route('kelurahan.download-template') }}">
                                     <i class="fa fa-upload" aria-hidden="true"></i>
-                                    Kelurahan Template</a>
+                                    Kelurahan Template</a> --}}
                             </div>
                         </div>
                         <div class="card-body">
@@ -61,6 +61,8 @@
                                             for="file-upload">Choose File</label>
                                         <input type="file" id="file-upload" class="custom-file-input" name="import-file"
                                             data-id="send-import">
+                                        <br /><br />
+                                        <a href="{{ route('kelurahan.download-template') }}" class="text">Unduh Template</a>
                                         <br /> <br />
                                         <div class="footer text-right">
                                             <button class="btn btn-primary" data-id="submit-import">Import File</button>

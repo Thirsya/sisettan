@@ -25,19 +25,25 @@
                         <div class="card-header">
                             <h4>Penawaran List</h4>
                             <div class="card-header-action">
-                                <a class="btn btn-icon icon-left btn-primary" href="{{ route('penawaran.create') }}">Create New Penawaran</a>
+                                {{-- <a class="btn btn-icon icon-left btn-primary" href="{{ route('penawaran.create') }}">Create New Penawaran</a> --}}
                                 <a class="btn btn-info btn-primary active import">
                                     <i class="fa fa-download" aria-hidden="true"></i>
                                     Import Penawaran</a>
-                                    <a class="btn btn-info btn-primary active" href="{{ route('penawaran.export') }}" data-id="export">
-                                        <i class="fa fa-upload" aria-hidden="true"></i>
+                                <a class="btn btn-info btn-primary active" href="{{ route('penawaran.export') }}" data-id="export">
+                                    <i class="fa fa-upload" aria-hidden="true"></i>
                                     Export Penawaran</a>
+                                {{-- <a class="btn btn-info btn-primary active" href="{{ route('penawaran.download-template') }}">
+                                    <i class="fa fa-upload" aria-hidden="true"></i>
+                                    Penawaran Template</a> --}}
+                                <a class="btn btn-info btn-primary active" href="#">
+                                    <i class="fas fa-exclamation"></i>
+                                    Luas Lebih dari 2 Hektar</a>
+                                <a class="btn btn-info btn-primary active" href="#">
+                                    <i class="fas fa-exclamation"></i>
+                                    Bidang/SHP Tidak Laku</a>
                                 <a class="btn btn-info btn-primary active search">
                                     <i class="fa fa-search" aria-hidden="true"></i>
                                     Search Penawaran</a>
-                                <a class="btn btn-info btn-primary active" href="{{ route('penawaran.download-template') }}">
-                                    <i class="fa fa-upload" aria-hidden="true"></i>
-                                    Penawaran Template</a>
                             </div>
                         </div>
                         <div class="card-body">
@@ -59,6 +65,8 @@
                                             for="file-upload">Choose File</label>
                                         <input type="file" id="file-upload" class="custom-file-input" name="import-file"
                                             data-id="send-import">
+                                        <br /><br />
+                                        <a href="{{ route('penawaran.download-template') }}" class="text">Unduh Template</a>
                                         <br /> <br />
                                         <div class="footer text-right">
                                             <button class="btn btn-primary" data-id="submit-import">Import File</button>

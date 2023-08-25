@@ -36,9 +36,9 @@
                                 <a class="btn btn-info btn-primary active search">
                                     <i class="fa fa-search" aria-hidden="true"></i>
                                     Search Harga Dasar</a>
-                                <a class="btn btn-info btn-primary active" href="{{ route('tkd.download-template') }}">
+                                {{-- <a class="btn btn-info btn-primary active" href="{{ route('tkd.download-template') }}">
                                     <i class="fa fa-upload" aria-hidden="true"></i>
-                                    Harga Dasar Template</a>
+                                    Harga Dasar Template</a> --}}
                             </div>
                         </div>
                         <div class="card-body">
@@ -60,6 +60,8 @@
                                             for="file-upload">Choose File</label>
                                         <input type="file" id="file-upload" class="custom-file-input" name="import-file"
                                             data-id="send-import">
+                                        <br /><br />
+                                        <a href="{{ route('tkd.download-template') }}" class="text">Unduh Template</a>
                                         <br /> <br />
                                         <div class="footer text-right">
                                             <button class="btn btn-primary" data-id="submit-import">Import File</button>
@@ -107,7 +109,8 @@
                                                 <td>{{ $tkd->kelurahan}}</td>
                                                 <td>{{ $tkd->bukti}}</td>
                                                 <td>{{ $tkd->luas}} m<sup>2</sup></td>
-                                                <td>{{ 'Rp ' . number_format($tkd->harga_dasar, 0, ',', '.') }}</td>
+                                                {{-- <td>{{ 'Rp ' . number_format($tkd->harga_dasar, 0, ',', '.') }}</td> --}}
+                                                <td>{{ $tkd->harga_dasar}}</td>
                                                 <td>{{ $tkd->keterangan}}</td>
                                                 <td>{{ $tkd->nop}}</td>
                                                 <td class="text-right">
