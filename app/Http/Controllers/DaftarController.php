@@ -52,6 +52,8 @@ class DaftarController extends Controller
                 return $query->whereIn('daftars.id_kelurahan', $kelurahanIds);
             })
             ->where('daftars.id_kelurahan', $kelurahanIdFromDaerah)
+            ->whereNull('daftars.deleted_at')
+
             ->orderByRaw("CAST(daftars.no_urut AS SIGNED) ASC")
             ->paginate(10);
         $daftarQuery->appends(['daftar' => $daftarName, 'kelurahan' => $requestedKelurahanIds]);
@@ -60,11 +62,10 @@ class DaftarController extends Controller
             'kelurahans' => $kelurahans,
             'daftarName' => $daftarName,
             'requestedKelurahanIds' => $requestedKelurahanIds,
-            'kelurahanSelected' => $requestedKelurahanIds, // Seems redundant. Consider if needed.
-            'daftar' => $daftarName // Seems redundant. Consider if needed.
+            'kelurahanSelected' => $requestedKelurahanIds,
+            'daftar' => $daftarName
         ]);
     }
-
 
     public function create()
     {
