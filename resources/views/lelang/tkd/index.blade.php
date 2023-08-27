@@ -94,8 +94,8 @@
                                             <th>Bidang</th>
                                             <th>Kelurahan</th>
                                             <th>Bukti</th>
-                                            <th>Luas</th>
-                                            <th>Harga Dasar</th>
+                                            <th style="width: 100px">Luas</th>
+                                            <th style="width: 120px">Harga Dasar</th>
                                             <th>Keterangan</th>
                                             <th>Nop</th>
                                             <th class="text-right">Action</th>
@@ -109,8 +109,7 @@
                                                 <td>{{ $tkd->kelurahan}}</td>
                                                 <td>{{ $tkd->bukti}}</td>
                                                 <td>{{ $tkd->luas}} m<sup>2</sup></td>
-                                                {{-- <td>{{ 'Rp ' . number_format($tkd->harga_dasar, 0, ',', '.') }}</td> --}}
-                                                <td>{{ $tkd->harga_dasar}}</td>
+                                                <td>{{ 'Rp ' . number_format($tkd->harga_dasar, 0, ',', '.') }}</td>
                                                 <td>{{ $tkd->keterangan}}</td>
                                                 <td>{{ $tkd->nop}}</td>
                                                 <td class="text-right">

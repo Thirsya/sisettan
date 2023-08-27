@@ -12,8 +12,8 @@ class ShareYearsToView
 {
     public function handle(Request $request, Closure $next)
     {
-        $tahun = Tahun::all();
-        View::share(['tahun' => $tahun]);
+        // $tahun = Tahun::all();
+        // View::share(['tahun' => $tahun]);
 
         return $next($request);
     }

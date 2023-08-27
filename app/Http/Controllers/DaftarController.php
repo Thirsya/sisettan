@@ -8,6 +8,7 @@ use App\Models\Daftar;
 use App\Http\Requests\StoreDaftarRequest;
 use App\Http\Requests\UpdateDaftarRequest;
 use App\Imports\DaftarsImport;
+use App\Models\Daerah;
 use App\Models\Kelurahan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -29,11 +30,10 @@ class DaftarController extends Controller
     {
         $kelurahans = Kelurahan::all();
         $daftarName = $request->input('daftar');
-        $kelurahanIds = $request->input('kelurahan');
-        $daftar = $request->input('daftar');
-        // $tahunId = session('tahun_id');
-        $kelurahanId = session('kelurahan_id');
-        $query = daftar::select(
+        $requestedKelurahanIds = $request->input('kelurahan');
+        $daftarIdFromSession = (int) session('selected_kelurahan_id');
+        $kelurahanIdFromDaerah = Daerah::where('id', $daftarIdFromSession)->pluck('id_kelurahan')->first();
+        $daftarQuery = daftar::select(
             'daftars.id',
             'daftars.id_kelurahan',
             'daftars.no_urut',
@@ -48,26 +48,23 @@ class DaftarController extends Controller
             ->when($request->input('nama'), function ($query, $nama) {
                 return $query->where('daftars.nama', 'like', '%' . $nama . '%');
             })
-            ->when($request->input('kelurahan'), function ($query, $kelurahan) {
-                return $query->whereIn('daftars.id_kelurahan', $kelurahan);
+            ->when($requestedKelurahanIds, function ($query, $kelurahanIds) {
+                return $query->whereIn('daftars.id_kelurahan', $kelurahanIds);
             })
-            // ->whereYear('daftars.tgl_perjanjian', $tahunId)
-            ->where('daftars.id_kelurahan', $kelurahanId)
+            ->where('daftars.id_kelurahan', $kelurahanIdFromDaerah)
             ->orderByRaw("CAST(daftars.no_urut AS SIGNED) ASC")
             ->paginate(10);
-        $kelurahanSelected = $request->input('kelurahan');
-
-        $query->appends(['daftar' => $daftarName, 'kelurahan' => $kelurahanIds]);
-
+        $daftarQuery->appends(['daftar' => $daftarName, 'kelurahan' => $requestedKelurahanIds]);
         return view('lelang.daftar.index')->with([
-            'daftars' => $query,
+            'daftars' => $daftarQuery,
             'kelurahans' => $kelurahans,
             'daftarName' => $daftarName,
-            'kelurahanIds' => $kelurahanIds,
-            'kelurahanSelected' => $kelurahanSelected,
-            'daftar' => $daftar,
+            'requestedKelurahanIds' => $requestedKelurahanIds,
+            'kelurahanSelected' => $requestedKelurahanIds, // Seems redundant. Consider if needed.
+            'daftar' => $daftarName // Seems redundant. Consider if needed.
         ]);
     }
+
 
     public function create()
     {

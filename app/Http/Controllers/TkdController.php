@@ -8,6 +8,8 @@ use App\Models\Tkd;
 use App\Http\Requests\StoreTkdRequest;
 use App\Http\Requests\UpdateTkdRequest;
 use App\Imports\TkdsImport;
+use App\Models\Daerah;
+use App\Models\Daftar;
 use App\Models\Kelurahan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -30,7 +32,8 @@ class TkdController extends Controller
         $tkdName = $request->input('tkd');
         $kelurahanIds = $request->input('kelurahan');
         $tkd = $request->input('tkd');
-        $kelurahanId = session('kelurahan_id');
+        $daftarIdFromSession = (int) session('selected_kelurahan_id');
+        $kelurahanIdFromDaerah = Daerah::where('id', $daftarIdFromSession)->pluck('id_kelurahan')->first();
         $query = Tkd::select(
             'tkds.id',
             'tkds.id_kelurahan',
@@ -50,7 +53,7 @@ class TkdController extends Controller
             ->when($request->input('kelurahan'), function ($query, $kelurahan) {
                 return $query->whereIn('tkds.id_kelurahan', $kelurahan);
             })
-            ->where('tkds.id_kelurahan', $kelurahanId)
+            ->where('tkds.id_kelurahan', $kelurahanIdFromDaerah)
             // ->orderBy('tkds.id_kelurahan', 'asc')
             ->paginate(20);
         $kelurahanSelected = $request->input('kelurahan');

@@ -25,7 +25,7 @@
                         <div class="card-header">
                             <h4>Penawaran List</h4>
                             <div class="card-header-action">
-                                {{-- <a class="btn btn-icon icon-left btn-primary" href="{{ route('penawaran.create') }}">Create New Penawaran</a> --}}
+                                <a class="btn btn-icon icon-left btn-primary" href="{{ route('penawaran.create') }}">Create New Penawaran</a>
                                 <a class="btn btn-info btn-primary active import">
                                     <i class="fa fa-download" aria-hidden="true"></i>
                                     Import Penawaran</a>
@@ -36,7 +36,7 @@
                                     <i class="fa fa-upload" aria-hidden="true"></i>
                                     Penawaran Template</a> --}}
                                 <a class="btn btn-info btn-primary active" href="#">
-                                    <i class="fas fa-exclamation"></i>
+                                    <i class="fas fa-fire"></i>
                                     Luas Lebih dari 2 Hektar</a>
                                 <a class="btn btn-info btn-primary active" href="#">
                                     <i class="fas fa-exclamation"></i>

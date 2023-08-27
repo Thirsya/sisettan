@@ -44,7 +44,7 @@
                                 <form action="{{ route('login') }}" method="POST" class="needs-validation"
                                     novalidate="">
                                     @csrf
-                                    <div class="form-group">
+                                    {{-- <div class="form-group">
                                         <select class="form-control select2" @error('tahun_lelang') is-invalid @enderror
                                             name="tahun_lelang" id="dropdown-item">
                                             <option value="">Tahun Lelang</option>
@@ -59,11 +59,11 @@
 
                                             </div>
                                         @enderror
-                                    </div>
+                                    </div> --}}
                                     <div class="form-group">
                                         <input type="username" name="username" value="{{ old('username') }}"
                                             class="form-control @error('username') is-invalid @enderror"
-                                            placeholder="Username" id="username" style="display: none   ;">
+                                            placeholder="Username" id="username" style="display: block   ;">
                                         @error('username')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -71,7 +71,7 @@
                                     <div class="form-group">
                                         <input type="password" name="password"
                                             class="form-control @error('password') is-invalid @enderror"
-                                            placeholder="Password" id="password" style="display: none;">
+                                            placeholder="Password" id="password" style="display: block;">
                                         @error('password')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -89,7 +89,7 @@
                                     </div>
                                     <div class="form-group">
                                         <button id="masuk" type="submit" class="btn btn-primary btn-lg btn-block"
-                                            tabindex="4" style="display: none;">
+                                            tabindex="4" style="display: block;">
                                             Masuk
                                         </button>
                                     </div>
@@ -132,8 +132,8 @@
                 var password = document.getElementById('password');
                 var dropdownKelurahan = document.getElementById('dropdownKelurahan');
                 var masuk = document.getElementById('masuk');
-                username.style.display = 'block';
-                password.style.display = 'block';
+                username.style.display = 'none';
+                password.style.display = 'none';
                 dropdownKelurahan.style.display = 'block';
                 masuk.style.display = 'block';
             });
@@ -196,7 +196,7 @@
             });
         });
     </script>
-    <script>
+    {{-- <script>
         $(document).ready(function() {
             $('#masuk').on('click', function(e) {
                 e.preventDefault();
@@ -245,7 +245,7 @@
                 }
             });
         });
-    </script>
+    </script> --}}
     @stack('customScript')
 </body>
 

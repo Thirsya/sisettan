@@ -8,6 +8,7 @@ use App\Models\Penawaran;
 use App\Http\Requests\StorePenawaranRequest;
 use App\Http\Requests\UpdatePenawaranRequest;
 use App\Imports\PenawaransImport;
+use App\Models\Daerah;
 use App\Models\Daftar;
 use App\Models\Tkd;
 use Illuminate\Http\Request;
@@ -30,7 +31,8 @@ class PenawaranController extends Controller
         $tkds = Tkd::all();
         $harga_dasar = $request->input('harga_dasar');
         // $tahunId = session('tahun_id');
-        $kelurahanId = session('kelurahan_id');
+        $daftarIdFromSession = (int) session('selected_kelurahan_id');
+        $kelurahanIdFromDaerah = Daerah::where('id', $daftarIdFromSession)->pluck('id_kelurahan')->first();
         $penawarans = DB::table('penawarans')
             ->select(
                 'penawarans.id',
@@ -66,7 +68,7 @@ class PenawaranController extends Controller
                 return $query->whereIn('daerah.jenis_barang_id', $bukti);
             })
             // ->whereYear('daftars.tgl_perjanjian', $tahunId)
-            ->where('daftars.id_kelurahan', $kelurahanId)
+            ->where('daftars.id_kelurahan', $kelurahanIdFromDaerah)
             ->paginate(10);
         $tkdSelected = $request->input('bukti');
         return view('lelang.penawaran.index')->with([

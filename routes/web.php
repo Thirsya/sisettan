@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\DaerahController;
 use App\Http\Controllers\DaftarController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DemoController;
 use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\KecamatanController;
@@ -31,7 +32,6 @@ use Illuminate\Http\Request;
 Route::get('/', function () {
     return view('auth/login');
 });
-Route::get('/getDaerah', [AuthController::class, 'requestAjaxLogin'])->name('requestAjaxLogin');
 
 
 Route::post('/setSessionTahun', function (Request $request) {
@@ -45,9 +45,13 @@ Route::post('/setSessionTahun', function (Request $request) {
 })->name('setSessionTahun');
 
 Route::group(['middleware' => ['auth', 'verified']], function () {
-    Route::get('/dashboard', function () {
-        return view('home', ['users' => User::get(),]);
-    });
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/getDaerah', [DashboardController::class, 'requestAjaxLogin'])->name('requestAjaxLogin');
+    Route::get('/total-pendaftar', [DashboardController::class, 'getTotalPendaftar']);
+    Route::get('/total-tkd', [DashboardController::class, 'getTotalTkd']);
+    Route::get('/total-penawaran', [DashboardController::class, 'getTotalPenawaran']);
+    Route::post('/store-selected-values', [DashboardController::class, 'storeSelectedValues'])
+        ->name('storeSelectedValues');
 
     Route::prefix('user-management')->group(function () {
         Route::resource('user', UserController::class);
