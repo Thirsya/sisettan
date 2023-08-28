@@ -54,7 +54,7 @@ class TkdController extends Controller
                 return $query->whereIn('tkds.id_kelurahan', $kelurahan);
             })
             ->where('tkds.id_kelurahan', $kelurahanIdFromDaerah)
-            // ->orderBy('tkds.id_kelurahan', 'asc')
+            ->whereNull('tkds.deleted_at')
             ->paginate(20);
         $kelurahanSelected = $request->input('kelurahan');
 

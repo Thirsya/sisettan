@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 return new class extends Migration
 {
@@ -24,6 +25,7 @@ return new class extends Migration
             $table->string('luas');
             $table->string('keterangan')->nullable();
             $table->string('nop')->nullable();
+            $table->softDeletes();
 
             $table->foreign('id_kelurahan')->references('id')->on('kelurahans');
             $table->timestamps();
