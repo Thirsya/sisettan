@@ -89,7 +89,7 @@
                                 <table class="table table-bordered table-md">
                                     <tbody>
                                         <tr>
-                                            <th>No</th>
+                                            <th>Id</th>
                                             <th>Letak</th>
                                             <th>Bidang</th>
                                             <th>Kelurahan</th>
@@ -108,7 +108,7 @@
                                                 <td>{{ $tkd->bidang}}</td>
                                                 <td>{{ $tkd->kelurahan}}</td>
                                                 <td>{{ $tkd->bukti}}</td>
-                                                <td>{{ $tkd->luas}} m<sup>2</sup></td>
+                                                <td>{{ number_format($tkd->luas, 0, ',', '.')}} m<sup>2</sup></td>
                                                 <td>{{ 'Rp ' . number_format($tkd->harga_dasar, 0, ',', '.') }}</td>
                                                 <td>{{ $tkd->keterangan}}</td>
                                                 <td>{{ $tkd->nop}}</td>

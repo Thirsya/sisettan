@@ -118,8 +118,8 @@
                                                 <td>{{ $penawaran->total_luas }} m<sup>2</sup></td>
                                                 <td>{{ $penawaran->nama }}</td>
                                                 <td>{{ $penawaran->bukti }} bidang {{ $penawaran->bidang }}</td>
-                                                <td>{{ $penawaran->luas }} m<sup>2</sup></td>
-                                                <td>{{ 'Rp ' . number_format($penawaran->harga_dasar, 0, ',', '.') }}</td>
+                                                <td>{{ number_format($penawaran->luas, 0, ',', '.') }} m<sup>2</sup></td>
+                                                <td>Rp {{ number_format($penawaran->harga_dasar, 0, ',', '.') }}</td>
                                                 <td>{{ 'Rp ' . number_format($penawaran->nilai_penawaran, 0, ',', '.') }}</td>
                                                 <td class="text-right">
                                                     <div class="d-flex justify-content-end">

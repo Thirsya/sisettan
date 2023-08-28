@@ -71,17 +71,21 @@
                                 <table class="table table-bordered table-md">
                                     <tbody>
                                         <tr>
-                                            <th>#</th>
+                                            <th>No</th>
+                                            <th>Username</th>
                                             <th>Name</th>
-                                            <th>Email</th>
+                                            <th>Password</th>
+                                            <th>HK</th>
                                             <th>Created At</th>
                                             <th class="text-right">Action</th>
                                         </tr>
                                         @foreach ($users as $key => $user)
                                             <tr>
                                                 <td>{{ ($users->currentPage() - 1) * $users->perPage() + $key + 1 }}</td>
-                                                <td>{{ $user->name }}</td>
-                                                <td>{{ $user->email }}</td>
+                                                <td>{{ $user->username }}</td>
+                                                <td>{{ $user->nama_pejabat }}</td>
+                                                <td>{{ $user->password }}</td>
+                                                <td>{{ $user->hk }}</td>
                                                 <td>{{ $user->created_at }}</td>
                                                 <td class="text-right">
                                                     <div class="d-flex justify-content-end">

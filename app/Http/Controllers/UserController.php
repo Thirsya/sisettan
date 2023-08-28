@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\UsersImport;
 use App\Models\Category;
+use App\Models\Pejabat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -33,22 +34,42 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        //index -> menampilkan tabel data
+        $pejabats = Pejabat::all();
+        $userName = $request->input('user');
+        $pejabatIds = $request->input('pejabat');
+        $user = $request->input('user');
 
-        Category::create([
-            "name" => "Masuk User Page",
-        ]);
-
-        // mengambil data
-        $users = DB::table('users')
-            ->when($request->input('name'), function ($query, $name) {
-                return $query->where('name', 'like', '%' . $name . '%');
+        $query = User::select(
+            'users.id',
+            'users.username',
+            'users.id_pejabat',
+            'users.password',
+            'users.hk',
+            'pejabats.nama_pejabat',
+            'pejabats.nip_pejabat',
+            'pejabats.no_sk')
+            ->leftJoin('pejabats', 'users.id_pejabat', '=', 'pejabats.id')
+            ->when($request->input('user'), function ($query, $user) {
+                return $query->where('users.user', 'like', '%' . $user . '%');
             })
-            ->select('id', 'name', 'email', DB::raw("DATE_FORMAT(created_at, '%d %M %Y') as created_at"))
+            ->when($request->input('pejabat'), function ($query, $pejabat) {
+                return $query->whereIn('users.id_pejabat', $pejabat);
+            })
+            ->whereNull('users.deleted_at')
             ->paginate(10);
-        return view('users.index', compact('users'));
-    }
+        $pejabatSelected = $request->input('pejabat');
 
+        $query->appends(['user' => $userName, 'pejabat' => $pejabatIds]);
+
+        return view('master data.user.index')->with([
+            'users' => $query,
+            'pejabats' => $pejabats,
+            'userName' => $userName,
+            'pejabatIds' => $pejabatIds,
+            'pejabatSelected' => $pejabatSelected,
+            'user' => $user,
+        ]);
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -71,7 +92,6 @@ class UserController extends Controller
         //simpan data
         User::create([
             'name' => $request['name'],
-            'email' => $request['email'],
             'password' => Hash::make($request['password']),
         ]);
         return redirect(route('user.index'))->with('success', 'Data Berhasil Ditambahkan');;
