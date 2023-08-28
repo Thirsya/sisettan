@@ -40,6 +40,7 @@ class OPDController extends Controller
                 return $query->whereIn('opds.id_kecamatan', $kecamatan);
             })
             // ->orderBy('opds.id_kecamatan', 'asc')
+            ->whereNull('opds.deleted_at')
             ->paginate(10);
         $kecamatanSelected = $request->input('kecamatan');
 

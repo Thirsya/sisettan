@@ -29,6 +29,7 @@ class JabatanController extends Controller
             ->when($request->input('jabatan'), function ($query, $jabatan) {
                 return $query->where('jabatan', 'like', '%' . $jabatan . '%');
             })
+            ->whereNull('jabatans.deleted_at')
             ->paginate(10);
         return view('users.jabatan.index', compact('jabatans'));
     }

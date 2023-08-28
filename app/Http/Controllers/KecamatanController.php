@@ -29,6 +29,7 @@ class KecamatanController extends Controller
             ->when($request->input('kecamatan'), function ($query, $kecamatan) {
                 return $query->where('kecamatan', 'like', '%' . $kecamatan . '%');
             })
+            ->whereNull('kecamatans.deleted_at')
             ->paginate(10);
         return view('master data.kecamatan.index', compact('kecamatans'));
     }

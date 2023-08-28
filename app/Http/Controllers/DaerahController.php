@@ -54,6 +54,7 @@ class DaerahController extends Controller
                 return $query->whereIn('daerah.jenis_barang_id', $kecamatan);
             })
             // ->orderBy('daerah.kode_jbs', 'asc')
+            ->whereNull('daerahs.deleted_at')
             ->paginate(10);
         $kecamatanSelected = $request->input('kecamatan');
         return view('master data.daerah.index')->with([

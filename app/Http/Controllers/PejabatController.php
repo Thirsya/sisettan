@@ -49,6 +49,7 @@ class PejabatController extends Controller
                 return $query->whereIn('pejabat.jenis_barang_id', $jabatan);
             })
             // ->orderBy('pejabat.kode_jbs', 'asc')
+            ->whereNull('pejabats.deleted_at')
             ->paginate(10);
         $jabatanSelected = $request->input('jabatan');
         return view('users.pejabat.index')->with([

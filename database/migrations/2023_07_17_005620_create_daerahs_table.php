@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 return new class extends Migration
 {
@@ -21,6 +22,7 @@ return new class extends Migration
             $table->string('periode')->nullable();
             $table->unsignedBigInteger('thn_sts')->nullable();
             $table->date('tanggal_lelang')->nullable();
+            $table->softDeletes();
 
             $table->foreign('id_kelurahan')->references('id')->on('kelurahans')->restrictOnDelete();
             $table->foreign('id_kecamatan')->references('id')->on('kecamatans')->restrictOnDelete();

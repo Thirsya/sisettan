@@ -40,6 +40,7 @@ class KelurahanController extends Controller
                 return $query->whereIn('kelurahans.id_kecamatan', $kecamatan);
             })
             // ->orderBy('kelurahans.id_kecamatan', 'asc')
+            ->whereNull('kelurahans.deleted_at')
             ->paginate(10);
         $kecamatanSelected = $request->input('kecamatan');
 

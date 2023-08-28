@@ -29,6 +29,7 @@ class TahunController extends Controller
             ->when($request->input('tahun'), function ($query, $tahun) {
                 return $query->where('tahun', 'like', '%' . $tahun . '%');
             })
+            ->whereNull('tahuns.deleted_at')
             ->paginate(10);
         return view('master data.tahun.index', compact('tahuns'));
     }
