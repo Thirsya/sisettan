@@ -13,6 +13,7 @@ use App\Http\Controllers\Menu\MenuItemController;
 use App\Http\Controllers\OpdController;
 use App\Http\Controllers\PejabatController;
 use App\Http\Controllers\PenawaranController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleAndPermission\AssignPermissionController;
 use App\Http\Controllers\RoleAndPermission\AssignUserToRoleController;
 use App\Http\Controllers\RoleAndPermission\ExportPermissionController;
@@ -46,6 +47,8 @@ Route::post('/setSessionTahun', function (Request $request) {
 
 Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/profile', function () {return view('profile.index');})->name('profile.edit');
+    Route::PUT('/update-profile-information', [ProfileController::class, 'update'])->name('profile.user.update');
     Route::get('/getDaerah', [DashboardController::class, 'requestAjaxLogin'])->name('requestAjaxLogin');
     Route::get('/total-pendaftar', [DashboardController::class, 'getTotalPendaftar']);
     Route::get('/total-tkd', [DashboardController::class, 'getTotalTkd']);
