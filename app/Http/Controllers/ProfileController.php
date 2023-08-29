@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreProfileRequest;
 use App\Http\Requests\UpdateProfileRequest;
+use App\Models\Pejabat;
 use App\Models\User;
 
 class ProfileController extends Controller
@@ -23,6 +24,7 @@ class ProfileController extends Controller
     public function index(Request $request)
     {
         $users = User::all();
+        $pejabats = Pejabat::all();
         $name = $request->input('name');
         $profiles = DB::table('profiles')
             ->select(
@@ -58,6 +60,7 @@ class ProfileController extends Controller
         return view('profile.index')->with([
             'profiles' => $profiles,
             'users' => $users,
+            'pejabats' => $pejabats,
             'userSelected' => $userSelected,
             'name' => $name,
         ]);
