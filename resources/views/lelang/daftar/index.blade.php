@@ -25,15 +25,16 @@
                         <div class="card-header">
                             <h4>Pendaftar Lelang List</h4>
                             <div class="card-header-action">
-                                <a class="btn btn-icon icon-left btn-primary" href="{{ route('daftar.create') }}">Create New
-                                    Pendaftar Lelang</a>
-                                <a class="btn btn-info btn-primary active import">
+                                <a class="btn btn-icon icon-left btn-primary" href="{{ route('daftar.create') }}">
+                                    <i class="far fa-file"></i>
+                                    Create Pendaftar Lelang</a>
+                                <a class="btn btn-info btn-warning active import bg-warning">
                                     <i class="fa fa-download" aria-hidden="true"></i>
                                     Import Pendaftar Lelang</a>
-                                <a class="btn btn-info btn-primary active" href="{{ route('daftar.export') }}" data-id="export">
+                                <a class="btn btn-info btn-dark active bg-dark" href="{{ route('daftar.export') }}" data-id="export">
                                     <i class="fa fa-upload" aria-hidden="true"></i>
                                     Export Pendaftar Lelang</a>
-                                <a class="btn btn-info btn-primary active search">
+                                <a class="btn btn-info btn-infp active search bg-info">
                                     <i class="fa fa-search" aria-hidden="true"></i>
                                     Search Pendaftar Lelang</a>
                                 {{-- <a class="btn btn-info btn-primary active" href="{{ route('daftar.download-template') }}">

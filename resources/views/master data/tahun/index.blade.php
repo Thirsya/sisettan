@@ -25,16 +25,17 @@
                         <div class="card-header">
                             <h4>Tahun List</h4>
                             <div class="card-header-action">
-                                <a class="btn btn-icon icon-left btn-primary" href="{{ route('tahun.create') }}">Create New
-                                    Tahun</a>
-                                <a class="btn btn-info btn-primary active import">
+                                <a class="btn btn-icon icon-left btn-primary" href="{{ route('tahun.create') }}">
+                                    <i class="far fa-file"></i>
+                                    Create Tahun</a>
+                                <a class="btn btn-info btn-warning active import bg-warning">
                                     <i class="fa fa-download" aria-hidden="true"></i>
                                     Import Tahun</a>
-                                <a class="btn btn-info btn-primary active" href="{{ route('tahun.export') }}"
+                                <a class="btn btn-info btn-dark active bg-dark" href="{{ route('tahun.export') }}"
                                     data-id="export">
                                     <i class="fa fa-upload" aria-hidden="true"></i>
                                     Export Tahun</a>
-                                <a class="btn btn-info btn-primary active search">
+                                <a class="btn btn-info btn-info active search bg-info">
                                     <i class="fa fa-search" aria-hidden="true"></i>
                                     Search Tahun</a>
                             </div>

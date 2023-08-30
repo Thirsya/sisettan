@@ -9,97 +9,58 @@
             <h2 class="section-title">Tambah Penawaran</h2>
             <div class="card">
                 <div class="card-header">
-                    <h4>Validasi Tambah Data</h4>
+                    <h4>Penawar : </h4>
+                </div>
+                <div class="card-header">
+                    <h4>No Urut : </h4>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('penawaran.store') }}" method="post">
-                        @csrf
-                        <div class="form-group">
-                            <label>Pendaftar</label>
-                            <select class="form-control select2 @error('idfk_daftar') is-invalid @enderror"
-                                name="idfk_daftar" data-id="select-pendaftar" id="idfk_daftar">
-                                <option value="">Piih Pendaftar</option>
-                                @foreach ($daftars as $nama)
-                                    <option value="{{ $nama->id }}">
-                                        {{ $nama->nama }} - {{ $nama->id_daftar }}</option>
-                                @endforeach
-                            </select>
-                            @error('idfk_daftar')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label>ID Harga Dasar</label>
-                            <select class="form-control select2 @error('idfk_tkd') is-invalid @enderror" name="idfk_tkd"
-                                data-id="select-tkd" id="idfk_tkd">
-                                <option value="">Piih Harga Dasar</option>
-                                @foreach ($tkds as $id_tkd)
-                                    <option value="{{ $id_tkd->id }}">
-                                        {{ $id_tkd->bukti }}</option>
-                                @endforeach
-                            </select>
-                            @error('idfk_tkd')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label>Luas Bidang</label>
-                            <input type="text" id="luas" name="luas"
-                                class="form-control @error('luas') is-invalid @enderror" placeholder="Masukan Luas Bidang"
-                                autocomplete="off" readonly>
-                            @error('luas')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label>Harga Dasar</label>
-                            <input type="text" id="harga_dasar" name="harga_dasar"
-                                class="form-control @error('harga_dasar') is-invalid @enderror"
-                                placeholder="Masukan Harga_dasar Bidang" autocomplete="off" readonly>
-                            @error('harga_dasar')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label>Nilai Penawaran</label>
-                            <input type="text" id="nilai_penawaran" name="nilai_penawaran"
-                                class="form-control @error('nilai_penawaran') is-invalid @enderror"
-                                placeholder="Masukan Nilai Penawaran" autocomplete="off">
-                            @error('nilai_penawaran')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="keterangan">Keterangan</label>
-                            <textarea id="keterangan" name="keterangan"
-                                class="form-control @error('keterangan') is-invalid @enderror"
-                                placeholder="Masukkan Keterangan" rows="4" autocomplete="off">
-                                @error('keterangan')
-                                    {{ old('keterangan') }}
-                                @enderror
-                            </textarea>
-                            @error('keterangan')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-
-                </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-md">
+                            <tbody>
+                                <tr style="text-align: center">
+                                    <th>Bukti</th>
+                                    <th>Luas</th>
+                                    <th>Bidang</th>
+                                    <th>Harga Dasar</th>
+                                    <th>Pemenang</th>
+                                    <th class="text-right" style="width: 500px; text-align: center" >Penawaran</th>
+                                </tr>
+                                    <tr>
+                                        {{-- <td>{{ ($penawarans->currentPage() - 1) * $penawarans->perPage() + $key + 1 }}
+                                        </td>
+                                        <td>{{ $penawaran->total_luas }} m<sup>2</sup></td>
+                                        <td>{{ $penawaran->nama }}</td>
+                                        <td>{{ $penawaran->bukti }} bidang {{ $penawaran->bidang }}</td>
+                                        <td>{{ number_format($penawaran->luas, 0, ',', '.') }} m<sup>2</sup></td>
+                                        <td>Rp {{ number_format($penawaran->harga_dasar, 0, ',', '.') }}</td>
+                                        <td>{{ 'Rp ' . number_format($penawaran->nilai_penawaran, 0, ',', '.') }}</td>
+                                        <td class="text-right">
+                                            <div class="d-flex justify-content-end">
+                                                <a href="{{ route('penawaran.edit', $penawaran->id) }}"
+                                                    class="btn btn-sm btn-info btn-icon "><i
+                                                        class="fas fa-edit"></i>
+                                                    Edit</a>
+                                                <form action="{{ route('penawaran.destroy', $penawaran->id) }}"
+                                                    method="POST" class="ml-2">
+                                                    <input type="hidden" name="_method" value="DELETE">
+                                                    <input type="hidden" name="_token"
+                                                        value="{{ csrf_token() }}">
+                                                    <button class="btn btn-sm btn-danger btn-icon confirm-delete" type="submit">
+                                                        <i class="fas fa-times"></i> Delete </button>
+                                                </form>
+                                            </div>
+                                        </td> --}}
+                                    </tr>
+                            </tbody>
+                        </table>
+                        {{-- <div class="d-flex justify-content-center">
+                            {{ $penawarans->withQueryString()->links() }}
+                        </div> --}}
+                    </div>
                 <div class="card-footer text-right">
-                    <button class="btn btn-primary">Submit</button>
-                    <a class="btn btn-secondary" href="{{ route('penawaran.index') }}">Cancel</a>
+                    <a class="btn btn-primary" href="{{ route('penawaran.index')}}">Selesai</a>
+                    {{-- <a class="btn btn-secondary" href="{{ route('penawaran.index') }}">Cancel</a> --}}
                 </div>
                 </form>
             </div>

@@ -25,23 +25,25 @@
                         <div class="card-header">
                             <h4>Penawaran List</h4>
                             <div class="card-header-action">
-                                <a class="btn btn-icon icon-left btn-primary" href="{{ route('penawaran.create') }}">Create New Penawaran</a>
-                                <a class="btn btn-info btn-primary active import">
+                                <a class="btn btn-icon icon-left btn-primary" href="{{ route('penawaran.create') }}">
+                                    <i class="far fa-file"></i>
+                                    Create Penawaran</a>
+                                <a class="btn btn-info btn-warning active import bg-warning">
                                     <i class="fa fa-download" aria-hidden="true"></i>
                                     Import Penawaran</a>
-                                <a class="btn btn-info btn-primary active" href="{{ route('penawaran.export') }}" data-id="export">
+                                <a class="btn btn-info btn-dark active bg-dark" href="{{ route('penawaran.export') }}" data-id="export">
                                     <i class="fa fa-upload" aria-hidden="true"></i>
                                     Export Penawaran</a>
                                 {{-- <a class="btn btn-info btn-primary active" href="{{ route('penawaran.download-template') }}">
                                     <i class="fa fa-upload" aria-hidden="true"></i>
                                     Penawaran Template</a> --}}
-                                <a class="btn btn-info btn-primary active" href="#">
-                                    <i class="fas fa-fire"></i>
+                                <a class="btn btn-info btn-success active bg-success" href="#">
+                                    <i class="fas fa-check"></i>
                                     Luas Lebih dari 2 Hektar</a>
-                                <a class="btn btn-info btn-primary active" href="#">
-                                    <i class="fas fa-exclamation"></i>
+                                <a class="btn btn-info btn-danger active bg-danger" href="#">
+                                    <i class="fas fa-times"></i>
                                     Bidang/SHP Tidak Laku</a>
-                                <a class="btn btn-info btn-primary active search">
+                                <a class="btn btn-info btn-info active search bg-info">
                                     <i class="fa fa-search" aria-hidden="true"></i>
                                     Search Penawaran</a>
                             </div>

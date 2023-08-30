@@ -25,16 +25,16 @@
                         <div class="card-header">
                             <h4>Kelurahan List</h4>
                             <div class="card-header-action">
-                                <a class="btn btn-icon icon-left btn-primary" href="{{ route('kelurahan.create') }}">Create
-                                    New
-                                    Kelurahan</a>
-                                <a class="btn btn-info btn-primary active import">
+                                <a class="btn btn-icon icon-left btn-primary" href="{{ route('kelurahan.create') }}">
+                                    <i class="far fa-file"></i>
+                                    Create Kelurahan</a>
+                                <a class="btn btn-info btn-warning active import bg-warning">
                                     <i class="fa fa-download" aria-hidden="true"></i>
                                     Import Kelurahan</a>
-                                <a class="btn btn-info btn-primary active" href="{{ route('kelurahan.export') }}" data-id="export">
+                                <a class="btn btn-info btn-dark active bg-dark" href="{{ route('kelurahan.export') }}" data-id="export">
                                     <i class="fa fa-upload" aria-hidden="true"></i>
                                     Export Kelurahan</a>
-                                <a class="btn btn-info btn-primary active search">
+                                <a class="btn btn-info btn-info active search bg-info">
                                     <i class="fa fa-search" aria-hidden="true"></i>
                                     Search Kelurahan</a>
                                 {{-- <a class="btn btn-info btn-primary active" href="{{ route('kelurahan.download-template') }}">

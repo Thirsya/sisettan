@@ -25,15 +25,16 @@
                         <div class="card-header">
                             <h4>Harga Dasar List</h4>
                             <div class="card-header-action">
-                                <a class="btn btn-icon icon-left btn-primary" href="{{ route('tkd.create') }}">Create New
-                                    Harga Dasar</a>
-                                <a class="btn btn-info btn-primary active import">
+                                <a class="btn btn-icon icon-left btn-primary" href="{{ route('tkd.create') }}">
+                                    <i class="far fa-file"></i>
+                                    Create Harga Dasar</a>
+                                <a class="btn btn-info btn-waning active import  bg-warning">
                                     <i class="fa fa-download" aria-hidden="true"></i>
                                     Import Harga Dasar</a>
-                                <a class="btn btn-info btn-primary active" href="{{ route('tkd.export') }}" data-id="export">
+                                <a class="btn btn-info btn-dark active  bg-dark" href="{{ route('tkd.export') }}" data-id="export">
                                     <i class="fa fa-upload" aria-hidden="true"></i>
                                     Export Harga Dasar</a>
-                                <a class="btn btn-info btn-primary active search">
+                                <a class="btn btn-info btn-info active search  bg-info">
                                     <i class="fa fa-search" aria-hidden="true"></i>
                                     Search Harga Dasar</a>
                                 {{-- <a class="btn btn-info btn-primary active" href="{{ route('tkd.download-template') }}">

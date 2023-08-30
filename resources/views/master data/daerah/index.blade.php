@@ -25,15 +25,16 @@
                         <div class="card-header">
                             <h4>Daerah Lelang List</h4>
                             <div class="card-header-action">
-                                <a class="btn btn-icon icon-left btn-primary" href="{{ route('daerah.create') }}">Create New
-                                    Daerah Lelang</a>
-                                <a class="btn btn-info btn-primary active import">
+                                <a class="btn btn-icon icon-left btn-primary" href="{{ route('daerah.create') }}">
+                                    <i class="far fa-file"></i>
+                                    Create Daerah Lelang</a>
+                                <a class="btn btn-info btn-warning active import bg-warning">
                                     <i class="fa fa-download" aria-hidden="true"></i>
                                     Import Daerah Lelang</a>
-                                <a class="btn btn-info btn-primary active" href="{{ route('daerah.export') }}" data-id="export">
+                                <a class="btn btn-info btn-dark active bg-dark" href="{{ route('daerah.export') }}" data-id="export">
                                     <i class="fa fa-upload" aria-hidden="true"></i>
                                     Export Daerah Lelang</a>
-                                <a class="btn btn-info btn-primary active search">
+                                <a class="btn btn-info btn-info active search bg-info">
                                     <i class="fa fa-search" aria-hidden="true"></i>
                                     Search Daerah Lelang</a>
                                 {{-- <a class="btn btn-info btn-primary active" href="{{ route('daerah.download-template') }}">

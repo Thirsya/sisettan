@@ -25,16 +25,17 @@
                         <div class="card-header">
                             <h4>Kecamatan List</h4>
                             <div class="card-header-action">
-                                <a class="btn btn-icon icon-left btn-primary" href="{{ route('kecamatan.create') }}">Create New
-                                    Kecamatan</a>
-                                <a class="btn btn-info btn-primary active import">
+                                <a class="btn btn-icon icon-left btn-primary" href="{{ route('kecamatan.create') }}">
+                                    <i class="far fa-file"></i>
+                                    Create Kecamatan</a>
+                                <a class="btn btn-info btn-warning active import bg-warning">
                                     <i class="fa fa-download" aria-hidden="true"></i>
                                     Import Kecamatan</a>
-                                <a class="btn btn-info btn-primary active" href="{{ route('kecamatan.export') }}"
+                                <a class="btn btn-info btn-dark active bg-dark" href="{{ route('kecamatan.export') }}"
                                     data-id="export">
                                     <i class="fa fa-upload" aria-hidden="true"></i>
                                     Export Kecamatan</a>
-                                <a class="btn btn-info btn-primary active search">
+                                <a class="btn btn-info btn-info active search bg-info">
                                     <i class="fa fa-search" aria-hidden="true"></i>
                                     Search Kecamatan</a>
                             </div>
