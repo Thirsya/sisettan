@@ -43,6 +43,12 @@
                                 <a class="btn btn-info btn-danger active bg-danger" href="#">
                                     <i class="fas fa-times"></i>
                                     Bidang/SHP Tidak Laku</a>
+                                <a class="btn btn-info btn-primary active bg-primary" href="#">
+                                    <i class="far fa-file"></i>
+                                    STS & Perjanjian</a>
+                                <a class="btn btn-info btn-primary active bg-primary" href="#">
+                                    <i class="far fa-file"></i>
+                                    Lampiran BA</a>
                                 <a class="btn btn-info btn-info active search bg-info">
                                     <i class="fa fa-search" aria-hidden="true"></i>
                                     Search Penawaran</a>
@@ -122,7 +128,7 @@
                                                 <td>{{ $penawaran->bukti }} bidang {{ $penawaran->bidang }}</td>
                                                 <td>{{ number_format($penawaran->luas, 0, ',', '.') }} m<sup>2</sup></td>
                                                 <td>Rp {{ number_format($penawaran->harga_dasar, 0, ',', '.') }}</td>
-                                                <td>{{ 'Rp ' . number_format($penawaran->nilai_penawaran, 0, ',', '.') }}</td>
+                                                <td>Rp {{ number_format($penawaran->nilai_penawaran, 0, ',', '.') }}</td>
                                                 <td class="text-right">
                                                     <div class="d-flex justify-content-end">
                                                         <a href="{{ route('penawaran.edit', $penawaran->id) }}"

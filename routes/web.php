@@ -47,7 +47,7 @@ Route::post('/setSessionTahun', function (Request $request) {
 
 Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/profile', function () {return view('profile.index');})->name('profile.edit');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.edit');
     Route::PUT('/update-profile-information', [ProfileController::class, 'update'])->name('profile.user.update');
     Route::get('/getDaerah', [DashboardController::class, 'requestAjaxLogin'])->name('requestAjaxLogin');
     Route::get('/total-pendaftar', [DashboardController::class, 'getTotalPendaftar']);

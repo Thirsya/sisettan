@@ -3,96 +3,90 @@
 namespace App\Http\Controllers;
 
 use App\Models\Profile;
-use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreProfileRequest;
 use App\Http\Requests\UpdateProfileRequest;
 use App\Models\Pejabat;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+
 
 class ProfileController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-        $this->middleware('permission:profile.index')->only('index');
-        $this->middleware('permission:profile.create')->only('create', 'store');
-        $this->middleware('permission:profile.edit')->only('edit', 'update');
-        $this->middleware('permission:profile.destroy')->only('destroy');
-    }
-
-    public function index(Request $request)
+    public function index()
     {
         $users = User::all();
-        $pejabats = Pejabat::all();
-        $name = $request->input('name');
+        $pejabat = DB::table('pejabats')
+            ->select(
+                'pejabats.id',
+                'pejabats.nama_pejabat',
+                'pejabats.id_jabatan',
+                'pejabats.id_opd',
+                'pejabats.nip_pejabat',
+                'pejabats.no_sk',
+                'opds.id as opds_id',
+                'opds.id_kecamatan',
+                'jabatans.jabatan',
+            )
+            ->leftJoin('jabatans', 'pejabats.id_jabatan', '=', 'jabatans.id')
+            ->leftJoin('opds', 'pejabats.id_opd', '=', 'opds.id')
+            ->whereNull('pejabats.deleted_at')
+            ->get();
+
         $profiles = DB::table('profiles')
             ->select(
                 'profiles.id',
                 'profiles.id_user',
-                'profiles.idfk_pejabat',
+                'profiles.id_pejabat',
                 'profiles.hk',
                 'pejabats.id_jabatan',
                 'pejabats.id_opd',
                 'pejabats.nama_pejabat',
                 'pejabats.nip_pejabat',
                 'pejabats.no_sk',
-                'users.username',
-                'users.name',
-                'users.email',
-                'users.email_verified_at',
-                'users.password',
-                'users.two_factor_secret',
-                'users.two_factor_recovery_codes',
-                'users.two_deleted_at',
                 'users.remember_token',
             )
             ->leftJoin('users', 'profiles.id_user', '=', 'users.id')
             ->leftJoin('pejabats', 'profiles.id_pejabat', '=', 'pejabats.id')
-            ->when($request->input('nama_pejabat'), function ($query, $nama_pejabat) {
-                return $query->where('nama_pejabat', 'like', '%' . $nama_pejabat . '%');
-            })
-            ->when($request->input('username'), function ($query, $username) {
-                return $query->whereIn('daerah.jenis_barang_id', $username);
-            })
             ->paginate(10);
-        $userSelected = $request->input('username');
+
+        $currentUserId = Auth::user()->id;
+        $profilesCollection = collect($profiles->items());
+        $currentProfile = $profilesCollection->firstWhere('id_user', $currentUserId);
+        $currentIdPejabat = $currentProfile ? $currentProfile->id_pejabat : null;
+
         return view('profile.index')->with([
             'profiles' => $profiles,
             'users' => $users,
-            'pejabats' => $pejabats,
-            'userSelected' => $userSelected,
-            'name' => $name,
+            'pejabat' => $pejabat,
+            'currentIdPejabat' => $currentIdPejabat,
+            'currentProfile' => $currentProfile,
         ]);
     }
 
-    public function create()
+    public function update(Request $request)
     {
-        //
-    }
+        $validatedData = $request->validate([
+            'username' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
+            'id_pejabat' => 'required|integer',
+            'hk' => 'required|integer',
+        ]);
 
-    public function store(StoreProfileRequest $request)
-    {
-        //
-    }
+        $user = Auth::user();
+        $userId = $user->id;
 
-    public function show(Profile $profile)
-    {
-        //
-    }
+        $user->username = $validatedData['username'];
+        $user->name = $validatedData['name'];
+        $user->save();
 
-    public function edit(Profile $profile)
-    {
-        //
-    }
+        $profile = Profile::firstOrNew(['id_user' => $userId]);
+        $profile->id_pejabat = $validatedData['id_pejabat'];
+        $profile->hk = $validatedData['hk'];
+        $profile->save();
 
-    public function update(UpdateProfileRequest $request, Profile $profile)
-    {
-        //
-    }
-
-    public function destroy(Profile $profile)
-    {
-        //
+        return redirect()->back()->with('success', 'Profil berhasil diperbarui.');
     }
 }
