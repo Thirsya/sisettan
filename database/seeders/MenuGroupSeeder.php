@@ -40,7 +40,7 @@ class MenuGroupSeeder extends Seeder
                 ],
                 [
                     'name' => 'Pejabat',
-                    'icon' => 'fas fa-users',
+                    'icon' => 'fas fa-user-tag',
                     'permission_name' => 'user.management',
                 ],
                 [
@@ -50,7 +50,12 @@ class MenuGroupSeeder extends Seeder
                 ],
                 [
                     'name' => 'Lelang',
-                    'icon' => 'fas fa-bars',
+                    'icon' => 'fas fa-dollar-sign',
+                    'permisison_name' => 'lelang',
+                ],
+                [
+                    'name' => 'PDF',
+                    'icon' => 'far fa-file',
                     'permisison_name' => 'lelang',
                 ],
             ]

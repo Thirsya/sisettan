@@ -27,6 +27,7 @@ class RoleAndPermissionSeeder extends Seeder
         Permission::create(['name' => 'menu.management']);
         Permission::create(['name' => 'master.data']);
         Permission::create(['name' => 'lelang']);
+        Permission::create(['name' => 'pdf']);
 
         //user
         Permission::create(['name' => 'user.index']);
@@ -125,11 +126,27 @@ class RoleAndPermissionSeeder extends Seeder
         Permission::create(['name' => 'penawaran.edit']);
         Permission::create(['name' => 'penawaran.destroy']);
 
+        Permission::create(['name' => 'pemenang.index']);
+        // Permission::create(['name' => 'pemenang.create']);
+        // Permission::create(['name' => 'pemenang.edit']);
+        // Permission::create(['name' => 'pemenang.destroy']);
+
+        Permission::create(['name' => 'rekap-sts.index']);
+        // Permission::create(['name' => 'rekap-sts.create']);
+        // Permission::create(['name' => 'rekap-sts.edit']);
+        // Permission::create(['name' => 'rekap-sts.destroy']);
+
+        Permission::create(['name' => 'gugur.index']);
+        // Permission::create(['name' => 'gugur.create']);
+        // Permission::create(['name' => 'gugur.edit']);
+        // Permission::create(['name' => 'gugur.destroy']);
+
         // create roles
         $roleUser = Role::create(['name' => 'user']);
         $roleUser->givePermissionTo([
             'dashboard',
             'lelang',
+            'pdf',
 
             'daftar.index',
             'daftar.create',
@@ -145,6 +162,12 @@ class RoleAndPermissionSeeder extends Seeder
             'penawaran.create',
             'penawaran.edit',
             'penawaran.destroy',
+
+            'pemenang.index',
+
+            'rekap-sts.index',
+
+            'gugur.index',
         ]);
 
         // create Super Admin

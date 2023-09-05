@@ -126,6 +126,24 @@ class MenuItemSeeder extends Seeder
                     'permission_name' => 'penawaran.index',
                     'menu_group_id' => 7,
                 ],
+                [
+                    'name' => 'Pemenang',
+                    'route' => 'pdf/pemenang',
+                    'permission_name' => 'pemenang.index',
+                    'menu_group_id' => 8,
+                ],
+                [
+                    'name' => 'Rekap STS',
+                    'route' => 'pdf/rekap-sts',
+                    'permission_name' => 'rekap-sts.index',
+                    'menu_group_id' => 8,
+                ],
+                [
+                    'name' => 'Gugur',
+                    'route' => 'pdf/gugur',
+                    'permission_name' => 'gugur.index',
+                    'menu_group_id' => 8,
+                ],
             ]
         );
     }
