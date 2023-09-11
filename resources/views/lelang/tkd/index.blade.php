@@ -36,7 +36,7 @@
                                     Export Harga Dasar</a>
                                 <a class="btn btn-info btn-info active search  bg-info">
                                     <i class="fa fa-search" aria-hidden="true"></i>
-                                    Search Harga Dasar</a>
+                                    Search SHP</a>
                                 {{-- <a class="btn btn-info btn-primary active" href="{{ route('tkd.download-template') }}">
                                     <i class="fa fa-upload" aria-hidden="true"></i>
                                     Harga Dasar Template</a> --}}
@@ -75,9 +75,9 @@
                                 <form id="search" method="GET" action="{{ route('tkd.index') }}">
                                     <div class="form-row">
                                         <div class="form-group col-md-4">
-                                            <label for="role">Harga Dasar</label>
-                                            <input type="text" name="tkd" class="form-control" id="tkd"
-                                                placeholder="Group tkd">
+                                            <label for="role">Bukti (SHP)</label>
+                                            <input type="text" name="bukti" class="form-control" id="bukti"
+                                                placeholder="SHP">
                                         </div>
                                     </div>
                                     <div class="text-right">

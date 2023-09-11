@@ -80,8 +80,8 @@ class PenawaranController extends Controller
             )
             ->leftJoin('tkds', 'penawarans.idfk_tkd', '=', 'tkds.id')
             ->leftJoin('daftars', 'penawarans.idfk_daftar', '=', 'daftars.id')
-            ->when($request->input('no_urut'), function ($query, $no_urut) {
-                return $query->where('no_urut', 'like', '%' . $no_urut . '%');
+            ->when($request->input('bukti'), function ($query, $bukti) {
+                return $query->where('bukti', 'like', '%' . $bukti . '%');
             })
             ->when($request->input('bukti'), function ($query, $bukti) {
                 return $query->whereIn('daerah.jenis_barang_id', $bukti);

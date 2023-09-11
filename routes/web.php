@@ -147,5 +147,6 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::resource('penawaran', PenawaranController::class);
         Route::get('/getTkd', [PenawaranController::class, 'getTkd'])->name('getTkd');
         Route::delete('/delete-all', [PenawaranController::class, 'deleteAll'])->name('delete.all');
+        Route::get('/lelang/penawaran/sts', function () {return view('lelang.penawaran.sts'); })->name('sts');
     });
 });

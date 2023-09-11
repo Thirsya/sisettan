@@ -74,9 +74,9 @@
                                 <form id="search" method="GET" action="{{ route('daftar.index') }}">
                                     <div class="form-row">
                                         <div class="form-group col-md-4">
-                                            <label for="role">Pendaftar</label>
-                                            <input type="text" name="daftar" class="form-control" id="daftar"
-                                                placeholder="Group daftar">
+                                            <label for="role">Nama Pendaftar</label>
+                                            <input type="text" name="nama" class="form-control" id="nama"
+                                                placeholder="Nama Pendaftar">
                                         </div>
                                     </div>
                                     <div class="text-right">

@@ -44,7 +44,7 @@
                                 <a class="btn btn-info btn-danger active bg-danger" href="#">
                                     <i class="fas fa-times"></i>
                                     Bidang/SHP Tidak Laku</a>
-                                <a class="btn btn-info btn-primary active bg-primary" href="#">
+                                <a class="btn btn-info btn-primary active bg-primary" href="{{ route('sts') }}">
                                     <i class="far fa-file"></i>
                                     STS & Perjanjian</a>
                                 <a class="btn btn-info btn-primary active bg-primary" href="#">
@@ -118,9 +118,9 @@
                                 <form id="search" method="GET" action="{{ route('penawaran.index') }}">
                                     <div class="form-row">
                                         <div class="form-group col-md-4">
-                                            <label for="role">Pendaftar</label>
-                                            <input type="text" name="nama" class="form-control" id="nama"
-                                                placeholder="Group Nama">
+                                            <label for="role">Bukti Hak (SHP)</label>
+                                            <input type="text" name="bukti" class="form-control" id="bukti"
+                                                placeholder="Bukti Hak">
                                         </div>
                                     </div>
                                     <div class="text-right">

@@ -47,8 +47,8 @@ class TkdController extends Controller
             'kelurahans.kelurahan'
         )
             ->leftJoin('kelurahans', 'tkds.id_kelurahan', '=', 'kelurahans.id')
-            ->when($request->input('letak'), function ($query, $letak) {
-                return $query->where('tkds.letak', 'like', '%' . $letak . '%');
+            ->when($request->input('bukti'), function ($query, $bukti) {
+                return $query->where('tkds.bukti', 'like', '%' . $bukti . '%');
             })
             ->when($request->input('kelurahan'), function ($query, $kelurahan) {
                 return $query->whereIn('tkds.id_kelurahan', $kelurahan);
