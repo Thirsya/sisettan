@@ -113,19 +113,22 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::get('kecamatan/export', [KecamatanController::class, 'export'])->name('kecamatan.export');
         Route::resource('kecamatan', KecamatanController::class);
 
-        Route::get('kelurahan/download-template', [KelurahanController::class, 'downloadTemplate'])->name('kelurahan.download-template');
+        Route::get('kelurahan/download-template', [KelurahanController::class, 'downloadTemplate'])
+            ->name('kelurahan.download-template');
         Route::post('kelurahan/import', [KelurahanController::class, 'import'])->name('kelurahan.import');
         Route::get('kelurahan/export', [KelurahanController::class, 'export'])->name('kelurahan.export');
         Route::resource('kelurahan', KelurahanController::class);
 
-        Route::get('daerah/download-template', [DaerahController::class, 'downloadTemplate'])->name('daerah.download-template');
+        Route::get('daerah/download-template', [DaerahController::class, 'downloadTemplate'])
+            ->name('daerah.download-template');
         Route::post('daerah/import', [DaerahController::class, 'import'])->name('daerah.import');
         Route::get('daerah/export', [DaerahController::class, 'export'])->name('daerah.export');
         Route::resource('daerah', DaerahController::class);
         Route::get('/getKelurahans', [DaerahController::class, 'getKelurahans'])->name('getKelurahans');
     });
     Route::prefix('lelang')->group(function () {
-        Route::get('daftar/download-template', [DaftarController::class, 'downloadTemplate'])->name('daftar.download-template');
+        Route::get('daftar/download-template', [DaftarController::class, 'downloadTemplate'])
+            ->name('daftar.download-template');
         Route::post('daftar/import', [DaftarController::class, 'import'])->name('daftar.import');
         Route::get('daftar/export', [DaftarController::class, 'export'])->name('daftar.export');
         Route::resource('daftar', DaftarController::class);
@@ -136,7 +139,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::get('tkd/export', [TkdController::class, 'export'])->name('tkd.export');
         Route::resource('tkd', TkdController::class);
 
-        Route::get('penawaran/download-template', [PenawaranController::class, 'downloadTemplate'])->name('penawaran.download-template');
+        Route::post('penawaran/form', [PenawaranController::class, 'handleForm'])->name('penawaran.handleForm');
+        Route::get('penawaran/download-template', [PenawaranController::class, 'downloadTemplate'])
+            ->name('penawaran.download-template');
         Route::post('penawaran/import', [PenawaranController::class, 'import'])->name('penawaran.import');
         Route::get('penawaran/export', [PenawaranController::class, 'export'])->name('penawaran.export');
         Route::resource('penawaran', PenawaranController::class);

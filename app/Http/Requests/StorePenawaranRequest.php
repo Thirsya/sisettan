@@ -19,7 +19,7 @@ class StorePenawaranRequest extends FormRequest
             'idfk_tkd' => 'required',
             'luas' => 'required',
             'harga_dasar' => 'required',
-            'nilai_penawaran' => 'required',
+            'nilai_penawaran' => 'nullable',
             'keterangan' => 'nullable'
         ];
     }

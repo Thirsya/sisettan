@@ -33,6 +33,24 @@ class PenawaranController extends Controller
         // $tahunId = session('tahun_id');
         $daftarIdFromSession = (int) session('selected_kelurahan_id');
         $kelurahanIdFromDaerah = Daerah::where('id', $daftarIdFromSession)->pluck('id_kelurahan')->first();
+        $daftarList = Daftar::select(
+            'daftars.id',
+            'daftars.id_kelurahan',
+            'daftars.no_urut',
+            'daftars.nama',
+            'daftars.alamat',
+            'daftars.no_kk',
+            'daftars.no_wp',
+            'daftars.tgl_perjanjian',
+            'kelurahans.kelurahan'
+        )
+            ->leftJoin('kelurahans', 'daftars.id_kelurahan', '=', 'kelurahans.id')
+            ->where('daftars.id_kelurahan', $kelurahanIdFromDaerah)
+            ->whereNull('daftars.deleted_at')
+            ->orderByRaw("CAST(daftars.no_urut AS SIGNED) ASC")
+            ->get();
+
+
         $penawarans = DB::table('penawarans')
             ->select(
                 'penawarans.id',
@@ -51,6 +69,7 @@ class PenawaranController extends Controller
                 'daftars.no_wp',
                 'daftars.tgl_perjanjian',
                 'tkds.id_tkd',
+                'tkds.id_kelurahan',
                 'tkds.bidang',
                 'tkds.letak',
                 'tkds.bukti',
@@ -77,18 +96,46 @@ class PenawaranController extends Controller
             'tkds' => $tkds,
             'tkdSelected' => $tkdSelected,
             'harga_dasar' => $harga_dasar,
+            'daftarList' => $daftarList,
         ]);
+    }
+
+    public function handleForm(Request $request)
+    {
+        $request->validate([
+            'penawaran' => 'required',
+        ]);
+        session(['penawaran_id' => $request->penawaran]);
+        return redirect()->route('penawaran.create');
     }
 
     public function create()
     {
-        $kelurahanId = session('kelurahan_id');
-        $tkds = Tkd::where('id_kelurahan', $kelurahanId)->get();
-        $daftars = Daftar::where('id_kelurahan', $kelurahanId)->get();
+        $daftarIdFromSession = (int) session('selected_kelurahan_id');
+        $kelurahanIdFromDaerah = Daerah::where('id', $daftarIdFromSession)->pluck('id_kelurahan')->first();
+        $penawaranId = session('penawaran_id');
+        $tkds = Tkd::select(
+            'tkds.id',
+            'tkds.id_kelurahan',
+            'tkds.bidang',
+            'tkds.letak',
+            'tkds.bukti',
+            'tkds.harga_dasar',
+            'tkds.luas',
+            'tkds.keterangan',
+            'tkds.nop',
+            DB::raw('(SELECT nilai_penawaran
+                      FROM penawarans
+                      WHERE idfk_tkd = tkds.id
+                      ORDER BY nilai_penawaran ASC
+                      LIMIT 1 OFFSET 1) AS nilai_penawaran')
+        )
+            ->where('id_kelurahan', $kelurahanIdFromDaerah)
+            ->get();
+        $daftars = Daftar::where('id', $penawaranId)->first();
         return view('lelang.penawaran.create')->with([
             'tkds' => $tkds,
             'daftars' => $daftars,
-            'kelurahanId' => $kelurahanId,
         ]);
     }
 
@@ -104,30 +151,48 @@ class PenawaranController extends Controller
 
     public function store(StorePenawaranRequest $request)
     {
-        $idDaftar = Daftar::where('id', $request->idfk_daftar)->pluck('id_daftar')->first();
-        $idKelurahan = Daftar::where('id', $request->idfk_daftar)->pluck('id_kelurahan')->first();
-        $idTkd = Tkd::where('id', $request->idfk_tkd)->pluck('id_tkd')->first();
+        // dd($request->all());
+        try {
+            foreach ($request->nilai_penawaran as $tkdId => $value) {
+                if (is_null($value)) {
+                    continue;
+                }
+                $daftar = Daftar::find($request->idfk_daftar[$tkdId]);
+                if (!$daftar) {
+                    continue;
+                }
 
-        $idPenawaran = $idKelurahan . "X" . $idDaftar . $idTkd;
+                $idDaftar = $daftar->id_daftar;
+                $idKelurahan = $daftar->id_kelurahan;
+                $idTkd = Tkd::where('id', $tkdId)->pluck('id_tkd')->first();
 
-        $penawaran = Penawaran::create([
-            'id_penawaran' => $idPenawaran,
-            'total_luas' => 0,
-            'idfk_daftar' => $request->idfk_daftar,
-            'id_daftar' => $idDaftar,
-            'idfk_tkd' => $request->idfk_tkd,
-            'id_tkd' => $idTkd,
-            'nilai_penawaran' => $request->nilai_penawaran,
-            'keterangan' => $request->keterangan,
-        ]);
+                $idPenawaran = $idKelurahan . "X" . $idDaftar . $idTkd;
 
-        $totalLuasTkd = Tkd::where('id', $penawaran->idfk_tkd)->sum('luas');
-        $totalLuasPenawaran = Penawaran::where('idfk_daftar', $penawaran->idfk_daftar)->value('total_luas');
-        $newTotalLuas = $totalLuasTkd + $totalLuasPenawaran;
-        Penawaran::where('idfk_daftar', $penawaran->idfk_daftar)->update(['total_luas' => $newTotalLuas]);
+                $penawaran = Penawaran::create([
+                    'id_penawaran' => $idPenawaran,
+                    'total_luas' => 0,
+                    'idfk_daftar' => $request->idfk_daftar[$tkdId],
+                    'id_daftar' => $idDaftar,
+                    'idfk_tkd' => $tkdId,
+                    'id_tkd' => $idTkd,
+                    'nilai_penawaran' => $value,
+                    'keterangan' => '',
+                ]);
 
-        return redirect()->route('penawaran.index')->with('success', 'Tambah Data Penawaran Sukses');
+                $totalLuasTkd = Tkd::where('id', $penawaran->idfk_tkd)->sum('luas');
+                $totalLuasPenawaran = Penawaran::where('idfk_daftar', $penawaran->idfk_daftar)->value('total_luas');
+                $newTotalLuas = $totalLuasTkd + $totalLuasPenawaran;
+
+                Penawaran::where('idfk_daftar', $penawaran->idfk_daftar)->update(['total_luas' => $newTotalLuas]);
+            }
+
+            return redirect()->route('penawaran.index')->with('success', 'Tambah Data Penawaran Sukses');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
     }
+
+
 
     public function show(StorePenawaranRequest $request)
     {

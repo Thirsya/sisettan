@@ -25,13 +25,14 @@
                         <div class="card-header">
                             <h4>Penawaran List</h4>
                             <div class="card-header-action">
-                                <a class="btn btn-icon icon-left btn-primary" href="{{ route('penawaran.create') }}">
-                                    <i class="far fa-file"></i>
+                                <a class="btn btn-icon icon-left btn-primary create active bg-info">
+                                    <i class="far fa-file" aria-hidden="true"></i>
                                     Create Penawaran</a>
                                 <a class="btn btn-info btn-warning active import bg-warning">
                                     <i class="fa fa-download" aria-hidden="true"></i>
                                     Import Penawaran</a>
-                                <a class="btn btn-info btn-dark active bg-dark" href="{{ route('penawaran.export') }}" data-id="export">
+                                <a class="btn btn-info btn-dark active bg-dark" href="{{ route('penawaran.export') }}"
+                                    data-id="export">
                                     <i class="fa fa-upload" aria-hidden="true"></i>
                                     Export Penawaran</a>
                                 {{-- <a class="btn btn-info btn-primary active" href="{{ route('penawaran.download-template') }}">
@@ -51,10 +52,40 @@
                                     Lampiran BA</a>
                                 <a class="btn btn-info btn-info active search bg-info">
                                     <i class="fa fa-search" aria-hidden="true"></i>
-                                    Search Penawaran</a>
+                                    Search SHP</a>
                             </div>
                         </div>
                         <div class="card-body">
+                            <div class="show-create mb-3" style="display: none">
+                                <form id="create" method="POST" action="{{ route('penawaran.handleForm') }}">
+                                    @csrf
+                                    <div class="form-row">
+                                        <div class="form-group col-md-4">
+                                            <label for="penawaran">Pendaftar</label>
+                                            <select
+                                                class="form-control select2
+                                                    @error('penawaran') is-invalid @enderror"
+                                                name="penawaran">
+                                                <option value="">Pilih Pendaftar</option>
+                                                @foreach ($daftarList as $daftarListNoUrut)
+                                                    <option value="{{ $daftarListNoUrut->id }}">
+                                                        {{ $daftarListNoUrut->no_urut }} - {{ $daftarListNoUrut->nama }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            @error('penawaran')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                        <div class="text-right" style="padding-top: 29px">
+                                            <button class="btn btn-primary mr-1" type="submit">Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
                             <div class="show-import mb-4" style="display: none">
                                 @error('import-file')
                                     <div class="invalid-feedback d-flex mb-10" role="alert">
@@ -74,7 +105,8 @@
                                         <input type="file" id="file-upload" class="custom-file-input" name="import-file"
                                             data-id="send-import">
                                         <br /><br />
-                                        <a href="{{ route('penawaran.download-template') }}" class="text">Unduh Template</a>
+                                        <a href="{{ route('penawaran.download-template') }}" class="text">Unduh
+                                            Template</a>
                                         <br /> <br />
                                         <div class="footer text-right">
                                             <button class="btn btn-primary" data-id="submit-import">Import File</button>
@@ -98,11 +130,9 @@
                                 </form>
                             </div>
                             <div class="d-flex justify-content-end">
-                                <form action="{{ route('delete.all') }}"
-                                    method="POST" class="ml-2">
+                                <form action="{{ route('delete.all') }}" method="POST" class="ml-2">
                                     <input type="hidden" name="_method" value="DELETE">
-                                    <input type="hidden" name="_token"
-                                        value="{{ csrf_token() }}">
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                     <button class="btn btn-sm btn-danger btn-icon confirm-delete"></i> Delete All</button>
                                 </form>
                             </div>
@@ -121,8 +151,7 @@
                                         </tr>
                                         @foreach ($penawarans as $key => $penawaran)
                                             <tr>
-                                                <td>{{ ($penawarans->currentPage() - 1) * $penawarans->perPage() + $key + 1 }}
-                                                </td>
+                                                <td>{{ ($penawarans->currentPage() - 1) * $penawarans->perPage() + $key + 1 }}</td>
                                                 <td>{{ $penawaran->total_luas }} m<sup>2</sup></td>
                                                 <td>{{ $penawaran->nama }}</td>
                                                 <td>{{ $penawaran->bukti }} bidang {{ $penawaran->bidang }}</td>
@@ -140,7 +169,8 @@
                                                             <input type="hidden" name="_method" value="DELETE">
                                                             <input type="hidden" name="_token"
                                                                 value="{{ csrf_token() }}">
-                                                            <button class="btn btn-sm btn-danger btn-icon confirm-delete" type="submit">
+                                                            <button class="btn btn-sm btn-danger btn-icon confirm-delete"
+                                                                type="submit">
                                                                 <i class="fas fa-times"></i> Delete </button>
                                                         </form>
                                                     </div>
@@ -161,6 +191,7 @@
     </section>
 @endsection
 @push('customScript')
+    <script src="/assets/js/select2.min.js"></script>
     <script>
         $(document).ready(function() {
             $('.import').click(function(event) {
@@ -173,6 +204,12 @@
                 $(".show-search").slideToggle("fast");
                 $(".show-import").hide();
             });
+            $('.create').click(function(event) {
+                event.stopPropagation();
+                $(".show-create").slideToggle("fast");
+                $(".show-import").hide();
+                $(".show-search").hide();
+            });
             //ganti label berdasarkan nama file
             $('#file-upload').change(function() {
                 var i = $(this).prev('label').clone();
@@ -184,4 +221,5 @@
 @endpush
 
 @push('customStyle')
+    <link rel="stylesheet" href="/assets/css/select2.min.css">
 @endpush
