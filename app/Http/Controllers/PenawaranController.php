@@ -114,24 +114,27 @@ class PenawaranController extends Controller
         $daftarIdFromSession = (int) session('selected_kelurahan_id');
         $kelurahanIdFromDaerah = Daerah::where('id', $daftarIdFromSession)->pluck('id_kelurahan')->first();
         $penawaranId = session('penawaran_id');
-        $tkds = Tkd::select(
-            'tkds.id',
-            'tkds.id_kelurahan',
-            'tkds.bidang',
-            'tkds.letak',
-            'tkds.bukti',
-            'tkds.harga_dasar',
-            'tkds.luas',
-            'tkds.keterangan',
-            'tkds.nop',
-            DB::raw('(SELECT nilai_penawaran
-                      FROM penawarans
-                      WHERE idfk_tkd = tkds.id
-                      ORDER BY nilai_penawaran ASC
-                      LIMIT 1 OFFSET 1) AS nilai_penawaran')
-        )
+        $tkds = DB::table('tkds')
+            ->select(
+                'tkds.id',
+                'tkds.id_kelurahan',
+                'tkds.bidang',
+                'tkds.letak',
+                'tkds.bukti',
+                'tkds.harga_dasar',
+                'tkds.luas',
+                'tkds.keterangan',
+                'tkds.nop',
+                DB::raw('COALESCE((SELECT nilai_penawaran
+                        FROM penawarans
+                        WHERE idfk_tkd = tkds.id
+                        ORDER BY nilai_penawaran DESC
+                        LIMIT 1 OFFSET 1), null) AS nilai_penawaran')
+            )
             ->where('id_kelurahan', $kelurahanIdFromDaerah)
+            ->whereNull('tkds.deleted_at')
             ->get();
+
         $daftars = Daftar::where('id', $penawaranId)->first();
         return view('lelang.penawaran.create')->with([
             'tkds' => $tkds,
@@ -151,7 +154,6 @@ class PenawaranController extends Controller
 
     public function store(StorePenawaranRequest $request)
     {
-        // dd($request->all());
         try {
             foreach ($request->nilai_penawaran as $tkdId => $value) {
                 if (is_null($value)) {

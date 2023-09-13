@@ -54,7 +54,7 @@
                             </table>
                         </div>
                         <div class="card-footer text-right">
-                            <button type="submit" class="btn btn-success">Save</button>
+                            {{-- <button type="submit" class="btn btn-success">Save</button> --}}
                             <a class="btn btn-primary" href="{{ route('penawaran.index') }}">Selesai</a>
                         </div>
                     </form>
