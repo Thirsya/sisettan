@@ -127,7 +127,7 @@ class MenuItemSeeder extends Seeder
                     'menu_group_id' => 7,
                 ],
                 [
-                    'name' => 'Pemenang',
+                    'name' => 'Pemenang 1-5',
                     'route' => 'pdf/pemenang',
                     'permission_name' => 'pemenang.index',
                     'menu_group_id' => 8,

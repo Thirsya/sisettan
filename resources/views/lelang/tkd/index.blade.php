@@ -91,7 +91,7 @@
                                     <tbody>
                                         <tr>
                                             <th>Id</th>
-                                            <th>Letak</th>
+                                            <th style="width: 100px">Letak</th>
                                             <th>Bidang</th>
                                             <th>Kelurahan</th>
                                             <th>Bukti</th>

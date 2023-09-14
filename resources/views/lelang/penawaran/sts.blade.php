@@ -68,7 +68,7 @@
 @push('customScript')
     <script src="/assets/js/select2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
-    <script type="text/javascript">
+    {{-- <script type="text/javascript">
         $(document).ready(function() {
             $('[id^=nilai_penawaran_]').mask('000,000,000,000,000', {
                 reverse: true
@@ -82,7 +82,7 @@
                 });
             });
         });
-    </script>
+    </script> --}}
 @endpush
 
 @push('customStyle')

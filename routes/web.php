@@ -5,6 +5,7 @@ use App\Http\Controllers\DaerahController;
 use App\Http\Controllers\DaftarController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DemoController;
+use App\Http\Controllers\GugurController;
 use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\KecamatanController;
 use App\Http\Controllers\KelurahanController;
@@ -148,5 +149,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::get('/getTkd', [PenawaranController::class, 'getTkd'])->name('getTkd');
         Route::delete('/delete-all', [PenawaranController::class, 'deleteAll'])->name('delete.all');
         Route::get('/lelang/penawaran/sts', function () {return view('lelang.penawaran.sts'); })->name('sts');
+
+        Route::get('/cetakGugur', [GugurController::class, 'cetakGugur'])->name('cetakGugur');
     });
 });

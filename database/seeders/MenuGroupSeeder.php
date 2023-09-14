@@ -56,7 +56,7 @@ class MenuGroupSeeder extends Seeder
                 [
                     'name' => 'PDF',
                     'icon' => 'far fa-file',
-                    'permisison_name' => 'lelang',
+                    'permisison_name' => 'pdf',
                 ],
             ]
         );
