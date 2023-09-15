@@ -83,11 +83,12 @@ class GugurController extends Controller
 
     public function cetakGugur()
     {
-        $gugur = Gugur::all();
+        $gugurs = Gugur::all();
 
-        view()->share('gugur', $gugur);
-        $pdf = PDF::loadview('pdf.gugur.index');
-        return $pdf->download('Gugur PDF');
+        // view()->share('gugur', $gugur);
+        $pdf = PDF::loadview('pdf.gugur.index', ['gugurs'=>$gugurs]);
+        // return $pdf->download('Gugur PDF');
+        return $pdf->stream();
     }
 
     public function create()

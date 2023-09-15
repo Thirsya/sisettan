@@ -154,14 +154,18 @@ class PenawaranController extends Controller
 
     public function store(StorePenawaranRequest $request)
     {
-        try {
-            foreach ($request->nilai_penawaran as $tkdId => $value) {
+        if ($request->ajax()) {
+            try {
+                $tkdId = $request->input('idfk_tkd');
+                $value = $request->input('nilai_penawaran');
+
                 if (is_null($value)) {
-                    continue;
+                    return response()->json(['success' => false, 'message' => 'Nilai penawaran is missing']);
                 }
-                $daftar = Daftar::find($request->idfk_daftar[$tkdId]);
+
+                $daftar = Daftar::find($request->input('idfk_daftar'));
                 if (!$daftar) {
-                    continue;
+                    return response()->json(['success' => false, 'message' => 'Daftar not found']);
                 }
 
                 $idDaftar = $daftar->id_daftar;
@@ -173,7 +177,7 @@ class PenawaranController extends Controller
                 $penawaran = Penawaran::create([
                     'id_penawaran' => $idPenawaran,
                     'total_luas' => 0,
-                    'idfk_daftar' => $request->idfk_daftar[$tkdId],
+                    'idfk_daftar' => $request->input('idfk_daftar'),
                     'id_daftar' => $idDaftar,
                     'idfk_tkd' => $tkdId,
                     'id_tkd' => $idTkd,
@@ -186,13 +190,16 @@ class PenawaranController extends Controller
                 $newTotalLuas = $totalLuasTkd + $totalLuasPenawaran;
 
                 Penawaran::where('idfk_daftar', $penawaran->idfk_daftar)->update(['total_luas' => $newTotalLuas]);
-            }
 
-            return redirect()->route('penawaran.index')->with('success', 'Tambah Data Penawaran Sukses');
-        } catch (\Exception $e) {
-            return back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+                return response()->json(['success' => true, 'message' => 'Data saved successfully']);
+            } catch (\Exception $e) {
+                return response()->json(['success' => false, 'message' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+            }
+        } else {
+            //
         }
     }
+
 
 
 

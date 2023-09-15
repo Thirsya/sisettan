@@ -120,6 +120,7 @@ class MenuItemSeeder extends Seeder
                     'permission_name' => 'tkd.index',
                     'menu_group_id' => 7,
                 ],
+                
                 [
                     'name' => 'Penawaran',
                     'route' => 'lelang/penawaran',

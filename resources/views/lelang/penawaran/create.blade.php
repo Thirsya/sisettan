@@ -35,16 +35,25 @@
                                             <td>Rp {{ number_format($tkd->harga_dasar, 0, ',', '.') }}</td>
                                             <td>Rp {{ number_format((float) $tkd->nilai_penawaran, 0, ',', '.') }}</td>
                                             <td>
-                                                <input type="text" name="nilai_penawaran[{{ $tkd->id }}]"
-                                                    class="form-control" id="nilai_penawaran_{{ $tkd->id }}">
+                                                <div class="d-flex">
+                                                    <input type="text" name="nilai_penawaran[{{ $tkd->id }}]"
+                                                        class="form-control" id="nilai_penawaran_{{ $tkd->id }}">
+
+                                                    <button type="button" class="btn btn-success ml-2 save-btn"
+                                                        id="save_{{ $tkd->id }}" style="display:none;">Save</button>
+                                                </div>
+                                                <div class="invalid-feedback" id="feedback_{{ $tkd->id }}">
+                                                    Invalid value.
+                                                </div>
+
                                                 <input type="hidden" name="idfk_daftar[{{ $tkd->id }}]"
-                                                    value="{{ $daftars->id }}">
+                                                    value="{{ $daftars->id }}" id="idfk_daftar_{{ $tkd->id }}">
                                                 <input type="hidden" name="idfk_tkd[{{ $tkd->id }}]"
-                                                    value="{{ $tkd->id }}">
+                                                    value="{{ $tkd->id }}" id="idfk_tkd_{{ $tkd->id }}">
                                                 <input type="hidden" name="harga_dasar[{{ $tkd->id }}]"
-                                                    value="{{ $tkd->harga_dasar }}">
+                                                    value="{{ $tkd->harga_dasar }}" id="harga_dasar_{{ $tkd->id }}">
                                                 <input type="hidden" name="luas[{{ $tkd->id }}]"
-                                                    value="{{ $tkd->luas }}">
+                                                    value="{{ $tkd->luas }}" id="luas_{{ $tkd->id }}">
                                                 <input type="hidden" name="keterangan[{{ $tkd->id }}]"
                                                     value="">
                                             </td>
@@ -67,17 +76,60 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
-            $('[id^=nilai_penawaran_]').mask('000,000,000,000,000', {
-                reverse: true
-            });
+            bindEventsAndPlugins();
 
-            // Saat form disubmit, bersihkan format dari semua input nilai_penawaran
-            $('form').on('submit', function() {
-                $('[id^=nilai_penawaran_]').each(function() {
-                    var cleanValue = $(this).val().replace(/,/g, ''); // Hapus semua tanda koma
-                    $(this).val(cleanValue);
+            function bindEventsAndPlugins() {
+                $('[id^=nilai_penawaran_]').mask('000,000,000,000,000', {
+                    reverse: true
                 });
-            });
+
+                $('[id^=nilai_penawaran_]').on('keyup change', function() {
+                    var index = this.id.split('_').pop();
+                    var hargaDasar = parseFloat($(`[name="harga_dasar[${index}]"]`).val().replace(/,/g,
+                        ''));
+                    var currentValue = parseFloat($(this).val().replace(/,/g, ''));
+
+                    if (currentValue < hargaDasar) {
+                        $(`#feedback_${index}`).text(
+                            `Nilai Penawaran minimal Rp ${hargaDasar.toLocaleString()}`);
+                        $(`#feedback_${index}`).show();
+                        $(`#save_${index}`).hide();
+                    } else {
+                        $(`#feedback_${index}`).hide();
+                        if ($(this).val()) {
+                            $(`#save_${index}`).show();
+                        }
+                    }
+                });
+
+                $('.save-btn').on('click', function() {
+                    var index = this.id.split('_').pop();
+
+                    var data = {
+                        '_token': $('meta[name="csrf-token"]').attr('content'),
+                        'nilai_penawaran': $(`#nilai_penawaran_${index}`).val().replace(/,/g, ''),
+                        'idfk_daftar': $(`#idfk_daftar_${index}`).val(),
+                        'idfk_tkd': $(`#idfk_tkd_${index}`).val(),
+                        'harga_dasar': $(`#harga_dasar_${index}`).val(),
+                        'luas': $(`#luas_${index}`).val(),
+                    };
+
+                    $.post('/lelang/penawaran', data, function(response) {
+                        if (response.success) {
+                            refreshTableData();
+                        } else {
+                            alert(response.message);
+                        }
+                    });
+                });
+            }
+
+            function refreshTableData() {
+                $.get('/lelang/penawaran/create', function(data) {
+                    $('.section').replaceWith($(data).find('.section'));
+                    bindEventsAndPlugins();
+                });
+            }
         });
     </script>
 @endpush
