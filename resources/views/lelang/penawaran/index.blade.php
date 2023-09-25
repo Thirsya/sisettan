@@ -38,10 +38,10 @@
                                 {{-- <a class="btn btn-info btn-primary active" href="{{ route('penawaran.download-template') }}">
                                     <i class="fa fa-upload" aria-hidden="true"></i>
                                     Penawaran Template</a> --}}
-                                <a class="btn btn-info btn-success active bg-success" href="#">
+                                <a class="btn btn-info btn-success active bg-success" target="_blank" href="{{ route('penawaran.cetakluas') }}">
                                     <i class="fas fa-check"></i>
                                     Luas Lebih dari 2 Hektar</a>
-                                <a class="btn btn-info btn-danger active bg-danger" href="#">
+                                <a class="btn btn-info btn-danger active bg-danger" target="_blank" href="{{ route('penawaran.cetaktidaklaku') }}">
                                     <i class="fas fa-times"></i>
                                     Bidang/SHP Tidak Laku</a>
                                 <a class="btn btn-info btn-primary active bg-primary" href="{{ route('sts') }}">

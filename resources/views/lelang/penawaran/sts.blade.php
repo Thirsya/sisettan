@@ -32,8 +32,8 @@
                                             <td>{{ $listPenawaran->nama }}</td>
                                             <td>{{ $listPenawaran->bukti }}</td>
                                             <td>{{ $listPenawaran->bidang }}</td>
-                                            <td>{{ $listPenawaran->luas }}</td>
-                                            <td>{{ $listPenawaran->nilai_penawaran }}</td>
+                                            <td>{{ number_format($listPenawaran->luas, 0, ',', '.') }}m<sup>2</sup></td>
+                                            <td>Rp {{ number_format($listPenawaran->nilai_penawaran, 0, ',', '.') }}</td>
                                             <td>
                                                 <form class="updateDateForm" data-id="{{ $listPenawaran->id }}">
                                                     <input type="date" class="tgl_perjanjian_input" name="tgl_perjanjian"

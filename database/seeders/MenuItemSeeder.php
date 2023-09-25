@@ -129,13 +129,13 @@ class MenuItemSeeder extends Seeder
                 ],
                 [
                     'name' => 'Pemenang 1-5',
-                    'route' => 'pdf/pemenang',
+                    'route' => '/pdf/cetakpemenang',
                     'permission_name' => 'pemenang.index',
                     'menu_group_id' => 8,
                 ],
                 [
                     'name' => 'Rekap STS',
-                    'route' => 'pdf/rekap-sts',
+                    'route' => '/pdf/cetakrekap',
                     'permission_name' => 'rekap-sts.index',
                     'menu_group_id' => 8,
                 ],

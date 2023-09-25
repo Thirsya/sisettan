@@ -15,7 +15,11 @@
                         @foreach ($item->menuItems as $menuItem)
                             @can($menuItem->permission_name)
                                 <li>
-                                    <a class="nav-link " href="{{ url($menuItem->route) }}">{{ $menuItem->name }}</a>
+                                    @if(in_array($menuItem->route, ['cetakgugur', 'cetakpemenang', 'cetakrekap']))
+                                        <a class="nav-link" href="{{ url($menuItem->route) }}" target="_blank">{{ $menuItem->name }}</a>
+                                    @else
+                                        <a class="nav-link" href="{{ url($menuItem->route) }}">{{ $menuItem->name }}</a>
+                                    @endif
                                 </li>
                             @endcan
                         @endforeach

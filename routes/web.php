@@ -13,8 +13,10 @@ use App\Http\Controllers\Menu\MenuGroupController;
 use App\Http\Controllers\Menu\MenuItemController;
 use App\Http\Controllers\OpdController;
 use App\Http\Controllers\PejabatController;
+use App\Http\Controllers\PemenangController;
 use App\Http\Controllers\PenawaranController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RekapController;
 use App\Http\Controllers\RoleAndPermission\AssignPermissionController;
 use App\Http\Controllers\RoleAndPermission\AssignUserToRoleController;
 use App\Http\Controllers\RoleAndPermission\ExportPermissionController;
@@ -149,6 +151,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::resource('penawaran', PenawaranController::class);
         Route::get('/getTkd', [PenawaranController::class, 'getTkd'])->name('getTkd');
         Route::delete('/delete-all', [PenawaranController::class, 'deleteAll'])->name('delete.all');
+        Route::get('/cetaktidaklaku', [PenawaranController::class, 'cetakTidakLaku'])->name('penawaran.cetaktidaklaku');
+        Route::get('/cetakluas', [PenawaranController::class, 'cetakLuas'])->name('penawaran.cetakluas');
 
         Route::get('/sts', [StsController::class, 'index'])->name('sts');
         Route::post('/sts/{id}/gugur', [StsController::class, 'gugur'])->name('sts.gugur');
@@ -157,7 +161,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     });
 
     Route::prefix('pdf')->group(function () {
-        Route::resource('gugur', GugurController::class);
         Route::get('/cetakgugur', [GugurController::class, 'cetakGugur'])->name('cetakgugur');
+        Route::get('/cetakpemenang', [PemenangController::class, 'cetakPemenang'])->name('cetakpemenang');
+        Route::get('/cetakrekap', [RekapController::class, 'cetakRekap'])->name('cetakrekap');
     });
 });

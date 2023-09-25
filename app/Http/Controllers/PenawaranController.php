@@ -11,6 +11,7 @@ use App\Imports\PenawaransImport;
 use App\Models\Daerah;
 use App\Models\Daftar;
 use App\Models\Tkd;
+use PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -271,5 +272,21 @@ class PenawaranController extends Controller
         }
 
         return response()->download($templatePath, 'penawaran_template.xlsx');
+    }
+
+    public function cetakLuas()
+    {
+        $luass = Penawaran::all();
+
+        $pdf = PDF::loadview('lelang.penawaran.luas', ['luass' => $luass]);
+        return $pdf->stream();
+    }
+
+    public function cetakTidakLaku()
+    {
+        $tidak_lakus = Penawaran::all();
+
+        $pdf = PDF::loadview('lelang.penawaran.tidak-laku', ['tidak_lakus' => $tidak_lakus]);
+        return $pdf->stream();
     }
 }
