@@ -103,7 +103,7 @@ class MenuItemSeeder extends Seeder
                     'menu_group_id' => 6,
                 ],
                 [
-                    'name' => 'Daerah Lelang',
+                    'name' => 'Periode',
                     'route' => 'master-data/daerah',
                     'permission_name' => 'daerah.index',
                     'menu_group_id' => 6,

@@ -4,7 +4,7 @@
     <!-- Main Content -->
     <section class="section">
         <div class="section-header">
-            <h1>Daerah Lelang List</h1>
+            <h1>Periode List</h1>
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
                 <div class="breadcrumb-item"><a href="#">Components</a></div>
@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="section-body">
-            <h2 class="section-title">Daerah Lelang Management</h2>
+            <h2 class="section-title">Periode Management</h2>
 
             <div class="row">
                 <div class="col-12">
@@ -23,20 +23,20 @@
                 <div class="col-12">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h4>Daerah Lelang List</h4>
+                            <h4>Periode List</h4>
                             <div class="card-header-action">
                                 <a class="btn btn-icon icon-left btn-primary" href="{{ route('daerah.create') }}">
                                     <i class="far fa-file"></i>
-                                    Create Daerah Lelang</a>
+                                    Create Periode</a>
                                 <a class="btn btn-info btn-warning active import bg-warning">
                                     <i class="fa fa-download" aria-hidden="true"></i>
-                                    Import Daerah Lelang</a>
+                                    Import Periode</a>
                                 <a class="btn btn-info btn-dark active bg-dark" href="{{ route('daerah.export') }}" data-id="export">
                                     <i class="fa fa-upload" aria-hidden="true"></i>
-                                    Export Daerah Lelang</a>
+                                    Export Periode</a>
                                 <a class="btn btn-info btn-info active search bg-info">
                                     <i class="fa fa-search" aria-hidden="true"></i>
-                                    Search Daerah Lelang</a>
+                                    Search Periode</a>
                                 {{-- <a class="btn btn-info btn-primary active" href="{{ route('daerah.download-template') }}">
                                     <i class="fa fa-upload" aria-hidden="true"></i>
                                     Daerah Template</a> --}}
