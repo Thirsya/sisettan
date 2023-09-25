@@ -26,12 +26,13 @@ class StsController extends Controller
             'daftars.nama',
             'daftars.tgl_perjanjian',
             'tkds.bukti',
+            'tkds.bidang',
             'tkds.luas',
             'penawarans.id'
         )
             ->leftJoin('tkds', 'tkds.id', 'penawarans.idfk_tkd')
             ->leftJoin('daftars', 'daftars.id', 'penawarans.idfk_daftar')
-            ->groupBy('id', 'idfk_tkd', 'no_urut', 'nama', 'tgl_perjanjian', 'bukti', 'luas')
+            ->groupBy('id', 'idfk_tkd', 'no_urut', 'nama', 'tgl_perjanjian', 'bukti', 'luas', 'bidang')
             ->where('daftars.id_kelurahan', $kelurahanIdFromDaerah)
             ->whereNull('penawarans.deleted_at')
             ->where('penawarans.gugur', '=', false)
@@ -77,7 +78,7 @@ class StsController extends Controller
             return abort(404, 'Penawaran not found');
         }
 
-        $pdf = PDF::loadView('pdf.rekap-sts.index', ['penawaran' => $penawaran]);
+        $pdf = PDF::loadView('lelang.penawaran.cetak-sts', ['penawaran' => $penawaran]);
         return $pdf->stream('sts-' . $id . '.pdf');
     }
 

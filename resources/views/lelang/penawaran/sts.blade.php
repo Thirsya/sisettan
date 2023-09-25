@@ -20,16 +20,18 @@
                                         <th>No Urut</th>
                                         <th>Nama</th>
                                         <th>Bukti Hak</th>
+                                        <th>Bidang</th>
                                         <th>Luas</th>
                                         <th>Penawaran</th>
-                                        <th>Tanggal Perjanjian</th>
-                                        <th>Menu</th>
+                                        <th style="width: 250px">Tanggal Perjanjian</th>
+                                        <th style="width: 550px">Menu</th>
                                     </tr>
                                     @foreach ($penawaran as $key => $listPenawaran)
                                         <tr>
                                             <td>{{ $listPenawaran->no_urut }}</td>
                                             <td>{{ $listPenawaran->nama }}</td>
                                             <td>{{ $listPenawaran->bukti }}</td>
+                                            <td>{{ $listPenawaran->bidang }}</td>
                                             <td>{{ $listPenawaran->luas }}</td>
                                             <td>{{ $listPenawaran->nilai_penawaran }}</td>
                                             <td>
