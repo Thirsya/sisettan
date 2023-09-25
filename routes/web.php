@@ -23,6 +23,7 @@ use App\Http\Controllers\RoleAndPermission\ImportPermissionController;
 use App\Http\Controllers\RoleAndPermission\ImportRoleController;
 use App\Http\Controllers\RoleAndPermission\PermissionController;
 use App\Http\Controllers\RoleAndPermission\RoleController;
+use App\Http\Controllers\StsController;
 use App\Http\Controllers\TahunController;
 use App\Http\Controllers\TkdController;
 use Illuminate\Support\Facades\Route;
@@ -148,11 +149,15 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::resource('penawaran', PenawaranController::class);
         Route::get('/getTkd', [PenawaranController::class, 'getTkd'])->name('getTkd');
         Route::delete('/delete-all', [PenawaranController::class, 'deleteAll'])->name('delete.all');
-        Route::get('/lelang/penawaran/sts', function () {return view('lelang.penawaran.sts'); })->name('sts');
+
+        Route::get('/sts', [StsController::class, 'index'])->name('sts');
+        Route::post('/sts/{id}/gugur', [StsController::class, 'gugur'])->name('sts.gugur');
+        Route::post('/sts/{penawaran}/update-date', [StsController::class, 'updateDate'])->name('penawaran.updateDate');
+        Route::get('/sts/{id}/print', [StsController::class, 'printSTS'])->name('sts.print');
     });
 
     Route::prefix('pdf')->group(function () {
         Route::resource('gugur', GugurController::class);
-        Route::get('/cetakGugur', [GugurController::class, 'cetakGugur'])->name('cetakGugur');
+        Route::get('/cetakgugur', [GugurController::class, 'cetakGugur'])->name('cetakgugur');
     });
 });

@@ -120,7 +120,7 @@ class MenuItemSeeder extends Seeder
                     'permission_name' => 'tkd.index',
                     'menu_group_id' => 7,
                 ],
-                
+
                 [
                     'name' => 'Penawaran',
                     'route' => 'lelang/penawaran',
@@ -141,7 +141,7 @@ class MenuItemSeeder extends Seeder
                 ],
                 [
                     'name' => 'Gugur',
-                    'route' => 'pdf/gugur',
+                    'route' => '/pdf/cetakgugur',
                     'permission_name' => 'gugur.index',
                     'menu_group_id' => 8,
                 ],

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('id_tkd');
             $table->string('nilai_penawaran');
             $table->string('keterangan')->nullable();
+            $table->boolean('gugur')->default(0);
             $table->softDeletes();
 
             $table->foreign('idfk_daftar')->references('id')->on('daftars');

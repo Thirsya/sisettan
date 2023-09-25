@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 return new class extends Migration
 {
@@ -21,6 +22,7 @@ return new class extends Migration
             $table->string('nilai_penawaran');
             $table->string('keterangan');
 
+            $table->softDeletes();
             $table->foreign('id_penawaran')->references('id')->on('penawarans');
             $table->foreign('id_daftar')->references('id')->on('daftars');
             $table->foreign('id_tkd')->references('id')->on('tkds');

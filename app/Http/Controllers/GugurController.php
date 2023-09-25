@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreGugurRequest;
 use App\Http\Requests\UpdateGugurRequest;
 use App\Models\Penawaran;
-use Barryvdh\DomPDF\PDF;
+use PDF;
 use Illuminate\Support\Facades\DB;
 
 class GugurController extends Controller

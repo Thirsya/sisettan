@@ -8,7 +8,7 @@
             <h2 class="section-title">STS Pemenang</h2>
             <a class="btn btn-info btn-primary active bg-primary"></i>(STS) Pemenang 1</a>
             <a class="btn btn-info btn-primary active bg-primary"></i>(STS) Pemenang 2</a>
-        <br><br><br>
+            <br><br><br>
             <div class="card">
                 <div class="card-body">
                     <form method="POST">
@@ -25,20 +25,25 @@
                                         <th>Tanggal Perjanjian</th>
                                         <th>Menu</th>
                                     </tr>
-                                    {{-- @foreach ($stss as $key => $sts) --}}
-                                        {{-- <tr>
-                                            <td>{{ $daftar->no_urut }}</td>
-                                            <td>{{ $daftar->nama}}</td>
-                                            <td>{{ $tkd->bukti }}</td>
-                                            <td>{{ $tkd->luas}}</td>
-                                            <td>{{ $penawaran->nilai_penawaran}}</td>
+                                    @foreach ($penawaran as $key => $listPenawaran)
+                                        <tr>
+                                            <td>{{ $listPenawaran->no_urut }}</td>
+                                            <td>{{ $listPenawaran->nama }}</td>
+                                            <td>{{ $listPenawaran->bukti }}</td>
+                                            <td>{{ $listPenawaran->luas }}</td>
+                                            <td>{{ $listPenawaran->nilai_penawaran }}</td>
                                             <td>
-                                                <input type="date" id="tgl_perjanjian" name="tgl_perjanjian">
-                                                <button type="submit" class="btn btn-success">Save</button>
+                                                <form class="updateDateForm" data-id="{{ $listPenawaran->id }}">
+                                                    <input type="date" class="tgl_perjanjian_input" name="tgl_perjanjian"
+                                                        value="{{ $listPenawaran->tgl_perjanjian }}">
+                                                    <button type="submit"
+                                                        class="ml-2 btn btn-sm btn-success btn-icon">Save</button>
+                                                </form>
                                             </td>
+
                                             <td>
                                                 <div class="d-flex justify-content-end">
-                                                    <form action="{{ route('penawaran.destroy', $penawaran->id) }}"
+                                                    <form action="{{ route('penawaran.destroy', $listPenawaran->id) }}"
                                                         method="POST" class="ml-2">
                                                         <input type="hidden" name="_method" value="DELETE">
                                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -46,14 +51,20 @@
                                                             type="submit">
                                                             <i class="fas fa-times"></i> Delete </button>
                                                     </form>
-                                                    <a href="#" class="btn btn-sm btn-danger btn-icon confirm-delete" type="submit">Di Gugurkan</a>
-                                                    <a href="#" class="btn btn-sm btn-info btn-icon ">Cetak STS</a>
-                                                    <a href="#" class="btn btn-sm btn-info btn-icon ">Cetak Pernyataan</a>
-                                                    <a href="#" class="btn btn-sm btn-info btn-icon ">Cetak Perjanjian</a>
+                                                    <a href="#" data-id="{{ $listPenawaran->id }}"
+                                                        class="ml-2 btn btn-sm btn-danger btn-icon gugur">Di
+                                                        Gugurkan</a>
+                                                    <a href="{{ route('sts.print', $listPenawaran->id) }}" target="_blank"
+                                                        class="ml-2 btn btn-sm btn-info btn-icon">Cetak STS</a>
+
+                                                    <a href="#" class="ml-2 btn btn-sm btn-info btn-icon ">Cetak
+                                                        Pernyataan</a>
+                                                    <a href="#" class="ml-2 btn btn-sm btn-info btn-icon ">Cetak
+                                                        Perjanjian</a>
                                                 </div>
                                             </td>
-                                        </tr> --}}
-                                    {{-- @endforeach --}}
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -68,6 +79,55 @@
 @push('customScript')
     <script src="/assets/js/select2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.gugur').on('click', function(e) {
+                e.preventDefault();
+
+                let penawaranId = $(this).data('id');
+
+                $.ajax({
+                    type: 'POST',
+                    url: `/lelang/sts/${penawaranId}/gugur`,
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                    },
+                    success: function(data) {
+                        alert(data.message);
+
+                        // Reload the entire page
+                        location.reload();
+                    },
+                    error: function(error) {
+                        alert('Error updating data.');
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('.updateDateForm').on('submit', function(e) {
+                e.preventDefault();
+                let penawaranId = $(this).data('id');
+                let tgl_perjanjian = $(this).find('.tgl_perjanjian_input').val();
+                console.log(tgl_perjanjian);
+                $.post(`/lelang/sts/${penawaranId}/update-date`, {
+                        "_token": "{{ csrf_token() }}",
+                        "tgl_perjanjian": tgl_perjanjian
+                    })
+                    .done(function(data) {
+                        alert(data.message);
+                        location.reload();
+                    })
+                    .fail(function(error) {
+                        console.error(error);
+                        alert('Error updating date.');
+                    });
+            });
+        });
+    </script>
+
     {{-- <script type="text/javascript">
         $(document).ready(function() {
             $('[id^=nilai_penawaran_]').mask('000,000,000,000,000', {
