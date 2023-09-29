@@ -161,7 +161,7 @@
 @endsection
 @push('customScript')
     <script src="/assets/js/select2.min.js"></script>
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script> --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
     <script>
         $(document).ready(function() {
             $('.gugur').on('click', function(e) {
@@ -171,7 +171,10 @@
 
                 $.ajax({
                     type: 'POST',
-                    url: /lelang/sts/${penawaranId}/gugur,
+                    url: /lelang/sts / $ {
+                        penawaranId
+                    }
+                    /gugur,
                     data: {
                         "_token": "{{ csrf_token() }}",
                     },
@@ -191,37 +194,38 @@
     <script>
         $(document).ready(function() {
             $('.updateDateForm').on('submit', function(e) {
-                e.preventDefault();
-                let penawaranId = $(this).data('id');
-                let tgl_perjanjian = $(this).find('.tgl_perjanjian_input').val();
-                console.log(tgl_perjanjian);
-                $.post(/lelang/sts/${penawaranId}/update-date, {
+                    e.preventDefault();
+                    let penawaranId = $(this).data('id');
+                    let tgl_perjanjian = $(this).find('.tgl_perjanjian_input').val();
+                    console.log(tgl_perjanjian);
+                    $.post(/lelang/sts / $ {
+                            penawaranId
+                        }
+                        /update-date, {
                         "_token": "{{ csrf_token() }}",
                         "tgl_perjanjian": tgl_perjanjian
                     })
-                    .done(function(data) {
-                        alert(data.message);
-                        location.reload();
-                    })
-                    .fail(function(error) {
-                        console.error(error);
-                        alert('Error updating date.');
-                    });
+                .done(function(data) {
+                    alert(data.message);
+                    location.reload();
+                })
+                .fail(function(error) {
+                    console.error(error);
+                    alert('Error updating date.');
+                });
             });
         });
     </script>
     <script>
         function showPage(pageNumber) {
-            // Sembunyikan semua halaman
             for (let i = 1; i <= 2; i++) {
-                const page = document.getElementById(page${i});
+                const page = document.getElementById(`page${i}`);
                 if (page) {
                     page.style.display = 'none';
                 }
             }
 
-            // Tampilkan halaman yang sesuai
-            const currentPage = document.getElementById(page${pageNumber});
+            const currentPage = document.getElementById(`page${pageNumber}`);
             if (currentPage) {
                 currentPage.style.display = 'block';
             }
