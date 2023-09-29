@@ -90,6 +90,7 @@ class PenawaranController extends Controller
             // ->whereYear('daftars.tgl_perjanjian', $tahunId)
             ->where('daftars.id_kelurahan', $kelurahanIdFromDaerah)
             ->whereNull('penawarans.deleted_at')
+            ->orderBy('tkds.bukti', 'DESC')
             ->paginate(10);
         $tkdSelected = $request->input('bukti');
         return view('lelang.penawaran.index')->with([
