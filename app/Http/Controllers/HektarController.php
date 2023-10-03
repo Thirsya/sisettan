@@ -24,10 +24,12 @@ class HektarController extends Controller
         $penawaran = Penawaran::select(
             'daftars.no_urut',
             'daftars.nama',
+            'daftars.alamat',
             'daftars.tgl_perjanjian',
             'tkds.bukti',
             'tkds.bidang',
             'tkds.luas',
+            'tkds.harga_dasar',
             'penawarans.id',
             DB::raw('MAX(penawarans.nilai_penawaran) as nilai_penawaran'),
             'penawarans.idfk_tkd'
@@ -44,10 +46,12 @@ class HektarController extends Controller
         $penawaran2 = Penawaran::select(
             'daftars.no_urut',
             'daftars.nama',
+            'daftars.alamat',
             'daftars.tgl_perjanjian',
             'tkds.bukti',
             'tkds.bidang',
             'tkds.luas',
+            'tkds.harga_dasar',
             'penawarans.id',
             DB::raw('
                     (SELECT nilai_penawaran
