@@ -1,5 +1,5 @@
 <style type="text/css">
-    table, tbody, td {
+    table{
         border: 1px solid black;
         border-collapse: collapse;
         padding-top: 0px;
@@ -18,11 +18,6 @@
         font-family: 'Arial';
         text-align: center;
     }
-
-    .ktbl {
-        border-left: 2px solid black;
-    }
-
     .btbl {
         border-bottom: 2px solid black;
     }
@@ -44,6 +39,5 @@ Masa Sewa <br> {{--  periode tabel daerah --}}
         <th>KETERANGAN</th>
     </tr>
 </thead>
-
 </table>
 </center>

@@ -33,7 +33,7 @@
                         <div class="card card-primary">
                             <div class="card-header">
                                 <p style="font-family: 'Roboto', sans-serif; font-size: 14px; font-weight: bold;">
-                                    Silahkan pilih tahun lelang terlebih dahulu !</p>
+                                    Silahkan masukkan username dan password terlebih dahulu !</p>
                             </div>
                             <div class="card-body">
                                 @if (session('status'))
