@@ -38,7 +38,7 @@
                                 {{-- <a class="btn btn-info btn-primary active" href="{{ route('penawaran.download-template') }}">
                                     <i class="fa fa-upload" aria-hidden="true"></i>
                                     Penawaran Template</a> --}}
-                                <a class="btn btn-info btn-success active bg-success" target="_blank" href="{{ route('penawaran.cetakluas') }}">
+                                <a class="btn btn-info btn-success active bg-success" href="{{ route('hektar') }}">
                                     <i class="fas fa-check"></i>
                                     Luas Lebih dari 2 Hektar</a>
                                 <a class="btn btn-info btn-danger active bg-danger" target="_blank" href="{{ route('penawaran.cetaktidaklaku') }}">

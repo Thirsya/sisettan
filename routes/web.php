@@ -6,6 +6,7 @@ use App\Http\Controllers\DaftarController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DemoController;
 use App\Http\Controllers\GugurController;
+use App\Http\Controllers\HektarController;
 use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\KecamatanController;
 use App\Http\Controllers\KelurahanController;
@@ -152,7 +153,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::get('/getTkd', [PenawaranController::class, 'getTkd'])->name('getTkd');
         Route::delete('/delete-all', [PenawaranController::class, 'deleteAll'])->name('delete.all');
         Route::get('/cetaktidaklaku', [PenawaranController::class, 'cetakTidakLaku'])->name('penawaran.cetaktidaklaku');
-        Route::get('/cetakluas', [PenawaranController::class, 'cetakLuas'])->name('penawaran.cetakluas');
+
+        Route::get('/dua-hektar', [HektarController::class, 'index'])->name('hektar');
 
         Route::get('/sts', [StsController::class, 'index'])->name('sts');
         Route::post('/sts/{id}/gugur', [StsController::class, 'gugur'])->name('sts.gugur');
