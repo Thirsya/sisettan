@@ -104,6 +104,7 @@ class StsController extends Controller
 
     public function printSTS($id)
     {
+
         $penawaran = Penawaran::find($id);
 
         if (!$penawaran) {
@@ -114,7 +115,15 @@ class StsController extends Controller
         return $pdf->stream('sts-' . $id . '.pdf');
     }
 
+    public function cetakPernyataan()
+    {
+        return view('lelang.penawaran.pernyataan');
+    }
 
+    public function cetakPerjanjian()
+    {
+        return view('lelang.penawaran.perjanjian');
+    }
 
     /**
      * Show the form for creating a new resource.

@@ -10,6 +10,7 @@
     <div class="tepi"></div>
     <br>
     <center>
+        
         REKAPITULASI PEMENANG LELANG TAHUN tahun<BR>
         TANAH KAS DESA kelurahan<br>
     </center> <br>

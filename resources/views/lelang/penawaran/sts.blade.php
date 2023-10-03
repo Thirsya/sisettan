@@ -64,9 +64,9 @@
                                                             target="_blank" class="ml-2 btn btn-sm btn-info btn-icon">Cetak
                                                             STS</a>
 
-                                                        <a href="#" class="ml-2 btn btn-sm btn-info btn-icon ">Cetak
+                                                        <a href="{{ route('sts.cetakpernyataan') }}" class="ml-2 btn btn-sm btn-info btn-icon ">Cetak
                                                             Pernyataan</a>
-                                                        <a href="#" class="ml-2 btn btn-sm btn-info btn-icon ">Cetak
+                                                        <a href="{{ route('sts.cetakperjanjian') }}" class="ml-2 btn btn-sm btn-info btn-icon ">Cetak
                                                             Perjanjian</a>
                                                     </div>
                                                 </td>

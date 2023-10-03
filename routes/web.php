@@ -153,6 +153,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::get('/getTkd', [PenawaranController::class, 'getTkd'])->name('getTkd');
         Route::delete('/delete-all', [PenawaranController::class, 'deleteAll'])->name('delete.all');
         Route::get('/cetaktidaklaku', [PenawaranController::class, 'cetakTidakLaku'])->name('penawaran.cetaktidaklaku');
+        Route::get('/cetakba', [PenawaranController::class, 'cetakBA'])->name('penawaran.cetakba');
+        Route::get('/cetaksekota', [PenawaranController::class, 'cetakSekota'])->name('penawaran.cetaksekota');
 
         Route::get('/dua-hektar', [HektarController::class, 'index'])->name('hektar');
 
@@ -160,6 +162,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::post('/sts/{id}/gugur', [StsController::class, 'gugur'])->name('sts.gugur');
         Route::post('/sts/{penawaran}/update-date', [StsController::class, 'updateDate'])->name('penawaran.updateDate');
         Route::get('/sts/{id}/print', [StsController::class, 'printSTS'])->name('sts.print');
+        Route::get('/perjajian', [StsController::class, 'cetakPerjanjian'])->name('sts.cetakperjanjian');
+        Route::get('/pernyataan', [StsController::class, 'cetakPernyataan'])->name('sts.cetakpernyataan');
     });
 
     Route::prefix('pdf')->group(function () {

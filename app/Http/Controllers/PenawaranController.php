@@ -275,19 +275,35 @@ class PenawaranController extends Controller
         return response()->download($templatePath, 'penawaran_template.xlsx');
     }
 
-    public function cetakLuas()
-    {
-        $luass = Penawaran::all();
+    // public function cetakLuas()
+    // {
+    //     $luass = Penawaran::all();
 
-        $pdf = PDF::loadview('lelang.penawaran.luas', ['luass' => $luass]);
-        return $pdf->stream();
-    }
+    //     $pdf = PDF::loadview('lelang.penawaran.luas', ['luass' => $luass]);
+    //     return $pdf->stream();
+    // }
 
     public function cetakTidakLaku()
     {
         $tidak_lakus = Penawaran::all();
 
         $pdf = PDF::loadview('lelang.penawaran.tidak-laku', ['tidak_lakus' => $tidak_lakus]);
+        return $pdf->stream();
+    }
+
+    public function cetakBA()
+    {
+        $bas = Penawaran::all();
+
+        $pdf = PDF::loadview('lelang.penawaran.tidak-laku', ['bas' => $bas]);
+        return $pdf->stream();
+    }
+
+    public function cetakSekota()
+    {
+        $sekotas = Penawaran::all();
+
+        $pdf = PDF::loadview('lelang.penawaran.rekap-sekota', ['sekotas' => $sekotas]);
         return $pdf->stream();
     }
 }

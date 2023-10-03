@@ -44,12 +44,15 @@
                                 <a class="btn btn-info btn-danger active bg-danger" target="_blank" href="{{ route('penawaran.cetaktidaklaku') }}">
                                     <i class="fas fa-times"></i>
                                     Bidang/SHP Tidak Laku</a>
-                                <a class="btn btn-info btn-primary active bg-primary" href="{{ route('sts') }}">
+                                <a class="btn btn-info btn-info active bg-info" href="{{ route('sts') }}">
                                     <i class="far fa-file"></i>
                                     STS & Perjanjian</a>
-                                <a class="btn btn-info btn-primary active bg-primary" href="#">
+                                <a class="btn btn-info btn-primary active bg-primary" target="_blank" href="{{ route('penawaran.cetakba') }}">
                                     <i class="far fa-file"></i>
                                     Lampiran BA</a>
+                                <a class="btn btn-info btn-primary active bg-primary" target="_blank" href="{{ route('penawaran.cetaksekota') }}">
+                                    <i class="far fa-file"></i>
+                                    Rekap Se-kota</a>
                                 <a class="btn btn-info btn-info active search bg-info">
                                     <i class="fa fa-search" aria-hidden="true"></i>
                                     Search SHP</a>
