@@ -202,9 +202,6 @@ class PenawaranController extends Controller
         }
     }
 
-
-
-
     public function show(StorePenawaranRequest $request)
     {
         Penawaran::create([
@@ -295,7 +292,7 @@ class PenawaranController extends Controller
     {
         $bas = Penawaran::all();
 
-        $pdf = PDF::loadview('lelang.penawaran.tidak-laku', ['bas' => $bas]);
+        $pdf = PDF::loadview('lelang.penawaran.cetak-ba', ['bas' => $bas]);
         return $pdf->stream();
     }
 

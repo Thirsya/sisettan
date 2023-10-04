@@ -7,10 +7,12 @@
  </style>
 
 <center>
+    <p style="font-size: 9px">Aplikasi Lelang TKD BPPKAD Kota Kediri Tahun 2023</p>
+    <img src="storage/images/kota.png" style="width: 50px;height: auto;float: left">
+    <h5>PEMERINTAH KOTA KEDIRI</h5>
     <div class="tepi"></div>
     <br>
-    <center>
-        
+    <center style="font-weight: bold">
         REKAPITULASI PEMENANG LELANG TAHUN tahun<BR>
         TANAH KAS DESA kelurahan<br>
     </center> <br>
