@@ -1,17 +1,52 @@
-<!DOCTYPE html>
-<html>
+<style>
+    .tepi {
+      width:100%;
+      height:auto;
+      border: 2px ridge black;
+    }
+ </style>
 
-<head>
-    <meta charset="utf-8">
-    <title>STS - {{ $penawaran->id }}</title>
-</head>
-
-<body>
-    <!-- Add your specific PDF content here -->
-    <h1>STS - {{ $penawaran->id }}</h1>
-    <p>No. Urut: {{ $penawaran->no_urut }}</p>
-    <p>Nama: {{ $penawaran->nama }}</p>
-    <!-- ... add more fields as needed ... -->
-</body>
-
-</html>
+<center>
+    <p style="font-size: 9px">Aplikasi Lelang TKD BPPKAD Kota Kediri</p>
+    <div class="tepi"></div>
+    <br>
+    <center style="font-weight: bold">
+        <H2>PEMERINTAH KOTA KEDIRI</H2>
+        SURAT TANDA SETORAN
+        <H2>(STS)</H2>
+    </center> <br>
+    <table style="float: right">
+        <tr>
+           <td>Bank </td>
+           <td>&nbsp;: </td>
+           <td>&nbsp;... </td>
+       </tr>
+       <tr>
+           <td>No. Rek </td>
+           <td>&nbsp;: </td>
+           <td>&nbsp;...</td>
+       </tr>
+    </table>
+    <br><br><br>
+    <table style="float: left">
+         <tr>
+            <td>Harap diterima uang sebesar </td>
+            <td>&nbsp;: </td>
+            <td>&nbsp;Rp  </td>
+        </tr>
+        <tr>
+            <td>Dengan Huruf </td>
+            <td>&nbsp;: </td>
+            <td>&nbsp;...</td>
+        </tr>
+    </table>
+    <br><br><br>
+    <p style="float: left">Dengan Perincian Sebagai Berikut :</p><br><br>
+    <table border="1" style="width:95%;border-color:black;">
+        <tr  style="font-size: 14px; font-weight: normal;">
+            <th>Kode Rekening</th>
+            <th style="width: 400px">Uraian</th>
+            <th>Jumlah (Rp)</th>
+        </tr>
+    </table>
+</center>

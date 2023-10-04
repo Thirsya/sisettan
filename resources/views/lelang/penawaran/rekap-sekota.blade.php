@@ -7,7 +7,7 @@
  </style>
 
 <center>
-    <p style="font-size: 9px">Aplikasi Lelang TKD BPPKAD Kota Kediri Tahun 2023</p>
+    <p style="font-size: 9px">Aplikasi Lelang TKD BPPKAD Kota Kediri</p>
     <div class="tepi"></div>
     <center>
         <h3>Rekap Hasil Lelang Berdasarkan Lampiran BA</h3>
