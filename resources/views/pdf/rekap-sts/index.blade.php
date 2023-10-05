@@ -1,10 +1,10 @@
 <style>
     .tepi {
-      width:100%;
-      height:auto;
-      border: 2px ridge black;
+        width: 100%;
+        height: auto;
+        border: 2px ridge black;
     }
- </style>
+</style>
 
 <center>
     <p style="font-size: 9px">Aplikasi Lelang TKD BPPKAD Kota Kediri</p>
@@ -13,24 +13,24 @@
     <div class="tepi"></div>
     <br>
     <center style="font-weight: bold">
-        REKAPITULASI PEMENANG LELANG TAHUN tahun<BR>
-        TANAH KAS DESA kelurahan<br>
+        REKAPITULASI PEMENANG LELANG TAHUN {{ $daerahList->tahun }}<BR>
+        TANAH KAS DESA {{ $daerahList->kelurahan }}<br>
     </center> <br>
     <table style="float: left">
-         <tr>
+        <tr>
             <td>Nomor </td>
             <td>&nbsp;: </td>
-            <td>&nbsp;590/noba/TKD/nomor_opd </td>
+            <td>&nbsp;590/{{ $daerahList->noba }}/TKD//{{ $daerahList->tahun }}</td>
         </tr>
         <tr>
             <td>Periode </td>
             <td>&nbsp;: </td>
-            <td>&nbsp;periode</td>
+            <td>&nbsp;{{ $daerahList->periode }}</td>
         </tr>
     </table>
     <br><br><br>
     <table border="1" style="width:95%;border-color:black;">
-        <tr  style="border-bottom:3pt double;">
+        <tr style="border-bottom:3pt double;">
             <th>No</th>
             <th>Nama</th>
             <th>Bidang Tanah</th>
@@ -38,5 +38,6 @@
             <th>Harga Dasar</th>
             <th>Penawaran</th>
         </tr>
+
     </table>
 </center>
