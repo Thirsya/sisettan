@@ -35,8 +35,8 @@
             <th colspan="2" >Obyek</th>
         </tr>
         <tr>
-            <th>Padi</th>
-            <th>Kacang</th>
+            <th>Bidang</th>
+            <th>Luas</th>
         </tr>
     </table>
     <br><br>

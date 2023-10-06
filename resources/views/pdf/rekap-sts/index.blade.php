@@ -8,7 +8,7 @@
 
 <center>
     <p style="font-size: 9px">Aplikasi Lelang TKD BPPKAD Kota Kediri</p>
-    <img src="storage/images/kota.png" style="width: 50px;height: auto;float: left">
+    <img src="public/images/kota.png" style="width: 50px;height: auto;float: left">
     <h5>PEMERINTAH KOTA KEDIRI</h5>
     <div class="tepi"></div>
     <br>
@@ -63,9 +63,9 @@
                     <td></td>
                     <td></td>
                     <td>{{ $penawaran->bukti }} Bidang {{ $penawaran->bidang }}</td>
-                    <td>{{ $penawaran->luas }}</td>
-                    <td>{{ $penawaran->harga_dasar }}</td>
-                    <td>{{ $penawaran->nilai_penawaran }}</td>
+                    <td>{{ number_format($penawaran->luas, 0, ',', '.') }} m<sup>2</td>
+                    <td>Rp {{ number_format($penawaran->harga_dasar, 0, ',', '.') }}</td>
+                    <td>Rp {{ number_format($penawaran->nilai_penawaran, 0, ',', '.') }}</td>
                 </tr>
                 @php
                     $totalNilaiPenawaran += $penawaran->nilai_penawaran;
@@ -76,9 +76,9 @@
                 <td></td>
                 <td></td>
                 <td>Sub Total</td>
-                <td>{{ $penawaran->total_luas }}</td>
-                <td>{{ $totalNilaiHargaDasar }}</td>
-                <td>{{ $totalNilaiPenawaran }}</td>
+                <td>{{ number_format($penawaran->total_luas, 0, ',', '.') }} m<sup>2</td>
+                <td>Rp {{ number_format($totalNilaiHargaDasar, 0, ',', '.') }}</td>
+                <td>Rp {{ number_format($totalNilaiPenawaran, 0, ',', '.') }}</td>
             </tr>
 
             @php
@@ -93,9 +93,9 @@
             <th></th>
             <th></th>
             <th>Total</th>
-            <th>{{ $totalLuasSum }}</th>
-            <th>{{ $totalNilaiHargaDasarSum }}</th>
-            <th>{{ $totalNilaiPenawaranSum }}</th>
+            <th>{{ number_format($totalLuasSum, 0, ',', '.') }} m<sup>2</th>
+            <th>Rp {{ number_format($totalNilaiHargaDasarSum, 0, ',', '.') }}</th>
+            <th>Rp {{ number_format($totalNilaiPenawaranSum, 0, ',', '.') }}</th>
         </tr>
     </table>
 </center>
