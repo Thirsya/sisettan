@@ -23,8 +23,8 @@
     }
 </style>
 
-<center style="font-family:'Arial';font-size: 15px;"><b>PEMENANG LELANG SEWA TANAH PERTANIAN YANG GUGUR</b><br> {{--  nama kelurahan --}}
-Masa Sewa <br> {{--  periode tabel daerah --}}
+<center style="font-family:'Arial';font-size: 15px;"><b>PEMENANG LELANG SEWA TANAH PERTANIAN YANG GUGUR {{ $daerahList->kelurahan }}</b><br>
+Masa Sewa {{ $daerahList->periode }}<br>
 
 <table>
 <thead>

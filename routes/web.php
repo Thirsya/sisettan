@@ -152,7 +152,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::resource('penawaran', PenawaranController::class);
         Route::get('/getTkd', [PenawaranController::class, 'getTkd'])->name('getTkd');
         Route::delete('/delete-all', [PenawaranController::class, 'deleteAll'])->name('delete.all');
-        Route::get('/cetaktidaklaku', [PenawaranController::class, 'cetakTidakLaku'])->name('penawaran.cetaktidaklaku');
+        Route::get('/cetaktidaklaku', [PenawaranController::class, 'cetakTakLaku'])->name('penawaran.cetaktidaklaku');
         Route::get('/cetakba', [PenawaranController::class, 'cetakBA'])->name('penawaran.cetakba');
         Route::get('/cetaksekota', [PenawaranController::class, 'cetakSekota'])->name('penawaran.cetaksekota');
 

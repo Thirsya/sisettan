@@ -280,11 +280,29 @@ class PenawaranController extends Controller
     //     return $pdf->stream();
     // }
 
-    public function cetakTidakLaku()
+    public function cetakTakLaku()
     {
-        $tidak_lakus = Penawaran::all();
+        $daftarIdFromSession = (int) session('selected_kelurahan_id');
+        $daerahList = Daerah::withTrashed()
+            ->where('main.id', $daftarIdFromSession)
+            ->select(
+                'main.periode',
+                'tahuns.tahun',
+                'kelurahans.kelurahan',
+                'main.noba',
+            )
+            ->from('daerahs as main')
+            ->leftJoin('tahuns', 'tahuns.id', 'main.thn_sts')
+            ->leftJoin('kelurahans', 'kelurahans.id', 'main.id_kelurahan')
+            ->first();
 
-        $pdf = PDF::loadview('lelang.penawaran.tidak-laku', ['tidak_lakus' => $tidak_lakus]);
+        $penawaranId = session('penawaran_id');
+        $taklakus = Penawaran::all();
+
+        $pdf = PDF::loadview('lelang.penawaran.tidak-laku', [
+            'taklakus' => $taklakus,
+            'daerahList' => $daerahList,
+        ]);
         return $pdf->stream();
     }
 

@@ -22,7 +22,7 @@
     <br><br><br>
     <table style="float: left">
          <tr>
-            <td>Kel. ....</td>
+            <td>{{ $daerahList->kelurahan }}</td>
         </tr>
     </table>
     <br><br>
