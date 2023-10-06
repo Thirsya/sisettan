@@ -14,7 +14,7 @@
         <H2>PEMENANG LELANG SEWA TANAH PERTANIAN</H2>
         MASA TANAM {{ $daerahList->periode }}
     </center>
-    <table style="float: right">
+    <table style="float: right;font-size:13px;">
         <tr>
            <td>LAMPIRAN BERITA ACARA </td>
        </tr>
@@ -30,14 +30,14 @@
     </tr>
     </table>
     <br><br>
-    <table style="float: left">
+    <table style="float: left;font-size:13px;">
          <tr>
             <td>{{ $daerahList->kelurahan }}</td>
         </tr>
     </table>
     <br><br>
-    <table border="1" style="width:95%;border-color:black;">
-        <tr style="font-size: 14px; font-weight: normal;">
+    <table border="1" style="font-size:12px;width:95%;border-color:black;">
+        <tr style="font-weight: normal;">
             <th rowspan="2" >No</th>
             <th rowspan="2" >Bukti Hak</th>
             <th rowspan="2" >Alamat</th>
@@ -54,13 +54,5 @@
             <th>Nama</th>
             <th>Harga Penawaran</th>
         </tr>
-        {{-- <tr>
-            <th>Nama</th>
-            <th>Harga Penawaran</th>
-        </tr>
-        <tr>
-            <th>Nama</th>
-            <th>Harga Penawaran</th>
-        </tr> --}}
     </table>
 </center>
