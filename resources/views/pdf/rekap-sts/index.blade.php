@@ -38,6 +38,64 @@
             <th>Harga Dasar</th>
             <th>Penawaran</th>
         </tr>
+        @php
+            $totalNilaiPenawaranSum = 0;
+            $totalLuasSum = 0;
+            $totalNilaiHargaDasarSum = 0;
+        @endphp
 
+        @foreach ($penawarans->groupBy('idfk_daftar') as $groupedPenawarans)
+            @php
+                $firstPenawaran = $groupedPenawarans->first();
+                $totalNilaiPenawaran = 0;
+                $totalNilaiHargaDasar = 0;
+            @endphp
+            <tr>
+                <td>{{ $loop->iteration }}</td>
+                <td>({{ $firstPenawaran->no_urut }}){{ $firstPenawaran->nama }}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            @foreach ($groupedPenawarans as $penawaran)
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>{{ $penawaran->bukti }} Bidang {{ $penawaran->bidang }}</td>
+                    <td>{{ $penawaran->luas }}</td>
+                    <td>{{ $penawaran->harga_dasar }}</td>
+                    <td>{{ $penawaran->nilai_penawaran }}</td>
+                </tr>
+                @php
+                    $totalNilaiPenawaran += $penawaran->nilai_penawaran;
+                    $totalNilaiHargaDasar += $penawaran->harga_dasar;
+                @endphp
+            @endforeach
+            <tr>
+                <td></td>
+                <td></td>
+                <td>Sub Total</td>
+                <td>{{ $penawaran->total_luas }}</td>
+                <td>{{ $totalNilaiHargaDasar }}</td>
+                <td>{{ $totalNilaiPenawaran }}</td>
+            </tr>
+
+            @php
+                $totalNilaiPenawaranSum += $totalNilaiPenawaran;
+                $totalLuasSum += $penawaran->total_luas;
+                $totalNilaiHargaDasarSum += $totalNilaiHargaDasar;
+            @endphp
+        @endforeach
+
+        <br>
+        <tr>
+            <th></th>
+            <th></th>
+            <th>Total</th>
+            <th>{{ $totalLuasSum }}</th>
+            <th>{{ $totalNilaiHargaDasarSum }}</th>
+            <th>{{ $totalNilaiPenawaranSum }}</th>
+        </tr>
     </table>
 </center>
