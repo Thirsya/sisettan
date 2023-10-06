@@ -20,9 +20,7 @@ class GugurController extends Controller
             ->where('main.id', $daftarIdFromSession)
             ->select(
                 'main.periode',
-                'tahuns.tahun',
                 'kelurahans.kelurahan',
-                'main.noba',
             )
             ->from('daerahs as main')
             ->leftJoin('tahuns', 'tahuns.id', 'main.thn_sts')

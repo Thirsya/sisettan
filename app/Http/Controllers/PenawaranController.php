@@ -287,10 +287,7 @@ class PenawaranController extends Controller
         $daerahList = Daerah::withTrashed()
             ->where('main.id', $daftarIdFromSession)
             ->select(
-                'main.periode',
-                'tahuns.tahun',
                 'kelurahans.kelurahan',
-                'main.noba',
             )
             ->from('daerahs as main')
             ->leftJoin('tahuns', 'tahuns.id', 'main.thn_sts')
@@ -350,9 +347,26 @@ class PenawaranController extends Controller
 
     public function cetakBA()
     {
+        $daftarIdFromSession = (int) session('selected_kelurahan_id');
+        $daerahList = Daerah::withTrashed()
+            ->where('main.id', $daftarIdFromSession)
+            ->select(
+                'main.periode',
+                'kelurahans.kelurahan',
+                'main.noba',
+            )
+            ->from('daerahs as main')
+            ->leftJoin('tahuns', 'tahuns.id', 'main.thn_sts')
+            ->leftJoin('kelurahans', 'kelurahans.id', 'main.id_kelurahan')
+            ->first();
+
+        $penawaranId = session('penawaran_id');
         $bas = Penawaran::all();
 
-        $pdf = PDF::loadview('lelang.penawaran.cetak-ba', ['bas' => $bas]);
+        $pdf = PDF::loadview('lelang.penawaran.cetak-ba', [
+            'bas' => $bas,
+            'daerahList' => $daerahList,
+        ]);
         return $pdf->stream();
     }
 
