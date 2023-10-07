@@ -51,7 +51,16 @@ class PenawaranController extends Controller
             ->orderByRaw("CAST(daftars.no_urut AS SIGNED) ASC")
             ->get();
 
-
+        $maxPenawaranByTkd = DB::table('penawarans')
+            ->select('idfk_tkd', DB::raw('MAX(nilai_penawaran) as max_penawaran'))
+            ->groupBy('idfk_tkd');
+        $daftarWithMaxPenawaran = DB::table('penawarans')
+            ->joinSub($maxPenawaranByTkd, 'sub_max', function ($join) {
+                $join->on('penawarans.idfk_tkd', '=', 'sub_max.idfk_tkd')
+                    ->whereColumn('penawarans.nilai_penawaran', 'sub_max.max_penawaran');
+            })
+            ->select('penawarans.idfk_daftar')
+            ->distinct();
         $penawarans = DB::table('penawarans')
             ->select(
                 'penawarans.id',
@@ -61,7 +70,11 @@ class PenawaranController extends Controller
                 'penawarans.idfk_tkd',
                 'penawarans.nilai_penawaran',
                 'penawarans.keterangan',
-                'penawarans.total_luas',
+                // 'penawarans.total_luas',
+                DB::raw('CASE
+                WHEN penawarans.idfk_daftar IN (' . $daftarWithMaxPenawaran->toSql() . ') THEN penawarans.total_luas
+                ELSE 0
+            END as total_luas'),
                 'daftars.id_daftar',
                 'daftars.no_urut',
                 'daftars.nama',
@@ -79,6 +92,7 @@ class PenawaranController extends Controller
                 'tkds.keterangan',
                 'tkds.nop',
             )
+            ->mergeBindings($daftarWithMaxPenawaran)
             ->leftJoin('tkds', 'penawarans.idfk_tkd', '=', 'tkds.id')
             ->leftJoin('daftars', 'penawarans.idfk_daftar', '=', 'daftars.id')
             ->when($request->input('bukti'), function ($query, $bukti) {
@@ -90,7 +104,7 @@ class PenawaranController extends Controller
             // ->whereYear('daftars.tgl_perjanjian', $tahunId)
             ->where('daftars.id_kelurahan', $kelurahanIdFromDaerah)
             ->whereNull('penawarans.deleted_at')
-            ->orderBy('tkds.bukti', 'DESC')
+            ->orderBy('daftars.nama', 'ASC')
             ->paginate(10);
         $tkdSelected = $request->input('bukti');
         return view('lelang.penawaran.index')->with([
@@ -294,7 +308,7 @@ class PenawaranController extends Controller
             ->leftJoin('kelurahans', 'kelurahans.id', 'main.id_kelurahan')
             ->first();
 
-            $sub = Penawaran::select('idfk_tkd', DB::raw('MAX(nilai_penawaran) as max_penawaran'))
+        $sub = Penawaran::select('idfk_tkd', DB::raw('MAX(nilai_penawaran) as max_penawaran'))
             ->whereNull('deleted_at')
             ->where('gugur', '=', 1)
             ->groupBy('idfk_tkd');
