@@ -362,6 +362,7 @@ class PenawaranController extends Controller
     public function cetakBA()
     {
         $daftarIdFromSession = (int) session('selected_kelurahan_id');
+        $kelurahanIdFromDaerah = Daerah::where('id', $daftarIdFromSession)->pluck('id_kelurahan')->first();
         $daerahList = Daerah::withTrashed()
             ->where('main.id', $daftarIdFromSession)
             ->select(
@@ -374,14 +375,76 @@ class PenawaranController extends Controller
             ->leftJoin('kelurahans', 'kelurahans.id', 'main.id_kelurahan')
             ->first();
 
-        $penawaranId = session('penawaran_id');
-        $bas = Penawaran::all();
+        $sub = Penawaran::select('idfk_tkd', DB::raw('MAX(nilai_penawaran) as max_penawaran'))
+            ->whereNull('deleted_at')
+            ->where('gugur', '=', false)
+            ->groupBy('idfk_tkd');
 
-        $pdf = PDF::loadview('lelang.penawaran.cetak-ba', [
-            'bas' => $bas,
+        $penawaran = Penawaran::select(
+            'daftars.no_urut',
+            'daftars.nama',
+            'daftar2.nama as nama2',
+            'daftars.tgl_perjanjian',
+            'tkds.bukti',
+            'tkds.letak',
+            'tkds.bidang',
+            'tkds.harga_dasar',
+            'tkds.luas',
+            'penawarans.id',
+            'penawarans.nilai_penawaran',
+            'penawarans.idfk_tkd',
+            'penawarans.idfk_daftar',
+            DB::raw('
+                    (SELECT nilai_penawaran
+                     FROM penawarans AS subquery
+                     WHERE subquery.idfk_tkd = penawarans.idfk_tkd
+                     AND subquery.nilai_penawaran IS NOT NULL
+                     ORDER BY subquery.nilai_penawaran DESC
+                     LIMIT 1 OFFSET 1) AS nilai_penawaran2
+                '),
+            DB::raw('
+                (SELECT idfk_daftar
+                 FROM penawarans AS subquery
+                 WHERE subquery.idfk_tkd = tkds.id
+                 AND subquery.nilai_penawaran =
+                    (SELECT nilai_penawaran
+                     FROM penawarans
+                     WHERE idfk_tkd = tkds.id
+                     AND nilai_penawaran IS NOT NULL
+                     ORDER BY nilai_penawaran DESC
+                     LIMIT 1 OFFSET 1)
+                 LIMIT 1) AS idfk_daftar2
+            ')
+        )
+            ->joinSub($sub, 'subquery', function ($join) {
+                $join->on('penawarans.idfk_tkd', '=', 'subquery.idfk_tkd')
+                    ->on('penawarans.nilai_penawaran', '=', 'subquery.max_penawaran');
+            })
+            ->leftJoin('tkds', 'tkds.id', '=', 'penawarans.idfk_tkd')
+            ->leftJoin('daftars', 'daftars.id', '=', 'penawarans.idfk_daftar')
+            ->leftJoin('daftars as daftar2', 'daftar2.id', '=',  DB::raw('
+            (SELECT idfk_daftar
+             FROM penawarans AS subquery
+             WHERE subquery.idfk_tkd = tkds.id
+             AND subquery.nilai_penawaran =
+                (SELECT nilai_penawaran
+                 FROM penawarans
+                 WHERE idfk_tkd = tkds.id
+                 AND nilai_penawaran IS NOT NULL
+                 ORDER BY nilai_penawaran DESC
+                 LIMIT 1 OFFSET 1)
+             LIMIT 1)
+        '))
+            ->where('daftars.id_kelurahan', $kelurahanIdFromDaerah)
+            ->orderBy('tkds.bukti', 'DESC')
+            ->get();
+
+        $pdf = PDF::loadView('lelang.penawaran.cetak-ba', [
+            'penawarans' => $penawaran,
             'daerahList' => $daerahList,
         ]);
-        return $pdf->stream();
+
+        return $pdf->stream('cetak-ba.pdf');
     }
 
     public function cetakSekota()
