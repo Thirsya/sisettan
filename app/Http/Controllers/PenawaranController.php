@@ -294,7 +294,7 @@ class PenawaranController extends Controller
     //     return $pdf->stream();
     // }
 
-    public function cetakTakLaku()
+    public function cetakTidakLaku()
     {
         $daftarIdFromSession = (int) session('selected_kelurahan_id');
         $kelurahanIdFromDaerah = Daerah::where('id', $daftarIdFromSession)->pluck('id_kelurahan')->first();
@@ -308,49 +308,22 @@ class PenawaranController extends Controller
             ->leftJoin('kelurahans', 'kelurahans.id', 'main.id_kelurahan')
             ->first();
 
-        $sub = Penawaran::select('idfk_tkd', DB::raw('MAX(nilai_penawaran) as max_penawaran'))
-            ->whereNull('deleted_at')
-            ->where('gugur', '=', 1)
-            ->groupBy('idfk_tkd');
-
-        $penawarans = DB::table('penawarans')
+        $penawarans = DB::table('tkds')
+            ->leftJoin('penawarans', 'tkds.id', '=', 'penawarans.idfk_tkd')
+            ->leftJoin('kelurahans', 'tkds.id_kelurahan', '=', 'kelurahans.id')
             ->select(
-                'penawarans.id',
-                'penawarans.id_daftar',
-                'penawarans.idfk_daftar',
-                'penawarans.id_tkd',
-                'penawarans.idfk_tkd',
-                'penawarans.nilai_penawaran',
-                'penawarans.keterangan',
-                'penawarans.total_luas',
-                'penawarans.keterangan',
-                'daftars.id_daftar',
-                'daftars.no_urut',
-                'daftars.nama',
-                'daftars.alamat',
-                'daftars.no_kk',
-                'daftars.no_wp',
-                'daftars.tgl_perjanjian',
-                'tkds.id_tkd',
-                'tkds.id_kelurahan',
-                'tkds.bidang',
-                'tkds.letak',
+                'tkds.id',
                 'tkds.bukti',
+                'tkds.letak',
+                'tkds.bidang',
                 'tkds.harga_dasar',
-                'tkds.luas',
-                'tkds.keterangan',
-                'tkds.nop',
+                'tkds.luas'
             )
-            ->joinSub($sub, 'subquery', function ($join) {
-                $join->on('penawarans.idfk_tkd', '=', 'subquery.idfk_tkd')
-                    ->on('penawarans.nilai_penawaran', '=', 'subquery.max_penawaran');
-            })
-            ->leftJoin('tkds', 'penawarans.idfk_tkd', '=', 'tkds.id')
-            ->leftJoin('daftars', 'penawarans.idfk_daftar', '=', 'daftars.id')
-            ->where('daftars.id_kelurahan', $kelurahanIdFromDaerah)
+            ->whereNull('penawarans.idfk_tkd')
             ->whereNull('penawarans.deleted_at')
-            ->orderBy('tkds.bukti', 'DESC')
+            ->where('tkds.id_kelurahan', $kelurahanIdFromDaerah)
             ->get();
+
 
         $pdf = PDF::loadview('lelang.penawaran.tidak-laku', [
             'penawarans' => $penawarans,
