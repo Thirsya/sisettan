@@ -38,7 +38,7 @@ class HektarController extends Controller
             ->leftJoin('daftars', 'daftars.id', '=', 'penawarans.idfk_daftar')
             ->where('daftars.id_kelurahan', $kelurahanIdFromDaerah)
             ->whereNull('penawarans.deleted_at')
-            ->where('penawarans.gugur', '=', false)
+            ->where('penawarans.total_luas', '>=', 20000)
             ->groupBy('penawarans.idfk_tkd')
             ->orderBy('tkds.bukti', 'DESC')
             ->get();
