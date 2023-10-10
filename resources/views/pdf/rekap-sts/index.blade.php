@@ -8,8 +8,8 @@
 
 <center>
     <p style="font-size: 9px">Aplikasi Lelang TKD BPPKAD Kota Kediri</p>
-    <img src="public/images/kota.png" style="width: 50px;height: auto;float: left">
-    {{-- <img src="{{ public_path('images/kota.png') }}" style="width: 50px; height: auto; float: left;"> --}}
+    {{-- <img src="public/images/kota.png" style="width: 50px;height: auto;float: left"> --}}
+    <img src="{{ public_path('images/kota.png') }}" style="width: 50px; height: auto; float: left;">
     <h5>PEMERINTAH KOTA KEDIRI</h5>
     <div class="tepi"></div>
     <br>

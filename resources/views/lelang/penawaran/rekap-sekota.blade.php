@@ -1,10 +1,10 @@
 <style>
     .tepi {
-      width:100%;
-      height:auto;
-      border: 2px ridge black;
+        width: 100%;
+        height: auto;
+        border: 2px ridge black;
     }
- </style>
+</style>
 
 <center>
     <p style="font-size: 9px">Aplikasi Lelang TKD BPPKAD Kota Kediri</p>
@@ -13,7 +13,7 @@
         <h3>Rekap Hasil Lelang Berdasarkan Lampiran BA</h3>
     </center>
     <table style="float: left">
-         <tr>
+        <tr>
             <td style="font-weight: bold">Rekap PerKelurahan</td>
         </tr>
     </table>
@@ -30,14 +30,27 @@
             <th>Penawaran</th>
             <th>Tidak Laku</th>
         </tr>
+        @foreach ($cetakSekota as $listCetakSekota)
+            <tr>
+                <td>{{ $loop->iteration }}</td>
+                <td>{{ $listCetakSekota->kelurahan }}</td>
+                <td>{{ $listCetakSekota->total_bidang }}</td>
+                <td>{{ $listCetakSekota->total_luas }}</td>
+                <td>{{ $listCetakSekota->total_harga_dasar }}</td>
+                <td>{{ $listCetakSekota->total_nilai_penawaran }}</td>
+                <td>{{ $listCetakSekota->total_daftar }}</td>
+                <td>{{ $listCetakSekota->total_penawaran }}</td>
+                <td>{{ $listCetakSekota->total_tidak_laku }}</td>
+            </tr>
+        @endforeach
     </table>
     <br><br>
     <table style="float: left">
         <tr>
-           <td style="font-weight: bold">Rekap PerKecamatan</td>
-       </tr>
-   </table>
-   <br><br>
+            <td style="font-weight: bold">Rekap PerKecamatan</td>
+        </tr>
+    </table>
+    <br><br>
     <table border="1" style="width:95%;border-color:black;">
         <tr style="font-size: 9px; font-weight: normal;">
             <th>Jumlah Luas Bidang (m2)</th>

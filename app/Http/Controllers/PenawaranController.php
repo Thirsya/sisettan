@@ -10,6 +10,7 @@ use App\Http\Requests\UpdatePenawaranRequest;
 use App\Imports\PenawaransImport;
 use App\Models\Daerah;
 use App\Models\Daftar;
+use App\Models\Kecamatan;
 use App\Models\Tkd;
 use PDF;
 use Illuminate\Http\Request;
@@ -422,9 +423,28 @@ class PenawaranController extends Controller
 
     public function cetakSekota()
     {
-        $sekotas = Penawaran::all();
+        $cetakSekota = Tkd::select(
+            'kelurahans.kelurahan',
+            DB::raw('COUNT(DISTINCT tkds.bidang) as total_bidang'),
+            DB::raw('SUM(tkds.luas) as total_luas'),
+            DB::raw('SUM(tkds.harga_dasar) as total_harga_dasar'),
+            DB::raw('SUM(penawarans.nilai_penawaran) as total_nilai_penawaran'),
+            DB::raw('COUNT(DISTINCT daftars.id) as total_daftar'),
+            DB::raw('COUNT(DISTINCT penawarans.id) as total_penawaran'),
+            DB::raw('SUM(CASE WHEN p1.idfk_tkd IS NULL THEN 1 ELSE 0 END) as total_tidak_laku'),
+        )
+            ->leftJoin('kelurahans', 'tkds.id_kelurahan', '=', 'kelurahans.id')
+            ->leftJoin('penawarans', 'penawarans.idfk_tkd', '=', 'tkds.id')
+            ->leftJoin('daftars', 'daftars.id_kelurahan', '=', 'kelurahans.id')
+            ->leftJoin('penawarans as p1', function ($join) {
+                $join->on('p1.idfk_tkd', '=', 'tkds.id')
+                    ->whereRaw('tkds.id NOT IN (SELECT idfk_tkd FROM penawarans)');
+            })
+            ->groupBy('kelurahans.kelurahan')
+            ->get();
 
-        $pdf = PDF::loadview('lelang.penawaran.rekap-sekota', ['sekotas' => $sekotas]);
+        $pdf = PDF::loadview('lelang.penawaran.rekap-sekota', ['cetakSekota' => $cetakSekota]);
         return $pdf->stream();
     }
+
 }
