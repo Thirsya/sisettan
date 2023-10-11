@@ -15,7 +15,7 @@
                     <form action="{{ route('kecamatan.store') }}" method="post">
                         @csrf
                         <div class="form-group">
-                            <label>Kecamatan</label>
+                            <label>Kecamatan<span class="text-danger">*</span></label>
                             <input type="text" id="kecamatan" name="kecamatan"
                                 class="form-control @error('kecamatan') is-invalid @enderror"
                                 placeholder="Masukan Kecamatan" autocomplete="off">

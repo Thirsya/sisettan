@@ -15,7 +15,7 @@
                     <form action="{{ route('daerah.store') }}" method="post">
                         @csrf
                         <div class="form-group">
-                            <label>Kecamatan</label>
+                            <label>Kecamatan<span class="text-danger">*</span></label>
                             <select class="form-control select2 @error('id_kecamatan') is-invalid @enderror"
                                 name="id_kecamatan" data-id="select-kecamatan" id="id_kecamatan">
                                 <option value="">Piih Kecamatan</option>
@@ -31,7 +31,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label>Kelurahan</label>
+                            <label>Kelurahan<span class="text-danger">*</span></label>
                             <select class="form-control select2 @error('id_kelurahan') is-invalid @enderror"
                                 name="id_kelurahan" data-id="select-kelurahan" id="id_kelurahan" disabled="disable">
                                 <option value="">Piih Kelurahan</option>
@@ -54,7 +54,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label>Periode</label>
+                            <label>Periode<span class="text-danger">*</span></label>
                             <input type="text" id="periode" name="periode"
                                 class="form-control @error('periode') is-invalid @enderror"
                                 placeholder="Masukan Periode" autocomplete="off">
@@ -65,7 +65,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label>Tahun</label>
+                            <label>Tahun<span class="text-danger">*</span></label>
                             <select class="form-control select2 @error('id_tahun') is-invalid @enderror"
                                 name="id_tahun" data-id="select-tahun" id="id_tahun">
                                 <option value="">Piih Tahun</option>
@@ -81,7 +81,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label>Tanggal Lelang</label>
+                            <label>Tanggal Lelang<span class="text-danger">*</span></label>
                             <input type="date" id="tanggal_lelang" name="tanggal_lelang"
                                 class="form-control @error('tanggal_lelang') is-invalid @enderror"
                                 placeholder="Masukan Tanggal Lelang" autocomplete="off">

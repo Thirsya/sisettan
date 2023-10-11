@@ -15,7 +15,7 @@
                     <form action="{{ route('kelurahan.store') }}" method="post">
                         @csrf
                         <div class="form-group">
-                            <label>Kecamatan</label>
+                            <label>Kecamatan<span class="text-danger">*</span></label>
                             <select class="form-control select2 @error('id_kecamatan') is-invalid @enderror"
                                 name="id_kecamatan" data-id="select-kecamatan" id="id_kecamatan">
                                 <option value="">Piih Kecamatan</option>
@@ -31,7 +31,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label>Kelurahan</label>
+                            <label>Kelurahan<span class="text-danger">*</span></label>
                             <input type="text" id="kelurahan" name="kelurahan"
                                 class="form-control @error('kelurahan') is-invalid @enderror"
                                 placeholder="Masukan Kelurahan" autocomplete="off">

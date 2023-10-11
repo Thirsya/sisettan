@@ -15,7 +15,7 @@
                     <form action="{{ route('tahun.store') }}" method="post">
                         @csrf
                         <div class="form-group">
-                            <label>Tahun</label>
+                            <label>Tahun<span class="text-danger">*</span></label>
                             <input type="text" id="tahun" name="tahun"
                                 class="form-control @error('tahun') is-invalid @enderror"
                                 placeholder="Masukan Tahun" autocomplete="off">

@@ -15,7 +15,7 @@
                     <form action="{{ route('tkd.store') }}" method="post">
                         @csrf
                         <div class="form-group">
-                            <label>Kelurahan</label>
+                            <label>Kelurahan<span class="text-danger">*</span></label>
                             <select class="form-control select2 @error('id_kelurahan') is-invalid @enderror"
                             name="id_kelurahan_disabled" data-id="select-kelurahan" id="id_kelurahan" disabled>
                                 <option value="">Piih Kelurahan</option>
@@ -32,7 +32,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label>Letak</label>
+                            <label>Letak<span class="text-danger">*</span></label>
                             <input type="text" id="letak" name="letak"
                                 class="form-control @error('letak') is-invalid @enderror"
                                 placeholder="Masukan Letak" autocomplete="off">
@@ -43,7 +43,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label>Bidang</label>
+                            <label>Bidang<span class="text-danger">*</span></label>
                             <input type="text" id="bidang" name="bidang"
                                 class="form-control @error('bidang') is-invalid @enderror"
                                 placeholder="Masukan Bidang" autocomplete="off">
@@ -54,7 +54,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label>Bukti</label>
+                            <label>Bukti<span class="text-danger">*</span></label>
                             <input type="text" id="bukti" name="bukti"
                                 class="form-control @error('bukti') is-invalid @enderror"
                                 placeholder="Masukan Bukti" autocomplete="off">
@@ -65,7 +65,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label>Luas</label>
+                            <label>Luas<span class="text-danger">*</span></label>
                             <input type="text" id="luas" name="luas"
                                 class="form-control @error('luas') is-invalid @enderror"
                                 placeholder="Masukan Luas" autocomplete="off">
@@ -76,7 +76,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label>Harga Dasar</label>
+                            <label>Harga Dasar<span class="text-danger">*</span></label>
                             <input type="text" id="harga_dasar" name="harga_dasar"
                                 class="form-control @error('harga_dasar') is-invalid @enderror"
                                 placeholder="Masukan Harga Dasar" autocomplete="off">
@@ -87,7 +87,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label>Keterangan</label>
+                            <label>Keterangan<span class="text-danger">*</span></label>
                             <textarea id="keterangan" name="keterangan"
                                 class="form-control @error('keterangan') is-invalid @enderror"
                                 placeholder="Masukkan Keterangan" autocomplete="off" rows="4"></textarea>
