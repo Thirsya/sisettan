@@ -32,15 +32,19 @@
         </tr>
         @foreach ($cetakSekota as $listCetakSekota)
             <tr>
-                <td>{{ $loop->iteration }}</td>
+                <td style="text-align: right">{{ $loop->iteration }}</td>
                 <td>{{ $listCetakSekota->kelurahan }}</td>
-                <td>{{ $listCetakSekota->total_bidang }}</td>
-                <td>{{ $listCetakSekota->total_luas }}</td>
-                <td>{{ $listCetakSekota->total_harga_dasar }}</td>
-                <td>{{ $listCetakSekota->total_nilai_penawaran }}</td>
-                <td>{{ $listCetakSekota->total_daftar }}</td>
-                <td>{{ $listCetakSekota->total_penawaran }}</td>
-                <td>{{ $listCetakSekota->total_tidak_laku }}</td>
+                <td style="text-align: right">{{ number_format($listCetakSekota->total_bidang, 0, ',', '.') }}
+                <td style="text-align: right">{{ number_format($listCetakSekota->total_luas, 0, ',', '.') }}
+                <td style="text-align: right">
+                    {{ number_format($listCetakSekota->total_harga_dasar, 0, ',', '.') }}
+                <td style="text-align: right">
+                    {{ number_format($listCetakSekota->total_nilai_penawaran, 0, ',', '.') }}
+                <td style="text-align: right">{{ number_format($listCetakSekota->total_daftar, 0, ',', '.') }}
+                <td style="text-align: right">
+                    {{ number_format($listCetakSekota->total_penawaran, 0, ',', '.') }}
+                <td style="text-align: right">
+                    {{ number_format($listCetakSekota->total_tidak_laku, 0, ',', '.') }}
             </tr>
         @endforeach
     </table>
@@ -53,9 +57,20 @@
     <br><br>
     <table border="1" style="width:95%;border-color:black;">
         <tr style="font-size: 9px; font-weight: normal;">
+            <th>Kecamatan</th>
             <th>Jumlah Luas Bidang (m2)</th>
             <th>Jumlah Harga Dasar (Rp)</th>
             <th>Jumlah Harga Penawaran (Rp)</th>
         </tr>
+        @foreach ($cetakSekotaKecamatan as $listCetakSekotaKecamatan)
+            <tr>
+                <td>Kec. {{ $listCetakSekotaKecamatan->kecamatan }}</td>
+                <td style="text-align: right">{{ number_format($listCetakSekotaKecamatan->total_luas, 0, ',', '.') }}
+                <td style="text-align: right">
+                    {{ number_format($listCetakSekotaKecamatan->total_harga_dasar, 0, ',', '.') }}
+                <td style="text-align: right">
+                    {{ number_format($listCetakSekotaKecamatan->total_nilai_penawaran, 0, ',', '.') }}
+            </tr>
+        @endforeach
     </table>
 </center>

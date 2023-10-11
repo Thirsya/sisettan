@@ -15,7 +15,7 @@
                     <form action="{{ route('daftar.store') }}" method="post">
                         @csrf
                         <div class="form-group">
-                            <label>Kelurahan</label>
+                            <label>Kelurahan <span class="text-danger">*</span></label>
                             <select class="form-control select2 @error('id_kelurahan') is-invalid @enderror"
                                 name="id_kelurahan_disabled" data-id="select-kelurahan" id="id_kelurahan" disabled>
                                 <option value="">Piih Kelurahan</option>
@@ -32,7 +32,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label>Nomor Urut</label>
+                            <label>Nomor Urut <span class="text-danger">*</span> </label>
                             <input type="text" id="no_urut" name="no_urut"
                                 class="form-control @error('no_urut') is-invalid @enderror" placeholder="Masukan Nomor Urut"
                                 autocomplete="off" readonly>
@@ -43,8 +43,8 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label>Nama</label>
-                            <input type="text" id="nama" name="nama"
+                            <label>Nama <span class="text-danger">*</span></label>
+                            <input type="text" id="nama" name="nama" required
                                 class="form-control @error('nama') is-invalid @enderror" placeholder="Masukan Nama"
                                 autocomplete="off">
                             @error('nama')
@@ -53,8 +53,9 @@
                                 </div>
                             @enderror
                         </div>
+
                         <div class="form-group">
-                            <label>Nomor Kartu Keluarga</label>
+                            <label>Nomor Kartu Keluarga <span class="text-danger">*</span></label>
                             <input type="text" id="no_kk" name="no_kk"
                                 class="form-control @error('no_kk') is-invalid @enderror"
                                 placeholder="Masukan No. Kartu Keluarga" autocomplete="off">
@@ -65,7 +66,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label>Alamat</label>
+                            <label>Alamat <span class="text-danger">*</span></label>
                             <input type="text" id="alamat" name="alamat"
                                 class="form-control @error('alamat') is-invalid @enderror" placeholder="Masukan Alamat"
                                 autocomplete="off">
@@ -76,7 +77,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label>Nomor WP</label>
+                            <label>Nomor WP <span class="text-danger">*</span></label>
                             <input type="text" id="no_wp" name="no_wp"
                                 class="form-control @error('no_wp') is-invalid @enderror" placeholder="Masukan Nomor WP"
                                 autocomplete="off">
@@ -87,7 +88,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label>Tanggal Perjanjian</label>
+                            <label>Tanggal Perjanjian <span class="text-danger">*</span></label>
                             <input type="date" id="tgl_perjanjian" name="tgl_perjanjian"
                                 class="form-control @error('tgl_perjanjian') is-invalid @enderror"
                                 placeholder="Masukan Tanggal Perjanjian" autocomplete="off">
@@ -111,18 +112,18 @@
     <script src="/assets/js/select2.min.js"></script>
     <script>
         // $(document).ready(function() {
-            var id = $('#id_kelurahan').val();
-            $.ajax({
-                url: '{{ route('getLatestNoUrut') }}',
-                data: {
-                    id: id
-                },
-                type: 'POST',
-                success: function(response) {
-                    console.log(response);
-                    $('#no_urut').val(response);
-                }
-            });
+        var id = $('#id_kelurahan').val();
+        $.ajax({
+            url: '{{ route('getLatestNoUrut') }}',
+            data: {
+                id: id
+            },
+            type: 'POST',
+            success: function(response) {
+                console.log(response);
+                $('#no_urut').val(response);
+            }
+        });
         // });
     </script>
 @endpush

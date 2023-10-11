@@ -431,20 +431,41 @@ class PenawaranController extends Controller
             DB::raw('SUM(penawarans.nilai_penawaran) as total_nilai_penawaran'),
             DB::raw('COUNT(DISTINCT daftars.id) as total_daftar'),
             DB::raw('COUNT(DISTINCT penawarans.id) as total_penawaran'),
-            DB::raw('SUM(CASE WHEN p1.idfk_tkd IS NULL THEN 1 ELSE 0 END) as total_tidak_laku'),
+            DB::raw('(SELECT COUNT(DISTINCT t.id) FROM tkds t
+                        LEFT JOIN penawarans p ON t.id = p.idfk_tkd
+                      WHERE p.idfk_tkd IS NULL AND t.id_kelurahan = kelurahans.id) as total_tidak_laku')
         )
             ->leftJoin('kelurahans', 'tkds.id_kelurahan', '=', 'kelurahans.id')
             ->leftJoin('penawarans', 'penawarans.idfk_tkd', '=', 'tkds.id')
             ->leftJoin('daftars', 'daftars.id_kelurahan', '=', 'kelurahans.id')
-            ->leftJoin('penawarans as p1', function ($join) {
-                $join->on('p1.idfk_tkd', '=', 'tkds.id')
-                    ->whereRaw('tkds.id NOT IN (SELECT idfk_tkd FROM penawarans)');
-            })
             ->groupBy('kelurahans.kelurahan')
             ->get();
 
-        $pdf = PDF::loadview('lelang.penawaran.rekap-sekota', ['cetakSekota' => $cetakSekota]);
+        $cetakSekotaKecamatan = Tkd::select(
+            'kecamatans.kecamatan',
+            DB::raw('SUM(tkds.luas) as total_luas'),
+            DB::raw('SUM(tkds.harga_dasar) as total_harga_dasar'),
+            DB::raw('SUM(penawarans.nilai_penawaran) as total_nilai_penawaran'),
+            //     DB::raw('COUNT(DISTINCT daftars.id) as total_daftar'),
+            //     DB::raw('COUNT(DISTINCT penawarans.id) as total_penawaran'),
+            //     DB::raw('(SELECT COUNT(DISTINCT t.id) FROM tkds t
+            //                     LEFT JOIN penawarans p ON t.id = p.idfk_tkd
+            //                   WHERE p.idfk_tkd IS NULL AND t.id_kelurahan = kelurahans.id) as total_tidak_laku')
+        )
+            ->leftJoin('kelurahans', 'tkds.id_kelurahan', '=', 'kelurahans.id')
+            ->leftJoin('kecamatans', 'kelurahans.id_kecamatan', '=', 'kecamatans.id')
+            ->leftJoin('penawarans', 'penawarans.idfk_tkd', '=', 'tkds.id')
+            // ->leftJoin('daftars', 'daftars.id_kelurahan', '=', 'kelurahans.id')
+            ->groupBy('kelurahans.id_kecamatan')
+            ->get();
+
+        $pdf = PDF::loadview(
+            'lelang.penawaran.rekap-sekota',
+            [
+                'cetakSekota' => $cetakSekota,
+                'cetakSekotaKecamatan' => $cetakSekotaKecamatan,
+            ]
+        );
         return $pdf->stream();
     }
-
 }
