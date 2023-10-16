@@ -19,12 +19,12 @@
         <tr>
            <td>Bank </td>
            <td>&nbsp;: </td>
-           <td>&nbsp;... </td>
+           <td>&nbsp;Bank Jatim </td>
        </tr>
        <tr>
            <td>No. Rek </td>
            <td>&nbsp;: </td>
-           <td>&nbsp;...</td>
+           <td>&nbsp;0061018399</td>
        </tr>
     </table>
     <br><br><br>
@@ -47,6 +47,14 @@
             <th>Kode Rekening</th>
             <th style="width: 400px">Uraian</th>
             <th>Jumlah (Rp)</th>
+        </tr>
+        <tr>
+            <td>4.1.4.03.01.001</td>
+            <td>Penerimaan Hasil Lelang Sewa Bekas Tanah Kas Desa
+                Pembayaran terhadap Sewa Tanah Bekas Tanah
+                Kas Desa Milik Pemerintah Kota Kediri sesuai Berita Acara
+            </td>
+
         </tr>
     </table>
 </center>

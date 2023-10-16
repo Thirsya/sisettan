@@ -91,13 +91,13 @@
                                     <tbody>
                                         <tr>
                                             <th>Id</th>
-                                            <th style="width: 100px">Letak</th>
+                                            <th style="width: 120px">Letak</th>
                                             <th>Bidang</th>
                                             <th>Kelurahan</th>
-                                            <th>Bukti</th>
+                                            <th style="width: 100px">Bukti</th>
                                             <th style="width: 100px">Luas</th>
                                             <th style="width: 120px">Harga Dasar</th>
-                                            <th>Keterangan</th>
+                                            <th style="width: 300px">Keterangan</th>
                                             <th>Nop</th>
                                             <th class="text-right">Action</th>
                                         </tr>
