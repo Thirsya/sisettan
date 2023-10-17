@@ -136,89 +136,67 @@ class StsController extends Controller
 
     public function printSTS($id)
     {
+        $daftarIdFromSession = (int) session('selected_kelurahan_id');
+        $daerahList = Daerah::withTrashed()
+            ->where('main.id', $daftarIdFromSession)
+            ->select(
+                'main.periode',
+                'tahuns.tahun',
+                'kelurahans.kelurahan',
+                'main.noba',
+                'tkds.bukti',
+                'tkds.bidang',
+                'tkds.letak',
+                'tkds.luas',
+                'daftars.nama',
+            )
+            ->from('daerahs as main')
+            ->leftJoin('tahuns', 'tahuns.id', 'main.thn_sts')
+            ->leftJoin('kelurahans', 'kelurahans.id', 'main.id_kelurahan')
+            ->leftJoin('tkds', 'tkds.id_kelurahan', 'kelurahans.id')
+            ->leftJoin('daftars', 'daftars.id_kelurahan', 'kelurahans.id')
+            ->first();
 
-        $penawaran = Penawaran::find($id);
+        $penawaranId = session('penawaran_id');
+        $penawarans = Penawaran::find($id);
 
-        if (!$penawaran) {
-            return abort(404, 'Penawaran not found');
-        }
-
-        $pdf = PDF::loadView('lelang.penawaran.cetak-sts', ['penawaran' => $penawaran]);
+        $pdf = PDF::loadview('lelang.penawaran.cetak-sts', [
+            'penawarans' => $penawarans,
+            'daerahList' => $daerahList,
+        ]);
         return $pdf->stream('sts-' . $id . '.pdf');
     }
 
     public function cetakPernyataan()
     {
+        $daftarIdFromSession = (int) session('selected_kelurahan_id');
+        $daerahList = Daerah::withTrashed()
+            ->where('main.id', $daftarIdFromSession)
+            ->select(
+                'main.periode',
+                'tahuns.tahun',
+                'kelurahans.kelurahan',
+                'main.noba',
+                'tkds.bukti',
+                'tkds.bidang',
+                'tkds.letak',
+                'tkds.luas',
+                'daftars.nama',
+                'daftars.alamat',
+            )
+            ->from('daerahs as main')
+            ->leftJoin('tahuns', 'tahuns.id', 'main.thn_sts')
+            ->leftJoin('kelurahans', 'kelurahans.id', 'main.id_kelurahan')
+            ->leftJoin('tkds', 'tkds.id_kelurahan', 'kelurahans.id')
+            ->leftJoin('daftars', 'daftars.id_kelurahan', 'kelurahans.id')
+            ->first();
+
+        $penawaranId = session('penawaran_id');
         return view('lelang.penawaran.pernyataan');
     }
 
     public function cetakPerjanjian()
     {
         return view('lelang.penawaran.perjanjian');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
     }
 }
