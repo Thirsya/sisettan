@@ -136,7 +136,7 @@
                                 <form action="{{ route('delete.all') }}" method="POST" class="ml-2">
                                     <input type="hidden" name="_method" value="DELETE">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                    <button class="btn btn-sm btn-danger btn-icon confirm-delete"></i> Delete All</button>
+                                    <button class="btn btn-sm btn-danger btn-icon confirm-delete"></i>Delete All</button>
                                 </form>
                             </div>
                             <div class="table-responsive">
@@ -150,7 +150,7 @@
                                             <th>Luas Bidang</th>
                                             <th>Harga Dasar</th>
                                             <th>Harga Penawaran</th>
-                                            <th class="text-right">Action</th>
+                                            <th class="text-right" style="width: 230px">Action</th>
                                         </tr>
                                         @foreach ($penawarans as $key => $penawaran)
                                             <tr>
@@ -163,6 +163,18 @@
                                                 <td>Rp {{ number_format($penawaran->nilai_penawaran, 0, ',', '.') }}</td>
                                                 <td class="text-right">
                                                     <div class="d-flex justify-content-end">
+                                                        <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user"></a>
+                                                        <div class="dropdown-menu dropdown-menu-right">
+                                                            <a href="#" class="dropdown-item has-icon">
+                                                                <i class="far fa-user"></i> Pemenang II
+                                                            </a>
+                                                            <div class="dropdown-divider"></div>
+                                                            <a href="#"
+                                                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                                                                class="dropdown-item has-icon text-danger">
+                                                                <i class="fas fa-sign-out-alt"></i> Kembali Ke Panitia
+                                                            </a>
+                                                        </div>
                                                         <a href="{{ route('penawaran.edit', $penawaran->id) }}"
                                                             class="btn btn-sm btn-info btn-icon "><i
                                                                 class="fas fa-edit"></i>

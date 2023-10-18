@@ -43,7 +43,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label>Noba</label>
+                            <label>No Berita Acara</label>
                             <input type="text" id="noba" name="noba"
                                 class="form-control @error('noba') is-invalid @enderror"
                                 placeholder="Masukan Noba" autocomplete="off">
