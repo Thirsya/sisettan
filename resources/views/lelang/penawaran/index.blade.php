@@ -41,16 +41,19 @@
                                 <a class="btn btn-info btn-success active bg-success" href="{{ route('hektar') }}">
                                     <i class="fas fa-check"></i>
                                     Luas Lebih dari 2 Hektar</a>
-                                <a class="btn btn-info btn-danger active bg-danger" target="_blank" href="{{ route('penawaran.cetaktidaklaku') }}">
+                                <a class="btn btn-info btn-danger active bg-danger" target="_blank"
+                                    href="{{ route('penawaran.cetaktidaklaku') }}">
                                     <i class="fas fa-times"></i>
                                     Bidang/SHP Tidak Laku</a>
                                 <a class="btn btn-info btn-info active bg-info" href="{{ route('sts') }}">
                                     <i class="far fa-file"></i>
                                     STS & Perjanjian</a>
-                                <a class="btn btn-info btn-primary active bg-primary" target="_blank" href="{{ route('penawaran.cetakba') }}">
+                                <a class="btn btn-info btn-primary active bg-primary" target="_blank"
+                                    href="{{ route('penawaran.cetakba') }}">
                                     <i class="far fa-file"></i>
                                     Lampiran BA</a>
-                                <a class="btn btn-info btn-primary active bg-primary" target="_blank" href="{{ route('penawaran.cetaksekota') }}">
+                                <a class="btn btn-info btn-primary active bg-primary" target="_blank"
+                                    href="{{ route('penawaran.cetaksekota') }}">
                                     <i class="far fa-file"></i>
                                     Rekap Se-kota</a>
                                 <a class="btn btn-info btn-info active search bg-info">
@@ -154,7 +157,8 @@
                                         </tr>
                                         @foreach ($penawarans as $key => $penawaran)
                                             <tr>
-                                                <td>{{ ($penawarans->currentPage() - 1) * $penawarans->perPage() + $key + 1 }}</td>
+                                                <td>{{ ($penawarans->currentPage() - 1) * $penawarans->perPage() + $key + 1 }}
+                                                </td>
                                                 <td>{{ $penawaran->total_luas }} m<sup>2</sup></td>
                                                 <td>{{ $penawaran->nama }}</td>
                                                 <td>{{ $penawaran->bukti }} bidang {{ $penawaran->bidang }}</td>
@@ -163,17 +167,25 @@
                                                 <td>Rp {{ number_format($penawaran->nilai_penawaran, 0, ',', '.') }}</td>
                                                 <td class="text-right">
                                                     <div class="d-flex justify-content-end">
-                                                        <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user"></a>
+                                                        <a href="#" data-toggle="dropdown"
+                                                            class="nav-link dropdown-toggle nav-link-lg nav-link-user"></a>
                                                         <div class="dropdown-menu dropdown-menu-right">
                                                             <a href="#" class="dropdown-item has-icon">
                                                                 <i class="far fa-user"></i> Pemenang II
                                                             </a>
                                                             <div class="dropdown-divider"></div>
-                                                            <a href="#"
-                                                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                                                                class="dropdown-item has-icon text-danger">
-                                                                <i class="fas fa-sign-out-alt"></i> Kembali Ke Panitia
-                                                            </a>
+                                                            @if ($penawaran->gugur == false)
+                                                                <a href="{{ route('penawaran.toggle-gugur', $penawaran->id) }}"
+                                                                    class="dropdown-item has-icon text-danger">
+                                                                    <i class="fas fa-sign-out-alt"></i> Digugurkan
+                                                                </a>
+                                                            @else
+                                                                <a href="{{ route('penawaran.toggle-gugur', $penawaran->id) }}"
+                                                                    class="dropdown-item has-icon text-danger">
+                                                                    <i class="fas fa-sign-out-alt"></i> Kembali Ke Panitia
+                                                                </a>
+                                                            @endif
+
                                                         </div>
                                                         <a href="{{ route('penawaran.edit', $penawaran->id) }}"
                                                             class="btn btn-sm btn-info btn-icon "><i

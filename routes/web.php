@@ -144,6 +144,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::get('tkd/export', [TkdController::class, 'export'])->name('tkd.export');
         Route::resource('tkd', TkdController::class);
 
+        Route::get('/penawaran/{id}/toggle-gugur', [PenawaranController::class, 'toggleGugur'])
+            ->name('penawaran.toggle-gugur');
         Route::post('penawaran/form', [PenawaranController::class, 'handleForm'])->name('penawaran.handleForm');
         Route::get('penawaran/download-template', [PenawaranController::class, 'downloadTemplate'])
             ->name('penawaran.download-template');

@@ -158,10 +158,16 @@ class StsController extends Controller
             ->first();
 
         $penawaranId = session('penawaran_id');
-        $penawarans = Penawaran::find($id);
+        $idDaftar = Penawaran::select('penawarans.idfk_daftar')
+            ->where('penawarans.id', $id)
+            ->first();
+
+        $totalNilaiPenawaran = Penawaran::where('penawarans.idfk_daftar', $idDaftar->idfk_daftar)
+            ->sum('penawarans.nilai_penawaran');
+
 
         $pdf = PDF::loadview('lelang.penawaran.cetak-sts', [
-            'penawarans' => $penawarans,
+            'totalNilaiPenawaran' => $totalNilaiPenawaran,
             'daerahList' => $daerahList,
         ]);
         return $pdf->stream('sts-' . $id . '.pdf');

@@ -44,7 +44,7 @@ class PenawaranController extends Controller
             'daftars.no_kk',
             'daftars.no_wp',
             'daftars.tgl_perjanjian',
-            'kelurahans.kelurahan'
+            'kelurahans.kelurahan',
         )
             ->leftJoin('kelurahans', 'daftars.id_kelurahan', '=', 'kelurahans.id')
             ->where('daftars.id_kelurahan', $kelurahanIdFromDaerah)
@@ -71,7 +71,7 @@ class PenawaranController extends Controller
                 'penawarans.idfk_tkd',
                 'penawarans.nilai_penawaran',
                 'penawarans.keterangan',
-                // 'penawarans.total_luas',
+                'penawarans.gugur',
                 DB::raw('CASE
                 WHEN penawarans.idfk_daftar IN (' . $daftarWithMaxPenawaran->toSql() . ') THEN penawarans.total_luas
                 ELSE 0
@@ -115,6 +115,14 @@ class PenawaranController extends Controller
             'harga_dasar' => $harga_dasar,
             'daftarList' => $daftarList,
         ]);
+    }
+
+    public function toggleGugur($id)
+    {
+        $penawaran = Penawaran::findOrFail($id);
+        $penawaran->gugur = !$penawaran->gugur;
+        $penawaran->save();
+        return redirect()->back()->with('success', 'Status gugur berhasil diubah');
     }
 
     public function handleForm(Request $request)
