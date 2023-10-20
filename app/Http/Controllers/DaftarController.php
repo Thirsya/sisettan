@@ -69,11 +69,12 @@ class DaftarController extends Controller
 
     public function create()
     {
-        $kelurahanId = session('kelurahan_id');
+        $daftarIdFromSession = (int) session('selected_kelurahan_id');
+        $kelurahanIdFromDaerah = Daerah::where('id', $daftarIdFromSession)->pluck('id_kelurahan')->first();
         $kelurahans = Kelurahan::all();
         return view('lelang.daftar.create')->with([
             'kelurahans' => $kelurahans,
-            'kelurahanId' => $kelurahanId,
+            'kelurahanIdFromDaerah' => $kelurahanIdFromDaerah,
         ]);
     }
 

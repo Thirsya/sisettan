@@ -20,11 +20,11 @@
                                 name="id_kelurahan_disabled" data-id="select-kelurahan" id="id_kelurahan" disabled>
                                 <option value="">Piih Kelurahan</option>
                                 @foreach ($kelurahans as $kelurahan)
-                                    <option @selected($kelurahan->id == $kelurahanId) value="{{ $kelurahan->id }}">
+                                    <option @selected($kelurahan->id == $kelurahanIdFromDaerah) value="{{ $kelurahan->id }}">
                                         {{ $kelurahan->kelurahan }}</option>
                                 @endforeach
                             </select>
-                            <input type="hidden" name="id_kelurahan" value="{{ $kelurahanId }}" />
+                            <input type="hidden" name="id_kelurahan" value="{{ $kelurahanIdFromDaerah }}" />
                             @error('id_kelurahan')
                                 <div class="invalid-feedback">
                                     {{ $message }}

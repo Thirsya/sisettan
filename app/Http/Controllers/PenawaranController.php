@@ -44,7 +44,7 @@ class PenawaranController extends Controller
             'daftars.no_kk',
             'daftars.no_wp',
             'daftars.tgl_perjanjian',
-            'kelurahans.kelurahan',
+            'kelurahans.kelurahan'
         )
             ->leftJoin('kelurahans', 'daftars.id_kelurahan', '=', 'kelurahans.id')
             ->where('daftars.id_kelurahan', $kelurahanIdFromDaerah)
@@ -115,14 +115,6 @@ class PenawaranController extends Controller
             'harga_dasar' => $harga_dasar,
             'daftarList' => $daftarList,
         ]);
-    }
-
-    public function toggleGugur($id)
-    {
-        $penawaran = Penawaran::findOrFail($id);
-        $penawaran->gugur = !$penawaran->gugur;
-        $penawaran->save();
-        return redirect()->back()->with('success', 'Status gugur berhasil diubah');
     }
 
     public function handleForm(Request $request)
@@ -238,10 +230,19 @@ class PenawaranController extends Controller
 
     public function edit(Penawaran $penawaran)
     {
-        $kelurahanId = session('kelurahan_id');
-        $tkds = Tkd::where('id_kelurahan', $kelurahanId)->get();
-        $daftars = Daftar::where('id_kelurahan', $kelurahanId)->get();
-        return view('lelang.penawaran.edit', compact('penawaran'))->with(['tkds' => $tkds, 'daftars' => $daftars]);
+        $daftarIdFromSession = (int) session('selected_kelurahan_id');
+        $kelurahanIdFromDaerah = Daerah::where('id', $daftarIdFromSession)->pluck('id_kelurahan')->first();
+        $tkds = Tkd::where('id_kelurahan', $kelurahanIdFromDaerah)->get();
+        $daftars = Daftar::where('id_kelurahan', $kelurahanIdFromDaerah)->get();
+        $idfkTkd = $penawaran->idfk_tkd;
+        $tkdList = Tkd::where('id', $idfkTkd)->first();
+        return view('lelang.penawaran.edit',)
+            ->with([
+                'tkds' => $tkds,
+                'daftars' => $daftars,
+                'penawaran' => $penawaran,
+                'tkdList' => $tkdList,
+            ]);
     }
 
     public function update(UpdatePenawaranRequest $request, Penawaran $penawaran)

@@ -50,8 +50,8 @@
                             <label>Luas Bidang</label>
                             <input type="text" id="luas" name="luas"
                                 class="form-control @error('luas') is-invalid @enderror" placeholder="Masukan Luas Bidang"
-                                value="{{ old('penawaran', $penawaran->luas) }}" data-id="input_luas"
-                                autocomplete="off" readonly>
+                                value="{{ old('penawaran', $tkdList->luas) }}" data-id="input_luas" autocomplete="off"
+                                readonly>
                             @error('luas')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -63,7 +63,7 @@
                             <input type="text" id="harga_dasar" name="harga_dasar"
                                 class="form-control @error('harga_dasar') is-invalid @enderror"
                                 placeholder="Masukan Harga_dasar Bidang"
-                                value="{{ old('penawaran', $penawaran->harga_dasar) }}" data-id="input_harga_dasar"
+                                value="{{ old('penawaran', $tkdList->harga_dasar) }}" data-id="input_harga_dasar"
                                 autocomplete="off" readonly>
                             @error('harga_dasar')
                                 <div class="invalid-feedback">
@@ -130,7 +130,9 @@
                 }
             });
 
-            $('#nilai_penawaran').mask('000,000,000,000,000', {reverse: true});
+            $('#nilai_penawaran').mask('000,000,000,000,000', {
+                reverse: true
+            });
         });
     </script>
 @endpush

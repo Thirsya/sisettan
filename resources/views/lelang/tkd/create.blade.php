@@ -17,14 +17,14 @@
                         <div class="form-group">
                             <label>Kelurahan<span class="text-danger">*</span></label>
                             <select class="form-control select2 @error('id_kelurahan') is-invalid @enderror"
-                            name="id_kelurahan_disabled" data-id="select-kelurahan" id="id_kelurahan" disabled>
+                                name="id_kelurahan_disabled" data-id="select-kelurahan" id="id_kelurahan" disabled>
                                 <option value="">Piih Kelurahan</option>
                                 @foreach ($kelurahans as $kelurahan)
-                                <option @selected($kelurahan->id == $kelurahanId) value="{{ $kelurahan->id }}">
+                                    <option @selected($kelurahan->id == $kelurahanIdFromDaerah) value="{{ $kelurahan->id }}">
                                         {{ $kelurahan->kelurahan }}</option>
                                 @endforeach
                             </select>
-                            <input type="hidden" name="id_kelurahan" value="{{ $kelurahanId }}" />
+                            <input type="hidden" name="id_kelurahan" value="{{ $kelurahanIdFromDaerah }}" />
                             @error('id_kelurahan')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -34,8 +34,8 @@
                         <div class="form-group">
                             <label>Letak<span class="text-danger">*</span></label>
                             <input type="text" id="letak" name="letak"
-                                class="form-control @error('letak') is-invalid @enderror"
-                                placeholder="Masukan Letak" autocomplete="off">
+                                class="form-control @error('letak') is-invalid @enderror" placeholder="Masukan Letak"
+                                autocomplete="off">
                             @error('letak')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -45,8 +45,8 @@
                         <div class="form-group">
                             <label>Bidang<span class="text-danger">*</span></label>
                             <input type="text" id="bidang" name="bidang"
-                                class="form-control @error('bidang') is-invalid @enderror"
-                                placeholder="Masukan Bidang" autocomplete="off">
+                                class="form-control @error('bidang') is-invalid @enderror" placeholder="Masukan Bidang"
+                                autocomplete="off">
                             @error('bidang')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -56,8 +56,8 @@
                         <div class="form-group">
                             <label>Bukti<span class="text-danger">*</span></label>
                             <input type="text" id="bukti" name="bukti"
-                                class="form-control @error('bukti') is-invalid @enderror"
-                                placeholder="Masukan Bukti" autocomplete="off">
+                                class="form-control @error('bukti') is-invalid @enderror" placeholder="Masukan Bukti"
+                                autocomplete="off">
                             @error('bukti')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -67,8 +67,8 @@
                         <div class="form-group">
                             <label>Luas<span class="text-danger">*</span></label>
                             <input type="text" id="luas" name="luas"
-                                class="form-control @error('luas') is-invalid @enderror"
-                                placeholder="Masukan Luas" autocomplete="off">
+                                class="form-control @error('luas') is-invalid @enderror" placeholder="Masukan Luas"
+                                autocomplete="off">
                             @error('luas')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -88,8 +88,7 @@
                         </div>
                         <div class="form-group">
                             <label>Keterangan<span class="text-danger">*</span></label>
-                            <textarea id="keterangan" name="keterangan"
-                                class="form-control @error('keterangan') is-invalid @enderror"
+                            <textarea id="keterangan" name="keterangan" class="form-control @error('keterangan') is-invalid @enderror"
                                 placeholder="Masukkan Keterangan" autocomplete="off" rows="4"></textarea>
                             @error('keterangan')
                                 <div class="invalid-feedback">
@@ -100,8 +99,8 @@
                         <div class="form-group">
                             <label>Nop</label>
                             <input type="text" id="nop" name="nop"
-                                class="form-control @error('nop') is-invalid @enderror"
-                                placeholder="Masukan Nop" autocomplete="off">
+                                class="form-control @error('nop') is-invalid @enderror" placeholder="Masukan Nop"
+                                autocomplete="off">
                             @error('nop')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -122,8 +121,9 @@
     <script src="/assets/js/select2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
     <script type="text/javascript">
-        // Format mata uang saat pengguna mengetik di kolom "Nilai Penawaran"
-        $('#harga_dasar').mask('000,000,000,000,000', {reverse: true});
+        $('#harga_dasar').mask('000,000,000,000,000', {
+            reverse: true
+        });
     </script>
 @endpush
 
