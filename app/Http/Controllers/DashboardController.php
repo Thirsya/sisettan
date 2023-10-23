@@ -11,8 +11,10 @@ use App\Imports\DaftarsImport;
 use App\Models\Daerah;
 use App\Models\Kelurahan;
 use App\Models\Penawaran;
+use App\Models\Profile;
 use App\Models\Tahun;
 use App\Models\Tkd;
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -40,9 +42,12 @@ class DashboardController extends Controller
     {
 
         if ($request->ajax() && $request->has('tahun_id')) {
+            $userId = Auth::user()->id;
+            $user = Auth::user();
+            $userKecamatan = Profile::where('id_user', $userId)->value('id_kecamatan');
             $tahunId = $request->input('tahun_id');
             $tahunName = Tahun::select('tahuns.tahun')->where('id', $tahunId)->pluck('tahun')->first();
-            $daerahs = Daerah::select(
+            $query = Daerah::select(
                 'daerahs.id',
                 'daerahs.tanggal_lelang',
                 'daerahs.id_kelurahan',
@@ -52,8 +57,11 @@ class DashboardController extends Controller
             )
                 ->leftJoin('kecamatans', 'daerahs.id_kecamatan', '=', 'kecamatans.id')
                 ->leftJoin('kelurahans', 'daerahs.id_kelurahan', '=', 'kelurahans.id')
-                ->whereYear('daerahs.tanggal_lelang', '=', $tahunName)
-                ->get();
+                ->whereYear('daerahs.tanggal_lelang', '=', $tahunName);
+            if ($user->hasRole('user')) {
+                $query->where('daerahs.id_kecamatan', $userKecamatan);
+            }
+            $daerahs = $query->get();
             return response()->json($daerahs);
         }
     }

@@ -20,27 +20,32 @@ class ProfileSeeder extends Seeder
                 [
                     'id_user' => '1',
                     'id_pejabat' => null,
-                    'hk' => '9'
+                    'hk' => '9',
+                    'id_kecamatan' => null
                 ],
                 [
                     'id_user' => '2',
                     'id_pejabat' => '1',
-                    'hk' => '1'
+                    'hk' => '1',
+                    'id_kecamatan' => 1
                 ],
                 [
                     'id_user' => '3',
                     'id_pejabat' => '2',
-                    'hk' => '2'
+                    'hk' => '2',
+                    'id_kecamatan' => 2
                 ],
                 [
                     'id_user' => '4',
                     'id_pejabat' => null,
-                    'hk' => '3'
+                    'hk' => '3',
+                    'id_kecamatan' => 3
                 ],
                 [
                     'id_user' => '5',
                     'id_pejabat' => null,
-                    'hk' => '0'
+                    'hk' => '0',
+                    'id_kecamatan' => null
                 ],
             ]
         );

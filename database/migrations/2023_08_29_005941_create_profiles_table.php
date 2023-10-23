@@ -17,8 +17,10 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('id_user');
             $table->unsignedBigInteger('id_pejabat')->nullable();
+            $table->unsignedBigInteger('id_kecamatan')->nullable();
             $table->string('hk');
 
+            $table->foreign('id_kecamatan')->references('id')->on('kecamatans');
             $table->foreign('id_user')->references('id')->on('users');
             $table->foreign('id_pejabat')->references('id')->on('pejabats');
             $table->timestamps();

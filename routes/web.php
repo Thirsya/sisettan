@@ -67,23 +67,25 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::get('export', [UserController::class, 'export'])->name('user.export');
         Route::get('demo', DemoController::class)->name('user.demo');
 
-        Route::post('jabatan/import', [JabatanController::class, 'import'])->name('jabatan.import');
-        Route::get('jabatan/export', [JabatanController::class, 'export'])->name('jabatan.export');
-        Route::resource('jabatan', JabatanController::class);
+        Route::post('jabatan/import', [JabatanController::class, 'import'])->name('jabatan.import')->middleware('check.kelurahan');
+        Route::get('jabatan/export', [JabatanController::class, 'export'])->name('jabatan.export')->middleware('check.kelurahan');
+        Route::resource('jabatan', JabatanController::class)->middleware('check.kelurahan');
 
-        Route::post('pejabat/import', [PejabatController::class, 'import'])->name('pejabat.import');
-        Route::get('pejabat/export', [PejabatController::class, 'export'])->name('pejabat.export');
-        Route::resource('pejabat', PejabatController::class);
+        Route::post('pejabat/import', [PejabatController::class, 'import'])->name('pejabat.import')->middleware('check.kelurahan');
+        Route::get('pejabat/export', [PejabatController::class, 'export'])->name('pejabat.export')->middleware('check.kelurahan');
+        Route::resource('pejabat', PejabatController::class)->middleware('check.kelurahan');
 
-        Route::post('opd/import', [OpdController::class, 'import'])->name('opd.import');
-        Route::get('opd/export', [OpdController::class, 'export'])->name('opd.export');
-        Route::resource('opd', OpdController::class);
+        Route::post('opd/import', [OpdController::class, 'import'])->name('opd.import')->middleware('check.kelurahan');
+        Route::get('opd/export', [OpdController::class, 'export'])->name('opd.export')->middleware('check.kelurahan');
+        Route::resource('opd', OpdController::class)->middleware('check.kelurahan');
     });
+
 
     Route::prefix('menu-management')->group(function () {
         Route::resource('menu-group', MenuGroupController::class);
         Route::resource('menu-item', MenuItemController::class);
     });
+
     Route::group(['prefix' => 'role-and-permission'], function () {
         //role
         Route::resource('role', RoleController::class);
@@ -109,7 +111,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::get('assing-user/{user}/edit', [AssignUserToRoleController::class, 'edit'])->name('assign.user.edit');
         Route::put('assign-user/{user}', [AssignUserToRoleController::class, 'update'])->name('assign.user.update');
     });
-    Route::prefix('master-data')->group(function () {
+
+    Route::prefix('master-data')->middleware('check.kelurahan')->group(function () {
         Route::post('tahun/import', [TahunController::class, 'import'])->name('tahun.import');
         Route::get('tahun/export', [TahunController::class, 'export'])->name('tahun.export');
         Route::resource('tahun', TahunController::class);
@@ -131,7 +134,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::resource('daerah', DaerahController::class);
         Route::get('/getKelurahans', [DaerahController::class, 'getKelurahans'])->name('getKelurahans');
     });
-    Route::prefix('lelang')->group(function () {
+
+    Route::prefix('lelang')->middleware('check.kelurahan')->group(function () {
         Route::get('daftar/download-template', [DaftarController::class, 'downloadTemplate'])
             ->name('daftar.download-template');
         Route::post('daftar/import', [DaftarController::class, 'import'])->name('daftar.import');
@@ -168,7 +172,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::get('/pernyataan', [StsController::class, 'cetakPernyataan'])->name('sts.cetakpernyataan');
     });
 
-    Route::prefix('pdf')->group(function () {
+    Route::prefix('pdf')->middleware('check.kelurahan')->group(function () {
         Route::get('/cetakgugur', [GugurController::class, 'cetakGugur'])->name('cetakgugur');
         Route::get('/cetakpemenang', [PemenangController::class, 'cetakPemenang'])->name('cetakpemenang');
         Route::get('/cetakrekap', [RekapController::class, 'cetakRekap'])->name('cetakrekap');

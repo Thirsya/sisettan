@@ -42,13 +42,16 @@ class UserController extends Controller
         $query = User::select(
             'users.id',
             'users.username',
-            'users.id_pejabat',
-            'users.password',
-            'users.hk',
+            // 'users.id_pejabat',
+            // 'users.password',
+            // 'users.hk',
             'pejabats.nama_pejabat',
             'pejabats.nip_pejabat',
-            'pejabats.no_sk')
-            ->leftJoin('pejabats', 'users.id_pejabat', '=', 'pejabats.id')
+            'pejabats.no_sk'
+        )
+            ->leftJoin('profiles', 'profiles.id_user', '=', 'users.id')
+            ->leftJoin('pejabats', 'pejabats.id', '=', 'profiles.id_pejabat')
+            // ->leftJoin('pejabats', 'users.id_pejabat', '=', 'pejabats.id')
             ->when($request->input('user'), function ($query, $user) {
                 return $query->where('users.user', 'like', '%' . $user . '%');
             })
@@ -61,7 +64,7 @@ class UserController extends Controller
 
         $query->appends(['user' => $userName, 'pejabat' => $pejabatIds]);
 
-        return view('master data.user.index')->with([
+        return view('users.index')->with([
             'users' => $query,
             'pejabats' => $pejabats,
             'userName' => $userName,

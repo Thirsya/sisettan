@@ -145,28 +145,27 @@ class RoleAndPermissionSeeder extends Seeder
         $roleUser = Role::create(['name' => 'user']);
         $roleUser->givePermissionTo([
             'dashboard',
+            'master.data',
             'lelang',
             'pdf',
-
             'daftar.index',
             'daftar.create',
             'daftar.edit',
             'daftar.destroy',
-
             'tkd.index',
             'tkd.create',
             'tkd.edit',
             'tkd.destroy',
-
             'penawaran.index',
             'penawaran.create',
             'penawaran.edit',
             'penawaran.destroy',
-
+            'daerah.index',
+            'daerah.create',
+            'daerah.edit',
+            'daerah.destroy',
             'pemenang.index',
-
             'rekap-sts.index',
-
             'gugur.index',
         ]);
 
