@@ -132,5 +132,37 @@
             </td>
             <td>Rp {{ number_format($totalNilaiPenawaran, 0, ',', '.') }}</td>
         </tr>
+        <tr>
+            <td> </td>
+            <td>Jumlah</td>
+            <td>Rp {{ number_format($totalNilaiPenawaran, 0, ',', '.') }}</td>
+        </tr>
+    </table><br>
+    <table style="text-align: center; float: right; padding-right: 30px">
+        <tr>
+            <td class="colored-column">Kediri, <?php echo date('d/m/Y'); ?> </td>
+        </tr>
+        <tr>
+            <td class="colored-column">Penyetor</td>
+        </tr><br><br><br><br><br>
+        <tr>
+            <td class="colored-column">{{ $daerahList->nama }}</td>
+        </tr>
+    </table>
+    <p style="float: left; font-size: 12px">Catatan : STS dilampiri slip setoran Bank</p>
+    <br><br><br><br><br><br><br><br><br><br>
+    <table style="float: left; font-size: 12px">
+        <tr>
+            <td class="colored-column">Cara Pengisian :</td>
+        </tr>
+        <tr>
+            <td class="colored-column">1. Kode Rekening diisi dengan kode rekening setiap rincian obyek pendapatan</td>
+        </tr>
+        <tr>
+            <td class="colored-column">2. Kolom uraian rincian obyek diisi uraian nama rincian obyek pendapatan</td>
+        </tr>
+        <tr>
+            <td class="colored-column">3. Kolom jumlah diisi jumlah nilai nominal penerimaan setiap rincian obyek pendapatan</td>
+        </tr>
     </table>
 </center>

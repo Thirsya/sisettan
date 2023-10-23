@@ -74,5 +74,19 @@
                 <td>{{ $firstPenawaran->nilai_penawaran2 }}</td>
             </tr>
         @endforeach
+    </table><br>
+    <table style="float: right; text-align: center; padding-right: 30px">
+        <tr>
+            <td>Selaku </td>
+        </tr>
+        <tr>
+            <td>Pengguna Barang </td>
+        </tr>
+        <tr>
+            <td>Milik Pemerintah Kota Kediri </td>
+        </tr><br><br><br><br><br>
+        <tr>
+            <td>NIP.</td>
+        </tr>
     </table>
 </center>

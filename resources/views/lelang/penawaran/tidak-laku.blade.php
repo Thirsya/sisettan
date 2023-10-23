@@ -50,7 +50,7 @@
         @endforeach
     </table>
     <br><br>
-    <table style="float: right">
+    <table style="float: right; text-align: center">
         <tr>
             <td>Selaku </td>
         </tr>
@@ -59,6 +59,9 @@
         </tr>
         <tr>
             <td>Milik Pemerintah Kota Kediri </td>
+        </tr><br><br><br><br><br>
+        <tr>
+            <td>NIP.</td>
         </tr>
     </table>
 </center>

@@ -25,9 +25,9 @@
                         <div class="card-header">
                             <h4>Periode List</h4>
                             <div class="card-header-action">
-                                <a class="btn btn-icon icon-left btn-primary" href="{{ route('daerah.create') }}">
+                                <a class="btn btn-icon icon-left btn-primary" href="#" data-toggle="modal" data-target="#modal-sewa">
                                     <i class="far fa-file"></i>
-                                    Create Periode</a>
+                                    Masa Sewa</a>
                                 <a class="btn btn-info btn-warning active import bg-warning">
                                     <i class="fa fa-download" aria-hidden="true"></i>
                                     Import Periode</a>
@@ -133,16 +133,14 @@
                                 </div>
                             </div>
                         </div>
-
-
-
-
                     </div>
                 </div>
             </div>
         </div>
     </section>
+    @include('master data.daerah.modal.sewa')
 @endsection
+
 @push('customScript')
     <script>
         $(document).ready(function() {
