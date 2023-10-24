@@ -7,6 +7,7 @@ use App\Http\Requests\StoreGugurRequest;
 use App\Http\Requests\UpdateGugurRequest;
 use App\Models\Penawaran;
 use App\Models\Daerah;
+use App\Models\Tahun;
 use PDF;
 use Illuminate\Support\Facades\DB;
 
@@ -14,8 +15,12 @@ class GugurController extends Controller
 {
     public function cetakGugur()
     {
+        $selectedTahunId = session('selected_tahun_id');
+        $tahunSelected = Tahun::where('id', $selectedTahunId)->value('tahun');
         $daftarIdFromSession = (int) session('selected_kelurahan_id');
-        $kelurahanIdFromDaerah = Daerah::where('id', $daftarIdFromSession)->pluck('id_kelurahan')->first();
+        $kelurahanIdFromDaerah = Daerah::where('id_kelurahan', $daftarIdFromSession)
+            ->whereYear('tanggal_lelang', $tahunSelected)
+            ->pluck('id_kelurahan')->first();
         $daerahList = Daerah::withTrashed()
             ->where('main.id', $daftarIdFromSession)
             ->select(

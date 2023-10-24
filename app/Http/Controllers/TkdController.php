@@ -11,6 +11,7 @@ use App\Imports\TkdsImport;
 use App\Models\Daerah;
 use App\Models\Daftar;
 use App\Models\Kelurahan;
+use App\Models\Tahun;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -32,8 +33,13 @@ class TkdController extends Controller
         $tkdName = $request->input('tkd');
         $kelurahanIds = $request->input('kelurahan');
         $tkd = $request->input('tkd');
+        $selectedTahunId = session('selected_tahun_id');
+        $tahunSelected = Tahun::where('id', $selectedTahunId)->value('tahun');
         $daftarIdFromSession = (int) session('selected_kelurahan_id');
-        $kelurahanIdFromDaerah = Daerah::where('id', $daftarIdFromSession)->pluck('id_kelurahan')->first();
+        $kelurahanIdFromDaerah = Daerah::where('id_kelurahan', $daftarIdFromSession)
+            ->whereYear('tanggal_lelang', $tahunSelected)
+            ->pluck('id_kelurahan')->first();
+
         $query = Tkd::select(
             'tkds.id',
             'tkds.id_kelurahan',
@@ -72,8 +78,13 @@ class TkdController extends Controller
 
     public function create()
     {
+        $selectedTahunId = session('selected_tahun_id');
+        $tahunSelected = Tahun::where('id', $selectedTahunId)->value('tahun');
         $daftarIdFromSession = (int) session('selected_kelurahan_id');
-        $kelurahanIdFromDaerah = Daerah::where('id', $daftarIdFromSession)->pluck('id_kelurahan')->first();
+        $kelurahanIdFromDaerah = Daerah::where('id_kelurahan', $daftarIdFromSession)
+            ->whereYear('tanggal_lelang', $tahunSelected)
+            ->pluck('id_kelurahan')->first();
+
         $kelurahans = Kelurahan::all();
         return view('lelang.tkd.create')->with([
             'kelurahans' => $kelurahans,

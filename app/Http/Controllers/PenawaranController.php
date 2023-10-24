@@ -11,6 +11,7 @@ use App\Imports\PenawaransImport;
 use App\Models\Daerah;
 use App\Models\Daftar;
 use App\Models\Kecamatan;
+use App\Models\Tahun;
 use App\Models\Tkd;
 use PDF;
 use Illuminate\Http\Request;
@@ -33,8 +34,13 @@ class PenawaranController extends Controller
         $tkds = Tkd::all();
         $harga_dasar = $request->input('harga_dasar');
         // $tahunId = session('tahun_id');
+        $selectedTahunId = session('selected_tahun_id');
+        $tahunSelected = Tahun::where('id', $selectedTahunId)->value('tahun');
         $daftarIdFromSession = (int) session('selected_kelurahan_id');
-        $kelurahanIdFromDaerah = Daerah::where('id', $daftarIdFromSession)->pluck('id_kelurahan')->first();
+        $kelurahanIdFromDaerah = Daerah::where('id_kelurahan', $daftarIdFromSession)
+            ->whereYear('tanggal_lelang', $tahunSelected)
+            ->pluck('id_kelurahan')->first();
+
         $daftarList = Daftar::select(
             'daftars.id',
             'daftars.id_kelurahan',
@@ -128,8 +134,13 @@ class PenawaranController extends Controller
 
     public function create()
     {
+        $selectedTahunId = session('selected_tahun_id');
+        $tahunSelected = Tahun::where('id', $selectedTahunId)->value('tahun');
         $daftarIdFromSession = (int) session('selected_kelurahan_id');
-        $kelurahanIdFromDaerah = Daerah::where('id', $daftarIdFromSession)->pluck('id_kelurahan')->first();
+        $kelurahanIdFromDaerah = Daerah::where('id_kelurahan', $daftarIdFromSession)
+            ->whereYear('tanggal_lelang', $tahunSelected)
+            ->pluck('id_kelurahan')->first();
+
         $penawaranId = session('penawaran_id');
         $tkds = DB::table('tkds')
             ->select(
@@ -230,8 +241,13 @@ class PenawaranController extends Controller
 
     public function edit(Penawaran $penawaran)
     {
+        $selectedTahunId = session('selected_tahun_id');
+        $tahunSelected = Tahun::where('id', $selectedTahunId)->value('tahun');
         $daftarIdFromSession = (int) session('selected_kelurahan_id');
-        $kelurahanIdFromDaerah = Daerah::where('id', $daftarIdFromSession)->pluck('id_kelurahan')->first();
+        $kelurahanIdFromDaerah = Daerah::where('id_kelurahan', $daftarIdFromSession)
+            ->whereYear('tanggal_lelang', $tahunSelected)
+            ->pluck('id_kelurahan')->first();
+
         $tkds = Tkd::where('id_kelurahan', $kelurahanIdFromDaerah)->get();
         $daftars = Daftar::where('id_kelurahan', $kelurahanIdFromDaerah)->get();
         $idfkTkd = $penawaran->idfk_tkd;
@@ -306,8 +322,13 @@ class PenawaranController extends Controller
 
     public function cetakTidakLaku()
     {
+        $selectedTahunId = session('selected_tahun_id');
+        $tahunSelected = Tahun::where('id', $selectedTahunId)->value('tahun');
         $daftarIdFromSession = (int) session('selected_kelurahan_id');
-        $kelurahanIdFromDaerah = Daerah::where('id', $daftarIdFromSession)->pluck('id_kelurahan')->first();
+        $kelurahanIdFromDaerah = Daerah::where('id_kelurahan', $daftarIdFromSession)
+            ->whereYear('tanggal_lelang', $tahunSelected)
+            ->pluck('id_kelurahan')->first();
+
         $daerahList = Daerah::withTrashed()
             ->where('main.id', $daftarIdFromSession)
             ->select(
@@ -344,8 +365,13 @@ class PenawaranController extends Controller
 
     public function cetakBA()
     {
+        $selectedTahunId = session('selected_tahun_id');
+        $tahunSelected = Tahun::where('id', $selectedTahunId)->value('tahun');
         $daftarIdFromSession = (int) session('selected_kelurahan_id');
-        $kelurahanIdFromDaerah = Daerah::where('id', $daftarIdFromSession)->pluck('id_kelurahan')->first();
+        $kelurahanIdFromDaerah = Daerah::where('id_kelurahan', $daftarIdFromSession)
+            ->whereYear('tanggal_lelang', $tahunSelected)
+            ->pluck('id_kelurahan')->first();
+
         $daerahList = Daerah::withTrashed()
             ->where('main.id', $daftarIdFromSession)
             ->select(

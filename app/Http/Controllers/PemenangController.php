@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Daerah;
 use App\Models\Daftar;
 use App\Models\Penawaran;
+use App\Models\Tahun;
 use PDF;
 use Illuminate\Support\Facades\DB;
 
@@ -12,9 +13,14 @@ class PemenangController extends Controller
 {
     public function cetakPemenang()
     {
+        $selectedTahunId = session('selected_tahun_id');
+        $tahunSelected = Tahun::where('id', $selectedTahunId)->value('tahun');
+
+
         $daftarIdFromSession = (int) session('selected_kelurahan_id');
         $daerahList = Daerah::withTrashed()
-            ->where('main.id', $daftarIdFromSession)
+            ->where('main.id_kelurahan', $daftarIdFromSession)
+            ->whereYear('tanggal_lelang', $tahunSelected)
             ->select(
                 'kelurahans.kelurahan',
             )
@@ -26,7 +32,9 @@ class PemenangController extends Controller
         $penawaranId = session('penawaran_id');
 
         $daftarIdFromSession = (int) session('selected_kelurahan_id');
-        $kelurahanIdFromDaerah = Daerah::where('id', $daftarIdFromSession)->pluck('id_kelurahan')->first();
+        $kelurahanIdFromDaerah = Daerah::where('id_kelurahan', $daftarIdFromSession)
+            ->whereYear('tanggal_lelang', $tahunSelected)
+            ->pluck('id_kelurahan')->first();
         $sub = Penawaran::select('idfk_tkd', DB::raw('MAX(nilai_penawaran) as max_penawaran'))
             ->whereNull('deleted_at')
             ->where('gugur', '=', false)

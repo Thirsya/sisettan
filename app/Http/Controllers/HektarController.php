@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Daerah;
 use App\Models\Daftar;
 use App\Models\Penawaran;
+use App\Models\Tahun;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PDF;
@@ -18,8 +19,12 @@ class HektarController extends Controller
      */
     public function index()
     {
+        $selectedTahunId = session('selected_tahun_id');
+        $tahunSelected = Tahun::where('id', $selectedTahunId)->value('tahun');
         $daftarIdFromSession = (int) session('selected_kelurahan_id');
-        $kelurahanIdFromDaerah = Daerah::where('id', $daftarIdFromSession)->pluck('id_kelurahan')->first();
+        $kelurahanIdFromDaerah = Daerah::where('id_kelurahan', $daftarIdFromSession)
+            ->whereYear('tanggal_lelang', $tahunSelected)
+            ->pluck('id_kelurahan')->first();
 
         $penawaran = Penawaran::select(
             'daftars.no_urut',

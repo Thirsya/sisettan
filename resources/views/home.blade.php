@@ -129,7 +129,12 @@
                 for (var kecamatan in kecamatanGroups) {
                     var optgroup = $('<optgroup>').attr('label', 'Kec.' + kecamatan);
                     kecamatanGroups[kecamatan].forEach(function(daerah) {
-                        var optionText = '[Kel.' + daerah.kelurahan + '] - tgl:' + daerah.tanggal_lelang;
+                        if (daerah.tanggal_lelang == null) {
+                            var optionText = daerah.kelurahan;
+                        } else {
+                            var optionText = '[' + daerah.kelurahan + '] - tgl: ' + daerah
+                                .tanggal_lelang;
+                        }
                         var option = $('<option>').attr('value', daerah.id)
                             .attr('data-id', daerah.id)
                             .text(optionText);
@@ -163,7 +168,6 @@
                 });
             }
 
-            // Handle year selection
             $('#dropdown-item').on('change', function() {
                 selectedYearId = $(this).find(':selected').val();
                 console.log("Selected Year ID: " + selectedYearId);
@@ -239,10 +243,7 @@
                 });
         }
 
-        // Update every 10 seconds
         setInterval(updateStatistics, 1000);
-
-        // Update immediately on page load
         updateStatistics();
     </script>
 @endpush
