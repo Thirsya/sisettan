@@ -99,6 +99,93 @@
             </div>
         </section>
     </section>
+    <form action="{{ route('storeJquery') }}" method="POST" enctype="multipart/form-data">
+        <div class="modal fade" id="modal-sewa" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Penguumuman Masa Sewa</h5>
+                    </div>
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Kecamatan<span class="text-danger">*</span></label>
+                            <select class="form-control select2 @error('id_kecamatan') is-invalid @enderror"
+                                name="id_kecamatan" data-id="select-kecamatan" id="id_kecamatan">
+                                <option value="">Piih Kecamatan</option>
+                            </select>
+                            @error('id_kecamatan')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label>Kelurahan<span class="text-danger">*</span></label>
+                            <select class="form-control select2 @error('id_kelurahan') is-invalid @enderror"
+                                name="id_kelurahan" data-id="select-kelurahan" id="id_kelurahan">
+                                <option value="">Piih Kelurahan</option>
+                            </select>
+                            @error('id_kelurahan')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label>No Berita Acara</label>
+                            <input type="text" id="noba" name="noba"
+                                class="form-control @error('noba') is-invalid @enderror" placeholder="Masukan Noba"
+                                autocomplete="off">
+                            @error('noba')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label>Periode<span class="text-danger">*</span></label>
+                            <input type="text" id="periode" name="periode"
+                                class="form-control @error('periode') is-invalid @enderror" placeholder="Masukan Periode"
+                                autocomplete="off">
+                            @error('periode')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label>Tahun<span class="text-danger">*</span></label>
+                            <select class="form-control select2 @error('thn_sts') is-invalid @enderror" name="thn_sts"
+                                data-id="select-tahun" id="thn_sts">
+                                <option value="">Piih Tahun</option>
+                            </select>
+                            @error('thn_sts')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label>Tanggal Lelang<span class="text-danger">*</span></label>
+                            <input type="date" id="tanggal_lelang" name="tanggal_lelang"
+                                class="form-control @error('tanggal_lelang') is-invalid @enderror"
+                                placeholder="Masukan Tanggal Lelang" autocomplete="off">
+                            @error('tanggal_lelang')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button id="saveChanges" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 @endsection
 
 @push('customScript')
@@ -195,7 +282,7 @@
 
             $('#dropdownKelurahan').on('change', function() {
                 selectedDaerahId = $(this).find(':selected').val();
-                if (selectedYearId) {
+                if (selectedYearId !== null) {
                     $.ajax({
                         url: '{{ route('storeSelectedValues') }}',
                         type: 'POST',
@@ -205,6 +292,19 @@
                         },
                         success: function(data) {
                             console.log("Selected values stored.");
+
+                            $.ajax({
+                                url: '{{ route('getTotalDaerah') }}',
+                                type: 'GET',
+                                success: function(data) {
+                                    console.log(data.totalDaerah);
+                                    if (data.totalDaerah == 0) {
+                                        $('#modal-sewa').modal('show');
+
+                                    }
+                                }
+                            });
+
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
                             console.error("AJAX error: ", textStatus, errorThrown);
@@ -213,12 +313,90 @@
                 }
             });
 
+
             if (selectedYearId) {
                 $('#dropdown-item').val(selectedYearId).trigger('change');
                 if (selectedDaerahId) {
                     $('#dropdownKelurahan').val(selectedDaerahId);
                 }
             }
+            $('#modal-sewa').on('shown.bs.modal', function() {
+                $.ajax({
+                    url: '/getKelurahansDashboard',
+                    type: 'GET',
+                    success: function(data) {
+                        console.log(data);
+                        $('#id_kelurahan').empty();
+                        $('#id_kecamatan').empty();
+                        $('#thn_sts').empty();
+                        $.each(data, function(key, kelurahan) {
+                            console.log(data.tahunSelected)
+                            $('#id_kelurahan').append('<option value="' + kelurahan.id +
+                                '">' + kelurahan.kelurahan + '</option>');
+                            $('#id_kecamatan').append('<option value="' + kelurahan
+                                .id_kecamatan + '">' + kelurahan.kecamatan +
+                                '</option>');
+                        });
+                        $('#thn_sts').append('<option value="' + data.tahunSelected.id + '">' +
+                            data.tahunSelected.tahun + '</option>');
+                    }
+                });
+
+            });
+
+            $('#id_kecamatan').change(function() {
+                $('#hidden_id_kecamatan').val($(this).val());
+            });
+
+            $('#id_kelurahan').change(function() {
+                $('#hidden_id_kelurahan').val($(this).val());
+            });
+
+            $("#saveChanges").on('click', function(e) {
+                e.preventDefault();
+
+                console.log("Button clicked!");
+
+                var kecamatanId = $('#id_kecamatan').val();
+                var kelurahanId = $('#id_kelurahan').val();
+                var noba = $('#noba').val();
+                var periode = $('#periode').val();
+                var thn_sts = $('#thn_sts').val();
+                var tanggal_lelang = $('#tanggal_lelang').val();
+
+                var formData = {
+                    'id_kecamatan': kecamatanId,
+                    'id_kelurahan': kelurahanId,
+                    'noba': noba,
+                    'periode': periode,
+                    'thn_sts': thn_sts,
+                    'tanggal_lelang': tanggal_lelang
+                };
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: '{{ route('storeJquery') }}',
+                    type: 'POST',
+                    data: formData,
+                    success: function(response) {
+                        if (response.success) {
+                            $('#modal-sewa').modal('hide');
+                            window.location.assign('/dashboard');
+                        } else {
+                            alert('Terjadi kesalahan saat menyimpan.');
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.error("AJAX error: ", textStatus, errorThrown);
+                        alert('Terjadi kesalahan saat menyimpan.');
+                    }
+                });
+            });
+
         });
     </script>
     <script>

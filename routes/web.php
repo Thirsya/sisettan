@@ -57,9 +57,13 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('/getDaerah', [DashboardController::class, 'requestAjaxLogin'])->name('requestAjaxLogin');
     Route::get('/total-pendaftar', [DashboardController::class, 'getTotalPendaftar']);
     Route::get('/total-tkd', [DashboardController::class, 'getTotalTkd']);
-    Route::get('/total-penawaran', [DashboardController::class, 'getTotalPenawaran']);
+    Route::get('/total-penawaran', [DashboardController::class, 'getTotalPenawaran'])->name('getTotalPenawaran');
+    Route::get('/total-daerah', [DashboardController::class, 'getTotalDaerah'])->name('getTotalDaerah');
     Route::post('/store-selected-values', [DashboardController::class, 'storeSelectedValues'])
         ->name('storeSelectedValues');
+    Route::get('/getKelurahansDashboard', [DashboardController::class, 'getKelurahansDashboard'])->name('getKelurahansDashboard');
+    Route::post('/storeJquery', [DaerahController::class, 'storeJquery'])->name('storeJquery');
+
 
     Route::prefix('user-management')->group(function () {
         Route::resource('user', UserController::class);
@@ -112,7 +116,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::put('assign-user/{user}', [AssignUserToRoleController::class, 'update'])->name('assign.user.update');
     });
 
-    Route::prefix('master-data')->middleware('check.kelurahan')->group(function () {
+    Route::prefix('master-data')->group(function () {
         Route::post('tahun/import', [TahunController::class, 'import'])->name('tahun.import');
         Route::get('tahun/export', [TahunController::class, 'export'])->name('tahun.export');
         Route::resource('tahun', TahunController::class);
@@ -131,6 +135,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             ->name('daerah.download-template');
         Route::post('daerah/import', [DaerahController::class, 'import'])->name('daerah.import');
         Route::get('daerah/export', [DaerahController::class, 'export'])->name('daerah.export');
+        Route::get('/getDaerahJquery', [DaerahController::class, 'getDaerahJquery'])->name('getDaerahJquery');
         Route::resource('daerah', DaerahController::class);
         Route::get('/getKelurahans', [DaerahController::class, 'getKelurahans'])->name('getKelurahans');
     });

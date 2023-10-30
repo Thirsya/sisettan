@@ -25,13 +25,15 @@
                         <div class="card-header">
                             <h4>Periode List</h4>
                             <div class="card-header-action">
-                                <a class="btn btn-icon icon-left btn-primary" href="#" data-toggle="modal" data-target="#modal-sewa">
+                                <a class="btn btn-icon icon-left btn-primary" href="#" data-toggle="modal"
+                                    data-target="#modal-sewa">
                                     <i class="far fa-file"></i>
                                     Masa Sewa</a>
                                 <a class="btn btn-info btn-warning active import bg-warning">
                                     <i class="fa fa-download" aria-hidden="true"></i>
                                     Import Periode</a>
-                                <a class="btn btn-info btn-dark active bg-dark" href="{{ route('daerah.export') }}" data-id="export">
+                                <a class="btn btn-info btn-dark active bg-dark" href="{{ route('daerah.export') }}"
+                                    data-id="export">
                                     <i class="fa fa-upload" aria-hidden="true"></i>
                                     Export Periode</a>
                                 <a class="btn btn-info btn-info active search bg-info">
@@ -101,12 +103,13 @@
                                         </tr>
                                         @foreach ($daerahs as $key => $daerah)
                                             <tr>
-                                                <td>{{ ($daerahs->currentPage() - 1) * $daerahs->perPage() + $key + 1 }}</td>
+                                                <td>{{ ($daerahs->currentPage() - 1) * $daerahs->perPage() + $key + 1 }}
+                                                </td>
                                                 <td>{{ $daerah->kecamatan }}</td>
-                                                <td>{{ $daerah->kelurahan}}</td>
-                                                <td>{{ $daerah->noba}}</td>
-                                                <td>{{ $daerah->periode}}</td>
-                                                <td>{{ $daerah->tahun}}</td>
+                                                <td>{{ $daerah->kelurahan }}</td>
+                                                <td>{{ $daerah->noba }}</td>
+                                                <td>{{ $daerah->periode }}</td>
+                                                <td>{{ $daerah->tahun }}</td>
                                                 <td>{{ $daerah->tanggal_lelang }}</td>
                                                 <td class="text-right">
                                                     <div class="d-flex justify-content-end">
@@ -138,10 +141,60 @@
             </div>
         </div>
     </section>
-    @include('master data.daerah.modal.sewa')
+    <form action="" method="post" enctype="multipart/form-data">
+        <div class="modal fade" id="modal-sewa" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Penguumuman Masa Sewa</h5>
+                        {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> --}}
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Kecamatan<span class="text-danger">*</span></label>
+                            <select class="form-control select2" name="id_kecamatan" data-id="select-kecamatan"
+                                id="id_kecamatan">
+                                <option value="">Piih Kecamatan</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Kelurahan<span class="text-danger">*</span></label>
+                            <select class="form-control select2" name="id_kelurahan" data-id="select-kelurahan"
+                                id="id_kelurahan">
+                                <option value="">Piih Kelurahan</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>No Berita Acara</label>
+                            <input type="text" id="noba" name="noba" class="form-control"
+                                placeholder="Masukan Noba" autocomplete="off">
+                        </div>
+                        <div class="form-group">
+                            <label>Periode<span class="text-danger">*</span></label>
+                            <input type="text" id="periode" name="periode" class="form-control "
+                                placeholder="Masukan Periode" autocomplete="off">
+                        </div>
+                        <div class="form-group">
+                            <label>Tahun<span class="text-danger">*</span></label>
+                            <select class="form-control select2" name="id_tahun" data-id="select-tahun" id="id_tahun">
+                                <option value="">Piih Tahun</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Tanggal Lelang<span class="text-danger">*</span></label>
+                            <input type="date" id="tanggal_lelang" name="tanggal_lelang" class="form-control"
+                                placeholder="Masukan Tanggal Lelang" autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
 @endsection
 
 @push('customScript')
+    <script src="/assets/js/select2.min.js"></script>
     <script>
         $(document).ready(function() {
             $('.import').click(function(event) {
@@ -162,7 +215,41 @@
             });
         });
     </script>
+    <script>
+        $(document).ready(function() {
+            $('#modal-sewa').on('shown.bs.modal', function() {
+                $.ajax({
+                    url: '/master-data/getDaerahJquery',
+                    type: 'GET',
+                    success: function(data) {
+                        console.log(data);
+                        $('#id_kelurahan').empty();
+                        $('#id_kecamatan').empty();
+                        $('#id_tahun').empty();
+                        $('#noba').empty();
+                        $('#periode').empty();
+                        $.each(data, function(key, daerah) {
+                            console.log(data)
+                            $('#id_kelurahan').append('<option value="' + daerah
+                                .id_kelurahan +
+                                '">' + daerah.kelurahan + '</option>');
+                            $('#id_kecamatan').append('<option value="' + daerah
+                                .id_kecamatan + '">' + daerah.kecamatan +
+                                '</option>');
+                            $('#id_tahun').append('<option value="' + daerah
+                                .thn_sts + '">' +
+                                daerah.tahun + '</option>');
+                            $('#noba').val(daerah.noba);
+                            $('#tanggal_lelang').val(daerah.tanggal_lelang);
+                            $('#periode').val(daerah.periode);
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 @endpush
 
 @push('customStyle')
+    <link rel="stylesheet" href="/assets/css/select2.min.css">
 @endpush

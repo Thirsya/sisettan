@@ -17,13 +17,13 @@ class CheckKelurahanSession
         //     return $next($request);
         // }
 
-        $selectedKelurahanId = session('selected_kelurahan_id');
+        $selectedKelurahanId = (int) session('selected_kelurahan_id');
         $selectedTahunId = session('selected_tahun_id');
-        $tahunSelected = Tahun::where('id', $selectedTahunId)->value('tahun');
+        $tahunSelected = Tahun::where('id', $selectedTahunId)->value('id');
 
         if ($selectedKelurahanId) {
             $hasDaerahForGivenYear = Daerah::where('id_kelurahan', $selectedKelurahanId)
-                ->whereYear('tanggal_lelang', $tahunSelected)
+                ->where('thn_sts', $tahunSelected)
                 ->exists();
             if ($hasDaerahForGivenYear) {
                 return $next($request);

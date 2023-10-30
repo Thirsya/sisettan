@@ -9,6 +9,7 @@ use App\Http\Requests\StoreDaftarRequest;
 use App\Http\Requests\UpdateDaftarRequest;
 use App\Imports\DaftarsImport;
 use App\Models\Daerah;
+use App\Models\Kecamatan;
 use App\Models\Kelurahan;
 use App\Models\Penawaran;
 use App\Models\Profile;
@@ -33,11 +34,14 @@ class DashboardController extends Controller
             ->pluck('id_kelurahan')->first();
         $totalPendaftar = Daftar::where('id_kelurahan', $kelurahanIdFromDaerah)->count();
         $tahun = Tahun::all();
+        $kecamatans = Kecamatan::all();
         return view('home')->with([
+            'kecamatans' => $kecamatans,
             'tahun' => $tahun,
             'tahunSelected' => $tahunSelected,
             'daerahSelected' => $daerahSelected,
             'totalPendaftar' => $totalPendaftar,
+            'kelurahanIdFromDaerah' => $kelurahanIdFromDaerah,
         ]);
     }
 
@@ -48,12 +52,12 @@ class DashboardController extends Controller
             $user = Auth::user();
             $userKecamatan = Profile::where('id_user', $userId)->value('id_kecamatan');
             $tahunId = $request->input('tahun_id');
-            $tahunName = Tahun::select('tahuns.tahun')->where('id', $tahunId)->pluck('tahun')->first();
+            $tahunName = Tahun::select('tahuns.id', 'tahuns.tahun')->where('id', $tahunId)->pluck('id')->first();
 
             $query = Kelurahan::select('kelurahans.id', 'kelurahans.kelurahan', 'daerahs.tanggal_lelang', 'daerahs.id_kecamatan', 'kecamatans.kecamatan')
                 ->leftJoin('daerahs', function ($join) use ($tahunName) {
                     $join->on('kelurahans.id', '=', 'daerahs.id_kelurahan')
-                        ->whereYear('daerahs.tanggal_lelang', '=', $tahunName);
+                        ->where('daerahs.thn_sts', $tahunName);
                 })
                 ->leftJoin('kecamatans', 'kelurahans.id_kecamatan', '=', 'kecamatans.id');
 
@@ -103,6 +107,17 @@ class DashboardController extends Controller
         return response()->json(['totalPenawaran' => $totalPenawaran]);
     }
 
+    public function getTotalDaerah()
+    {
+        $selectedTahunId = session('selected_tahun_id');
+        $tahunSelected = Tahun::where('id', $selectedTahunId)->value('tahun');
+        $daftarIdFromSession = (int) session('selected_kelurahan_id');
+        $totalDaerah = Daerah::where('id_kelurahan', $daftarIdFromSession)
+            ->whereYear('tanggal_lelang', $tahunSelected)
+            ->count();
+        return response()->json(['totalDaerah' => $totalDaerah]);
+    }
+
     public function getTotalTkd()
     {
         $selectedTahunId = session('selected_tahun_id');
@@ -113,5 +128,24 @@ class DashboardController extends Controller
             ->pluck('id_kelurahan')->first();
         $totalTkd = Tkd::where('id_kelurahan', $kelurahanIdFromDaerah)->count();
         return response()->json(['totalTkd' => $totalTkd]);
+    }
+
+    public function getKelurahansDashboard()
+    {
+        $selectedTahunId = session('selected_tahun_id');
+        $tahunSelected = Tahun::select('id', 'tahun')->where('id', $selectedTahunId)->first();
+        $daftarIdFromSession = (int) session('selected_kelurahan_id');
+        $kelurahans = Kelurahan::select(
+            'kelurahans.id',
+            'kelurahans.id_kecamatan',
+            'kelurahans.kelurahan',
+            'kecamatans.kecamatan'
+        )
+            ->leftJoin('kecamatans', 'kelurahans.id_kecamatan', '=', 'kecamatans.id')
+            ->where('kelurahans.id', $daftarIdFromSession)->first();
+        return response()->json([
+            'kelurahans' => $kelurahans,
+            'tahunSelected' => $tahunSelected
+        ]);
     }
 }

@@ -24,6 +24,6 @@ class Daerah extends Model
 
     public function tahun()
     {
-        return $this->belongsTo(Tahun::class, 'id_tahun');
+        return $this->belongsTo(Tahun::class, 'thn_sts');
     }
 }

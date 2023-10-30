@@ -86,6 +86,21 @@ class DaerahController extends Controller
         return redirect()->route('daerah.index')->with('success', 'Tambah Data Daerah Sukses');
     }
 
+    public function storeJquery(StoreDaerahRequest $request)
+    {
+        Daerah::create([
+            'id_kecamatan' => $request->id_kecamatan,
+            'id_kelurahan' => $request->id_kelurahan,
+            'noba' => $request->noba,
+            'periode' => $request->periode,
+            'thn_sts' => $request->thn_sts,
+            'tanggal_lelang' => $request->tanggal_lelang,
+        ]);
+
+        return response()->json(['success' => true, 'message' => 'Tambah Data Daerah Sukses']);
+    }
+
+
     public function show(Daerah $daerah)
     {
         return view('master data.daerah.show', compact('daerah'));
@@ -151,5 +166,35 @@ class DaerahController extends Controller
         }
 
         return response()->download($templatePath, 'daerah_template.xlsx');
+    }
+
+
+
+    public function getDaerahJquery()
+    {
+        $selectedTahunId = session('selected_tahun_id');
+        $tahunSelected = Tahun::where('id', $selectedTahunId)->value('id');
+        $daftarIdFromSession = (int) session('selected_kelurahan_id');
+        $daerah = Daerah::select(
+            'daerahs.id',
+            'daerahs.tanggal_lelang',
+            'daerahs.id_kelurahan',
+            'daerahs.id_kecamatan',
+            'daerahs.noba',
+            'daerahs.periode',
+            'daerahs.thn_sts',
+            'kelurahans.kelurahan',
+            'kecamatans.kecamatan',
+            'tahuns.tahun'
+        )
+            ->leftJoin('kecamatans', 'daerahs.id_kecamatan', '=', 'kecamatans.id')
+            ->leftJoin('kelurahans', 'daerahs.id_kelurahan', '=', 'kelurahans.id')
+            ->leftJoin('tahuns', 'daerahs.thn_sts', '=', 'tahuns.id')
+            ->where('daerahs.id_kelurahan', $daftarIdFromSession)
+            ->where('daerahs.thn_sts', $tahunSelected)
+            ->first();
+        return response()->json([
+            'daerah' => $daerah,
+        ]);
     }
 }
