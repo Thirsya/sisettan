@@ -136,6 +136,15 @@
                                 </form>
                             </div>
                             <div class="d-flex justify-content-end">
+                                <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user"></a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a href="#" class="dropdown-item has-icon">
+                                            Upload BA
+                                        </a>
+                                        <a href="#" class="dropdown-item has-icon">
+                                            Upload SHP Tidak Laku
+                                        </a>
+                                    </div>
                                 <form action="{{ route('delete.all') }}" method="POST" class="ml-2">
                                     <input type="hidden" name="_method" value="DELETE">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -171,18 +180,18 @@
                                                             class="nav-link dropdown-toggle nav-link-lg nav-link-user"></a>
                                                         <div class="dropdown-menu dropdown-menu-right">
                                                             <a href="#" class="dropdown-item has-icon">
-                                                                <i class="far fa-user"></i> Pemenang II
+                                                                Pemenang II
                                                             </a>
                                                             <div class="dropdown-divider"></div>
                                                             @if ($penawaran->gugur == false)
                                                                 <a href="{{ route('penawaran.toggle-gugur', $penawaran->id) }}"
                                                                     class="dropdown-item has-icon text-danger">
-                                                                    <i class="fas fa-sign-out-alt"></i> Digugurkan
+                                                                    Digugurkan
                                                                 </a>
                                                             @else
                                                                 <a href="{{ route('penawaran.toggle-gugur', $penawaran->id) }}"
                                                                     class="dropdown-item has-icon text-danger">
-                                                                    <i class="fas fa-sign-out-alt"></i> Kembali Ke Panitia
+                                                                    Kembali Ke Panitia
                                                                 </a>
                                                             @endif
 

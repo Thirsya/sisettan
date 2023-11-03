@@ -25,7 +25,7 @@
                                             <th>Luas</th>
                                             <th>Penawaran</th>
                                             <th style="width: 250px">Tanggal Perjanjian</th>
-                                            <th style="width: 550px">Menu</th>
+                                            <th style="width: 570px">Menu</th>
                                         </tr>
                                         @foreach ($penawaran as $key => $listPenawaran)
                                             <tr>
@@ -67,6 +67,19 @@
                                                             Pernyataan</a>
                                                         <a href="{{ route('sts.cetakperjanjian') }}" class="ml-2 btn btn-sm btn-info btn-icon ">Cetak
                                                             Perjanjian</a>
+                                                        <a href="#" data-toggle="dropdown"
+                                                            class="nav-link dropdown-toggle nav-link-lg nav-link-user"></a>
+                                                        <div class="dropdown-menu dropdown-menu-right">
+                                                            <a href="#" class="dropdown-item has-icon">
+                                                                Upload STS
+                                                            </a>
+                                                            <a href="#" class="dropdown-item has-icon">
+                                                                Upload Pernyataan
+                                                            </a>
+                                                            <a href="#" class="dropdown-item has-icon">
+                                                                Upload Perjanjian
+                                                            </a>
+                                                        </div>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -141,6 +154,19 @@
                                                             Pernyataan</a>
                                                         <a href="#" class="ml-2 btn btn-sm btn-info btn-icon ">Cetak
                                                             Perjanjian</a>
+                                                            <a href="#" data-toggle="dropdown"
+                                                            class="nav-link dropdown-toggle nav-link-lg nav-link-user"></a>
+                                                        <div class="dropdown-menu dropdown-menu-right">
+                                                            <a href="#" class="dropdown-item has-icon">
+                                                                Upload STS
+                                                            </a>
+                                                            <a href="#" class="dropdown-item has-icon">
+                                                                Upload Pernyataan
+                                                            </a>
+                                                            <a href="#" class="dropdown-item has-icon">
+                                                                Upload Perjanjian
+                                                            </a>
+                                                        </div>
                                                     </div>
                                                 </td>
                                             </tr>
