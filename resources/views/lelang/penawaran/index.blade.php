@@ -25,37 +25,22 @@
                         <div class="card-header">
                             <h4>Penawaran List</h4>
                             <div class="card-header-action">
-                                <a class="btn btn-icon icon-left btn-primary create active bg-info">
+                                <a class="btn btn-icon icon-left btn-primary create active">
                                     <i class="far fa-file" aria-hidden="true"></i>
                                     Create Penawaran</a>
-                                <a class="btn btn-info btn-warning active import bg-warning">
-                                    <i class="fa fa-download" aria-hidden="true"></i>
-                                    Import Penawaran</a>
                                 <a class="btn btn-info btn-dark active bg-dark" href="{{ route('penawaran.export') }}"
                                     data-id="export">
                                     <i class="fa fa-upload" aria-hidden="true"></i>
                                     Export Penawaran</a>
-                                {{-- <a class="btn btn-info btn-primary active" href="{{ route('penawaran.download-template') }}">
-                                    <i class="fa fa-upload" aria-hidden="true"></i>
-                                    Penawaran Template</a> --}}
-                                <a class="btn btn-info btn-success active bg-success" href="{{ route('hektar') }}">
-                                    <i class="fas fa-check"></i>
-                                    Luas Lebih dari 2 Hektar</a>
-                                <a class="btn btn-info btn-danger active bg-danger" target="_blank"
-                                    href="{{ route('penawaran.cetaktidaklaku') }}">
-                                    <i class="fas fa-times"></i>
-                                    Bidang/SHP Tidak Laku</a>
-                                <a class="btn btn-info btn-info active bg-info" href="{{ route('sts') }}">
+                                <a class="btn btn-success btn-success active bg-success" href="{{ route('sts') }}">
                                     <i class="far fa-file"></i>
                                     STS & Perjanjian</a>
-                                <a class="btn btn-info btn-primary active bg-primary" target="_blank"
-                                    href="{{ route('penawaran.cetakba') }}">
-                                    <i class="far fa-file"></i>
-                                    Lampiran BA</a>
-                                <a class="btn btn-info btn-primary active bg-primary" target="_blank"
-                                    href="{{ route('penawaran.cetaksekota') }}">
-                                    <i class="far fa-file"></i>
-                                    Rekap Se-kota</a>
+                                <a class="btn btn-danger btn-danger active cetak bg-danger">
+                                    <i class="fa fa-search" aria-hidden="true"></i>
+                                    Cetak Data</a>
+                                <a class="btn btn-warning btn-warning active import-button bg-warning">
+                                    <i class="fa fa-download" aria-hidden="true"></i>
+                                    Import Data</a>
                                 <a class="btn btn-info btn-info active search bg-info">
                                     <i class="fa fa-search" aria-hidden="true"></i>
                                     Search SHP</a>
@@ -91,7 +76,6 @@
                                     </div>
                                 </form>
                             </div>
-
                             <div class="show-import mb-4" style="display: none">
                                 @error('import-file')
                                     <div class="invalid-feedback d-flex mb-10" role="alert">
@@ -111,14 +95,94 @@
                                         <input type="file" id="file-upload" class="custom-file-input" name="import-file"
                                             data-id="send-import">
                                         <br /><br />
-                                        <a href="{{ route('penawaran.download-template') }}" class="text">Unduh
-                                            Template</a>
+                                        <a href="{{ route('penawaran.download-template') }}" class="text">Unduh Template</a>
                                         <br /> <br />
                                         <div class="footer text-right">
                                             <button class="btn btn-primary" data-id="submit-import">Import File</button>
                                         </div>
                                     </form>
                                 </div>
+                            </div>
+                            <div class="show-import-ba mb-4" style="display: none">
+                                @error('import-file')
+                                    <div class="invalid-feedback d-flex mb-10" role="alert">
+                                        <div class="alert_alert-dange_mt-1_mb-1">
+                                            {{ $message }}
+                                        </div>
+                                    </div>
+                                @enderror
+                                <div class="custom-file">
+                                    <form action="{{ route('penawaran.import') }}" method="POST"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        @method('POST')
+                                        <label
+                                            class="custom-file-label @error('import-file', 'ImportPenawaranRequest') is-invalid @enderror"
+                                            for="file-upload">Choose File</label>
+                                        <input type="file" id="file-upload" class="custom-file-input" name="import-file"
+                                            data-id="send-import">
+                                        <br /><br />
+                                        <div class="footer text-right">
+                                            <button class="btn btn-primary" data-id="submit-import">Upload File</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="show-import-shp mb-4" style="display: none">
+                                @error('import-file')
+                                    <div class="invalid-feedback d-flex mb-10" role="alert">
+                                        <div class="alert_alert-dange_mt-1_mb-1">
+                                            {{ $message }}
+                                        </div>
+                                    </div>
+                                @enderror
+                                <div class="custom-file">
+                                    <form action="{{ route('penawaran.import') }}" method="POST"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        @method('POST')
+                                        <label
+                                            class="custom-file-label @error('import-file', 'ImportPenawaranRequest') is-invalid @enderror"
+                                            for="file-upload">Choose File</label>
+                                        <input type="file" id="file-upload" class="custom-file-input"
+                                            name="import-file" data-id="send-import">
+                                        <br /><br />
+                                        <div class="footer text-right">
+                                            <button class="btn btn-primary" data-id="submit-import">Upload File</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="show-cetak mb-3" style="display: none">
+                                <a class="btn btn-info btn-success active bg-success" href="{{ route('hektar') }}">
+                                    <i class="fas fa-check"></i>
+                                    Luas Lebih dari 2 Hektar</a>
+                                <a class="btn btn-info btn-danger active bg-danger" target="_blank"
+                                    href="{{ route('penawaran.cetaktidaklaku') }}">
+                                    <i class="fas fa-times"></i>
+                                    Bidang/SHP Tidak Laku</a>
+                                {{-- <a class="btn btn-info btn-info active bg-info" href="{{ route('sts') }}">
+                                    <i class="far fa-file"></i>
+                                    STS & Perjanjian</a> --}}
+                                <a class="btn btn-info btn-primary active bg-primary" target="_blank"
+                                    href="{{ route('penawaran.cetakba') }}">
+                                    <i class="far fa-file"></i>
+                                    Lampiran BA</a>
+                                <a class="btn btn-info btn-primary active bg-primary" target="_blank"
+                                    href="{{ route('penawaran.cetaksekota') }}">
+                                    <i class="far fa-file"></i>
+                                    Rekap Se-kota</a>
+                            </div>
+                            <div class="show-import-button mb-3" style="display: none">
+                                <a class="btn btn-info btn-warning active import bg-warning">
+                                    <i class="fa fa-download" aria-hidden="true"></i>
+                                    Import Penawaran</a>
+                                <a class="btn btn-info btn-warning active import-ba bg-warning">
+                                    <i class="fa fa-download" aria-hidden="true"></i>
+                                    Upload BA</a>
+                                <a class="btn btn-info btn-warning active import-shp bg-warning">
+                                    <i class="fa fa-download" aria-hidden="true"></i>
+                                    Upload SHP Tidak Laku</a>
                             </div>
                             <div class="show-search mb-3" style="display: none">
                                 <form id="search" method="GET" action="{{ route('penawaran.index') }}">
@@ -135,22 +199,23 @@
                                     </div>
                                 </form>
                             </div>
-                            <div class="d-flex justify-content-end">
-                                <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user"></a>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <a href="#" class="dropdown-item has-icon">
-                                            Upload BA
-                                        </a>
-                                        <a href="#" class="dropdown-item has-icon">
-                                            Upload SHP Tidak Laku
-                                        </a>
-                                    </div>
+                            {{-- <div class="d-flex justify-content-end">
+                                <a href="#" data-toggle="dropdown"
+                                    class="nav-link dropdown-toggle nav-link-lg nav-link-user"></a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a href="#" class="dropdown-item has-icon">
+                                        Upload BA
+                                    </a>
+                                    <a href="#" class="dropdown-item has-icon">
+                                        Upload SHP Tidak Laku
+                                    </a>
+                                </div>
                                 <form action="{{ route('delete.all') }}" method="POST" class="ml-2">
                                     <input type="hidden" name="_method" value="DELETE">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                     <button class="btn btn-sm btn-danger btn-icon confirm-delete"></i>Delete All</button>
                                 </form>
-                            </div>
+                            </div> --}}
                             <div class="table-responsive">
                                 <table class="table table-bordered table-md">
                                     <tbody>
@@ -233,19 +298,71 @@
             $('.import').click(function(event) {
                 event.stopPropagation();
                 $(".show-import").slideToggle("fast");
+                $(".show-create").hide();
+                $(".show-import-button").hide();
+                $(".show-cetak").hide();
                 $(".show-search").hide();
+                $(".show-import-shp").hide();
+                $(".show-import-ba").hide();
             });
             $('.search').click(function(event) {
                 event.stopPropagation();
                 $(".show-search").slideToggle("fast");
                 $(".show-import").hide();
+                $(".show-create").hide();
+                $(".show-import-button").hide();
+                $(".show-cetak").hide();
+                $(".show-import-shp").hide();
+                $(".show-import-ba").hide();
             });
             $('.create').click(function(event) {
                 event.stopPropagation();
                 $(".show-create").slideToggle("fast");
                 $(".show-import").hide();
-                $(".show-search").hide();
+                $(".show-import-button").hide();
+                $(".show-cetak").hide();
+                $(".show-import-shp").hide();
+                $(".show-import-ba").hide();
             });
+            $('.cetak').click(function(event) {
+                event.stopPropagation();
+                $(".show-cetak").slideToggle("fast");
+                $(".show-import").hide();
+                $(".show-create").hide();
+                $(".show-import-button").hide();
+                $(".show-import-shp").hide();
+                $(".show-import-ba").hide();
+            });
+
+            $('.import-button').click(function(event) {
+                event.stopPropagation();
+                $(".show-import-button").slideToggle("fast");
+                $(".show-import").hide();
+                $(".show-create").hide();
+                $(".show-cetak").hide();
+                $(".show-import-shp").hide();
+                $(".show-import-ba").hide();
+            });
+
+            $('.import-shp').click(function(event) {
+                event.stopPropagation();
+                $(".show-import-shp").slideToggle("fast");
+                $(".show-import").hide();
+                $(".show-create").hide();
+                $(".show-cetak").hide();
+                $(".show-import-button").hide();
+
+            });
+            $('.import-ba').click(function(event) {
+                event.stopPropagation();
+                $(".show-import-ba").slideToggle("fast");
+                $(".show-import").hide();
+                $(".show-create").hide();
+                $(".show-cetak").hide();
+                $(".show-import-shp").hide();
+                $(".show-import-button").hide();
+            });
+
             //ganti label berdasarkan nama file
             $('#file-upload').change(function() {
                 var i = $(this).prev('label').clone();
