@@ -9,7 +9,7 @@ class Daerah extends Model
 {
     use SoftDeletes;
     protected $table = 'daerahs';
-    protected $fillable = ['id_kecamatan', 'id_kelurahan', 'tanggal_lelang', 'noba', 'periode', 'thn_sts'];
+    protected $fillable = ['id_kecamatan', 'id_kelurahan', 'tanggal_lelang', 'noba', 'periode', 'thn_sts', 'surat', 'surat_shp'];
     protected $dates = ['deleted_at'];
 
     public function kecamatan()

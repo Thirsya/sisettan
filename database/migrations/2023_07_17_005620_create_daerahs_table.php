@@ -23,6 +23,8 @@ return new class extends Migration
             $table->unsignedBigInteger('thn_sts')->nullable();
             $table->date('tanggal_lelang')->nullable();
             $table->boolean('aktif')->default(0);
+            $table->string('surat')->nullable();
+            $table->string('surat_shp')->nullable();
             $table->softDeletes();
 
             $table->foreign('id_kelurahan')->references('id')->on('kelurahans')->restrictOnDelete();

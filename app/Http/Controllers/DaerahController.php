@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\DaerahsExport;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ImportBaRequest;
 use App\Http\Requests\ImportDaerahRequest;
 use App\Http\Requests\StoreDaerahRequest;
 use App\Http\Requests\UpdateDaerahRequest;
@@ -40,6 +41,8 @@ class DaerahController extends Controller
                 'daerahs.noba',
                 'daerahs.periode',
                 'daerahs.thn_sts',
+                'daerahs.surat',
+                'daerahs.surat_shp',
                 'kelurahans.kelurahan',
                 'kecamatans.kecamatan',
                 'tahuns.tahun'
@@ -53,7 +56,7 @@ class DaerahController extends Controller
             ->when($request->input('kecamatan'), function ($query, $kecamatan) {
                 return $query->whereIn('daerah.jenis_barang_id', $kecamatan);
             })
-            // ->orderBy('daerah.kode_jbs', 'asc')
+
             ->whereNull('daerahs.deleted_at')
             ->paginate(10);
         $kecamatanSelected = $request->input('kecamatan');
@@ -139,9 +142,9 @@ class DaerahController extends Controller
 
     public function getKelurahans(Request $request)
     {
-        // $kecamatanId = $request->input('kecamatan_id');
 
-        // Fetch the kelurahans based on the selected kecamatan
+
+
         $kelurahans = Kelurahan::all()->where('id_kecamatan', $request->kecamatan_id);
 
         return response()->json(['kelurahans' => $kelurahans]);
@@ -196,5 +199,57 @@ class DaerahController extends Controller
         return response()->json([
             'daerah' => $daerah,
         ]);
+    }
+
+    public function uploadSurat(ImportBaRequest $request)
+    {
+        $selectedTahunId = session('selected_tahun_id');
+        $tahunSelected = Tahun::where('id', $selectedTahunId)->value('id');
+        $daftarIdFromSession = (int) session('selected_kelurahan_id');
+
+        $daerah = Daerah::where('id_kelurahan', $daftarIdFromSession)
+            ->where('thn_sts', $tahunSelected)
+            ->first();
+
+        if ($daerah) {
+            $file = $request->file('import-file');
+
+            $filename = $file->getClientOriginalName();
+            $path = $file->storeAs('public/surat', $filename);
+
+
+            $daerah->surat = $filename;
+            $daerah->save();
+
+            return back()->with('success', 'Surat berhasil diunggah dan data diperbarui.');
+        } else {
+            return back()->with('error', 'Data daerah tidak ditemukan.');
+        }
+    }
+
+    public function uploadSuratSHP(ImportBaRequest $request)
+    {
+        $selectedTahunId = session('selected_tahun_id');
+        $tahunSelected = Tahun::where('id', $selectedTahunId)->value('id');
+        $daftarIdFromSession = (int) session('selected_kelurahan_id');
+
+        $daerah = Daerah::where('id_kelurahan', $daftarIdFromSession)
+            ->where('thn_sts', $tahunSelected)
+            ->first();
+
+        if ($daerah) {
+            $file = $request->file('import-file');
+
+            $filename = $file->getClientOriginalName();
+            $path = $file->storeAs('public/surat', $filename);
+
+
+            $daerah->surat_shp = $filename;
+            $daerah->save();
+
+            return back()->with('success', 'Surat berhasil diunggah dan data diperbarui.');
+        } else {
+            return back()->with('error', 'Data daerah tidak ditemukan.');
+        }
     }
 }

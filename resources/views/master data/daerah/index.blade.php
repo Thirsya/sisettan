@@ -99,6 +99,8 @@
                                             <th>Periode</th>
                                             <th>Tahun Sts</th>
                                             <th>Tanggal</th>
+                                            <th class="text-right" style="width: 150px">Preview BA</th>
+                                            <th class="text-right" style="width: 150px">Preview SHP</th>
                                             <th class="text-right">Action</th>
                                         </tr>
                                         @foreach ($daerahs as $key => $daerah)
@@ -111,19 +113,41 @@
                                                 <td>{{ $daerah->periode }}</td>
                                                 <td>{{ $daerah->tahun }}</td>
                                                 <td>{{ $daerah->tanggal_lelang }}</td>
+                                                <td class="text-left">
+                                                    @if ($daerah->surat)
+                                                        <?php $daerah->suratUrl = Storage::url('surat/' . $daerah->surat); ?>
+                                                        <button type="button" class="btn btn-primary preview-btn"
+                                                            data-key="{{ $key }}"
+                                                            data-daerah="{{ json_encode($daerah, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE) }}">
+                                                            Preview File
+                                                        </button>
+                                                    @endif
+                                                </td>
+                                                <td class="text-left">
+                                                    @if ($daerah->surat_shp)
+                                                        <?php $daerah->suratUrlSHP = Storage::url('surat/' . $daerah->surat_shp); ?>
+                                                        <button type="button" class="btn btn-primary preview-btn-shp"
+                                                            data-key="{{ $key }}"
+                                                            data-daerah-shp="{{ json_encode($daerah, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE) }}">
+                                                            Preview File
+                                                        </button>
+                                                    @endif
+                                                </td>
+
                                                 <td class="text-right">
                                                     <div class="d-flex justify-content-end">
                                                         <a href="{{ route('daerah.edit', $daerah->id) }}"
-                                                            class="btn btn-sm btn-info btn-icon "><i
-                                                                class="fas fa-edit"></i>
-                                                            Edit</a>
+                                                            class="btn btn-sm btn-info btn-icon">
+                                                            <i class="fas fa-edit"></i> Edit
+                                                        </a>
                                                         <form action="{{ route('daerah.destroy', $daerah->id) }}"
                                                             method="POST" class="ml-2">
-                                                            <input type="hidden" name="_method" value="DELETE">
-                                                            <input type="hidden" name="_token"
-                                                                value="{{ csrf_token() }}">
-                                                            <button class="btn btn-sm btn-danger btn-icon confirm-delete">
-                                                                <i class="fas fa-times"></i> Delete </button>
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit"
+                                                                class="btn btn-sm btn-danger btn-icon confirm-delete">
+                                                                <i class="fas fa-times"></i> Delete
+                                                            </button>
                                                         </form>
                                                     </div>
                                                 </td>
@@ -141,6 +165,30 @@
             </div>
         </div>
     </section>
+    <div class="modal fade" id="previewFileModal" tabindex="-1" aria-labelledby="previewFileModalLabel"
+        aria-hidden="true" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Preview BA</h5>
+                </div>
+                <div class="modal-body">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="previewFileModal2" tabindex="-1" aria-labelledby="previewFileModalLabel"
+        aria-hidden="true" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel1">Preview BA</h5>
+                </div>
+                <div class="modal-body">
+                </div>
+            </div>
+        </div>
+    </div>
     <form action="" method="post" enctype="multipart/form-data">
         <div class="modal fade" id="modal-sewa" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
@@ -197,6 +245,7 @@
     <script src="/assets/js/select2.min.js"></script>
     <script>
         $(document).ready(function() {
+            // $('.modal').modal();
             $('.import').click(function(event) {
                 event.stopPropagation();
                 $(".show-import").slideToggle("fast");
@@ -246,6 +295,36 @@
                     }
                 });
             });
+        });
+    </script>
+    <script>
+        $('.preview-btn').on('click', function() {
+            var key = $(this).data('key');
+            var daerah = JSON.parse($(this).attr('data-daerah'));
+            $('#previewFileModal .modal-title').text('Preview File ' + key);
+            if (daerah.surat.endsWith('.pdf')) {
+                $('#previewFileModal .modal-body').html('<iframe src="' + daerah.suratUrl +
+                    '" width="100%" height="500px" frameborder="0"></iframe>');
+            } else {
+                $('#previewFileModal .modal-body').html('<img src="' + daerah.suratUrl +
+                    '" alt="Surat" style="max-width: 100%; height: auto;">');
+            }
+            $('#previewFileModal').modal('show');
+        });
+    </script>
+    <script>
+        $('.preview-btn-shp').on('click', function() {
+            var key = $(this).data('key');
+            var daerah = JSON.parse($(this).attr('data-daerah-shp'));
+            $('#previewFileModal2 .modal-title').text('Preview File ' + key);
+            if (daerah.surat_shp.endsWith('.pdf')) {
+                $('#previewFileModal2 .modal-body').html('<iframe src="' + daerah.suratUrlSHP +
+                    '" width="100%" height="500px" frameborder="0"></iframe>');
+            } else {
+                $('#previewFileModal2 .modal-body').html('<img src="' + daerah.suratUrlSHP +
+                    '" alt="Surat" style="max-width: 100%; height: auto;">');
+            }
+            $('#previewFileModal2').modal('show');
         });
     </script>
 @endpush

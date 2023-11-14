@@ -95,7 +95,8 @@
                                         <input type="file" id="file-upload" class="custom-file-input" name="import-file"
                                             data-id="send-import">
                                         <br /><br />
-                                        <a href="{{ route('penawaran.download-template') }}" class="text">Unduh Template</a>
+                                        <a href="{{ route('penawaran.download-template') }}" class="text">Unduh
+                                            Template</a>
                                         <br /> <br />
                                         <div class="footer text-right">
                                             <button class="btn btn-primary" data-id="submit-import">Import File</button>
@@ -112,14 +113,13 @@
                                     </div>
                                 @enderror
                                 <div class="custom-file">
-                                    <form action="{{ route('penawaran.import') }}" method="POST"
+                                    <form action="{{ route('daerahs.upload') }}" method="POST"
                                         enctype="multipart/form-data">
                                         @csrf
-                                        @method('POST')
                                         <label
-                                            class="custom-file-label @error('import-file', 'ImportPenawaranRequest') is-invalid @enderror"
-                                            for="file-upload">Choose File</label>
-                                        <input type="file" id="file-upload" class="custom-file-input" name="import-file"
+                                            class="custom-file-label @error('import-file', 'ImportBaRequest') is-invalid @enderror"
+                                            for="file-upload1">Choose File</label>
+                                        <input type="file" id="file-upload1" class="custom-file-input" name="import-file"
                                             data-id="send-import">
                                         <br /><br />
                                         <div class="footer text-right">
@@ -137,14 +137,14 @@
                                     </div>
                                 @enderror
                                 <div class="custom-file">
-                                    <form action="{{ route('penawaran.import') }}" method="POST"
+                                    <form action="{{ route('daerahs.upload.shp') }}" method="POST"
                                         enctype="multipart/form-data">
                                         @csrf
                                         @method('POST')
                                         <label
                                             class="custom-file-label @error('import-file', 'ImportPenawaranRequest') is-invalid @enderror"
-                                            for="file-upload">Choose File</label>
-                                        <input type="file" id="file-upload" class="custom-file-input"
+                                            for="file-upload2">Choose File</label>
+                                        <input type="file" id="file-upload2" class="custom-file-input"
                                             name="import-file" data-id="send-import">
                                         <br /><br />
                                         <div class="footer text-right">
@@ -363,10 +363,19 @@
                 $(".show-import-button").hide();
             });
 
-            //ganti label berdasarkan nama file
             $('#file-upload').change(function() {
                 var i = $(this).prev('label').clone();
                 var file = $('#file-upload')[0].files[0].name;
+                $(this).prev('label').text(file);
+            });
+            $('#file-upload1').change(function() {
+                var i = $(this).prev('label').clone();
+                var file = $('#file-upload1')[0].files[0].name;
+                $(this).prev('label').text(file);
+            });
+            $('#file-upload2').change(function() {
+                var i = $(this).prev('label').clone();
+                var file = $('#file-upload2')[0].files[0].name;
                 $(this).prev('label').text(file);
             });
         });

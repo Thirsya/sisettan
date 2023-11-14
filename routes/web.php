@@ -138,6 +138,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::get('/getDaerahJquery', [DaerahController::class, 'getDaerahJquery'])->name('getDaerahJquery');
         Route::resource('daerah', DaerahController::class);
         Route::get('/getKelurahans', [DaerahController::class, 'getKelurahans'])->name('getKelurahans');
+        Route::post('/upload', [DaerahController::class, 'uploadSurat'])->name('daerahs.upload');
+        Route::post('/upload-shp', [DaerahController::class, 'uploadSuratSHP'])->name('daerahs.upload.shp');
     });
 
     Route::prefix('lelang')->middleware('check.kelurahan')->group(function () {

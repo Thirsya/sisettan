@@ -400,29 +400,22 @@
         });
     </script>
     <script>
-        function updateStatistics() {
-            fetch('/total-pendaftar')
-                .then(response => response.json())
-                .then(data => {
-                    const totalPendaftarElement = document.getElementById('totalPendaftar');
-                    totalPendaftarElement.textContent = data.totalPendaftar || '--';
+        $(document).ready(function() {
+            function updateStatistics() {
+                $.getJSON('/total-pendaftar', function(data) {
+                    $('#totalPendaftar').text(data.totalPendaftar || '--');
                 });
-            fetch('/total-tkd')
-                .then(response => response.json())
-                .then(data => {
-                    const totalTkdElement = document.getElementById('totalTkd');
-                    totalTkdElement.textContent = data.totalTkd || '--';
+                $.getJSON('/total-tkd', function(data) {
+                    $('#totalTkd').text(data.totalTkd || '--');
                 });
-            fetch('/total-penawaran')
-                .then(response => response.json())
-                .then(data => {
-                    const totalPenawaranElement = document.getElementById('totalPenawaran');
-                    totalPenawaranElement.textContent = data.totalPenawaran || '--';
+                $.getJSON('/total-penawaran', function(data) {
+                    $('#totalPenawaran').text(data.totalPenawaran || '--');
                 });
-        }
+            }
 
-        setInterval(updateStatistics, 1000);
-        updateStatistics();
+            setInterval(updateStatistics, 1000);
+            updateStatistics();
+        });
     </script>
 @endpush
 
