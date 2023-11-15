@@ -9,7 +9,7 @@
             <a class="btn btn-info btn-primary active bg-primary" onclick="showPage(1)">(STS) Pemenang 1</a>
             <a class="btn btn-info btn-primary active bg-primary" onclick="showPage(2)">(STS) Pemenang 2</a>
             <div id="page1">
-                <br><br><br>
+                <br><br>
                 <div class="card">
                     <div class="card-body">
                         <form method="POST">
@@ -25,7 +25,7 @@
                                             <th>Luas</th>
                                             <th>Penawaran</th>
                                             <th style="width: 250px">Tanggal Perjanjian</th>
-                                            <th style="width: 570px">Menu</th>
+                                            <th style="width: 610px">Menu</th>
                                         </tr>
                                         @foreach ($penawaran as $key => $listPenawaran)
                                             <tr>
@@ -53,32 +53,26 @@
                                                             <input type="hidden" name="_method" value="DELETE">
                                                             <input type="hidden" name="_token"
                                                                 value="{{ csrf_token() }}">
-                                                            <button class="btn btn-sm btn-danger btn-icon confirm-delete"
-                                                                type="submit">
+                                                            <button class="btn btn-sm btn-danger btn-icon confirm-delete" type="submit" style="height: 40px">
                                                                 <i class="fas fa-times"></i> Delete </button>
                                                         </form>
                                                         <a href="#" data-id="{{ $listPenawaran->id }}"
-                                                            class="ml-2 btn btn-sm btn-danger btn-icon gugur">Di
-                                                            Gugurkan</a>
+                                                            class="ml-2 btn btn-sm btn-danger btn-icon gugur" style="padding-top: 7px">Di Gugurkan</a>
                                                         <a href="{{ route('sts.print', $listPenawaran->id) }}"
-                                                            target="_blank" class="ml-2 btn btn-sm btn-info btn-icon">Cetak
-                                                            STS</a>
-                                                        <a href="{{ route('sts.cetakpernyataan') }}" class="ml-2 btn btn-sm btn-info btn-icon ">Cetak
-                                                            Pernyataan</a>
-                                                        <a href="{{ route('sts.cetakperjanjian') }}" class="ml-2 btn btn-sm btn-info btn-icon ">Cetak
-                                                            Perjanjian</a>
+                                                            target="_blank" class="ml-2 btn btn-sm btn-info btn-icon" style="padding-top: 7px">Cetak STS</a>
+                                                        <a href="{{ route('sts.cetakpernyataan') }}" class="ml-2 btn btn-sm btn-info btn-icon " style="padding-top: 7px">Cetak Pernyataan</a>
+                                                        <a href="{{ route('sts.cetakperjanjian') }}" class="ml-2 btn btn-sm btn-info btn-icon " style="padding-top: 7px">Cetak Perjanjian</a>
+                                                        {{-- <a href="#" class="ml-2 btn btn-sm btn-info btn-icon ">Upload</a> --}}
                                                         <a href="#" data-toggle="dropdown"
                                                             class="nav-link dropdown-toggle nav-link-lg nav-link-user"></a>
-                                                        <div class="dropdown-menu dropdown-menu-right">
-                                                            <a href="#" class="dropdown-item has-icon">
-                                                                Upload STS
-                                                            </a>
-                                                            <a href="#" class="dropdown-item has-icon">
-                                                                Upload Pernyataan
-                                                            </a>
-                                                            <a href="#" class="dropdown-item has-icon">
-                                                                Upload Perjanjian
-                                                            </a>
+                                                            <div class="dropdown-menu dropdown-menu-right">
+                                                                <a class="dropdown-item has-icon" href="#" data-toggle="modal" data-target="#modal-upload">
+                                                                    Upload
+                                                                </a>
+                                                                <a class="dropdown-item has-icon" href="#" data-toggle="modal" data-target="#modal-preview">
+                                                                    Preview
+                                                                </a>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -95,7 +89,7 @@
                 </div>
             </div>
             <div id="page2" style="display: none">
-                <br><br><br>
+                <br><br>
                 <div class="card">
                     <div class="card-body">
                         <form method="POST">
@@ -104,14 +98,14 @@
                                 <table class="table table-bordered table-md">
                                     <tbody>
                                         <tr style="text-align: center">
-                                            <th>No Urut 2</th>
+                                            <th>No Urut</th>
                                             <th>Nama</th>
                                             <th>Bukti Hak</th>
                                             <th>Bidang</th>
                                             <th>Luas</th>
                                             <th>Penawaran</th>
                                             <th style="width: 250px">Tanggal Perjanjian</th>
-                                            <th style="width: 550px">Menu</th>
+                                            <th style="width: 570px">Menu</th>
                                         </tr>
                                         @foreach ($penawaran2 as $key => $listPenawaran)
                                             <tr>
@@ -145,27 +139,11 @@
                                                                 <i class="fas fa-times"></i> Delete </button>
                                                         </form>
                                                         <a href="#" data-id="{{ $listPenawaran->id }}"
-                                                            class="ml-2 btn btn-sm btn-danger btn-icon gugur">Di
-                                                            Gugurkan</a>
+                                                            class="ml-2 btn btn-sm btn-danger btn-icon gugur">Di Gugurkan</a>
                                                         <a href="{{ route('sts.print', $listPenawaran->id) }}"
-                                                            target="_blank" class="ml-2 btn btn-sm btn-info btn-icon">Cetak
-                                                            STS</a>
-                                                        <a href="#" class="ml-2 btn btn-sm btn-info btn-icon ">Cetak
-                                                            Pernyataan</a>
-                                                        <a href="#" class="ml-2 btn btn-sm btn-info btn-icon ">Cetak
-                                                            Perjanjian</a>
-                                                            <a href="#" data-toggle="dropdown"
-                                                            class="nav-link dropdown-toggle nav-link-lg nav-link-user"></a>
-                                                        <div class="dropdown-menu dropdown-menu-right">
-                                                            <a href="#" class="dropdown-item has-icon">
-                                                                Upload STS
-                                                            </a>
-                                                            <a href="#" class="dropdown-item has-icon">
-                                                                Upload Pernyataan
-                                                            </a>
-                                                            <a href="#" class="dropdown-item has-icon">
-                                                                Upload Perjanjian
-                                                            </a>
+                                                            target="_blank" class="ml-2 btn btn-sm btn-info btn-icon">Cetak STS</a>
+                                                        <a href="#" class="ml-2 btn btn-sm btn-info btn-icon ">Cetak Pernyataan</a>
+                                                        <a href="#" class="ml-2 btn btn-sm btn-info btn-icon ">Cetak Perjanjian</a>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -182,6 +160,8 @@
                 </div>
             </div>
     </section>
+    @include('lelang.penawaran.modal.upload')
+    @include('lelang.penawaran.modal.preview')
 @endsection
 @push('customScript')
     <script src="/assets/js/select2.min.js"></script>

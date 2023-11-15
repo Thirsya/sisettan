@@ -262,16 +262,15 @@
 
                                                         </div>
                                                         <a href="{{ route('penawaran.edit', $penawaran->id) }}"
-                                                            class="btn btn-sm btn-info btn-icon "><i
-                                                                class="fas fa-edit"></i>
-                                                            Edit</a>
+                                                            class="btn btn-sm btn-info btn-icon " style="padding-top: 7px"><i
+                                                                class="fas fa-edit"></i>Edit</a>
                                                         <form action="{{ route('penawaran.destroy', $penawaran->id) }}"
                                                             method="POST" class="ml-2">
                                                             <input type="hidden" name="_method" value="DELETE">
                                                             <input type="hidden" name="_token"
                                                                 value="{{ csrf_token() }}">
                                                             <button class="btn btn-sm btn-danger btn-icon confirm-delete"
-                                                                type="submit">
+                                                                type="submit" style="height: 40px">
                                                                 <i class="fas fa-times"></i> Delete </button>
                                                         </form>
                                                     </div>
