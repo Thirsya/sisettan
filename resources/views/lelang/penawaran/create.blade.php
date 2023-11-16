@@ -13,6 +13,10 @@
                 <div class="card-header">
                     <h4>No Urut : {{ $daftars->no_urut }}</h4>
                 </div>
+                <div class="form-group col-md-4" style=" display: flex; float: right;">
+                    <input type="text" name="bukti" class="form-control" id="bukti" placeholder="Bukti Hak">
+                    <button class="btn btn-primary mr-1" type="submit">Submit</button>
+                </div>
                 <div class="card-body">
                     <form action="{{ route('penawaran.store') }}" method="POST">
                         @csrf

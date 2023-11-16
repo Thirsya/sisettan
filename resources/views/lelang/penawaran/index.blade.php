@@ -71,7 +71,7 @@
                                             @enderror
                                         </div>
                                         <div class="text-right" style="padding-top: 29px">
-                                            <button class="btn btn-primary mr-1" type="submit">Submit</button>
+                                            <button class="btn btn-primary mr-1" type="submit" style="height: 41px">Submit</button>
                                         </div>
                                     </div>
                                 </form>

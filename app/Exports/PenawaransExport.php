@@ -17,7 +17,7 @@ class PenawaransExport implements FromCollection, WithHeadings, ShouldAutoSize
         return Penawaran::Select('id_penawaran', 'total_luas',
         'idfk_daftar', 'id_daftar',
         'idfk_tkd', 'id_tkd',
-        'nilai_penawaran', 'keterangan')->get();
+        'nilai_penawaran', 'gugur', 'keterangan')->get();
     }
 
     public function headings(): array
@@ -30,6 +30,7 @@ class PenawaransExport implements FromCollection, WithHeadings, ShouldAutoSize
             'Id FK TKD',
             'Id TKD',
             'Nilai Penawaran',
+            'Gugur',
             'Keterangan',
         ];
     }

@@ -38,6 +38,7 @@ class PenawaransImport implements ToCollection, WithHeadingRow, WithUpserts
                 'nilai_penawaran' => $row['nilai_penawaran'],
                 'keterangan' => $row['keterangan'],
                 'total_luas' => $totalLuas,
+                'gugur' => $row['gugur'],
             ];
         }
 
