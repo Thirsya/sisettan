@@ -132,7 +132,7 @@ class PenawaranController extends Controller
         return redirect()->route('penawaran.create');
     }
 
-    public function create()
+    public function create(Request $request)
     {
         $selectedTahunId = session('selected_tahun_id');
         $tahunSelected = Tahun::where('id', $selectedTahunId)->value('tahun');
@@ -161,6 +161,9 @@ class PenawaranController extends Controller
             )
             ->where('id_kelurahan', $kelurahanIdFromDaerah)
             ->whereNull('tkds.deleted_at')
+            ->when($request->input('tkd'), function ($query, $tkd) {
+                return $query->where('tkds.bukti', 'like', '%' . $tkd . '%');
+            })
             ->get();
 
         $daftars = Daftar::where('id', $penawaranId)->first();

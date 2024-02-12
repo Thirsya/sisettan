@@ -20,12 +20,10 @@ class RekapController extends Controller
             ->pluck('id_kelurahan')->first();
 
         $daerahList = Daerah::withTrashed()
-            ->where('main.id', $daftarIdFromSession)
+            ->where('main.id_kelurahan', $daftarIdFromSession)
+            ->whereYear('tanggal_lelang', $tahunSelected)
             ->select(
-                'main.periode',
-                'tahuns.tahun',
                 'kelurahans.kelurahan',
-                'main.noba',
             )
             ->from('daerahs as main')
             ->leftJoin('tahuns', 'tahuns.id', 'main.thn_sts')

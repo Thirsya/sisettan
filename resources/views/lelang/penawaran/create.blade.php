@@ -13,11 +13,23 @@
                 <div class="card-header">
                     <h4>No Urut : {{ $daftars->no_urut }}</h4>
                 </div>
-                <div class="form-group col-md-4" style=" display: flex; float: right;">
-                    <input type="text" name="bukti" class="form-control" id="bukti" placeholder="Bukti Hak">
-                    <button class="btn btn-primary mr-1" type="submit">Submit</button>
-                </div>
+
+
                 <div class="card-body">
+                    <div class="show-search mb-3" style="display: block">
+                        <form action="{{ route('penawaran.create') }}" method="GET">
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    {{-- <label for="role">TKD</label> --}}
+
+                                    <input type="text" name="tkd" class="form-control" placeholder="Cari..."
+                                        value="{{ request('tkd') }}">
+                                </div>
+                                <div class="text-right">
+                                    <button class="btn btn-primary mr-1" type="submit">Submit</button>
+                                </div>
+                        </form>
+                    </div>
                     <form action="{{ route('penawaran.store') }}" method="POST">
                         @csrf
                         <div class="table-responsive">

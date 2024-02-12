@@ -22,9 +22,9 @@ class GugurController extends Controller
             ->whereYear('tanggal_lelang', $tahunSelected)
             ->pluck('id_kelurahan')->first();
         $daerahList = Daerah::withTrashed()
-            ->where('main.id', $daftarIdFromSession)
+            ->where('main.id_kelurahan', $daftarIdFromSession)
+            ->whereYear('tanggal_lelang', $tahunSelected)
             ->select(
-                'main.periode',
                 'kelurahans.kelurahan',
             )
             ->from('daerahs as main')
