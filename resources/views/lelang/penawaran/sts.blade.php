@@ -67,11 +67,11 @@
                                                             class="nav-link dropdown-toggle nav-link-lg nav-link-user"></a>
                                                             <div class="dropdown-menu dropdown-menu-right">
                                                                 <a class="dropdown-item has-icon" href="#" data-toggle="modal" data-target="#modal-upload">
-                                                                    Upload
+                                                                    Dokumen
                                                                 </a>
-                                                                <a class="dropdown-item has-icon" href="#" data-toggle="modal" data-target="#modal-preview">
+                                                                {{-- <a class="dropdown-item has-icon" href="#" data-toggle="modal" data-target="#modal-preview">
                                                                     Preview
-                                                                </a>
+                                                                </a> --}}
                                                             </div>
                                                         </div>
                                                     </div>
