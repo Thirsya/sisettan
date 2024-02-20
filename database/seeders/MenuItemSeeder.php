@@ -145,6 +145,12 @@ class MenuItemSeeder extends Seeder
                     'permission_name' => 'gugur.index',
                     'menu_group_id' => 8,
                 ],
+                [
+                    'name' => 'Detail',
+                    'route' => '/maps/detail',
+                    'permission_name' => 'detail.index',
+                    'menu_group_id' => 9,
+                ],
             ]
         );
     }

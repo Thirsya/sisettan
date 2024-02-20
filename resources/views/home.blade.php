@@ -104,7 +104,7 @@
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Penguumuman Masa Sewa</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Pengumuman Masa Sewa</h5>
                     </div>
                     @csrf
                     <div class="modal-body">

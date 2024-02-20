@@ -58,6 +58,11 @@ class MenuGroupSeeder extends Seeder
                     'icon' => 'far fa-file',
                     'permisison_name' => 'pdf',
                 ],
+                [
+                    'name' => 'Maps',
+                    'icon' => 'far fa-file',
+                    'permisison_name' => 'maps',
+                ],
             ]
         );
     }

@@ -29,6 +29,7 @@ use App\Http\Controllers\RoleAndPermission\RoleController;
 use App\Http\Controllers\StsController;
 use App\Http\Controllers\TahunController;
 use App\Http\Controllers\TkdController;
+use App\Http\Controllers\DetailController;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
 use App\Http\Controllers\UserController;
@@ -184,4 +185,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::get('/cetakpemenang', [PemenangController::class, 'cetakPemenang'])->name('cetakpemenang');
         Route::get('/cetakrekap', [RekapController::class, 'cetakRekap'])->name('cetakrekap');
     });
+
+    Route::prefix('maps')->middleware('check.kelurahan')->group(function () {
+        Route::get('/detail', [DetailController::class, 'index'])->name('detail');
+    });
+
 });

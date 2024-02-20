@@ -28,6 +28,7 @@ class RoleAndPermissionSeeder extends Seeder
         Permission::create(['name' => 'master.data']);
         Permission::create(['name' => 'lelang']);
         Permission::create(['name' => 'pdf']);
+        Permission::create(['name' => 'maps']);
 
         //user
         Permission::create(['name' => 'user.index']);
@@ -141,6 +142,8 @@ class RoleAndPermissionSeeder extends Seeder
         // Permission::create(['name' => 'gugur.edit']);
         // Permission::create(['name' => 'gugur.destroy']);
 
+        Permission::create(['name' => 'detail.index']);
+
         // create roles
         $roleUser = Role::create(['name' => 'user']);
         $roleUser->givePermissionTo([
@@ -148,6 +151,7 @@ class RoleAndPermissionSeeder extends Seeder
             'master.data',
             'lelang',
             'pdf',
+            'maps',
             'daftar.index',
             'daftar.create',
             'daftar.edit',
@@ -167,6 +171,7 @@ class RoleAndPermissionSeeder extends Seeder
             'pemenang.index',
             'rekap-sts.index',
             'gugur.index',
+            'detail.index',
         ]);
 
         // create Super Admin
