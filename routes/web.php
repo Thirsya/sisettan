@@ -173,6 +173,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::get('/dua-hektar', [HektarController::class, 'index'])->name('hektar');
 
         Route::get('/sts', [StsController::class, 'index'])->name('sts');
+        Route::post('/upload-sts', [StsController::class, 'upload'])->name('sts.upload');
         Route::post('/sts/{id}/gugur', [StsController::class, 'gugur'])->name('sts.gugur');
         Route::post('/sts/{penawaran}/update-date', [StsController::class, 'updateDate'])->name('penawaran.updateDate');
         Route::get('/sts/{id}/print', [StsController::class, 'printSTS'])->name('sts.print');
@@ -189,5 +190,4 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::prefix('maps')->middleware('check.kelurahan')->group(function () {
         Route::get('/detail', [DetailController::class, 'index'])->name('detail');
     });
-
 });

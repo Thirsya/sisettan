@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Daerah;
 use App\Models\Daftar;
 use App\Models\Penawaran;
+use App\Models\Sts;
 use App\Models\Tahun;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -209,5 +210,28 @@ class StsController extends Controller
     public function cetakPerjanjian()
     {
         return view('lelang.penawaran.perjanjian');
+    }
+
+    public function upload(Request $request)
+    {
+        $validatedData = $request->validate([
+            'fileSts' => 'required|mimes:pdf|max:5000',
+            'filePernyataan' => 'required|mimes:pdf|max:5000',
+            'filePerjanjian' => 'required|mimes:pdf|max:5000',
+            'fileBa' => 'required|mimes:pdf|max:5000',
+            'id_penawaran' => 'required|integer',
+        ]);
+
+        $sts = new Sts();
+
+        $sts->surat_tanda_setor = $request->file('fileSts')->store('sts');
+        $sts->surat_pernyataan = $request->file('filePernyataan')->store('sts');
+        $sts->surat_perjanjian = $request->file('filePerjanjian')->store('sts');
+        $sts->berita_acara = $request->file('fileBa')->store('sts');
+        $sts->id_penawaran = $request->id_penawaran;
+
+        $sts->save();
+
+        return response()->json(['message' => 'Files uploaded successfully']);
     }
 }

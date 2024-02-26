@@ -38,54 +38,48 @@
                                 @enderror
                             </div>
                             <div class="show-search mb-3">
+                            </div>
+                            <div class="col-12 d-flex justify-content-center">
+                                <h1>MAPS</h1>
+                            </div>
+                            <div class="table-responsive">
+
                                 <section class="section">
-                                    <div class="col-12 col-lg-12 col-md-6 d-flex justify-content-center">
+                                    <div class="col-12 col-lg-12 col-md-6 d-flex justify-content">
                                         <div class="row" style="width: 1200px">
                                             <div class="col-12 col-md-12 col-lg-5">
                                                 <div class="card-header">
                                                     <h4>Letak : </h4>
                                                 </div>
                                                 <div class="card-header">
-                                                    <h4>Kelurahan :  </h4>
+                                                    <h4>Kelurahan : </h4>
                                                 </div>
                                                 <div class="card-header">
-                                                    <h4>Kecamatan :  </h4>
+                                                    <h4>Kecamatan : </h4>
                                                 </div>
                                                 <div class="card-header">
-                                                    <h4>Luas :  </h4>
+                                                    <h4>Luas : </h4>
                                                 </div>
                                                 <div class="card-header">
-                                                    <h4>Harga:  </h4>
+                                                    <h4>Harga: </h4>
                                                 </div>
                                                 <div class="card-header">
                                                     <h4>NOP : </h4>
                                                 </div>
                                                 <div class="card-header">
-                                                    <h4>Keterangan :  </h4>
+                                                    <h4>Keterangan : </h4>
                                                 </div>
                                             </div>
-                                            <div class="col-5">
-                                                <h1>MAPS</h1>
-                                            </div>
+
                                         </div>
                                     </div>
                                 </section>
-                                {{--
-                                letak
-                                kelurahan
-                                kecamatan
-                                luas
-                                harga
-                                nop
-                                keterangan --}}
-                            </div>
-                            <div class="table-responsive">
-
                                 <div class="d-flex justify-content-center">
                                     {{-- {{ $tkds->withQueryString()->links() }} --}}
                                 </div>
                             </div>
-                        </div></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -112,6 +106,10 @@
             });
         });
     </script>
+    <script src="/assets/js/select2.min.js"></script>
+@endpush
+@push('customStyle')
+    <link rel="stylesheet" href="/assets/css/select2.min.css">
 @endpush
 
 @push('customStyle')

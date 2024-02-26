@@ -53,26 +53,34 @@
                                                             <input type="hidden" name="_method" value="DELETE">
                                                             <input type="hidden" name="_token"
                                                                 value="{{ csrf_token() }}">
-                                                            <button class="btn btn-sm btn-danger btn-icon confirm-delete" type="submit" style="height: 40px">
+                                                            <button class="btn btn-sm btn-danger btn-icon confirm-delete"
+                                                                type="submit" style="height: 40px">
                                                                 <i class="fas fa-times"></i> Delete </button>
                                                         </form>
                                                         <a href="#" data-id="{{ $listPenawaran->id }}"
-                                                            class="ml-2 btn btn-sm btn-danger btn-icon gugur" style="padding-top: 7px">Di Gugurkan</a>
+                                                            class="ml-2 btn btn-sm btn-danger btn-icon gugur"
+                                                            style="padding-top: 7px">Di Gugurkan</a>
                                                         <a href="{{ route('sts.print', $listPenawaran->id) }}"
-                                                            target="_blank" class="ml-2 btn btn-sm btn-info btn-icon" style="padding-top: 7px">Cetak STS</a>
-                                                        <a href="{{ route('sts.cetakpernyataan') }}" class="ml-2 btn btn-sm btn-info btn-icon " style="padding-top: 7px">Cetak Pernyataan</a>
-                                                        <a href="{{ route('sts.cetakperjanjian') }}" class="ml-2 btn btn-sm btn-info btn-icon " style="padding-top: 7px">Cetak Perjanjian</a>
+                                                            target="_blank" class="ml-2 btn btn-sm btn-info btn-icon"
+                                                            style="padding-top: 7px">Cetak STS</a>
+                                                        <a href="{{ route('sts.cetakpernyataan') }}"
+                                                            class="ml-2 btn btn-sm btn-info btn-icon "
+                                                            style="padding-top: 7px">Cetak Pernyataan</a>
+                                                        <a href="{{ route('sts.cetakperjanjian') }}"
+                                                            class="ml-2 btn btn-sm btn-info btn-icon "
+                                                            style="padding-top: 7px">Cetak Perjanjian</a>
                                                         {{-- <a href="#" class="ml-2 btn btn-sm btn-info btn-icon ">Upload</a> --}}
                                                         <a href="#" data-toggle="dropdown"
                                                             class="nav-link dropdown-toggle nav-link-lg nav-link-user"></a>
-                                                            <div class="dropdown-menu dropdown-menu-right">
-                                                                <a class="dropdown-item has-icon" href="#" data-toggle="modal" data-target="#modal-upload">
-                                                                    Dokumen
-                                                                </a>
-                                                                {{-- <a class="dropdown-item has-icon" href="#" data-toggle="modal" data-target="#modal-preview">
+                                                        <div class="dropdown-menu dropdown-menu-right">
+                                                            <a class="dropdown-item has-icon" href="#"
+                                                                data-toggle="modal" data-target="#modal-upload"
+                                                                data-id="{{ $listPenawaran->id }}">
+                                                                Dokumen
+                                                            </a>
+                                                            {{-- <a class="dropdown-item has-icon" href="#" data-toggle="modal" data-target="#modal-preview">
                                                                     Preview
                                                                 </a> --}}
-                                                            </div>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -81,84 +89,85 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="card-footer text-right">
-                                <a class="btn btn-primary" href="{{ route('penawaran.index') }}">Selesai</a>
-                            </div>
-                        </form>
                     </div>
+                    <div class="card-footer text-right">
+                        <a class="btn btn-primary" href="{{ route('penawaran.index') }}">Selesai</a>
+                    </div>
+                    </form>
                 </div>
             </div>
-            <div id="page2" style="display: none">
-                <br><br>
-                <div class="card">
-                    <div class="card-body">
-                        <form method="POST">
-                            @csrf
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-md">
-                                    <tbody>
-                                        <tr style="text-align: center">
-                                            <th>No Urut</th>
-                                            <th>Nama</th>
-                                            <th>Bukti Hak</th>
-                                            <th>Bidang</th>
-                                            <th>Luas</th>
-                                            <th>Penawaran</th>
-                                            <th style="width: 250px">Tanggal Perjanjian</th>
-                                            <th style="width: 570px">Menu</th>
-                                        </tr>
-                                        @foreach ($penawaran2 as $key => $listPenawaran)
-                                            <tr>
-                                                <td>{{ $listPenawaran->no_urut }}</td>
-                                                <td>{{ $listPenawaran->nama }}</td>
-                                                <td>{{ $listPenawaran->bukti }}</td>
-                                                <td>{{ $listPenawaran->bidang }}</td>
-                                                <td>{{ number_format($listPenawaran->luas, 0, ',', '.') }}m<sup>2</sup>
-                                                </td>
-                                                <td>Rp {{ number_format($listPenawaran->nilai_penawaran, 0, ',', '.') }}
-                                                </td>
-                                                <td>
-                                                    <form class="updateDateForm" data-id="{{ $listPenawaran->id }}">
-                                                        <input type="date" class="tgl_perjanjian_input"
-                                                            name="tgl_perjanjian"
-                                                            value="{{ $listPenawaran->tgl_perjanjian }}">
-                                                        <button type="submit"
-                                                            class="ml-2 btn btn-sm btn-success btn-icon">Save</button>
-                                                    </form>
-                                                </td>
+        </div>
+        <div id="page2" style="display: none">
+            <br><br>
+            <div class="card">
+                <div class="card-body">
+                    <form method="POST">
+                        @csrf
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-md">
+                                <tbody>
+                                    <tr style="text-align: center">
+                                        <th>No Urut</th>
+                                        <th>Nama</th>
+                                        <th>Bukti Hak</th>
+                                        <th>Bidang</th>
+                                        <th>Luas</th>
+                                        <th>Penawaran</th>
+                                        <th style="width: 250px">Tanggal Perjanjian</th>
+                                        <th style="width: 570px">Menu</th>
+                                    </tr>
+                                    @foreach ($penawaran2 as $key => $listPenawaran)
+                                        <tr>
+                                            <td>{{ $listPenawaran->no_urut }}</td>
+                                            <td>{{ $listPenawaran->nama }}</td>
+                                            <td>{{ $listPenawaran->bukti }}</td>
+                                            <td>{{ $listPenawaran->bidang }}</td>
+                                            <td>{{ number_format($listPenawaran->luas, 0, ',', '.') }}m<sup>2</sup>
+                                            </td>
+                                            <td>Rp {{ number_format($listPenawaran->nilai_penawaran, 0, ',', '.') }}
+                                            </td>
+                                            <td>
+                                                <form class="updateDateForm" data-id="{{ $listPenawaran->id }}">
+                                                    <input type="date" class="tgl_perjanjian_input" name="tgl_perjanjian"
+                                                        value="{{ $listPenawaran->tgl_perjanjian }}">
+                                                    <button type="submit"
+                                                        class="ml-2 btn btn-sm btn-success btn-icon">Save</button>
+                                                </form>
+                                            </td>
 
-                                                <td>
-                                                    <div class="d-flex justify-content-end">
-                                                        <form action="{{ route('penawaran.destroy', $listPenawaran->id) }}"
-                                                            method="POST" class="ml-2">
-                                                            <input type="hidden" name="_method" value="DELETE">
-                                                            <input type="hidden" name="_token"
-                                                                value="{{ csrf_token() }}">
-                                                            <button class="btn btn-sm btn-danger btn-icon confirm-delete"
-                                                                type="submit">
-                                                                <i class="fas fa-times"></i> Delete </button>
-                                                        </form>
-                                                        <a href="#" data-id="{{ $listPenawaran->id }}"
-                                                            class="ml-2 btn btn-sm btn-danger btn-icon gugur">Di Gugurkan</a>
-                                                        <a href="{{ route('sts.print', $listPenawaran->id) }}"
-                                                            target="_blank" class="ml-2 btn btn-sm btn-info btn-icon">Cetak STS</a>
-                                                        <a href="#" class="ml-2 btn btn-sm btn-info btn-icon ">Cetak Pernyataan</a>
-                                                        <a href="#" class="ml-2 btn btn-sm btn-info btn-icon ">Cetak Perjanjian</a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="card-footer text-right">
-                                <a class="btn btn-primary" href="{{ route('penawaran.index') }}">Selesai</a>
-                            </div>
-                        </form>
-                    </div>
+                                            <td>
+                                                <div class="d-flex justify-content-end">
+                                                    <form action="{{ route('penawaran.destroy', $listPenawaran->id) }}"
+                                                        method="POST" class="ml-2">
+                                                        <input type="hidden" name="_method" value="DELETE">
+                                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                        <button class="btn btn-sm btn-danger btn-icon confirm-delete"
+                                                            type="submit">
+                                                            <i class="fas fa-times"></i> Delete </button>
+                                                    </form>
+                                                    <a href="#" data-id="{{ $listPenawaran->id }}"
+                                                        class="ml-2 btn btn-sm btn-danger btn-icon gugur">Di Gugurkan</a>
+                                                    <a href="{{ route('sts.print', $listPenawaran->id) }}" target="_blank"
+                                                        class="ml-2 btn btn-sm btn-info btn-icon">Cetak STS</a>
+                                                    <a href="#" class="ml-2 btn btn-sm btn-info btn-icon ">Cetak
+                                                        Pernyataan</a>
+                                                    <a href="#" class="ml-2 btn btn-sm btn-info btn-icon ">Cetak
+                                                        Perjanjian</a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                 </div>
+                <div class="card-footer text-right">
+                    <a class="btn btn-primary" href="{{ route('penawaran.index') }}">Selesai</a>
+                </div>
+                </form>
             </div>
+        </div>
+        </div>
     </section>
     @include('lelang.penawaran.modal.upload')
     @include('lelang.penawaran.modal.preview')
@@ -223,17 +232,47 @@
     <script>
         function showPage(pageNumber) {
             for (let i = 1; i <= 2; i++) {
-                const page = document.getElementById(`page${i}`);
+                const page = document.getElementById(page${i});
                 if (page) {
                     page.style.display = 'none';
                 }
             }
 
-            const currentPage = document.getElementById(`page${pageNumber}`);
+            const currentPage = document.getElementById(page${pageNumber});
             if (currentPage) {
                 currentPage.style.display = 'block';
             }
         }
+    </script>
+    <script>
+        $('#modal-upload').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget)
+            var id = button.data('id')
+            $('#id_penawaran').val(id);
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#uploadForm').submit(function(e) {
+                e.preventDefault();
+                var formData = new FormData(this);
+                formData.append('id_penawaran', $('#id_penawaran').val());
+
+                $.ajax({
+                    url: $(this).attr('action'),
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        console.log(response);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            });
+        });
     </script>
 @endpush
 
