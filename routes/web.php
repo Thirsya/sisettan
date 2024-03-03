@@ -37,8 +37,11 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 
 Route::get('/', function () {
-    return view('auth/login');
+    return view('landing-page');
 });
+// Route::get('/', function () {
+//     return view('auth/login');
+// });
 
 
 Route::post('/setSessionTahun', function (Request $request) {
