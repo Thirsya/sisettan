@@ -18,6 +18,8 @@ class TkdsImport implements ToModel, WithHeadingRow, WithUpserts
             'bukti' => $row['bukti'],
             'harga_dasar' => $row['harga_dasar'],
             'luas' => $row['luas'],
+            'longitude' => $row['longitude'],
+            'latitude' => $row['latitude'],
             'keterangan' => $row['keterangan'],
             'nop' => $row['nop'],
         ]);

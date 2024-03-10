@@ -23,6 +23,8 @@ return new class extends Migration
             $table->string('bukti');
             $table->string('harga_dasar');
             $table->string('luas');
+            $table->string('longitude')->nullable();
+            $table->string('latitude')->nullable();
             $table->string('keterangan')->nullable();
             $table->string('nop')->nullable();
             $table->softDeletes();
