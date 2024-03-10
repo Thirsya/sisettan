@@ -38,7 +38,7 @@ use Illuminate\Http\Request;
 
 Route::get('/', function () {
     return view('landing-page');
-});
+})->name('landing-page');
 // Route::get('/', function () {
 //     return view('auth/login');
 // });

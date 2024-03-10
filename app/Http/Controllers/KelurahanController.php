@@ -58,8 +58,8 @@ class KelurahanController extends Controller
 
     public function create()
     {
-        $kecamatans=Kecamatan::all();
-        return view('master data.kelurahan.create')->with(['kecamatans'=> $kecamatans]);
+        $kecamatans = Kecamatan::all();
+        return view('master data.kelurahan.create')->with(['kecamatans' => $kecamatans]);
     }
 
     public function store(StoreKelurahanRequest $request)
@@ -82,8 +82,10 @@ class KelurahanController extends Controller
     {
         $kecamatans = Kecamatan::all();
         return view('master data.kelurahan.edit')->with(
-            ['kelurahan' => $kelurahan,
-            'kecamatans' => $kecamatans]
+            [
+                'kelurahan' => $kelurahan,
+                'kecamatans' => $kecamatans
+            ]
         );
     }
 
@@ -98,7 +100,7 @@ class KelurahanController extends Controller
     public function destroy(Kelurahan $kelurahan)
     {
         try {
-            $kelurahan->delete();
+            $kelurahan->forceDelete();
             return redirect()->route('kelurahan.index')->with('success', 'Hapus Data Kelurahan Sukses');
         } catch (\Illuminate\Database\QueryException $e) {
             $error_code = $e->errorInfo[1];

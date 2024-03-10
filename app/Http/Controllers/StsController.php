@@ -9,6 +9,7 @@ use App\Models\Sts;
 use App\Models\Tahun;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use PDF;
 
 class StsController extends Controller
@@ -42,13 +43,18 @@ class StsController extends Controller
             'penawarans.id',
             'penawarans.nilai_penawaran',
             'penawarans.idfk_tkd',
-            'penawarans.idfk_daftar'
+            'penawarans.idfk_daftar',
+            'sts.surat_tanda_setor',
+            'sts.surat_pernyataan',
+            'sts.surat_perjanjian',
+            'sts.berita_acara',
         )
             ->joinSub($sub, 'subquery', function ($join) {
                 $join->on('penawarans.idfk_tkd', '=', 'subquery.idfk_tkd')
                     ->on('penawarans.nilai_penawaran', '=', 'subquery.max_penawaran');
             })
             ->leftJoin('tkds', 'tkds.id', '=', 'penawarans.idfk_tkd')
+            ->leftJoin('sts', 'sts.id_penawaran', '=', 'penawarans.id')
             ->leftJoin('daftars', 'daftars.id', '=', 'penawarans.idfk_daftar')
             ->where('daftars.id_kelurahan', $kelurahanIdFromDaerah)
             ->orderBy('tkds.bukti', 'DESC')
@@ -224,13 +230,30 @@ class StsController extends Controller
 
         $sts = new Sts();
 
-        $sts->surat_tanda_setor = $request->file('fileSts')->store('sts');
-        $sts->surat_pernyataan = $request->file('filePernyataan')->store('sts');
-        $sts->surat_perjanjian = $request->file('filePerjanjian')->store('sts');
-        $sts->berita_acara = $request->file('fileBa')->store('sts');
+        // Generate random name for the files
+        $randomName = Str::random(10);
+
+        // Mendapatkan ekstensi file
+        $extensionSts = $request->file('fileSts')->getClientOriginalExtension();
+        $extensionPernyataan = $request->file('filePernyataan')->getClientOriginalExtension();
+        $extensionPerjanjian = $request->file('filePerjanjian')->getClientOriginalExtension();
+        $extensionBa = $request->file('fileBa')->getClientOriginalExtension();
+
+        // Menyimpan file di storage
+        $request->file('fileSts')->storeAs('public/sts', $randomName . '.' . $extensionSts);
+        $request->file('filePernyataan')->storeAs('public/sts', $randomName . '.' . $extensionPernyataan);
+        $request->file('filePerjanjian')->storeAs('public/sts', $randomName . '.' . $extensionPerjanjian);
+        $request->file('fileBa')->storeAs('public/sts', $randomName . '.' . $extensionBa);
+
+        // Menyimpan hanya nama file di database
+        $sts->surat_tanda_setor = $randomName . '.' . $extensionSts;
+        $sts->surat_pernyataan = $randomName . '.' . $extensionPernyataan;
+        $sts->surat_perjanjian = $randomName . '.' . $extensionPerjanjian;
+        $sts->berita_acara = $randomName . '.' . $extensionBa;
         $sts->id_penawaran = $request->id_penawaran;
 
         $sts->save();
+
 
         return response()->json(['message' => 'Files uploaded successfully']);
     }

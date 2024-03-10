@@ -17,7 +17,7 @@ return new class extends Migration
         Schema::create('kelurahans', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_kecamatan');
-            $table->string('kelurahan')->unique()->nullable();;
+            $table->string('kelurahan')->unique()->nullable();
             $table->softDeletes();
             $table->foreign('id_kecamatan')->references('id')->on('kecamatans')->restrictOnDelete();
             $table->timestamps();

@@ -72,7 +72,7 @@ class KecamatanController extends Controller
     public function destroy(Kecamatan $kecamatan)
     {
         try {
-            $kecamatan->delete();
+            $kecamatan->forceDelete();
             return redirect()->route('kecamatan.index')->with('success', 'Hapus Data Kecamatan Sukses');
         } catch (\Illuminate\Database\QueryException $e) {
             $error_code = $e->errorInfo[1];
