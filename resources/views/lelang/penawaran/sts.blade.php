@@ -57,14 +57,14 @@
                                                 <br>
                                                 <h6>Aksi</h6>
                                                 <table class="table table-bordered table-md">
-                                                    <tr style="text-align: center">
+                                                    {{-- <tr style="text-align: center">
                                                         <th>Hapus Data</th>
                                                         <th>Digugurkan</th>
                                                         <th>Cetak STS</th>
                                                         <th>Cetak Pertanyataan</th>
                                                         <th>Cetak Perjanjian</th>
                                                         <th>Upload Dokumen</th>
-                                                    </tr>
+                                                    </tr> --}}
                                                     <tr style="text-align: center;">
                                                         <td>
                                                             <form

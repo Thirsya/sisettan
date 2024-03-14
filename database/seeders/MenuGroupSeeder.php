@@ -60,7 +60,7 @@ class MenuGroupSeeder extends Seeder
                 ],
                 [
                     'name' => 'Maps',
-                    'icon' => 'far fa-file',
+                    'icon' => 'fas fa-map-marker-alt',
                     'permisison_name' => 'maps',
                 ],
             ]

@@ -16,7 +16,7 @@
         <div class="website-logo">
             <a href="{{ route('landing-page') }}">
                 <div class="logo">
-                    <img class="logo-size" src="images/regis.png" alt="">
+                    <img class="logo-size" src="images/bppkad.png" alt="">
                 </div>
             </a>
         </div>
@@ -30,7 +30,7 @@
             <div class="form-holder">
                 <div class="form-content">
                     <div class="form-items">
-                        <h3>Sistem Lelang Tanah</h3>
+                        <h3>Sistem Lelang Sewa Tanah</h3>
                         <p>Kota Kediri</p>
                         <div class="page-links">
                             <a href="login6.html" class="active">Login</a>

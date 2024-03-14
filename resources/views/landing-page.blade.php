@@ -9,7 +9,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Title -->
-    <title>Sisettan</title>
+    <title>SISETTAN</title>
     <!-- Place favicon.ico in the root directory -->
     <link rel="apple-touch-icon" href="assetLanding/images/pavicon.png">
     <link rel="shortcut icon" type="image/ico" href="assetLanding/images/pavicon.png" />
@@ -48,7 +48,7 @@
             <div class="row">
                 <div class="col-xs-12 row-flex">
                     <div class="site-brand solid">
-                        <a href="#" class="logo">Sistem Lelang Tanah</a>
+                        <a href="#" class="logo">Sistem Lelang Sewa Tanah Pertanian</a>
                     </div>
                     <button class="burger">
                         <span class="bar"></span>
@@ -75,14 +75,14 @@
     <!-- Header-Area -->
     <header class="header-area v1 relative-box" id="home-area">
         <div class="image-side-box right-box hidden-xs hidden-sm">
-            <img src="images/regis.png" class="layer" data-depth="0.35" alt="">
+            <img src="images/bppkad.png" class="layer" data-depth="0.35" alt="">
         </div>
         <div class="container">
             <div class="row">
                 <div class="col-xs-12 col-md-7">
                     <div class="text-box">
-                        <h2 class="title">Sisettan</h2>
-                        <p>Sistem Informasi Sewa Tanah Pertanian.</p>
+                        <h2 class="title">SISETTAN</h2>
+                        <p>Sistem Informasi Lelang Sewa Tanah Pertanian.</p>
                         <div class="space-30"></div>
                         <a href="{{ route('login') }}" class="bttn-1">Login</a>
                     </div>
@@ -189,8 +189,8 @@
                 <div class="col-xs-12 col-md-6">
                     <div class="text-box text-white">
                         <h4 class="top-title text-white">Profil Dinas</h4>
-                        <h2 class="title">BPPKAD</h2>
-                        <p>Badan Pendapatan, Pengelolaan Keuangan dan Aset Daerah</p>
+                        <h2 class="title">BPPKAD KOTA KEDIRI</h2>
+                        <p>Badan Pendapatan, Pengelolaan Keuangan dan Aset Daerah Kota Kediri</p>
                         <div class="space-40"></div>
                         <a href="https://bppkad.kedirikota.go.id/" class="bttn-2">Visit Dinas</a>
                     </div>

@@ -50,6 +50,8 @@ class TkdController extends Controller
             'tkds.luas',
             'tkds.keterangan',
             'tkds.nop',
+            'tkds.longitude',
+            'tkds.latitude',
             'kelurahans.kelurahan'
         )
             ->leftJoin('kelurahans', 'tkds.id_kelurahan', '=', 'kelurahans.id')

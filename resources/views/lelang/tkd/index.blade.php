@@ -31,7 +31,8 @@
                                 <a class="btn btn-info btn-waning active import  bg-warning">
                                     <i class="fa fa-download" aria-hidden="true"></i>
                                     Import Harga Dasar</a>
-                                <a class="btn btn-info btn-dark active  bg-dark" href="{{ route('tkd.export') }}" data-id="export">
+                                <a class="btn btn-info btn-dark active  bg-dark" href="{{ route('tkd.export') }}"
+                                    data-id="export">
                                     <i class="fa fa-upload" aria-hidden="true"></i>
                                     Export Harga Dasar</a>
                                 <a class="btn btn-info btn-info active search  bg-info">
@@ -52,8 +53,7 @@
                                     </div>
                                 @enderror
                                 <div class="custom-file">
-                                    <form action="{{ route('tkd.import') }}" method="POST"
-                                        enctype="multipart/form-data">
+                                    <form action="{{ route('tkd.import') }}" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         @method('POST')
                                         <label
@@ -99,28 +99,34 @@
                                             <th style="width: 120px">Harga Dasar</th>
                                             <th style="width: 300px">Keterangan</th>
                                             <th>Nop</th>
+                                            <th>Longitude</th>
+                                            <th>Latitude</th>
+                                            <th>Nop</th>
                                             <th class="text-right">Action</th>
                                         </tr>
                                         @foreach ($tkds as $key => $tkd)
                                             <tr>
                                                 {{-- <td>{{ ($tkds->currentPage() - 1) * $tkds->perPage() + $key + 1 }}</td> --}}
-                                                <td>{{ $tkd->id}}</td>
-                                                <td>{{ $tkd->letak}}</td>
-                                                <td>{{ $tkd->bidang}}</td>
-                                                <td>{{ $tkd->kelurahan}}</td>
-                                                <td>{{ $tkd->bukti}}</td>
-                                                <td>{{ number_format($tkd->luas, 0, ',', '.')}} m<sup>2</sup></td>
+                                                <td>{{ $tkd->id }}</td>
+                                                <td>{{ $tkd->letak }}</td>
+                                                <td>{{ $tkd->bidang }}</td>
+                                                <td>{{ $tkd->kelurahan }}</td>
+                                                <td>{{ $tkd->bukti }}</td>
+                                                <td>{{ number_format($tkd->luas, 0, ',', '.') }} m<sup>2</sup></td>
                                                 <td>Rp {{ number_format($tkd->harga_dasar, 0, ',', '.') }}</td>
-                                                <td>{{ $tkd->keterangan}}</td>
-                                                <td>{{ $tkd->nop}}</td>
+                                                <td>{{ $tkd->keterangan }}</td>
+                                                <td>{{ $tkd->nop }}</td>
+                                                <td>{{ $tkd->latitude }}</td>
+                                                <td>{{ $tkd->longitude }}</td>
+                                                <td>{{ $tkd->nop }}</td>
                                                 <td class="text-right">
                                                     <div class="d-flex justify-content-end">
                                                         <a href="{{ route('tkd.edit', $tkd->id) }}"
                                                             class="btn btn-sm btn-info btn-icon "><i
                                                                 class="fas fa-edit"></i>
                                                             Edit</a>
-                                                        <form action="{{ route('tkd.destroy', $tkd->id) }}"
-                                                            method="POST" class="ml-2">
+                                                        <form action="{{ route('tkd.destroy', $tkd->id) }}" method="POST"
+                                                            class="ml-2">
                                                             <input type="hidden" name="_method" value="DELETE">
                                                             <input type="hidden" name="_token"
                                                                 value="{{ csrf_token() }}">

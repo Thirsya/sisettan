@@ -246,6 +246,7 @@
                         'tahun_id': selectedYearId
                     },
                     success: function(data) {
+                        console.log("Data Request Ajax Login: ", data);
                         populateKelurahanDropdown(data);
                         $('#dropdownKelurahan').show();
                     },
@@ -261,6 +262,7 @@
 
                 selectedDaerahId = null;
                 $('#dropdownKelurahan').hide();
+                console.log('pilih tahun', selectedYearId);
                 if (selectedYearId) {
                     $.ajax({
                         url: '{{ route('requestAjaxLogin') }}',
@@ -269,6 +271,7 @@
                             'tahun_id': selectedYearId
                         },
                         success: function(data) {
+                            console.log('Data Request Ajax Selected Year: ', data);
                             populateKelurahanDropdown(data);
 
                             $('#dropdownKelurahan').show();
@@ -291,13 +294,15 @@
                             'kelurahan_id': selectedDaerahId,
                         },
                         success: function(data) {
-                            console.log("Selected values stored.");
+                            console.log("Milih data di kecamatan dan kelurahan berhasil!");
 
                             $.ajax({
                                 url: '{{ route('getTotalDaerah') }}',
                                 type: 'GET',
                                 success: function(data) {
-                                    console.log(data.totalDaerah);
+                                    console.log(selectedDaerahId);
+                                    console.log("Tampil Data");
+                                    console.log(data);
                                     if (data.totalDaerah == 0) {
                                         $('#modal-sewa').modal('show');
 

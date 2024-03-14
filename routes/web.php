@@ -192,5 +192,6 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     Route::prefix('maps')->middleware('check.kelurahan')->group(function () {
         Route::get('/detail', [DetailController::class, 'index'])->name('detail');
+        Route::get('/detail-data/{id}', [DetailController::class, 'detail'])->name('maps.detail');
     });
 });

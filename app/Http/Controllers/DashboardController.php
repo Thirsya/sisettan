@@ -54,7 +54,13 @@ class DashboardController extends Controller
             $tahunId = $request->input('tahun_id');
             $tahunName = Tahun::select('tahuns.id', 'tahuns.tahun')->where('id', $tahunId)->pluck('id')->first();
 
-            $query = Kelurahan::select('kelurahans.id', 'kelurahans.kelurahan', 'daerahs.tanggal_lelang', 'daerahs.id_kecamatan', 'kecamatans.kecamatan')
+            $query = Kelurahan::select(
+                'kelurahans.id',
+                'kelurahans.kelurahan',
+                'daerahs.tanggal_lelang',
+                'daerahs.id_kecamatan',
+                'kecamatans.kecamatan'
+            )
                 ->leftJoin('daerahs', function ($join) use ($tahunName) {
                     $join->on('kelurahans.id', '=', 'daerahs.id_kelurahan')
                         ->where('daerahs.thn_sts', $tahunName);
