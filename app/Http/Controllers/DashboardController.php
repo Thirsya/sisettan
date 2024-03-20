@@ -52,7 +52,7 @@ class DashboardController extends Controller
             $user = Auth::user();
             $userKecamatan = Profile::where('id_user', $userId)->value('id_kecamatan');
             $tahunId = $request->input('tahun_id');
-            $tahunName = Tahun::select('tahuns.id', 'tahuns.tahun')->where('id', $tahunId)->pluck('id')->first();
+            $tahunName = Tahun::select('tahuns.id', 'tahuns.tahun')->where('id', $tahunId)->pluck('tahun')->first();
 
             $query = Kelurahan::select(
                 'kelurahans.id',
@@ -63,7 +63,7 @@ class DashboardController extends Controller
             )
                 ->leftJoin('daerahs', function ($join) use ($tahunName) {
                     $join->on('kelurahans.id', '=', 'daerahs.id_kelurahan')
-                        ->where('daerahs.thn_sts', $tahunName);
+                        ->whereYear('daerahs.tanggal_lelang', $tahunName);
                 })
                 ->leftJoin('kecamatans', 'kelurahans.id_kecamatan', '=', 'kecamatans.id');
 

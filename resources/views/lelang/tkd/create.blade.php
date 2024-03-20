@@ -107,6 +107,40 @@
                                 </div>
                             @enderror
                         </div>
+                        <div class="form-group">
+                            <label>Map Location<span class="text-danger">*</span></label>
+                            <div id="map" style="height: 400px;"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col md-6">
+                                <div class="form-group ">
+                                    <label>Longitude<span class="text-danger">*</span></label>
+                                    <input type="text" id="longitude" name="longitude"
+                                        class="form-control @error('longitude') is-invalid @enderror"
+                                        placeholder="Masukan Longitude" autocomplete="off">
+                                    @error('longitude')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col md-6">
+                                <div class="form-group">
+                                    <label>Latitude<span class="text-danger">*</span></label>
+                                    <input type="text" id="latitude" name="latitude"
+                                        class="form-control @error('latitude') is-invalid @enderror"
+                                        placeholder="Masukan Latitude" autocomplete="off">
+                                    @error('latitude')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+
+
                 </div>
                 <div class="card-footer text-right">
                     <button class="btn btn-primary">Submit</button>
@@ -117,16 +151,94 @@
         </div>
     </section>
 @endsection
+@push('customStyle')
+    <link rel="stylesheet" href="/assets/css/select2.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.EasyButton/2.4.0/easy-button.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch/dist/geosearch.css" />
+@endpush
+
 @push('customScript')
     <script src="/assets/js/select2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.EasyButton/2.4.0/easy-button.min.js"></script>
+    <script src="https://unpkg.com/leaflet-geosearch/dist/geosearch.umd.js"></script>
+
     <script type="text/javascript">
         $('#harga_dasar').mask('000,000,000,000,000', {
             reverse: true
         });
+        $('form').on('submit', function() {
+            var harga_dasar = $('#harga_dasar').val().replace(/,/g, '');
+            $('#harga_dasar').val(harga_dasar);
+        });
     </script>
-@endpush
+    </script>
+    <script>
+        $(document).ready(function() {
+            var map = L.map('map').fitWorld();
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 18,
+            }).addTo(map);
 
-@push('customStyle')
-    <link rel="stylesheet" href="/assets/css/select2.min.css">
+            map.locate({
+                setView: true,
+                maxZoom: 16
+            });
+
+            var marker;
+
+            function placeMarker(lat, lng) {
+                var newLatLng = new L.LatLng(lat, lng);
+                if (marker) {
+                    map.removeLayer(marker);
+                }
+                marker = new L.Marker(newLatLng).addTo(map);
+                map.setView(newLatLng, 16);
+            }
+
+            map.on('click', function(e) {
+                $('#latitude').val(e.latlng.lat);
+                $('#longitude').val(e.latlng.lng);
+                placeMarker(e.latlng.lat, e.latlng.lng);
+            });
+
+            $('#latitude, #longitude').on('change', function() {
+                var lat = $('#latitude').val();
+                var lng = $('#longitude').val();
+                if (lat && lng) {
+                    placeMarker(lat, lng);
+                }
+            });
+
+            const provider = new GeoSearch.OpenStreetMapProvider();
+
+            const searchControl = new GeoSearch.GeoSearchControl({
+                provider: provider,
+                showMarker: false,
+                autoClose: true,
+            });
+
+            map.addControl(searchControl);
+
+            map.on('geosearch/showlocation', function(e) {
+                placeMarker(e.location.y, e.location.x);
+                $('#latitude').val(e.location.y);
+                $('#longitude').val(e.location.x);
+            });
+
+            L.easyButton('fas fa-location-arrow', function(btn, map) {
+                map.locate({
+                    setView: true,
+                    maxZoom: 16,
+                    enableHighAccuracy: true
+                }).on('locationfound', function(e) {
+                    placeMarker(e.latitude, e.longitude);
+                    $('#latitude').val(e.latitude);
+                    $('#longitude').val(e.longitude);
+                });
+            }, 'Get Current Location').addTo(map);
+        });
+    </script>
 @endpush

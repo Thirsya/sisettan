@@ -99,7 +99,6 @@ class TkdController extends Controller
         $id_kelurahan = $request->id_kelurahan;
         $count = Tkd::where('id_kelurahan', $id_kelurahan)->count();
         $id_tkd = $id_kelurahan . "S" . ($count + 1);
-
         Tkd::create([
             'id_tkd' => $id_tkd,
             'id_kelurahan' => $id_kelurahan,
@@ -110,6 +109,8 @@ class TkdController extends Controller
             'luas' => $request->luas,
             'keterangan' => $request->keterangan,
             'nop' => $request->nop,
+            'longitude' => $request->longitude,
+            'latitude' => $request->latitude,
         ]);
 
         return redirect()->route('tkd.index')->with('success', 'Tambah Data TKD Sukses');
