@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('latitude')->nullable();
             $table->string('keterangan')->nullable();
             $table->string('nop')->nullable();
+            $table->string('foto')->nullable();
             $table->softDeletes();
 
             $table->foreign('id_kelurahan')->references('id')->on('kelurahans');

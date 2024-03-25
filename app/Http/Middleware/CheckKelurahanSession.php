@@ -19,11 +19,11 @@ class CheckKelurahanSession
 
         $selectedKelurahanId = (int) session('selected_kelurahan_id');
         $selectedTahunId = session('selected_tahun_id');
-        $tahunSelected = Tahun::where('id', $selectedTahunId)->value('id');
+        $tahunSelected = Tahun::where('id', $selectedTahunId)->value('tahun');
 
         if ($selectedKelurahanId) {
             $hasDaerahForGivenYear = Daerah::where('id_kelurahan', $selectedKelurahanId)
-                ->where('thn_sts', $tahunSelected)
+                ->whereYear('tanggal_lelang', $tahunSelected)
                 ->exists();
             if ($hasDaerahForGivenYear) {
                 return $next($request);

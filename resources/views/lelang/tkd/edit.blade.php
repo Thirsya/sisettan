@@ -219,6 +219,7 @@
                     enableHighAccuracy: true
                 }).on('locationfound', function(e) {
                     placeMarker(e.latitude, e.longitude);
+                    
                     $('#latitude').val(e.latitude);
                     $('#longitude').val(e.longitude);
                 });
