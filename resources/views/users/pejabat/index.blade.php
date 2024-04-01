@@ -28,12 +28,6 @@
                                 <a class="btn btn-icon icon-left btn-primary" href="{{ route('pejabat.create') }}">
                                     <i class="far fa-file"></i>
                                     Create Pejabat</a>
-                                <a class="btn btn-info btn-warning active import bg-warning">
-                                    <i class="fa fa-download" aria-hidden="true"></i>
-                                    Import Pejabat</a>
-                                <a class="btn btn-info btn-dark active bg-dark" href="{{ route('pejabat.export') }}" data-id="export">
-                                    <i class="fa fa-upload" aria-hidden="true"></i>
-                                    Export Pejabat</a>
                                 <a class="btn btn-info btn-info active search bg-info">
                                     <i class="fa fa-search" aria-hidden="true"></i>
                                     Search Pejabat</a>
@@ -72,7 +66,7 @@
                                         <div class="form-group col-md-4">
                                             <label for="role">Pejabat</label>
                                             <input type="text" name="pejabat" class="form-control" id="pejabat"
-                                                placeholder="Group pejabat">
+                                                placeholder="Nama Pejabat" value="{{ $pejabatSearch }}">
                                         </div>
                                     </div>
                                     <div class="text-right">
@@ -95,7 +89,8 @@
                                         </tr>
                                         @foreach ($pejabats as $key => $pejabat)
                                             <tr>
-                                                <td>{{ ($pejabats->currentPage() - 1) * $pejabats->perPage() + $key + 1 }}</td>
+                                                <td>{{ ($pejabats->currentPage() - 1) * $pejabats->perPage() + $key + 1 }}
+                                                </td>
                                                 <td>{{ $pejabat->nama_pejabat }}</td>
                                                 <td>{{ $pejabat->jabatan }}</td>
                                                 <td>{{ $pejabat->id_kecamatan }}</td>

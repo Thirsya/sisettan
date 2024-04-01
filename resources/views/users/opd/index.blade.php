@@ -28,12 +28,6 @@
                                 <a class="btn btn-icon icon-left btn-primary" href="{{ route('opd.create') }}">
                                     <i class="far fa-file"></i>
                                     Create OPD</a>
-                                <a class="btn btn-info btn-warning active import bg-warning">
-                                    <i class="fa fa-download" aria-hidden="true"></i>
-                                    Import OPD</a>
-                                <a class="btn btn-info btn-dark active bg-dark" href="{{ route('opd.export') }}" data-id="export">
-                                    <i class="fa fa-upload" aria-hidden="true"></i>
-                                    Export OPD</a>
                                 <a class="btn btn-info btn-info active search bg-info">
                                     <i class="fa fa-search" aria-hidden="true"></i>
                                     Search OPD</a>
@@ -49,8 +43,7 @@
                                     </div>
                                 @enderror
                                 <div class="custom-file">
-                                    <form action="{{ route('opd.import') }}" method="POST"
-                                        enctype="multipart/form-data">
+                                    <form action="{{ route('opd.import') }}" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         @method('POST')
                                         <label
@@ -72,7 +65,20 @@
                                         <div class="form-group col-md-4">
                                             <label for="role">OPD</label>
                                             <input type="text" name="opd" class="form-control" id="opd"
-                                                placeholder="Group opd">
+                                                placeholder="Nomer opd" value="{{ $opd }}">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="role">Kecamatan</label>
+                                            <select class="form-control select2" name="kecamatan[]" multiple
+                                                data-id="select-Kecamatan" id="kecamatan">
+                                                <option value="">Pilih Kecamatan </option>
+                                                @foreach ($kecamatans as $kecamatan)
+                                                    <option value="{{ $kecamatan->id }}"
+                                                        {{ (is_array(old('kecamatan')) && in_array($kecamatan->id, old('kecamatan'))) || (isset($kecamatanSelected) && in_array($kecamatan->id, $kecamatanSelected)) ? 'selected' : '' }}>
+                                                        {{ $kecamatan->kecamatan }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="text-right">
@@ -101,8 +107,8 @@
                                                             class="btn btn-sm btn-info btn-icon "><i
                                                                 class="fas fa-edit"></i>
                                                             Edit</a>
-                                                        <form action="{{ route('opd.destroy', $opd->id) }}"
-                                                            method="POST" class="ml-2">
+                                                        <form action="{{ route('opd.destroy', $opd->id) }}" method="POST"
+                                                            class="ml-2">
                                                             <input type="hidden" name="_method" value="DELETE">
                                                             <input type="hidden" name="_token"
                                                                 value="{{ csrf_token() }}">
@@ -131,6 +137,7 @@
     </section>
 @endsection
 @push('customScript')
+    <script src="/assets/js/select2.min.js"></script>
     <script>
         $(document).ready(function() {
             $('.import').click(function(event) {
@@ -154,4 +161,5 @@
 @endpush
 
 @push('customStyle')
+    <link rel="stylesheet" href="/assets/css/select2.min.css">
 @endpush

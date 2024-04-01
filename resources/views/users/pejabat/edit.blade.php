@@ -29,8 +29,8 @@
                         </div>
                         <div class="form-group">
                             <label>Jabatan</label>
-                            <select class="form-control select2 @error('id_jabatan') is-invalid @enderror"
-                                id="id_jabatan" name="id_jabatan" data-id="select-id_jabatan">
+                            <select class="form-control select2 @error('id_jabatan') is-invalid @enderror" id="id_jabatan"
+                                name="id_jabatan" data-id="select-id_jabatan">
                                 <option value="">Pilih Jabatan</option>
                                 @foreach ($jabatans as $jabatan)
                                     <option @selected($jabatan->id == $pejabat->id_jabatan) value="{{ $jabatan->id }}">
@@ -46,12 +46,12 @@
                         </div>
                         <div class="form-group">
                             <label>OPD</label>
-                            <select class="form-control select2 @error('id_opd') is-invalid @enderror"
-                                id="id_opd" name="id_opd" data-id="select-id_opd">
+                            <select class="form-control select2 @error('id_opd') is-invalid @enderror" id="id_opd"
+                                name="id_opd" data-id="select-id_opd">
                                 <option value="">Pilih OPD</option>
                                 @foreach ($opds as $opd)
                                     <option @selected($opd->id == $pejabat->id_opd) value="{{ $opd->id }}">
-                                        {{ $opd->nama_opd }}
+                                        {{ $opd->no_opd }}
                                     </option>
                                 @endforeach
                             </select>
@@ -76,9 +76,8 @@
                         <div class="form-group">
                             <label>No. SK</label>
                             <input type="text" id="no_sk" name="no_sk"
-                                class="form-control @error('pejabat') is-invalid @enderror "
-                                placeholder="Masukan No. SK" value="{{ old('pejabat', $pejabat->no_sk) }}"
-                                data-id="input_no_sk" autocomplete="off">
+                                class="form-control @error('pejabat') is-invalid @enderror " placeholder="Masukan No. SK"
+                                value="{{ old('pejabat', $pejabat->no_sk) }}" data-id="input_no_sk" autocomplete="off">
                             @error('pejabat')
                                 <div class="invalid-feedback">
                                     {{ $message }}

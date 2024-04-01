@@ -28,12 +28,6 @@
                                 <a class="btn btn-icon icon-left btn-primary" href="{{ route('jabatan.create') }}">
                                     <i class="far fa-file"></i>
                                     Create Jabatan</a>
-                                <a class="btn btn-info btn-warning active import bg-warning">
-                                    <i class="fa fa-download" aria-hidden="true"></i>
-                                    Import Jabatan</a>
-                                <a class="btn btn-info btn-dark active bg-dark" href="{{ route('jabatan.export') }}" data-id="export">
-                                    <i class="fa fa-upload" aria-hidden="true"></i>
-                                    Export Jabatan</a>
                                 <a class="btn btn-info btn-info active search bg-info">
                                     <i class="fa fa-search" aria-hidden="true"></i>
                                     Search Jabatan</a>
@@ -91,7 +85,8 @@
                                         </tr>
                                         @foreach ($jabatans as $key => $jabatan)
                                             <tr>
-                                                <td>{{ ($jabatans->currentPage() - 1) * $jabatans->perPage() + $key + 1 }}</td>
+                                                <td>{{ ($jabatans->currentPage() - 1) * $jabatans->perPage() + $key + 1 }}
+                                                </td>
                                                 <td>{{ $jabatan->jabatan }}</td>
                                                 <td class="text-right">
                                                     <div class="d-flex justify-content-end">

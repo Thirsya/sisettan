@@ -29,6 +29,7 @@ class PejabatController extends Controller
     {
         $jabatans = Jabatan::all();
         $id_kecamatan = $request->input('id_kecamatan');
+        $pejabatSearch = $request->input('pejabat');
         $pejabats = DB::table('pejabats')
             ->select(
                 'pejabats.id',
@@ -42,17 +43,14 @@ class PejabatController extends Controller
             )
             ->leftJoin('jabatans', 'pejabats.id_jabatan', '=', 'jabatans.id')
             ->leftJoin('opds', 'pejabats.id_opd', '=', 'opds.id')
-            ->when($request->input('opd'), function ($query, $opd) {
-                return $query->where('opd', 'like', '%' . $opd . '%');
+            ->when($request->input('pejabat'), function ($query, $pejabat) {
+                return $query->where('pejabats.nama_pejabat', 'like', '%' . $pejabat . '%');
             })
-            ->when($request->input('jabatan'), function ($query, $jabatan) {
-                return $query->whereIn('pejabat.jenis_barang_id', $jabatan);
-            })
-            // ->orderBy('pejabat.kode_jbs', 'asc')
             ->whereNull('pejabats.deleted_at')
             ->paginate(10);
         $jabatanSelected = $request->input('jabatan');
         return view('users.pejabat.index')->with([
+            'pejabatSearch' => $pejabatSearch,
             'pejabats' => $pejabats,
             'jabatans' => $jabatans,
             'jabatanSelected' => $jabatanSelected,
@@ -64,7 +62,7 @@ class PejabatController extends Controller
     {
         $jabatans = Jabatan::all();
         $opds = Opd::all();
-        return view('users.pejabat.create')->with(['jabatans'=> $jabatans, 'opds' => $opds]);
+        return view('users.pejabat.create')->with(['jabatans' => $jabatans, 'opds' => $opds]);
     }
 
     public function store(StorePejabatRequest $request)
@@ -82,7 +80,7 @@ class PejabatController extends Controller
     {
         $jabatans = Jabatan::all();
         $opds = Opd::all();
-        return view('users.pejabat.edit', compact('pejabat'))->with(['jabatans'=> $jabatans, 'opds' => $opds]);
+        return view('users.pejabat.edit', compact('pejabat'))->with(['jabatans' => $jabatans, 'opds' => $opds]);
     }
 
     public function update(UpdatePejabatRequest $request, Pejabat $pejabat)

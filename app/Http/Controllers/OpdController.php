@@ -34,7 +34,7 @@ class OPDController extends Controller
         $query = Opd::select('opds.id', 'opds.id_kecamatan', 'opds.no_opd', 'kecamatans.kecamatan')
             ->leftJoin('kecamatans', 'opds.id_kecamatan', '=', 'kecamatans.id')
             ->when($request->input('opd'), function ($query, $opd) {
-                return $query->where('opds.opd', 'like', '%' . $opd . '%');
+                return $query->where('opds.no_opd', 'like', '%' . $opd . '%');
             })
             ->when($request->input('kecamatan'), function ($query, $kecamatan) {
                 return $query->whereIn('opds.id_kecamatan', $kecamatan);
@@ -58,8 +58,8 @@ class OPDController extends Controller
 
     public function create()
     {
-        $kecamatans=Kecamatan::all();
-        return view('users.opd.create')->with(['kecamatans'=> $kecamatans]);
+        $kecamatans = Kecamatan::all();
+        return view('users.opd.create')->with(['kecamatans' => $kecamatans]);
     }
 
     public function store(StoreopdRequest $request)
@@ -75,9 +75,9 @@ class OPDController extends Controller
 
     public function edit(Opd $opd)
     {
-        $kecamatans=Kecamatan::all();
+        $kecamatans = Kecamatan::all();
         return view('users.opd.edit', compact('opd'))->with(
-            ['no_opd' => $opd, 'nama_opd' => $opd, 'kecamatans'=> $kecamatans]
+            ['no_opd' => $opd, 'nama_opd' => $opd, 'kecamatans' => $kecamatans]
         );
     }
 

@@ -27,8 +27,8 @@
                         </div>
                         <div class="form-group">
                             <label>Jabatan</label>
-                            <select class="form-control select2 @error('id_jabatan') is-invalid @enderror"
-                                name="id_jabatan" data-id="select-jabatan" id="id_jabatan">
+                            <select class="form-control select2 @error('id_jabatan') is-invalid @enderror" name="id_jabatan"
+                                data-id="select-jabatan" id="id_jabatan">
                                 <option value="">Piih Jabatan</option>
                                 @foreach ($jabatans as $jabatan)
                                     <option value="{{ $jabatan->id }}">
@@ -43,12 +43,12 @@
                         </div>
                         <div class="form-group">
                             <label>OPD</label>
-                            <select class="form-control select2 @error('id_opd') is-invalid @enderror"
-                                name="id_opd" data-id="select-opd" id="id_opd">
+                            <select class="form-control select2 @error('id_opd') is-invalid @enderror" name="id_opd"
+                                data-id="select-opd" id="id_opd">
                                 <option value="">Piih OPD</option>
                                 @foreach ($opds as $opd)
                                     <option value="{{ $opd->id }}">
-                                        {{ $opd->nama_opd }}</option>
+                                        {{ $opd->no_opd }}</option>
                                 @endforeach
                             </select>
                             @error('id_opd')
@@ -71,8 +71,8 @@
                         <div class="form-group">
                             <label>No. SK</label>
                             <input type="text" id="no_sk" name="no_sk"
-                                class="form-control @error('no_sk') is-invalid @enderror"
-                                placeholder="Masukan No. SK" autocomplete="off">
+                                class="form-control @error('no_sk') is-invalid @enderror" placeholder="Masukan No. SK"
+                                autocomplete="off">
                             @error('no_sk')
                                 <div class="invalid-feedback">
                                     {{ $message }}
