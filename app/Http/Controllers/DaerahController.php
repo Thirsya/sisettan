@@ -30,8 +30,12 @@ class DaerahController extends Controller
 
     public function index(Request $request)
     {
-        $kecamatans = Kecamatan::all();
+        $kecamatan = Kecamatan::all();
+        $kelurahan = Kelurahan::all();
         $tanggal_lelang = $request->input('tanggal_lelang');
+        $kecamatanSelected = $request->input('kecamatan');
+        $kelurahanSelected = $request->input('kelurahan');
+
         $daerahs = DB::table('daerahs')
             ->select(
                 'daerahs.id',
@@ -50,20 +54,21 @@ class DaerahController extends Controller
             ->leftJoin('kecamatans', 'daerahs.id_kecamatan', '=', 'kecamatans.id')
             ->leftJoin('kelurahans', 'daerahs.id_kelurahan', '=', 'kelurahans.id')
             ->leftJoin('tahuns', 'daerahs.thn_sts', '=', 'tahuns.id')
-            ->when($request->input('kelurahan'), function ($query, $kelurahan) {
-                return $query->where('kelurahan', 'like', '%' . $kelurahan . '%');
+            ->when($request->kecamatan, function ($query, $kecamatan) {
+                return $query->where('daerahs.id_kecamatan', $kecamatan);
             })
-            ->when($request->input('kecamatan'), function ($query, $kecamatan) {
-                return $query->whereIn('daerah.jenis_barang_id', $kecamatan);
+            ->when($request->kelurahan, function ($query, $kelurahan) {
+                return $query->where('daerahs.id_kelurahan', $kelurahan);
             })
 
             ->whereNull('daerahs.deleted_at')
             ->paginate(10);
-        $kecamatanSelected = $request->input('kecamatan');
         return view('master data.daerah.index')->with([
             'daerahs' => $daerahs,
-            'kecamatans' => $kecamatans,
+            'kecamatan' => $kecamatan,
+            'kelurahan' => $kelurahan,
             'kecamatanSelected' => $kecamatanSelected,
+            'kelurahanSelected' => $kelurahanSelected,
             'tanggal_lelang' => $tanggal_lelang,
         ]);
     }
@@ -251,5 +256,17 @@ class DaerahController extends Controller
         } else {
             return back()->with('error', 'Data daerah tidak ditemukan.');
         }
+    }
+
+    public function editLoadKelurahan(Request $request)
+    {
+        $kelurahan['Kelurahan'] = Kelurahan::all()->where('id_kecamatan', $request->id_kecamatan);
+        return response()->json($kelurahan);
+    }
+
+    public function kelurahanFilter(Request $request)
+    {
+        $kelurahan['Kelurahan'] = Kelurahan::where('id_kecamatan', $request->id_kecamatan)->get();
+        return response()->json($kelurahan);
     }
 }

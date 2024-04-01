@@ -141,6 +141,10 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::post('daerah/import', [DaerahController::class, 'import'])->name('daerah.import');
         Route::get('daerah/export', [DaerahController::class, 'export'])->name('daerah.export');
         Route::get('/getDaerahJquery', [DaerahController::class, 'getDaerahJquery'])->name('getDaerahJquery');
+        Route::post('kelurahan-filter', [DaerahController::class, 'kelurahanFilter'])
+            ->name('kelurahan.filter.survey');
+        Route::get('/edit-kelurahan-filter', [DaerahController::class, 'editLoadKelurahan'])
+            ->name('load.filter');
         Route::resource('daerah', DaerahController::class);
         Route::get('/getKelurahans', [DaerahController::class, 'getKelurahans'])->name('getKelurahans');
         Route::post('/upload', [DaerahController::class, 'uploadSurat'])->name('daerahs.upload');

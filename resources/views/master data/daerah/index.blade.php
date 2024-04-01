@@ -77,9 +77,22 @@
                                 <form id="search" method="GET" action="{{ route('daerah.index') }}">
                                     <div class="form-row">
                                         <div class="form-group col-md-4">
-                                            <label for="role">daerah</label>
-                                            <input type="text" name="daerah" class="form-control" id="daerah"
-                                                placeholder="Group daerah">
+                                            <label for="role">Kecamatan</label>
+                                            <select class="form-control select2" name="kecamatan" data-id="select-Kecamatan"
+                                                id="kecamatan">
+                                                <option value="" readonly>Pilih Kecamatan </option>
+                                                @foreach ($kecamatan as $kecamat)
+                                                    <option value="{{ $kecamat->id }}" @selected($kecamat->id == $kecamatanSelected)>
+                                                        {{ $kecamat->kecamatan }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="role">Kelurahan</label>
+                                            <select class="form-control select2 kelurahan" name="kelurahan"
+                                                data-id="select-kelurahan" id="kelurahan">
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="text-right">
@@ -325,6 +338,60 @@
                     '" alt="Surat" style="max-width: 100%; height: auto;">');
             }
             $('#previewFileModal2').modal('show');
+        });
+    </script>
+    <script src="/assets/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var detailStatus = {};
+            $('.form-control select2 kelurahan').select2();
+            $('#kecamatan').change(function() {
+                var kecamatanIds = $('#kecamatan').val();
+                $.ajax({
+                    url: '{{ route('kelurahan.filter.survey') }}',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        id_kecamatan: kecamatanIds,
+                        _token: "{{ csrf_token() }}"
+                    },
+                    success: function(response) {
+                        $('#kelurahan').html(
+                            '<option value="" readonly>Pilih Nama Kelurahan</option>');
+                        $.each(response['Kelurahan'], function(index, val) {
+                            $('#kelurahan').append('<option value="' + val.id +
+                                '"> ' + val.kelurahan + ' </option>')
+                        });
+                    }
+                });
+            });
+            var selectkecResponden = "{{ $kecamatanSelected }}";
+            var oldKelurahanId = "{{ $kelurahanSelected }}";
+            var selectkelSelect = "{{ $kelurahan }}";
+            var dataKelurahan = JSON.parse(selectkelSelect.replace(/&quot;/g, '"'));
+            $('#kelurahan').empty();
+            $.ajax({
+                url: '{{ route('load.filter') }}',
+                type: 'GET',
+                dataType: 'json',
+                data: {
+                    id_kecamatan: selectkecResponden,
+
+                },
+                success: function(response, items) {
+                    $.each(dataKelurahan, function(index, val) {
+                        if (val.id_kecamatan == selectkecResponden) {
+                            console.log(val.id);
+                            $('#kelurahan').html(
+                                '<option value="" readonly>Pilih Nama Kelurahan</option>');
+                            $('#kelurahan').append('<option value="' + val.id + '" >' +
+                                val.kelurahan + '</option>')
+                            $("#kelurahan option[value='" + oldKelurahanId + "']").attr(
+                                "selected", "selected");
+                        }
+                    });
+                }
+            });
         });
     </script>
 @endpush
