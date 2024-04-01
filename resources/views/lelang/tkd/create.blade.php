@@ -12,7 +12,7 @@
                     <h4>Validasi Tambah Data</h4>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('tkd.store') }}" method="post">
+                    <form action="{{ route('tkd.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label>Kelurahan<span class="text-danger">*</span></label>
@@ -139,8 +139,16 @@
                                 </div>
                             </div>
                         </div>
-
-
+                        <div class="form-group">
+                            <label>Foto<span class="text-danger">*</span></label>
+                            <input type="file" id="foto" name="foto"
+                                class="form-control @error('foto') is-invalid @enderror">
+                            @error('foto')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
                 </div>
                 <div class="card-footer text-right">
                     <button class="btn btn-primary">Submit</button>

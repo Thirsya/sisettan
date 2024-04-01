@@ -37,42 +37,8 @@
                                 <h1>MAPS</h1>
                             </div>
                             <div class="table-responsive">
-
-                                <section class="section">
-                                    <div class="col-12 col-lg-12 col-md-6 d-flex justify-content">
-                                        <div class="row" style="width: 1200px">
-                                            <div class="col-12 col-md-12 col-lg-5">
-                                                <div class="card-header letak">
-                                                    <h4>Letak : </h4>
-                                                </div>
-                                                <div class="card-header kecamatan">
-                                                    <h4>Kecamatan : </h4>
-                                                </div>
-                                                <div class="card-header kelurahan">
-                                                    <h4>Kelurahan : </h4>
-                                                </div>
-                                                <div class="card-header luas">
-                                                    <h4>Luas : </h4>
-                                                </div>
-                                                <div class="card-header harga">
-                                                    <h4>Harga: </h4>
-                                                </div>
-                                                <div class="card-header nop">
-                                                    <h4>NOP : </h4>
-                                                </div>
-                                                <div class="card-header keterangan">
-                                                    <h4>Keterangan : </h4>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </section>
-                                <div class="d-flex justify-content-center">
-                                    {{-- {{ $tkds->withQueryString()->links() }} --}}
-                                </div>
                             </div>
-                            <div id="map" style="height: 400px;"></div>
+                            <div id="map" style="height: 600px;"></div>
                         </div>
                     </div>
                 </div>
@@ -103,37 +69,56 @@
     </script>
     <script>
         $(document).ready(function() {
-            var map = L.map('map').setView([0, 0], 13); // Initialize map with arbitrary values
-            var marker = L.marker([0, 0]).addTo(map); // Initialize marker with arbitrary values
+            var map = L.map('map').setView([0, 0], 13);
+            var marker = L.marker([0, 0]).addTo(map);
 
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 19,
             }).addTo(map);
 
             $('#dropdown-item').change(function() {
-                var selectedOption = $(this).find('option:selected');
-                var selectedValue = selectedOption.val();
+                var selectedValue = $(this).val();
                 console.log(selectedValue);
 
                 $.ajax({
                     url: '/maps/detail-data/' + selectedValue,
                     type: 'GET',
                     success: function(response) {
-                        console.log(response);
-
                         var newPosition = [response.latitude, response.longitude];
-                        map.setView(newPosition, 13);
-                        marker.setLatLng(newPosition).bindPopup(response.letak).openPopup();
+                        map.setView(newPosition, 18);
+                        marker.setLatLng(newPosition);
 
-                        $('.letak').html('<h4>Letak : ' + response.letak + '</h4>');
-                        $('.kelurahan').html('<h4>Kelurahan : ' + response.kelurahan + '</h4>');
-                        $('.kecamatan').html('<h4>Kecamatan : ' + response.kecamatan + '</h4>');
-                        $('.luas').html('<h4>Luas : ' + response.luas + '</h4>');
-                        $('.harga').html('<h4>Harga : ' + response.harga_dasar + '</h4>');
-                        $('.nop').html('<h4>NOP : ' + response.nop + '</h4>');
-                        $('.keterangan').html('<h4>Keterangan : ' + response.keterangan +
-                            '</h4>');
+                        var popupContent = `
+    <section class="popup-content">
+        <header><h4>Detail Lokasi</h4></header>
+        <div><strong>Letak:</strong> ${response.letak}</div>
+        <div><strong>Kelurahan:</strong> ${response.kelurahan}</div>
+        <div><strong>Kecamatan:</strong> ${response.kecamatan}</div>
+        <div><strong>Luas:</strong> ${response.luas}</div>
+        <div><strong>Harga:</strong> ${response.harga_dasar}</div>
+        <div><strong>NOP:</strong> ${response.nop}</div>
+        <div><strong>Keterangan:</strong> ${response.keterangan}</div>
+        <figure>
+            ${
+                response.foto ? 
+                `<img src="/storage/${response.foto}" alt="Foto" class="popup-image">
+                                <figcaption>Foto Lokasi</figcaption>` :
+                `<div class="no-photo">Tidak Ada Foto</div>`
+            }
+        </figure>
+    </section>`;
+
+
+                        marker.bindPopup(popupContent).openPopup();
                     }
+                });
+            });
+
+            marker.on('popupopen', function() {
+                // Sesuaikan nilai x dan y berdasarkan kebutuhan
+                // Nilai y negatif untuk menggeser map ke atas
+                map.panBy([0, -200], {
+                    animate: true
                 });
             });
         });
@@ -147,4 +132,37 @@
 
 @push('customStyle')
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        .popup-content {
+            width: 200px;
+            font-family: Arial, sans-serif;
+        }
+
+        .popup-content header {
+            margin-bottom: 10px;
+        }
+
+        .popup-content div,
+        .popup-content figure {
+            margin-bottom: 5px;
+        }
+
+        .popup-image {
+            width: 100%;
+            height: auto;
+            margin-top: 10px;
+        }
+
+        figcaption {
+            text-align: center;
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        .no-photo {
+            padding: 10px;
+            text-align: center;
+            color: #666;
+        }
+    </style>
 @endpush

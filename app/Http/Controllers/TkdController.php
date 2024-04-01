@@ -15,6 +15,7 @@ use App\Models\Tahun;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Storage;
 
 class TkdController extends Controller
 {
@@ -52,6 +53,7 @@ class TkdController extends Controller
             'tkds.nop',
             'tkds.longitude',
             'tkds.latitude',
+            'tkds.foto',
             'kelurahans.kelurahan'
         )
             ->leftJoin('kelurahans', 'tkds.id_kelurahan', '=', 'kelurahans.id')
@@ -99,6 +101,14 @@ class TkdController extends Controller
         $id_kelurahan = $request->id_kelurahan;
         $count = Tkd::where('id_kelurahan', $id_kelurahan)->count();
         $id_tkd = $id_kelurahan . "S" . ($count + 1);
+
+        // Handle the photo upload
+        if ($request->hasFile('foto')) {
+            $foto = $request->file('foto');
+            $fotoName = time() . '.' . $foto->getClientOriginalExtension();
+            $fotoPath = $foto->storeAs('fotoTkd', $fotoName, 'public');
+        }
+        // dd($fotoPath);
         Tkd::create([
             'id_tkd' => $id_tkd,
             'id_kelurahan' => $id_kelurahan,
@@ -111,6 +121,7 @@ class TkdController extends Controller
             'nop' => $request->nop,
             'longitude' => $request->longitude,
             'latitude' => $request->latitude,
+            'foto' => $fotoPath,
         ]);
 
         return redirect()->route('tkd.index')->with('success', 'Tambah Data TKD Sukses');
@@ -129,7 +140,19 @@ class TkdController extends Controller
 
     public function update(UpdateTkdRequest $request, Tkd $tkd)
     {
-        $tkd->update($request->validated());
+        if ($request->hasFile('foto')) {
+            Storage::disk('public')->delete($tkd->foto);
+
+            $foto = $request->file('foto');
+            $fotoName = time() . '.' . $foto->getClientOriginalExtension();
+            $fotoPath = $foto->storeAs('fotoTkd', $fotoName, 'public');
+
+            $validatedData = $request->validated();
+            $validatedData['foto'] = $fotoPath;
+        }
+
+        $tkd->update($validatedData ?? $request->validated());
+
         return redirect()->route('tkd.index')->with('success', 'Tkd updated successfully.');
     }
 

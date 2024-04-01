@@ -33,6 +33,7 @@ class DetailController extends Controller
             'tkds.nop',
             'tkds.longitude',
             'tkds.latitude',
+            'tkds.foto',
             'kelurahans.kelurahan'
         )
             ->leftJoin('kelurahans', 'tkds.id_kelurahan', '=', 'kelurahans.id')
@@ -62,6 +63,8 @@ class DetailController extends Controller
             'tkds.nop',
             'tkds.longitude',
             'tkds.latitude',
+            'tkds.latitude',
+            'tkds.foto',
             'kelurahans.kelurahan',
             'kecamatans.kecamatan'
         )

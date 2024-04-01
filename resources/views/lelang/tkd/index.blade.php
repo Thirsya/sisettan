@@ -90,7 +90,7 @@
                                 <table class="table table-bordered table-md">
                                     <tbody>
                                         <tr>
-                                            <th>Id</th>
+                                            <th>No.</th>
                                             <th style="width: 120px">Letak</th>
                                             <th>Bidang</th>
                                             <th>Kelurahan</th>
@@ -98,7 +98,6 @@
                                             <th style="width: 100px">Luas</th>
                                             <th style="width: 120px">Harga Dasar</th>
                                             <th style="width: 300px">Keterangan</th>
-                                            <th>Nop</th>
                                             <th>Longitude</th>
                                             <th>Latitude</th>
                                             <th>Nop</th>
@@ -106,8 +105,8 @@
                                         </tr>
                                         @foreach ($tkds as $key => $tkd)
                                             <tr>
-                                                {{-- <td>{{ ($tkds->currentPage() - 1) * $tkds->perPage() + $key + 1 }}</td> --}}
-                                                <td>{{ $tkd->id }}</td>
+                                                <td>{{ ($tkds->currentPage() - 1) * $tkds->perPage() + $key + 1 }}</td>
+                                                {{-- <td>{{ $tkd->id }}</td> --}}
                                                 <td>{{ $tkd->letak }}</td>
                                                 <td>{{ $tkd->bidang }}</td>
                                                 <td>{{ $tkd->kelurahan }}</td>
@@ -118,7 +117,6 @@
                                                 <td>{{ $tkd->nop }}</td>
                                                 <td>{{ $tkd->latitude }}</td>
                                                 <td>{{ $tkd->longitude }}</td>
-                                                <td>{{ $tkd->nop }}</td>
                                                 <td class="text-right">
                                                     <div class="d-flex justify-content-end">
                                                         <a href="{{ route('tkd.edit', $tkd->id) }}"
