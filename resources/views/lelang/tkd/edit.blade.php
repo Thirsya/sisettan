@@ -12,7 +12,7 @@
                     <h4>Ubah Data</h4>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('tkd.update', $tkd) }}" method="post">
+                    <form action="{{ route('tkd.update', $tkd) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="form-group">
@@ -145,7 +145,18 @@
                                 </div>
                             </div>
                         </div>
-
+                        <div class="form-group">
+                            <label>Foto</label>
+                            <input type="file" id="foto" name="foto"
+                                class="form-control @error('foto') is-invalid @enderror" onchange="previewImage();">
+                            @error('foto')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                            <img id="image-preview" src="{{ asset('storage/' . $tkd->foto) }}" alt="your image"
+                                width="200" />
+                        </div>
                 </div>
                 <div class="card-footer text-right">
                     <button class="btn btn-primary">Kirim</button>
@@ -219,7 +230,7 @@
                     enableHighAccuracy: true
                 }).on('locationfound', function(e) {
                     placeMarker(e.latitude, e.longitude);
-                    
+
                     $('#latitude').val(e.latitude);
                     $('#longitude').val(e.longitude);
                 });
@@ -229,6 +240,15 @@
 @endpush
 
 @push('customStyle')
+    <style>
+        #image-preview {
+            display: block;
+            max-width: 200px;
+            margin: 20px auto;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            border-radius: 5px;
+        }
+    </style>
     <link rel="stylesheet" href="/assets/css/select2.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.EasyButton/2.4.0/easy-button.min.css" />

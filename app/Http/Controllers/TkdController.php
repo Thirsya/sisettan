@@ -108,7 +108,7 @@ class TkdController extends Controller
             $fotoName = time() . '.' . $foto->getClientOriginalExtension();
             $fotoPath = $foto->storeAs('fotoTkd', $fotoName, 'public');
         }
-        // dd($fotoPath);
+
         Tkd::create([
             'id_tkd' => $id_tkd,
             'id_kelurahan' => $id_kelurahan,
@@ -140,18 +140,21 @@ class TkdController extends Controller
 
     public function update(UpdateTkdRequest $request, Tkd $tkd)
     {
+        $validatedData = $request->validated();
+        // dd($request->hasFile('foto'));
         if ($request->hasFile('foto')) {
-            Storage::disk('public')->delete($tkd->foto);
-
+            if ($tkd->foto) {
+                Storage::disk('public')->delete($tkd->foto);
+            }
             $foto = $request->file('foto');
             $fotoName = time() . '.' . $foto->getClientOriginalExtension();
             $fotoPath = $foto->storeAs('fotoTkd', $fotoName, 'public');
-
-            $validatedData = $request->validated();
             $validatedData['foto'] = $fotoPath;
+        } else {
+            $validatedData['foto'] = $tkd->foto;
         }
 
-        $tkd->update($validatedData ?? $request->validated());
+        $tkd->update($validatedData);
 
         return redirect()->route('tkd.index')->with('success', 'Tkd updated successfully.');
     }
