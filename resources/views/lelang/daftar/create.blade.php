@@ -77,7 +77,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label>Nomor WP <span class="text-danger">*</span></label>
+                            <label>Nomor WP</label>
                             <input type="text" id="no_wp" name="no_wp"
                                 class="form-control @error('no_wp') is-invalid @enderror" placeholder="Masukan Nomor WP"
                                 autocomplete="off">

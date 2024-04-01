@@ -28,8 +28,8 @@ class UpdateTkdRequest extends FormRequest
             'harga_dasar' => 'required',
             'keterangan' => 'nullable',
             'nop' => 'nullable',
-            'longitude' => 'required',
-            'latitude' => 'required',
+            'longitude' => 'nullable',
+            'latitude' => 'nullable',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:10000',
         ];
     }
@@ -43,9 +43,6 @@ class UpdateTkdRequest extends FormRequest
             'bukti.required' => 'Bukti wajib diisi',
             'luas.required' => 'Luas wajib diisi',
             'harga_dasar.required' => 'Harga Dasar wajib diisi',
-            'longitude.required' => 'Longitude wajib diisi',
-            'latitude.required' => 'Latitude wajib diisi',
-            // 'foto.required' => 'Foto Wajib Diisi',
             'foto.image' => 'Foto Wajib Sesuai Format',
             'foto.mimes' => 'Foto Tidak Sesuai Format',
             'foto.max' => 'Foto Melebihi Maksimal Ukuran',

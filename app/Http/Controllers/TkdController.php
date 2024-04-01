@@ -121,7 +121,7 @@ class TkdController extends Controller
             'nop' => $request->nop,
             'longitude' => $request->longitude,
             'latitude' => $request->latitude,
-            'foto' => $fotoPath,
+            'foto' => $fotoPath ?? null,
         ]);
 
         return redirect()->route('tkd.index')->with('success', 'Tambah Data TKD Sukses');

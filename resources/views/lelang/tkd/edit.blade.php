@@ -112,13 +112,13 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label>Map Location<span class="text-danger">*</span></label>
+                            <label>Map Location</label>
                             <div id="map" style="height: 400px;"></div>
                         </div>
                         <div class="row">
                             <div class="col md-6">
                                 <div class="form-group ">
-                                    <label>Longitude<span class="text-danger">*</span></label>
+                                    <label>Longitude</label>
                                     <input type="text" id="longitude" name="longitude"
                                         class="form-control @error('longitude') is-invalid @enderror"
                                         placeholder="Masukan Longitude" autocomplete="off"
@@ -132,7 +132,7 @@
                             </div>
                             <div class="col md-6">
                                 <div class="form-group">
-                                    <label>Latitude<span class="text-danger">*</span></label>
+                                    <label>Latitude</label>
                                     <input type="text" id="latitude" name="latitude"
                                         class="form-control @error('latitude') is-invalid @enderror"
                                         placeholder="Masukan Latitude" autocomplete="off"
