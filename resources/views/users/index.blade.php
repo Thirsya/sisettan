@@ -27,12 +27,6 @@
                             <div class="card-header-action">
                                 <a class="btn btn-icon icon-left btn-primary" href="{{ route('user.create') }}">Create New
                                     User</a>
-                                <a class="btn btn-info btn-primary active import">
-                                    <i class="fa fa-download" aria-hidden="true"></i>
-                                    Import User</a>
-                                <a class="btn btn-info btn-primary active" href="{{ route('user.export') }}">
-                                    <i class="fa fa-upload" aria-hidden="true"></i>
-                                    Export User</a>
                                 <a class="btn btn-info btn-primary active search">
                                     <i class="fa fa-search" aria-hidden="true"></i>
                                     Search User</a>
@@ -73,10 +67,11 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Username</th>
-                                            <th>Name</th>
+                                            <th>Nama Pejabat</th>
                                             <th>Password</th>
                                             <th>HK</th>
                                             <th>Created At</th>
+                                            <th>Status</th>
                                             <th class="text-right">Action</th>
                                         </tr>
                                         @foreach ($users as $key => $user)
@@ -87,20 +82,56 @@
                                                 <td>{{ $user->password }}</td>
                                                 <td>{{ $user->hk }}</td>
                                                 <td>{{ $user->created_at }}</td>
+                                                <td>
+                                                    @if ($user->deleted_at == null)
+                                                        User Aktif
+                                                    @else
+                                                        User Non-Aktif
+                                                    @endif
+
+                                                </td>
                                                 <td class="text-right">
                                                     <div class="d-flex justify-content-end">
                                                         <a href="{{ route('user.edit', $user->id) }}"
                                                             class="btn btn-sm btn-info btn-icon "><i
                                                                 class="fas fa-edit"></i>
                                                             Edit</a>
-                                                        <form action="{{ route('user.destroy', $user->id) }}"
-                                                            method="POST" class="ml-2">
-                                                            <input type="hidden" name="_method" value="DELETE">
-                                                            <input type="hidden" name="_token"
-                                                                value="{{ csrf_token() }}">
-                                                            <button class="btn btn-sm btn-danger btn-icon confirm-delete">
-                                                                <i class="fas fa-times"></i> Delete </button>
-                                                        </form>
+                                                        @if ($user->deleted_at == null)
+                                                            <form action="{{ route('user.destroy', $user->id) }}"
+                                                                method="POST" class="ml-2" id="del-<?= $user->id ?>">
+                                                                <input type="hidden" name="_method" value="DELETE">
+                                                                <input type="hidden" name="_token"
+                                                                    value="{{ csrf_token() }}">
+                                                                <button type="submit" id="#submit"
+                                                                    class="btn btn-sm btn-danger btn-icon "
+                                                                    data-confirm="Nonaktifkan User ?|Apakah Kamu Yakin?"
+                                                                    data-confirm-yes="submitDel(<?= $user->id ?>)"
+                                                                    data-id="del-{{ $user->id }}">
+                                                                    <i class="fas fa-times"> </i> Deactive </button>
+                                                            </form>
+                                                        @else
+                                                            {{-- <form action="{{ route('user.restore', $user->id) }}"
+                                                                method="POST" class="ml-2">
+                                                                <input type="hidden" name="_method" value="PATCH">
+                                                                <input type="hidden" name="_token"
+                                                                    value="{{ csrf_token() }}">
+                                                                <button class="btn btn-sm btn-success btn-icon">
+                                                                    <i class="fas fa-check"></i> Activate
+                                                                </button>
+                                                            </form> --}}
+                                                            <form action="{{ route('user.restore', $user->id) }}"
+                                                                method="POST" class="ml-2" id="del-<?= $user->id ?>">
+                                                                <input type="hidden" name="_method" value="PATCH">
+                                                                <input type="hidden" name="_token"
+                                                                    value="{{ csrf_token() }}">
+                                                                <button type="submit" id="#submit"
+                                                                    class="btn btn-sm btn-success btn-icon "
+                                                                    data-confirm="Aktifkan User ?|Apakah Kamu Yakin?"
+                                                                    data-confirm-yes="submitDel(<?= $user->id ?>)"
+                                                                    data-id="del-{{ $user->id }}">
+                                                                    <i class="fas fa-times"> </i> Active </button>
+                                                            </form>
+                                                        @endif
                                                     </div>
                                                 </td>
                                             </tr>
@@ -142,6 +173,10 @@
                 $(this).prev('label').text(file);
             });
         });
+
+        function submitDel(id) {
+            $('#del-' + id).submit()
+        }
     </script>
 @endpush
 

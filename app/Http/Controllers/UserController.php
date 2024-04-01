@@ -39,16 +39,16 @@ class UserController extends Controller
         $pejabatIds = $request->input('pejabat');
         $user = $request->input('user');
 
-        $query = User::select(
-            'users.id',
-            'users.username',
-            // 'users.id_pejabat',
-            // 'users.password',
-            // 'users.hk',
-            'pejabats.nama_pejabat',
-            'pejabats.nip_pejabat',
-            'pejabats.no_sk'
-        )
+        $query = User::withTrashed()
+            ->select(
+                'users.id',
+                'users.username',
+                'users.username',
+                'users.deleted_at',
+                'pejabats.nama_pejabat',
+                'pejabats.nip_pejabat',
+                'pejabats.no_sk'
+            )
             ->leftJoin('profiles', 'profiles.id_user', '=', 'users.id')
             ->leftJoin('pejabats', 'pejabats.id', '=', 'profiles.id_pejabat')
             // ->leftJoin('pejabats', 'users.id_pejabat', '=', 'pejabats.id')
@@ -58,7 +58,6 @@ class UserController extends Controller
             ->when($request->input('pejabat'), function ($query, $pejabat) {
                 return $query->whereIn('users.id_pejabat', $pejabat);
             })
-            ->whereNull('users.deleted_at')
             ->paginate(10);
         $pejabatSelected = $request->input('pejabat');
 
@@ -95,9 +94,10 @@ class UserController extends Controller
         //simpan data
         User::create([
             'name' => $request['name'],
+            'username' => $request['username'],
             'password' => Hash::make($request['password']),
         ]);
-        return redirect(route('user.index'))->with('success', 'Data Berhasil Ditambahkan');;
+        return redirect(route('user.index'))->with('success', 'Data Berhasil Ditambahkan');
     }
 
     /**
@@ -147,28 +147,14 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //delete data
         $user->delete();
         return redirect()->route('user.index')->with('success', 'User Deleted Successfully');
     }
 
-    public function export()
+    public function restore($id)
     {
-        // export data ke excel
-        return Excel::download(new UsersExport, 'users.xlsx');
-    }
-
-    public function import(Request $request)
-    {
-        // import excel ke data tables
-        $users = Excel::toCollection(new UsersImport, $request->import_file);
-        foreach ($users[0] as $user) {
-            User::where('id', $user[0])->update([
-                'name' => $user[1],
-                'email' => $user[2],
-                'password' => $user[3],
-            ]);
-        }
-        return redirect()->route('user.index');
+        $user = User::onlyTrashed()->where('id', $id)->first();
+        $user->restore();
+        return redirect()->route('user.index')->with('success', 'User Diaktifkan');
     }
 }

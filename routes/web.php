@@ -70,6 +70,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
 
     Route::prefix('user-management')->group(function () {
+        Route::patch('/user/{user}/restore', [UserController::class, 'restore'])->name('user.restore');
         Route::resource('user', UserController::class);
         Route::post('import', [UserController::class, 'import'])->name('user.import');
         Route::get('export', [UserController::class, 'export'])->name('user.export');

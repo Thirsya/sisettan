@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
     <section class="section">
         <div class="section-header">
             <h1>Table</h1>
@@ -32,10 +31,11 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="text" class="form-control @error('email') is-invalid @enderror" id="email"
-                                name="email" placeholder="Enter User Email" value="{{ old('email') }}">
-                            @error('email')
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control @error('username') is-invalid @enderror"
+                                id="username" name="username" placeholder="Enter User Username"
+                                value="{{ old('username') }}">
+                            @error('username')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
