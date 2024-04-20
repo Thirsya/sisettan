@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('sts', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_penawaran');
-            $table->string('surat_tanda_setor');
-            $table->string('surat_pernyataan');
-            $table->string('surat_perjanjian');
-            $table->string('berita_acara');
+            $table->string('surat_tanda_setor')->nullable();
+            $table->string('surat_pernyataan')->nullable();
+            $table->string('surat_perjanjian')->nullable();
+            $table->string('berita_acara')->nullable();
             $table->foreign('id_penawaran')->references('id')->on('penawarans');
             $table->timestamps();
         });

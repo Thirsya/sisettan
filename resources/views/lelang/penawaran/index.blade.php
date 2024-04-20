@@ -71,7 +71,8 @@
                                             @enderror
                                         </div>
                                         <div class="text-right" style="padding-top: 29px">
-                                            <button class="btn btn-primary mr-1" type="submit" style="height: 41px">Submit</button>
+                                            <button class="btn btn-primary mr-1" type="submit"
+                                                style="height: 41px">Submit</button>
                                         </div>
                                     </div>
                                 </form>
@@ -189,8 +190,15 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-4">
                                             <label for="role">Bukti Hak (SHP)</label>
-                                            <input type="text" name="bukti" class="form-control" id="bukti"
-                                                placeholder="Bukti Hak">
+                                            <select class="form-control select2" name="tkdsearch">
+                                                <option value="">Pilih Pendaftar</option>
+                                                @foreach ($tkdDropdown as $daftarListNoUrut)
+                                                    <option value="{{ $daftarListNoUrut->id }}">
+                                                        {{ $daftarListNoUrut->bukti }} bidang
+                                                        {{ $daftarListNoUrut->bidang }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="text-right">
@@ -199,23 +207,6 @@
                                     </div>
                                 </form>
                             </div>
-                            {{-- <div class="d-flex justify-content-end">
-                                <a href="#" data-toggle="dropdown"
-                                    class="nav-link dropdown-toggle nav-link-lg nav-link-user"></a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a href="#" class="dropdown-item has-icon">
-                                        Upload BA
-                                    </a>
-                                    <a href="#" class="dropdown-item has-icon">
-                                        Upload SHP Tidak Laku
-                                    </a>
-                                </div>
-                                <form action="{{ route('delete.all') }}" method="POST" class="ml-2">
-                                    <input type="hidden" name="_method" value="DELETE">
-                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                    <button class="btn btn-sm btn-danger btn-icon confirm-delete"></i>Delete All</button>
-                                </form>
-                            </div> --}}
                             <div class="table-responsive">
                                 <table class="table table-bordered table-md">
                                     <tbody>
@@ -262,8 +253,8 @@
 
                                                         </div>
                                                         <a href="{{ route('penawaran.edit', $penawaran->id) }}"
-                                                            class="btn btn-sm btn-info btn-icon " style="padding-top: 7px"><i
-                                                                class="fas fa-edit"></i>Edit</a>
+                                                            class="btn btn-sm btn-info btn-icon "
+                                                            style="padding-top: 7px"><i class="fas fa-edit"></i>Edit</a>
                                                         <form action="{{ route('penawaran.destroy', $penawaran->id) }}"
                                                             method="POST" class="ml-2">
                                                             <input type="hidden" name="_method" value="DELETE">

@@ -185,32 +185,28 @@ class StsController extends Controller
         return $pdf->stream('sts-' . $id . '.pdf');
     }
 
-    public function cetakPernyataan()
+    public function cetakPernyataan($id)
     {
-        $daftarIdFromSession = (int) session('selected_kelurahan_id');
-        $daerahList = Daerah::withTrashed()
-            ->where('main.id', $daftarIdFromSession)
-            ->select(
-                'main.periode',
-                'tahuns.tahun',
-                'kelurahans.kelurahan',
-                'main.noba',
-                'tkds.bukti',
-                'tkds.bidang',
-                'tkds.letak',
-                'tkds.luas',
-                'daftars.nama',
-                'daftars.alamat',
-            )
-            ->from('daerahs as main')
-            ->leftJoin('tahuns', 'tahuns.id', 'main.thn_sts')
-            ->leftJoin('kelurahans', 'kelurahans.id', 'main.id_kelurahan')
-            ->leftJoin('tkds', 'tkds.id_kelurahan', 'kelurahans.id')
-            ->leftJoin('daftars', 'daftars.id_kelurahan', 'kelurahans.id')
+        $idDaftar = Penawaran::select('penawarans.idfk_daftar')
+            ->where('penawarans.id', $id)
             ->first();
+        $daerahList = Daftar::select(
+            'daftars.id',
+            'daftars.nama',
+            'daftars.alamat',
+            'daftars.id_kelurahan',
+            'kelurahans.kelurahan',
+            'daerahs.periode',
+            DB::raw('YEAR(daerahs.tanggal_lelang) as tahun_lelang')
+        )
 
-        $penawaranId = session('penawaran_id');
-        return view('lelang.penawaran.pernyataan');
+            ->leftJoin('daerahs', 'daerahs.id_kelurahan', 'daftars.id_kelurahan')
+            ->leftJoin('kelurahans', 'kelurahans.id', 'daftars.id_kelurahan')
+            ->where('daftars.id', $idDaftar->idfk_daftar)
+            ->first();
+        return view('lelang.penawaran.pernyataan')->with([
+            'daerahList' => $daerahList,
+        ]);
     }
 
     public function cetakPerjanjian()
@@ -221,39 +217,51 @@ class StsController extends Controller
     public function upload(Request $request)
     {
         $validatedData = $request->validate([
-            'fileSts' => 'required|mimes:pdf|max:5000',
-            'filePernyataan' => 'required|mimes:pdf|max:5000',
-            'filePerjanjian' => 'required|mimes:pdf|max:5000',
-            'fileBa' => 'required|mimes:pdf|max:5000',
+            'fileSts' => 'nullable|mimes:pdf|max:5000',
+            'filePernyataan' => 'nullable|mimes:pdf|max:5000',
+            'filePerjanjian' => 'nullable|mimes:pdf|max:5000',
+            'fileBa' => 'nullable|mimes:pdf|max:5000',
             'id_penawaran' => 'required|integer',
         ]);
 
-        $sts = new Sts();
+        // Cek apakah Sts dengan id_penawaran yang diberikan sudah ada
+        $sts = Sts::where('id_penawaran', $request->id_penawaran)->first();
+
+        // Jika tidak, buat yang baru
+        if (!$sts) {
+            $sts = new Sts();
+            $sts->id_penawaran = $request->id_penawaran;
+        }
 
         // Generate random name for the files
         $randomName = Str::random(10);
 
-        // Mendapatkan ekstensi file
-        $extensionSts = $request->file('fileSts')->getClientOriginalExtension();
-        $extensionPernyataan = $request->file('filePernyataan')->getClientOriginalExtension();
-        $extensionPerjanjian = $request->file('filePerjanjian')->getClientOriginalExtension();
-        $extensionBa = $request->file('fileBa')->getClientOriginalExtension();
+        // Mendapatkan ekstensi file dan menyimpan file di storage
+        if ($request->hasFile('fileSts')) {
+            $extensionSts = $request->file('fileSts')->getClientOriginalExtension();
+            $request->file('fileSts')->storeAs('public/sts', $randomName . '.' . $extensionSts);
+            $sts->surat_tanda_setor = $randomName . '.' . $extensionSts;
+        }
 
-        // Menyimpan file di storage
-        $request->file('fileSts')->storeAs('public/sts', $randomName . '.' . $extensionSts);
-        $request->file('filePernyataan')->storeAs('public/sts', $randomName . '.' . $extensionPernyataan);
-        $request->file('filePerjanjian')->storeAs('public/sts', $randomName . '.' . $extensionPerjanjian);
-        $request->file('fileBa')->storeAs('public/sts', $randomName . '.' . $extensionBa);
+        if ($request->hasFile('filePernyataan')) {
+            $extensionPernyataan = $request->file('filePernyataan')->getClientOriginalExtension();
+            $request->file('filePernyataan')->storeAs('public/sts', $randomName . '.' . $extensionPernyataan);
+            $sts->surat_pernyataan = $randomName . '.' . $extensionPernyataan;
+        }
 
-        // Menyimpan hanya nama file di database
-        $sts->surat_tanda_setor = $randomName . '.' . $extensionSts;
-        $sts->surat_pernyataan = $randomName . '.' . $extensionPernyataan;
-        $sts->surat_perjanjian = $randomName . '.' . $extensionPerjanjian;
-        $sts->berita_acara = $randomName . '.' . $extensionBa;
-        $sts->id_penawaran = $request->id_penawaran;
+        if ($request->hasFile('filePerjanjian')) {
+            $extensionPerjanjian = $request->file('filePerjanjian')->getClientOriginalExtension();
+            $request->file('filePerjanjian')->storeAs('public/sts', $randomName . '.' . $extensionPerjanjian);
+            $sts->surat_perjanjian = $randomName . '.' . $extensionPerjanjian;
+        }
+
+        if ($request->hasFile('fileBa')) {
+            $extensionBa = $request->file('fileBa')->getClientOriginalExtension();
+            $request->file('fileBa')->storeAs('public/sts', $randomName . '.' . $extensionBa);
+            $sts->berita_acara = $randomName . '.' . $extensionBa;
+        }
 
         $sts->save();
-
 
         return response()->json(['message' => 'Files uploaded successfully']);
     }

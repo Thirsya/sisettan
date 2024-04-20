@@ -31,6 +31,8 @@ class PenawaranController extends Controller
 
     public function index(Request $request)
     {
+
+
         $tkds = Tkd::all();
         $harga_dasar = $request->input('harga_dasar');
         // $tahunId = session('tahun_id');
@@ -41,6 +43,8 @@ class PenawaranController extends Controller
             ->whereYear('tanggal_lelang', $tahunSelected)
             ->pluck('id_kelurahan')->first();
 
+        $tkdDropdown = Tkd::where('id_kelurahan', $kelurahanIdFromDaerah)->get();
+        // dd($request->input('tkdsearch'));
         $daftarList = Daftar::select(
             'daftars.id',
             'daftars.id_kelurahan',
@@ -102,11 +106,8 @@ class PenawaranController extends Controller
             ->mergeBindings($daftarWithMaxPenawaran)
             ->leftJoin('tkds', 'penawarans.idfk_tkd', '=', 'tkds.id')
             ->leftJoin('daftars', 'penawarans.idfk_daftar', '=', 'daftars.id')
-            ->when($request->input('bukti'), function ($query, $bukti) {
-                return $query->where('bukti', 'like', '%' . $bukti . '%');
-            })
-            ->when($request->input('bukti'), function ($query, $bukti) {
-                return $query->whereIn('daerah.jenis_barang_id', $bukti);
+            ->when($request->input('tkdsearch'), function ($query, $tkdsearchID) {
+                return $query->where('tkds.id', $tkdsearchID);
             })
             // ->whereYear('daftars.tgl_perjanjian', $tahunId)
             ->where('daftars.id_kelurahan', $kelurahanIdFromDaerah)
@@ -120,6 +121,7 @@ class PenawaranController extends Controller
             'tkdSelected' => $tkdSelected,
             'harga_dasar' => $harga_dasar,
             'daftarList' => $daftarList,
+            'tkdDropdown' => $tkdDropdown,
         ]);
     }
 
@@ -131,6 +133,15 @@ class PenawaranController extends Controller
         session(['penawaran_id' => $request->penawaran]);
         return redirect()->route('penawaran.create');
     }
+
+    public function toggleGugur($id)
+    {
+        $penawaran = Penawaran::findOrFail($id);
+        $penawaran->gugur = !$penawaran->gugur;
+        $penawaran->save();
+        return redirect()->back()->with('success', 'Status gugur berhasil diubah');
+    }
+
 
     public function create(Request $request)
     {
@@ -332,14 +343,14 @@ class PenawaranController extends Controller
             ->whereYear('tanggal_lelang', $tahunSelected)
             ->pluck('id_kelurahan')->first();
 
+        // dd($kelurahanIdFromDaerah);
         $daerahList = Daerah::withTrashed()
-            ->where('main.id', $daftarIdFromSession)
+            ->where('daerahs.id_kelurahan', $kelurahanIdFromDaerah)
             ->select(
                 'kelurahans.kelurahan',
             )
-            ->from('daerahs as main')
-            ->leftJoin('tahuns', 'tahuns.id', 'main.thn_sts')
-            ->leftJoin('kelurahans', 'kelurahans.id', 'main.id_kelurahan')
+            ->leftJoin('tahuns', 'tahuns.id', 'daerahs.thn_sts')
+            ->leftJoin('kelurahans', 'kelurahans.id', 'daerahs.id_kelurahan')
             ->first();
 
         $penawarans = DB::table('tkds')
@@ -376,7 +387,7 @@ class PenawaranController extends Controller
             ->pluck('id_kelurahan')->first();
 
         $daerahList = Daerah::withTrashed()
-            ->where('main.id', $daftarIdFromSession)
+            ->where('main.id_kelurahan', $daftarIdFromSession)
             ->select(
                 'main.periode',
                 'kelurahans.kelurahan',

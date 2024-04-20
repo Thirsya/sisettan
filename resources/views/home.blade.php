@@ -3,15 +3,12 @@
     <section class="section">
         <div class="section-header">
             <h1>Dashboard</h1>
-            <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-                <div class="breadcrumb-item"><a href="#">Components</a></div>
-            </div>
         </div>
         <section class="section">
-            <div class="col-12 col-lg-12 col-md-6 d-flex justify-content-center">
-                <div class="row" style="width: 1200px">
-                    <div class="col-12 col-md-4 col-lg-7">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-lg-8 col-md-10">
+                        <!-- Filter section -->
                         <div class="pricing pricing-highlight">
                             <div class="pricing-title">
                                 Filter
@@ -51,45 +48,51 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-5">
-                        <div class="col-lg-12 col-md-6 col-sm-6 col-12">
-                            <div class="card card-statistic-2">
-                                <div class="card-icon bg-danger">
-                                    <i class="fas fa-user"></i>
-                                </div>
-                                <div class="card-wrap">
-                                    <div class="card-header">
-                                        <h4>Total Pendaftar</h4>
+                    <div class="col-12 col-lg-4 col-md-6">
+                        <!-- Statistic cards -->
+                        <div class="row">
+                            <div class="col-12">
+                                <!-- Total Pendaftar card -->
+                                <div class="card card-statistic-2">
+                                    <div class="card-icon bg-danger">
+                                        <i class="fas fa-user"></i>
                                     </div>
-                                    <div class="card-body" id="totalPendaftar">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-12 col-md-6 col-sm-6 col-12">
-                            <div class="card card-statistic-2">
-                                <div class="card-icon bg-success">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                </div>
-                                <div class="card-wrap">
-                                    <div class="card-header">
-                                        <h4>Total TKD</h4>
-                                    </div>
-                                    <div class="card-body" id="totalTkd">
+                                    <div class="card-wrap">
+                                        <div class="card-header">
+                                            <h4>Total Pendaftar</h4>
+                                        </div>
+                                        <div class="card-body" id="totalPendaftar">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-lg-12 col-md-6 col-sm-6 col-12">
-                            <div class="card card-statistic-2">
-                                <div class="card-icon bg-warning">
-                                    <i class="fas fa-file"></i>
-                                </div>
-                                <div class="card-wrap">
-                                    <div class="card-header">
-                                        <h4>Total Penawaran</h4>
+                            <div class="col-12">
+                                <!-- Total TKD card -->
+                                <div class="card card-statistic-2">
+                                    <div class="card-icon bg-success">
+                                        <i class="fas fa-map-marker-alt"></i>
                                     </div>
-                                    <div class="card-body" id="totalPenawaran">
+                                    <div class="card-wrap">
+                                        <div class="card-header">
+                                            <h4>Total TKD</h4>
+                                        </div>
+                                        <div class="card-body" id="totalTkd">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <!-- Total Penawaran card -->
+                                <div class="card card-statistic-2">
+                                    <div class="card-icon bg-warning">
+                                        <i class="fas fa-file"></i>
+                                    </div>
+                                    <div class="card-wrap">
+                                        <div class="card-header">
+                                            <h4>Total Penawaran</h4>
+                                        </div>
+                                        <div class="card-body" id="totalPenawaran">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -111,7 +114,7 @@
                         <div class="form-group">
                             <label>Kecamatan<span class="text-danger">*</span></label>
                             <select class="form-control select2 @error('id_kecamatan') is-invalid @enderror"
-                                name="id_kecamatan" data-id="select-kecamatan" id="id_kecamatan">
+                                name="id_kecamatan" data-id="select-kecamatan" id="id_kecamatan" disabled>
                                 <option value="">Piih Kecamatan</option>
                             </select>
                             @error('id_kecamatan')
@@ -123,7 +126,7 @@
                         <div class="form-group">
                             <label>Kelurahan<span class="text-danger">*</span></label>
                             <select class="form-control select2 @error('id_kelurahan') is-invalid @enderror"
-                                name="id_kelurahan" data-id="select-kelurahan" id="id_kelurahan">
+                                name="id_kelurahan" data-id="select-kelurahan" id="id_kelurahan" disabled>
                                 <option value="">Piih Kelurahan</option>
                             </select>
                             @error('id_kelurahan')
@@ -179,7 +182,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button id="saveChanges" class="btn btn-primary">Save changes</button>
                     </div>
                 </div>
@@ -194,9 +197,6 @@
         $(document).ready(function() {
             var selectedYearId = {{ $tahunSelected ?? 'null' }};
             var selectedDaerahId = {{ $daerahSelected ?? 'null' }};
-            if (selectedDaerahId) {
-                console.log('selected Daerah :' + selectedDaerahId);
-            }
 
             function populateKelurahanDropdown(data) {
                 var selectedDaerahId = {{ $daerahSelected ?? 'null' }};
@@ -225,9 +225,6 @@
                         var option = $('<option>').attr('value', daerah.id)
                             .attr('data-id', daerah.id)
                             .text(optionText);
-                        console.log(daerah.id);
-                        console.log(selectedDaerahId);
-                        console.log(daerah.id === parseInt(selectedDaerahId));
                         if (daerah.id === parseInt(selectedDaerahId)) {
                             option.attr('selected', 'selected');
                         }
@@ -246,23 +243,18 @@
                         'tahun_id': selectedYearId
                     },
                     success: function(data) {
-                        console.log("Data Request Ajax Login: ", data);
                         populateKelurahanDropdown(data);
                         $('#dropdownKelurahan').show();
                     },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        console.error("AJAX error: ", textStatus, errorThrown);
-                    }
+                    error: function(jqXHR, textStatus, errorThrown) {}
                 });
             }
 
             $('#dropdown-item').on('change', function() {
                 selectedYearId = $(this).find(':selected').val();
-                console.log("Selected Year ID: " + selectedYearId);
 
                 selectedDaerahId = null;
                 $('#dropdownKelurahan').hide();
-                console.log('pilih tahun', selectedYearId);
                 if (selectedYearId) {
                     $.ajax({
                         url: '{{ route('requestAjaxLogin') }}',
@@ -271,13 +263,12 @@
                             'tahun_id': selectedYearId
                         },
                         success: function(data) {
-                            console.log('Data Request Ajax Selected Year: ', data);
                             populateKelurahanDropdown(data);
 
                             $('#dropdownKelurahan').show();
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
-                            console.error("AJAX error: ", textStatus, errorThrown);
+
                         }
                     });
                 }
@@ -294,15 +285,11 @@
                             'kelurahan_id': selectedDaerahId,
                         },
                         success: function(data) {
-                            console.log("Milih data di kecamatan dan kelurahan berhasil!");
 
                             $.ajax({
                                 url: '{{ route('getTotalDaerah') }}',
                                 type: 'GET',
                                 success: function(data) {
-                                    console.log(selectedDaerahId);
-                                    console.log("Tampil Data");
-                                    console.log(data);
                                     if (data.totalDaerah == 0) {
                                         $('#modal-sewa').modal('show');
 
@@ -311,9 +298,7 @@
                             });
 
                         },
-                        error: function(jqXHR, textStatus, errorThrown) {
-                            console.error("AJAX error: ", textStatus, errorThrown);
-                        }
+                        error: function(jqXHR, textStatus, errorThrown) {}
                     });
                 }
             });
@@ -330,24 +315,36 @@
                     url: '/getKelurahansDashboard',
                     type: 'GET',
                     success: function(data) {
-                        console.log(data);
                         $('#id_kelurahan').empty();
                         $('#id_kecamatan').empty();
                         $('#thn_sts').empty();
                         $.each(data, function(key, kelurahan) {
-                            console.log(data.tahunSelected)
-                            $('#id_kelurahan').append('<option value="' + kelurahan.id +
+                            $('#id_kelurahan').append('<option value="' + kelurahan
+                                .id +
                                 '">' + kelurahan.kelurahan + '</option>');
                             $('#id_kecamatan').append('<option value="' + kelurahan
                                 .id_kecamatan + '">' + kelurahan.kecamatan +
                                 '</option>');
                         });
-                        $('#thn_sts').append('<option value="' + data.tahunSelected.id + '">' +
+                        $('#thn_sts').append('<option value="' + data.tahunSelected.id +
+                            '">' +
                             data.tahunSelected.tahun + '</option>');
+                        updateDateRange(data.tahunSelected.tahun);
                     }
                 });
-
             });
+
+            function updateDateRange(selectedYear) {
+                if (selectedYear) {
+                    var minDate = selectedYear + '-01-01';
+                    var maxDate = selectedYear + '-12-31';
+                    $('#tanggal_lelang').attr('min', minDate);
+                    $('#tanggal_lelang').attr('max', maxDate);
+                } else {
+                    $('#tanggal_lelang').removeAttr('min');
+                    $('#tanggal_lelang').removeAttr('max');
+                }
+            }
 
             $('#id_kecamatan').change(function() {
                 $('#hidden_id_kecamatan').val($(this).val());
@@ -359,8 +356,6 @@
 
             $("#saveChanges").on('click', function(e) {
                 e.preventDefault();
-
-                console.log("Button clicked!");
 
                 var kecamatanId = $('#id_kecamatan').val();
                 var kelurahanId = $('#id_kelurahan').val();
@@ -389,15 +384,18 @@
                     data: formData,
                     success: function(response) {
                         if (response.success) {
-                            $('#modal-sewa').modal('hide');
-                            window.location.assign('/dashboard');
+                            // $('#modal-sewa').modal('hide');
+                            toastr.success('Sukses Menambahkan data.');
+                            setTimeout(function() {
+                                window.location.assign('/dashboard');
+                            }, 500);
                         } else {
-                            alert('Terjadi kesalahan saat menyimpan.');
+                            console.log(formData);
+                            toastr.error('Terjadi kesalahan saat menyimpan.');
                         }
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
-                        console.error("AJAX error: ", textStatus, errorThrown);
-                        alert('Terjadi kesalahan saat menyimpan.');
+                        toastr.error('Terjadi kesalahan saat menyimpan.');
                     }
                 });
             });

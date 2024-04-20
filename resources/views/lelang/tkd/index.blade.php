@@ -98,9 +98,9 @@
                                             <th style="width: 100px">Luas</th>
                                             <th style="width: 120px">Harga Dasar</th>
                                             <th style="width: 300px">Keterangan</th>
+                                            <th>Nop</th>
                                             <th>Longitude</th>
                                             <th>Latitude</th>
-                                            <th>Nop</th>
                                             <th class="text-right">Action</th>
                                         </tr>
                                         @foreach ($tkds as $key => $tkd)

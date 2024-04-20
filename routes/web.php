@@ -185,8 +185,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::post('/sts/{id}/gugur', [StsController::class, 'gugur'])->name('sts.gugur');
         Route::post('/sts/{penawaran}/update-date', [StsController::class, 'updateDate'])->name('penawaran.updateDate');
         Route::get('/sts/{id}/print', [StsController::class, 'printSTS'])->name('sts.print');
-        Route::get('/perjajian', [StsController::class, 'cetakPerjanjian'])->name('sts.cetakperjanjian');
-        Route::get('/pernyataan', [StsController::class, 'cetakPernyataan'])->name('sts.cetakpernyataan');
+        Route::get('/perjajian/{id}', [StsController::class, 'cetakPerjanjian'])->name('sts.cetakperjanjian');
+        Route::get('/pernyataan/{id}', [StsController::class, 'cetakPernyataan'])->name('sts.cetakpernyataan');
     });
 
     Route::prefix('pdf')->middleware('check.kelurahan')->group(function () {

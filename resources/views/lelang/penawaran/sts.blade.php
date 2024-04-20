@@ -26,6 +26,7 @@
                                         <th>Penawaran</th>
                                         <th style="width: 250px">Tanggal Perjanjian</th>
                                         <th>Menu</th>
+                                        <th>Aksi</th>
                                     </tr>
                                     @foreach ($penawaran as $key => $listPenawaran)
                                         <tr>
@@ -91,12 +92,12 @@
                                                                 STS</a>
                                                         </td>
                                                         <td>
-                                                            <a href="{{ route('sts.cetakpernyataan') }}"
+                                                            <a href="{{ route('sts.cetakpernyataan', $listPenawaran->id) }}"
                                                                 class="ml-2 btn btn-sm btn-info btn-icon ">Cetak
                                                                 Pernyataan</a>
                                                         </td>
                                                         <td>
-                                                            <a href="{{ route('sts.cetakperjanjian') }}"
+                                                            <a href="{{ route('sts.cetakperjanjian', $listPenawaran->id) }}"
                                                                 class="ml-2 btn btn-sm btn-info btn-icon ">Cetak
                                                                 Perjanjian</a>
                                                         </td>
@@ -136,10 +137,36 @@
                                                                 </button>
                                                             @endif
                                                         </td>
-                                                        {{-- <td>{{ $listPenawaran->surat_tanda_setor }}</td> --}}
-                                                        <td>{{ $listPenawaran->surat_pernyataan }}</td>
-                                                        <td>{{ $listPenawaran->surat_perjanjian }}</td>
-                                                        <td>{{ $listPenawaran->berita_acara }}</td>
+                                                        <td>
+                                                            @if ($listPenawaran->surat_pernyataan)
+                                                                <?php $listPenawaran->suratUrl = Storage::url('sts/' . $listPenawaran->surat_pernyataan); ?>
+                                                                <button type="button" class="btn btn-primary preview-btn-2"
+                                                                    data-key="{{ $key }}"
+                                                                    data-penawaran="{{ json_encode($listPenawaran, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE) }}">
+                                                                    Preview File
+                                                                </button>
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            @if ($listPenawaran->surat_perjanjian)
+                                                                <?php $listPenawaran->suratUrl = Storage::url('sts/' . $listPenawaran->surat_perjanjian); ?>
+                                                                <button type="button" class="btn btn-primary preview-btn-3"
+                                                                    data-key="{{ $key }}"
+                                                                    data-penawaran="{{ json_encode($listPenawaran, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE) }}">
+                                                                    Preview File
+                                                                </button>
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            @if ($listPenawaran->berita_acara)
+                                                                <?php $listPenawaran->suratUrl = Storage::url('sts/' . $listPenawaran->berita_acara); ?>
+                                                                <button type="button" class="btn btn-primary preview-btn-4"
+                                                                    data-key="{{ $key }}"
+                                                                    data-penawaran="{{ json_encode($listPenawaran, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE) }}">
+                                                                    Preview File
+                                                                </button>
+                                                            @endif
+                                                        </td>
                                                     </tr>
                                                 </table>
                                             </td>
@@ -200,7 +227,8 @@
                                                     <form action="{{ route('penawaran.destroy', $listPenawaran->id) }}"
                                                         method="POST" class="ml-2">
                                                         <input type="hidden" name="_method" value="DELETE">
-                                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                        <input type="hidden" name="_token"
+                                                            value="{{ csrf_token() }}">
                                                         <button class="btn btn-sm btn-danger btn-icon confirm-delete"
                                                             type="submit">
                                                             <i class="fas fa-times"></i> Delete </button>
@@ -238,6 +266,25 @@
                     <h5 class="modal-title" id="exampleModalLabel">Preview BA</h5>
                 </div>
                 <div class="modal-body">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="successModalLabel">Success</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Upload successful.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -334,6 +381,14 @@
                     contentType: false,
                     success: function(response) {
                         console.log(response);
+                        $('#modal-upload').modal('hide');
+                        $('#uploadForm').modal('hide');
+                        $('#successModal').modal('show');
+
+                        // Delay for 2 seconds (2000 milliseconds) before reloading
+                        setTimeout(function() {
+                            window.location.reload();
+                        }, 2000);
                     },
                     error: function(xhr, status, error) {
                         console.error(xhr.responseText);
@@ -366,7 +421,46 @@
         $('.preview-btn').on('click', function() {
             var key = $(this).data('key');
             var listPenawaran = JSON.parse($(this).attr('data-penawaran'));
-            $('#previewFileModal .modal-title').text('Preview File ' + key);
+            $('#previewFileModal .modal-title').text('Preview File STS');
+            if (listPenawaran.surat_tanda_setor.endsWith('.pdf')) {
+                $('#previewFileModal .modal-body').html('<iframe src="' + listPenawaran.suratUrl +
+                    '" width="100%" height="500px" frameborder="0"></iframe>');
+            } else {
+                $('#previewFileModal .modal-body').html('<img src="' + listPenawaran.suratUrl +
+                    '" alt="Surat" style="max-width: 100%; height: auto;">');
+            }
+            $('#previewFileModal').modal('show');
+        });
+        $('.preview-btn-2').on('click', function() {
+            var key = $(this).data('key');
+            var listPenawaran = JSON.parse($(this).attr('data-penawaran'));
+            $('#previewFileModal .modal-title').text('Preview File Pernyataan');
+            if (listPenawaran.surat_tanda_setor.endsWith('.pdf')) {
+                $('#previewFileModal .modal-body').html('<iframe src="' + listPenawaran.suratUrl +
+                    '" width="100%" height="500px" frameborder="0"></iframe>');
+            } else {
+                $('#previewFileModal .modal-body').html('<img src="' + listPenawaran.suratUrl +
+                    '" alt="Surat" style="max-width: 100%; height: auto;">');
+            }
+            $('#previewFileModal').modal('show');
+        });
+        $('.preview-btn-3').on('click', function() {
+            var key = $(this).data('key');
+            var listPenawaran = JSON.parse($(this).attr('data-penawaran'));
+            $('#previewFileModal .modal-title').text('Preview File Perjanjian');
+            if (listPenawaran.surat_tanda_setor.endsWith('.pdf')) {
+                $('#previewFileModal .modal-body').html('<iframe src="' + listPenawaran.suratUrl +
+                    '" width="100%" height="500px" frameborder="0"></iframe>');
+            } else {
+                $('#previewFileModal .modal-body').html('<img src="' + listPenawaran.suratUrl +
+                    '" alt="Surat" style="max-width: 100%; height: auto;">');
+            }
+            $('#previewFileModal').modal('show');
+        });
+        $('.preview-btn-4').on('click', function() {
+            var key = $(this).data('key');
+            var listPenawaran = JSON.parse($(this).attr('data-penawaran'));
+            $('#previewFileModal .modal-title').text('Preview File Berita Acara');
             if (listPenawaran.surat_tanda_setor.endsWith('.pdf')) {
                 $('#previewFileModal .modal-body').html('<iframe src="' + listPenawaran.suratUrl +
                     '" width="100%" height="500px" frameborder="0"></iframe>');
