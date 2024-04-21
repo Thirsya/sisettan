@@ -2,7 +2,7 @@
 header('Content-Type: application/vnd.ms-word');
 header('Expires: 0');
 header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-header('content-disposition: attachment;filename=Surat Pernyataan.docx');
+header('content-disposition: attachment;filename=Surat Pernyataan.doc');
 ?>
 <html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office"
     xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:m="http://schemas.microsoft.com/office/2004/12/omml"
@@ -1164,10 +1164,10 @@ mso-ansi-language:EN-US'> <span
                             sejak berakhirnya masa tanam sebagaimana dimaksud dalam perjanjian sewa
                             menyewa tanah pertanian milik Pemerintah Kota Kediri yang berasal dari bekas
                             tanah kas desa {{ $daerahList->kelurahan }} nomor : 028</span><span
-                            style='font-family:"Cambria",serif'>/_</span><span lang=IN
+                            style='font-family:"Cambria",serif'>/___</span><span lang=IN
                             style='font-family:"Cambria",serif;mso-ansi-language:IN'>/TKD//{{ $daerahList->tahun_lelang }}
-                            tanggal </span><span style='font-family:"Cambria",serif'>//, </span><span
-                            lang=IN style='font-family:"Cambria",serif;mso-ansi-language:IN'>maka saya
+                            tanggal </span><span style='font-family:"Cambria",serif'>___/___/___, </span><span lang=IN
+                            style='font-family:"Cambria",serif;mso-ansi-language:IN'>maka saya
                             melepaskan segala hak dan kepentingan atas seluruh tanaman yang berada diatas
                             lahan pertanian yang menjadi obyek sewa dan menyatakan bukan milik saya lagi;</span></p>
                 </td>

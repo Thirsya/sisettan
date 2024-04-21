@@ -209,9 +209,83 @@ class StsController extends Controller
         ]);
     }
 
-    public function cetakPerjanjian()
+    public function cetakPerjanjian($id)
     {
-        return view('lelang.penawaran.perjanjian');
+        $idDaftar = Penawaran::select(
+            'penawarans.idfk_daftar',
+            'penawarans.nilai_penawaran',
+            'penawarans.total_luas',
+        )
+            ->where('penawarans.id', $id)
+            ->first();
+        $sub = Penawaran::select('idfk_tkd', DB::raw('MAX(nilai_penawaran) as max_penawaran'))
+            ->whereNull('deleted_at')
+            ->where('gugur', '=', false)
+            ->groupBy('idfk_tkd');
+        $listPenawaran = DB::table('penawarans')
+            ->select(
+                'penawarans.id',
+                'penawarans.id_daftar',
+                'penawarans.idfk_daftar',
+                'penawarans.id_tkd',
+                'penawarans.idfk_tkd',
+                'penawarans.nilai_penawaran',
+                'penawarans.keterangan',
+                'penawarans.total_luas',
+                'daftars.id_daftar',
+                'daftars.no_urut',
+                'daftars.nama',
+                'daftars.alamat',
+                'daftars.no_kk',
+                'daftars.no_wp',
+                'daftars.tgl_perjanjian',
+                'tkds.id_tkd',
+                'tkds.id_kelurahan',
+                'kelurahans.kelurahan',
+                'tkds.bidang',
+                'tkds.letak',
+                'tkds.bukti',
+                'tkds.harga_dasar',
+                'tkds.luas',
+                'tkds.keterangan',
+                'tkds.nop',
+            )
+            ->joinSub($sub, 'subquery', function ($join) {
+                $join->on('penawarans.idfk_tkd', '=', 'subquery.idfk_tkd')
+                    ->on('penawarans.nilai_penawaran', '=', 'subquery.max_penawaran');
+            })
+            ->leftJoin('tkds', 'penawarans.idfk_tkd', '=', 'tkds.id')
+            ->leftJoin('daftars', 'penawarans.idfk_daftar', '=', 'daftars.id')
+            ->leftJoin('kelurahans', 'kelurahans.id', 'tkds.id_kelurahan')
+            ->where('daftars.id', $idDaftar->idfk_daftar)
+            ->whereNull('penawarans.deleted_at')
+            ->orderBy('tkds.bukti', 'DESC')
+            ->get();
+        // dd($listPenawaran);
+
+        $daerahList = Daftar::select(
+            'daftars.id',
+            'daftars.nama',
+            'daftars.alamat',
+            'daftars.id_kelurahan',
+            'kelurahans.id_kecamatan',
+            'kecamatans.kecamatan',
+            'kelurahans.kelurahan',
+            'daerahs.periode',
+            'daerahs.tanggal_lelang',
+            DB::raw('YEAR(daerahs.tanggal_lelang) as tahun_lelang'),
+            DB::raw('MONTH(daerahs.tanggal_lelang) as bulan_lelang')
+        )
+            ->leftJoin('daerahs', 'daerahs.id_kelurahan', 'daftars.id_kelurahan')
+            ->leftJoin('kelurahans', 'kelurahans.id', 'daftars.id_kelurahan')
+            ->leftJoin('kecamatans', 'kecamatans.id', 'kelurahans.id_kecamatan')
+            ->where('daftars.id', $idDaftar->idfk_daftar)
+            ->first();
+        return view('lelang.penawaran.perjanjian')->with([
+            'daerahList' => $daerahList,
+            'idDaftar' => $idDaftar,
+            'listPenawaran' => $listPenawaran,
+        ]);
     }
 
     public function upload(Request $request)

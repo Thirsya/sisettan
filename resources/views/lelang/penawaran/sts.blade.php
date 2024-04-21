@@ -31,7 +31,7 @@
                                     @foreach ($penawaran as $key => $listPenawaran)
                                         <tr>
                                             <td>{{ $listPenawaran->no_urut }}</td>
-                                            <td>{{ $listPenawaran->id }}</td>
+                                            {{-- <td>{{ $listPenawaran->id }}</td> --}}
                                             <td>{{ $listPenawaran->nama }}</td>
                                             <td>{{ $listPenawaran->bukti }}</td>
                                             <td>{{ $listPenawaran->bidang }}</td>
