@@ -185,30 +185,48 @@
     </script>
     <script>
         $(document).ready(function() {
-            var map = L.map('map').setView([{{ $tkd->latitude }}, {{ $tkd->longitude }}], 13);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 19,
-            }).addTo(map);
+            console.log('asu');
+            var map = L.map('map').fitWorld();
+            var marker;
 
-            var marker = L.marker([{{ $tkd->latitude }}, {{ $tkd->longitude }}]).addTo(map);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 18,
+            }).addTo(map);
+            console.log({{ isset($tkd->latitude) ? $tkd->latitude : 'null' }});
+            var lat = {{ isset($tkd->latitude) ? $tkd->latitude : 'null' }};
+            var lng = {{ isset($tkd->longitude) ? $tkd->longitude : 'null' }};
+
+            if (lat === null || lng === null) {
+                map.locate({
+                    setView: true,
+                    maxZoom: 16,
+                    enableHighAccuracy: true
+                }).on('locationfound', function(e) {}).on('locationerror', function(e) {});
+            } else {
+                map.setView([lat, lng], 16);
+                marker = L.marker([lat, lng]).addTo(map);
+            }
+
 
             function placeMarker(lat, lng) {
                 var newLatLng = new L.LatLng(lat, lng);
                 if (marker) {
-                    map.removeLayer(marker);
+                    marker.setLatLng(newLatLng);
+                } else {
+                    marker = new L.Marker(newLatLng).addTo(map);
                 }
-                marker = new L.Marker(newLatLng).addTo(map);
                 map.setView(newLatLng, 16);
             }
 
             map.on('click', function(e) {
-                marker.setLatLng(e.latlng);
-                $('#latitude').val(e.latlng.lat);
-                $('#longitude').val(e.latlng.lng);
+                if (e.latlng) {
+                    $('#latitude').val(e.latlng.lat);
+                    $('#longitude').val(e.latlng.lng);
+                    placeMarker(e.latlng.lat, e.latlng.lng);
+                }
             });
 
             const provider = new GeoSearch.OpenStreetMapProvider();
-
             const searchControl = new GeoSearch.GeoSearchControl({
                 provider: provider,
                 showMarker: false,
@@ -218,9 +236,11 @@
             map.addControl(searchControl);
 
             map.on('geosearch/showlocation', function(e) {
-                placeMarker(e.location.y, e.location.x);
-                $('#latitude').val(e.location.y);
-                $('#longitude').val(e.location.x);
+                if (e.location) {
+                    placeMarker(e.location.y, e.location.x);
+                    $('#latitude').val(e.location.y);
+                    $('#longitude').val(e.location.x);
+                }
             });
 
             L.easyButton('fas fa-location-arrow', function(btn, map) {
@@ -228,11 +248,6 @@
                     setView: true,
                     maxZoom: 16,
                     enableHighAccuracy: true
-                }).on('locationfound', function(e) {
-                    placeMarker(e.latitude, e.longitude);
-
-                    $('#latitude').val(e.latitude);
-                    $('#longitude').val(e.longitude);
                 });
             }, 'Get Current Location').addTo(map);
         });
