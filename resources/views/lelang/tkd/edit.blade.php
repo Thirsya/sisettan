@@ -185,7 +185,7 @@
     </script>
     <script>
         $(document).ready(function() {
-            console.log('asu');
+
             var map = L.map('map').fitWorld();
             var marker;
 

@@ -609,7 +609,7 @@
     <!-- Footer-Area-Start -->
     <footer class="footer-area section-bg" id="contact-area"
         style="background-image: url('assetLanding/images/footer-bg.png')">
-        <div class="container">
+        {{-- <div class="container">
             <div class="row">
                 <div class="col-xs-12">
                     <!-- Subscribe-Area-Start -->
@@ -639,19 +639,20 @@
                     <!-- Subscribe-Area-End -->
                 </div>
             </div>
-        </div>
+        </div> --}}
         <div class="footer-bottom">
             <div class="container">
                 <!-- Footer-Widget-Start -->
                 <div class="row">
-                    <div class="col-xs-12 col-sm-6 col-md-3">
+                    <div class="col-xs-12 col-sm-6 col-md-12">
                         <div class="widget">
                             <h4 class="widget-title">About Us</h4>
-                            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
-                                there live the blind texts.</p>
+                            <p>Badan Pendapatan, Pengelola Keuangan dan Aset Daerah Kota Kediri merupakan unsur penunjang urusan pemerintahan di bidang keuangan.
+                                Badan Pendapatan, Pengelola Keuangan dan Aset Daerah dipimpin oleh Kepala Badan yang berkedudukan di bawah dan bertanggung jawab kepada Walikota melalui Sekretaris Daerah.
+                            </p>
                         </div>
                     </div>
-                    <div class="col-xs-12 col-sm-6 col-md-3">
+                    {{-- <div class="col-xs-12 col-sm-6 col-md-3">
                         <div class="widget">
                             <h4 class="widget-title">Quick Link</h4>
                             <ul>
@@ -662,8 +663,8 @@
                                 <li><a href="#">Contact Us!</a></li>
                             </ul>
                         </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-3">
+                    </div> --}}
+                    {{-- <div class="col-xs-12 col-sm-6 col-md-3">
                         <div class="widget">
                             <h4 class="widget-title">Support</h4>
                             <ul>
@@ -686,7 +687,7 @@
                                 <a href="#"><i class="fa fa-linkedin"></i></a>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
                 <!-- Footer-Widget-End -->
             </div>
@@ -695,7 +696,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-xs-12 text-center">
-                        <span class="copyright">&copy; 2019 Jupiter. All Rights Reserved</span>
+                        <span class="copyright">&copy; 2024 Politeknik Negeri Malang</span>
                     </div>
                 </div>
             </div>
