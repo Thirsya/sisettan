@@ -51,8 +51,8 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-4">
                                             <label for="role">User</label>
-                                            <input type="text" name="name" class="form-control" id="name"
-                                                placeholder="User Name">
+                                            <input type="text" name="username" class="form-control" id="name"
+                                                placeholder="User Name" value="{{ $user }}">
                                         </div>
                                     </div>
                                     <div class="text-right">

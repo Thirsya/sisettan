@@ -43,9 +43,9 @@
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $listPenawaran->bukti }}</td>
                 <td>{{ $listPenawaran->letak }}</td>
-                <td>{{ $listPenawaran->harga_dasar }}</td>
+                <td>Rp {{ number_format($listPenawaran->harga_dasar, 0, ',', '.') }}</td>
                 <td>{{ $listPenawaran->bidang }}</td>
-                <td>{{ $listPenawaran->luas }}</td>
+                <td>{{ number_format($listPenawaran->luas, 0, ',', '.') }} m<sup>2</sup></td>
             </tr>
         @endforeach
     </table>

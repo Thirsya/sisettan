@@ -37,7 +37,7 @@ class UserController extends Controller
         $pejabats = Pejabat::all();
         $userName = $request->input('user');
         $pejabatIds = $request->input('pejabat');
-        $user = $request->input('user');
+        $user = $request->input('username');
 
         $query = User::withTrashed()
             ->select(
@@ -52,8 +52,8 @@ class UserController extends Controller
             ->leftJoin('profiles', 'profiles.id_user', '=', 'users.id')
             ->leftJoin('pejabats', 'pejabats.id', '=', 'profiles.id_pejabat')
             // ->leftJoin('pejabats', 'users.id_pejabat', '=', 'pejabats.id')
-            ->when($request->input('user'), function ($query, $user) {
-                return $query->where('users.user', 'like', '%' . $user . '%');
+            ->when($request->input('username'), function ($query, $user) {
+                return $query->where('users.username', 'like', '%' . $user . '%');
             })
             ->when($request->input('pejabat'), function ($query, $pejabat) {
                 return $query->whereIn('users.id_pejabat', $pejabat);

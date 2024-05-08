@@ -24,6 +24,7 @@ class RekapController extends Controller
             ->whereYear('tanggal_lelang', $tahunSelected)
             ->select(
                 'kelurahans.kelurahan',
+                'main.periode'
             )
             ->from('daerahs as main')
             ->leftJoin('tahuns', 'tahuns.id', 'main.thn_sts')
@@ -78,6 +79,6 @@ class RekapController extends Controller
             'daerahList' => $daerahList,
             'penawarans' => $penawarans
         ]);
-        return $pdf->stream();
+        return $pdf->stream('REKAP STS.pdf');
     }
 }

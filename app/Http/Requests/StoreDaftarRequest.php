@@ -25,7 +25,7 @@ class StoreDaftarRequest extends FormRequest
             'alamat' => 'required',
             'no_kk' => 'required',
             'no_wp' => 'nullable',
-            'tgl_perjanjian' => 'required',
+            'tgl_perjanjian' => 'nullable',
         ];
     }
 

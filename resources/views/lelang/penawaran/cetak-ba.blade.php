@@ -65,13 +65,13 @@
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $firstPenawaran->bukti }}</td>
                 <td>{{ $firstPenawaran->letak }}</td>
-                <td>{{ $firstPenawaran->harga_dasar }}</td>
+                <td>Rp {{ number_format($firstPenawaran->harga_dasar, 0, ',', '.') }}</td>
                 <td>{{ $firstPenawaran->bidang }}</td>
-                <td>{{ $firstPenawaran->luas }}</td>
+                <td>{{ number_format($firstPenawaran->luas, 0, ',', '.') }} m<sup>2</sup></td>
                 <td>{{ $firstPenawaran->nama }}</td>
-                <td>{{ $firstPenawaran->nilai_penawaran }}</td>
+                <td>Rp {{ number_format($firstPenawaran->nilai_penawaran, 0, ',', '.') }}</td>
                 <td>{{ $firstPenawaran->nama2 }}</td>
-                <td>{{ $firstPenawaran->nilai_penawaran2 }}</td>
+                <td>Rp {{ number_format($firstPenawaran->nilai_penawaran2, 0, ',', '.') }}</td>
             </tr>
         @endforeach
     </table><br>

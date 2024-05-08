@@ -52,12 +52,12 @@
                                     @csrf
                                     <div class="form-row">
                                         <div class="form-group col-md-4">
-                                            <label for="penawaran">Pendaftar</label>
+                                            <label for="penawaran">Bukti Hak (SHP)</label>
                                             <select
                                                 class="form-control select2
                                                     @error('penawaran') is-invalid @enderror"
                                                 name="penawaran">
-                                                <option value="">Pilih Pendaftar</option>
+                                                <option value="">Pilih Bukti Hak (SHP)</option>
                                                 @foreach ($daftarList as $daftarListNoUrut)
                                                     <option value="{{ $daftarListNoUrut->id }}">
                                                         {{ $daftarListNoUrut->no_urut }} - {{ $daftarListNoUrut->nama }}
@@ -191,7 +191,7 @@
                                         <div class="form-group col-md-4">
                                             <label for="role">Bukti Hak (SHP)</label>
                                             <select class="form-control select2" name="tkdsearch">
-                                                <option value="">Pilih Pendaftar</option>
+                                                <option value="">Pilih Bukti Hak (SHP)</option>
                                                 @foreach ($tkdDropdown as $daftarListNoUrut)
                                                     <option value="{{ $daftarListNoUrut->id }}">
                                                         {{ $daftarListNoUrut->bukti }} bidang

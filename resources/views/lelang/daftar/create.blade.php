@@ -88,7 +88,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label>Tanggal Perjanjian <span class="text-danger">*</span></label>
+                            <label>Tanggal Perjanjian </label>
                             <input type="date" id="tgl_perjanjian" name="tgl_perjanjian"
                                 class="form-control @error('tgl_perjanjian') is-invalid @enderror"
                                 placeholder="Masukan Tanggal Perjanjian" autocomplete="off">

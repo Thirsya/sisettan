@@ -37,7 +37,7 @@
                         </div>
                         <form method="POST" action="{{ route('login') }}">
                             <input class="form-control @error('username') is-invalid @enderror" type="text"
-                                name="username" placeholder="E-mail Address" required>
+                                name="username" placeholder="Username" required>
                             @error('username')
                                 <div class="alert alert-danger mt-2">
                                     <div>{{ $message }}</div>

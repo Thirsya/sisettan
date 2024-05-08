@@ -2,7 +2,7 @@
 header('Content-Type: application/vnd.ms-word');
 header('Expires: 0');
 header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-header('content-disposition: attachment;filename=Perjanjian TESS.doc');
+header('content-disposition: attachment;filename=Perjanjian.doc');
 ?>
 <!-- Your Website <a href="http://tkd.bppkad.kedirikota.go.id/">tkd.bppkad.kedirikota.go.id</a> license an expire, please contact with Administator. Thank you. -->
 <html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office"
@@ -660,10 +660,10 @@ line-height:115%;font-family:"Cambria","serif";mso-ansi-language:EN-US'>/{{ $dae
             11 => 'November',
             12 => 'Desember',
         ];
-        
+
         $bulanLelang = $daerahList->bulan_lelang;
         $bulanLelangIndonesia = $bulanIndonesia[$bulanLelang];
-        
+
         function terbilang($angka)
         {
             $angka = abs($angka);
@@ -692,7 +692,7 @@ line-height:115%;font-family:"Cambria","serif";mso-ansi-language:EN-US'>/{{ $dae
             }
             return $temp;
         }
-        
+
         $tahunLelangTerbilang = terbilang($daerahList->tahun_lelang);
         $nilaiPenawaranTerbilang = terbilang($idDaftar->nilai_penawaran) . ' Rupiah';
         ?>

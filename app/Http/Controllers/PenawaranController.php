@@ -374,7 +374,7 @@ class PenawaranController extends Controller
             'penawarans' => $penawarans,
             'daerahList' => $daerahList,
         ]);
-        return $pdf->stream();
+        return $pdf->stream('BIDANG TIDAK LAKU.pdf');
     }
 
     public function cetakBA()
@@ -467,7 +467,7 @@ class PenawaranController extends Controller
             'daerahList' => $daerahList,
         ]);
 
-        return $pdf->stream('cetak-ba.pdf');
+        return $pdf->stream('BERITA ACARA.pdf');
     }
 
     public function cetakSekota()
@@ -515,6 +515,6 @@ class PenawaranController extends Controller
                 'cetakSekotaKecamatan' => $cetakSekotaKecamatan,
             ]
         );
-        return $pdf->stream();
+        return $pdf->stream('REKAP SEKOTA.pdf');
     }
 }

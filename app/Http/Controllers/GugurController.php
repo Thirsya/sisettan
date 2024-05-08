@@ -80,6 +80,6 @@ class GugurController extends Controller
             'penawarans' => $penawarans,
             'daerahList' => $daerahList,
         ]);
-        return $pdf->stream();
+        return $pdf->stream('GUGUR.pdf');
     }
 }

@@ -236,6 +236,6 @@ class PemenangController extends Controller
             'daerahList' => $daerahList,
             'winnersWithDetails' => $winnersWithDetails,
         ])->setPaper('a4', 'landscape');
-        return $pdf->stream();
+        return $pdf->stream('PEMENANG 1-5.pdf');
     }
 }
