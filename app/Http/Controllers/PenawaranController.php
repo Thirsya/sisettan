@@ -72,6 +72,24 @@ class PenawaranController extends Controller
             })
             ->select('penawarans.idfk_daftar')
             ->distinct();
+        $maxPenawaran = DB::table('penawarans')
+            ->select('idfk_daftar', 'idfk_tkd', DB::raw('MAX(nilai_penawaran) as max_nilai'))
+            ->groupBy('idfk_daftar', 'idfk_tkd');
+
+        $maxPenawaranPerTkd = DB::table('penawarans')
+            ->select(
+                'penawarans.idfk_tkd',
+                'tkds.luas',
+                'penawarans.idfk_daftar',
+                DB::raw(
+                    'MAX(penawarans.nilai_penawaran) as max_nilai',
+                )
+            )
+            ->leftJoin('tkds', 'penawarans.idfk_tkd', '=', 'tkds.id')
+            ->where('tkds.id_kelurahan', $kelurahanIdFromDaerah)
+            ->groupBy('penawarans.idfk_tkd');
+        // dd($maxPenawaranPerTkd->get());
+
         $penawarans = DB::table('penawarans')
             ->select(
                 'penawarans.id',
@@ -84,6 +102,7 @@ class PenawaranController extends Controller
                 'penawarans.gugur',
                 DB::raw('CASE
                 WHEN penawarans.idfk_daftar IN (' . $daftarWithMaxPenawaran->toSql() . ') THEN penawarans.total_luas
+                WHEN penawarans.nilai_penawaran < max_penawaran_tkd.max_nilai THEN penawarans.total_luas - tkds.luas
                 ELSE 0
             END as total_luas'),
                 'daftars.id_daftar',
@@ -104,12 +123,19 @@ class PenawaranController extends Controller
                 'tkds.nop',
             )
             ->mergeBindings($daftarWithMaxPenawaran)
+            ->joinSub($maxPenawaran, 'max_penawaran_daftar', function ($join) {
+                $join->on('penawarans.idfk_daftar', '=', 'max_penawaran_daftar.idfk_daftar')
+                    ->on('penawarans.idfk_tkd', '=', 'max_penawaran_daftar.idfk_tkd')
+                    ->on('penawarans.nilai_penawaran', '=', 'max_penawaran_daftar.max_nilai');
+            })
+            ->joinSub($maxPenawaranPerTkd, 'max_penawaran_tkd', function ($join) {
+                $join->on('penawarans.idfk_tkd', '=', 'max_penawaran_tkd.idfk_tkd');
+            })
             ->leftJoin('tkds', 'penawarans.idfk_tkd', '=', 'tkds.id')
             ->leftJoin('daftars', 'penawarans.idfk_daftar', '=', 'daftars.id')
             ->when($request->input('tkdsearch'), function ($query, $tkdsearchID) {
                 return $query->where('tkds.id', $tkdsearchID);
             })
-            // ->whereYear('daftars.tgl_perjanjian', $tahunId)
             ->where('daftars.id_kelurahan', $kelurahanIdFromDaerah)
             ->whereNull('penawarans.deleted_at')
             ->orderBy('daftars.nama', 'ASC')
@@ -165,10 +191,10 @@ class PenawaranController extends Controller
                 'tkds.keterangan',
                 'tkds.nop',
                 DB::raw('COALESCE((SELECT nilai_penawaran
-                        FROM penawarans
-                        WHERE idfk_tkd = tkds.id
-                        ORDER BY nilai_penawaran DESC
-                        LIMIT 1 OFFSET 1), null) AS nilai_penawaran')
+FROM penawarans
+WHERE idfk_tkd = tkds.id
+ORDER BY nilai_penawaran DESC
+LIMIT 1 OFFSET 1), null) AS nilai_penawaran')
             )
             ->where('id_kelurahan', $kelurahanIdFromDaerah)
             ->whereNull('tkds.deleted_at')
@@ -328,10 +354,10 @@ class PenawaranController extends Controller
 
     // public function cetakLuas()
     // {
-    //     $luass = Penawaran::all();
+    // $luass = Penawaran::all();
 
-    //     $pdf = PDF::loadview('lelang.penawaran.luas', ['luass' => $luass]);
-    //     return $pdf->stream();
+    // $pdf = PDF::loadview('lelang.penawaran.luas', ['luass' => $luass]);
+    // return $pdf->stream();
     // }
 
     public function cetakTidakLaku()
@@ -374,7 +400,7 @@ class PenawaranController extends Controller
             'penawarans' => $penawarans,
             'daerahList' => $daerahList,
         ]);
-        return $pdf->stream('BIDANG TIDAK LAKU.pdf');
+        return $pdf->stream();
     }
 
     public function cetakBA()
@@ -418,26 +444,26 @@ class PenawaranController extends Controller
             'penawarans.idfk_tkd',
             'penawarans.idfk_daftar',
             DB::raw('
-                    (SELECT nilai_penawaran
-                     FROM penawarans AS subquery
-                     WHERE subquery.idfk_tkd = penawarans.idfk_tkd
-                     AND subquery.nilai_penawaran IS NOT NULL
-                     ORDER BY subquery.nilai_penawaran DESC
-                     LIMIT 1 OFFSET 1) AS nilai_penawaran2
-                '),
+(SELECT nilai_penawaran
+FROM penawarans AS subquery
+WHERE subquery.idfk_tkd = penawarans.idfk_tkd
+AND subquery.nilai_penawaran IS NOT NULL
+ORDER BY subquery.nilai_penawaran DESC
+LIMIT 1 OFFSET 1) AS nilai_penawaran2
+'),
             DB::raw('
-                (SELECT idfk_daftar
-                 FROM penawarans AS subquery
-                 WHERE subquery.idfk_tkd = tkds.id
-                 AND subquery.nilai_penawaran =
-                    (SELECT nilai_penawaran
-                     FROM penawarans
-                     WHERE idfk_tkd = tkds.id
-                     AND nilai_penawaran IS NOT NULL
-                     ORDER BY nilai_penawaran DESC
-                     LIMIT 1 OFFSET 1)
-                 LIMIT 1) AS idfk_daftar2
-            ')
+(SELECT idfk_daftar
+FROM penawarans AS subquery
+WHERE subquery.idfk_tkd = tkds.id
+AND subquery.nilai_penawaran =
+(SELECT nilai_penawaran
+FROM penawarans
+WHERE idfk_tkd = tkds.id
+AND nilai_penawaran IS NOT NULL
+ORDER BY nilai_penawaran DESC
+LIMIT 1 OFFSET 1)
+LIMIT 1) AS idfk_daftar2
+')
         )
             ->joinSub($sub, 'subquery', function ($join) {
                 $join->on('penawarans.idfk_tkd', '=', 'subquery.idfk_tkd')
@@ -445,19 +471,19 @@ class PenawaranController extends Controller
             })
             ->leftJoin('tkds', 'tkds.id', '=', 'penawarans.idfk_tkd')
             ->leftJoin('daftars', 'daftars.id', '=', 'penawarans.idfk_daftar')
-            ->leftJoin('daftars as daftar2', 'daftar2.id', '=',  DB::raw('
-            (SELECT idfk_daftar
-             FROM penawarans AS subquery
-             WHERE subquery.idfk_tkd = tkds.id
-             AND subquery.nilai_penawaran =
-                (SELECT nilai_penawaran
-                 FROM penawarans
-                 WHERE idfk_tkd = tkds.id
-                 AND nilai_penawaran IS NOT NULL
-                 ORDER BY nilai_penawaran DESC
-                 LIMIT 1 OFFSET 1)
-             LIMIT 1)
-        '))
+            ->leftJoin('daftars as daftar2', 'daftar2.id', '=', DB::raw('
+(SELECT idfk_daftar
+FROM penawarans AS subquery
+WHERE subquery.idfk_tkd = tkds.id
+AND subquery.nilai_penawaran =
+(SELECT nilai_penawaran
+FROM penawarans
+WHERE idfk_tkd = tkds.id
+AND nilai_penawaran IS NOT NULL
+ORDER BY nilai_penawaran DESC
+LIMIT 1 OFFSET 1)
+LIMIT 1)
+'))
             ->where('daftars.id_kelurahan', $kelurahanIdFromDaerah)
             ->orderBy('tkds.bukti', 'DESC')
             ->get();
@@ -467,7 +493,7 @@ class PenawaranController extends Controller
             'daerahList' => $daerahList,
         ]);
 
-        return $pdf->stream('BERITA ACARA.pdf');
+        return $pdf->stream('cetak-ba.pdf');
     }
 
     public function cetakSekota()
@@ -481,8 +507,8 @@ class PenawaranController extends Controller
             DB::raw('COUNT(DISTINCT daftars.id) as total_daftar'),
             DB::raw('COUNT(DISTINCT penawarans.id) as total_penawaran'),
             DB::raw('(SELECT COUNT(DISTINCT t.id) FROM tkds t
-                        LEFT JOIN penawarans p ON t.id = p.idfk_tkd
-                      WHERE p.idfk_tkd IS NULL AND t.id_kelurahan = kelurahans.id) as total_tidak_laku')
+LEFT JOIN penawarans p ON t.id = p.idfk_tkd
+WHERE p.idfk_tkd IS NULL AND t.id_kelurahan = kelurahans.id) as total_tidak_laku')
         )
             ->leftJoin('kelurahans', 'tkds.id_kelurahan', '=', 'kelurahans.id')
             ->leftJoin('penawarans', 'penawarans.idfk_tkd', '=', 'tkds.id')
@@ -495,11 +521,11 @@ class PenawaranController extends Controller
             DB::raw('SUM(tkds.luas) as total_luas'),
             DB::raw('SUM(tkds.harga_dasar) as total_harga_dasar'),
             DB::raw('SUM(penawarans.nilai_penawaran) as total_nilai_penawaran'),
-            //     DB::raw('COUNT(DISTINCT daftars.id) as total_daftar'),
-            //     DB::raw('COUNT(DISTINCT penawarans.id) as total_penawaran'),
-            //     DB::raw('(SELECT COUNT(DISTINCT t.id) FROM tkds t
-            //                     LEFT JOIN penawarans p ON t.id = p.idfk_tkd
-            //                   WHERE p.idfk_tkd IS NULL AND t.id_kelurahan = kelurahans.id) as total_tidak_laku')
+            // DB::raw('COUNT(DISTINCT daftars.id) as total_daftar'),
+            // DB::raw('COUNT(DISTINCT penawarans.id) as total_penawaran'),
+            // DB::raw('(SELECT COUNT(DISTINCT t.id) FROM tkds t
+            // LEFT JOIN penawarans p ON t.id = p.idfk_tkd
+            // WHERE p.idfk_tkd IS NULL AND t.id_kelurahan = kelurahans.id) as total_tidak_laku')
         )
             ->leftJoin('kelurahans', 'tkds.id_kelurahan', '=', 'kelurahans.id')
             ->leftJoin('kecamatans', 'kelurahans.id_kecamatan', '=', 'kecamatans.id')
@@ -515,6 +541,6 @@ class PenawaranController extends Controller
                 'cetakSekotaKecamatan' => $cetakSekotaKecamatan,
             ]
         );
-        return $pdf->stream('REKAP SEKOTA.pdf');
+        return $pdf->stream();
     }
 }
