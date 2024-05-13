@@ -64,16 +64,36 @@ class PenawaranController extends Controller
             ->get();
 
         $maxPenawaranByTkd = DB::table('penawarans')
-            ->select('idfk_tkd', DB::raw('MAX(nilai_penawaran) as max_penawaran'))
+            ->select(
+                'idfk_tkd',
+                DB::raw('MAX(CAST(penawarans.nilai_penawaran AS UNSIGNED)) as max_penawaran')
+            )
             ->groupBy('idfk_tkd');
 
         $daftarWithMaxPenawaran = DB::table('penawarans')
-            ->select('penawarans.idfk_daftar')
             ->joinSub($maxPenawaranByTkd, 'sub_max', function ($join) {
                 $join->on('penawarans.idfk_tkd', '=', 'sub_max.idfk_tkd')
                     ->whereColumn('penawarans.nilai_penawaran', 'sub_max.max_penawaran');
             })
+            ->select('penawarans.idfk_daftar')
             ->distinct();
+
+        $maxPenawaran = DB::table('penawarans')
+            ->select('idfk_daftar', 'idfk_tkd', DB::raw('MAX(nilai_penawaran) as max_nilai'))
+            ->groupBy('idfk_daftar', 'idfk_tkd');
+
+        $maxPenawaranPerTkd = DB::table('penawarans')
+            ->select(
+                'penawarans.idfk_tkd',
+                'tkds.luas',
+                'penawarans.idfk_daftar',
+                DB::raw(
+                    'MAX(penawarans.nilai_penawaran) as max_nilai',
+                )
+            )
+            ->leftJoin('tkds', 'penawarans.idfk_tkd', '=', 'tkds.id')
+            ->where('tkds.id_kelurahan', $kelurahanIdFromDaerah)
+            ->groupBy('penawarans.idfk_tkd');
 
         $totalLuasByTkd = DB::table('penawarans')
             ->select('penawarans.idfk_daftar', DB::raw('SUM(tkds.luas) as total_luas'))
@@ -112,6 +132,15 @@ class PenawaranController extends Controller
                 'tkds.keterangan',
                 'tkds.nop'
             )
+            ->mergeBindings($daftarWithMaxPenawaran)
+            ->joinSub($maxPenawaran, 'max_penawaran_daftar', function ($join) {
+                $join->on('penawarans.idfk_daftar', '=', 'max_penawaran_daftar.idfk_daftar')
+                    ->on('penawarans.idfk_tkd', '=', 'max_penawaran_daftar.idfk_tkd')
+                    ->on('penawarans.nilai_penawaran', '=', 'max_penawaran_daftar.max_nilai');
+            })
+            ->joinSub($maxPenawaranPerTkd, 'max_penawaran_tkd', function ($join) {
+                $join->on('penawarans.idfk_tkd', '=', 'max_penawaran_tkd.idfk_tkd');
+            })
             ->leftJoin('tkds', 'penawarans.idfk_tkd', '=', 'tkds.id')
             ->leftJoin('daftars', 'penawarans.idfk_daftar', '=', 'daftars.id')
             ->leftJoinSub($totalLuasByTkd, 'total_luas_sub', function ($join) {
@@ -413,7 +442,10 @@ LIMIT 1 OFFSET 1), null) AS nilai_penawaran')
             ->leftJoin('kelurahans', 'kelurahans.id', 'main.id_kelurahan')
             ->first();
 
-        $sub = Penawaran::select('idfk_tkd', DB::raw('MAX(nilai_penawaran) as max_penawaran'))
+        $sub = Penawaran::select(
+            'idfk_tkd',
+            DB::raw('MAX(CAST(penawarans.nilai_penawaran AS UNSIGNED)) as max_penawaran')
+        )
             ->whereNull('deleted_at')
             ->where('gugur', '=', false)
             ->groupBy('idfk_tkd');

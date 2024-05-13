@@ -31,10 +31,20 @@ class RekapController extends Controller
             ->leftJoin('kelurahans', 'kelurahans.id', 'main.id_kelurahan')
             ->first();
 
-        $sub = Penawaran::select('idfk_tkd', DB::raw('MAX(nilai_penawaran) as max_penawaran'))
-            ->whereNull('deleted_at')
-            ->where('gugur', '=', false)
-            ->groupBy('idfk_tkd');
+        $sub = Penawaran::select(
+            'penawarans.idfk_tkd',
+            DB::raw('MAX(CAST(penawarans.nilai_penawaran AS UNSIGNED)) as max_penawaran')
+        )
+            ->leftJoin('daftars', 'penawarans.idfk_daftar', '=', 'daftars.id')
+            ->where('daftars.id_kelurahan', $kelurahanIdFromDaerah)
+            ->whereNull('penawarans.deleted_at')
+            ->where('penawarans.gugur', '=', false)
+            // ->where('penawarans.idfk_tkd', '=', 381);
+            ->groupBy('penawarans.idfk_tkd');
+
+
+
+        // dd($sub->get());
 
         $penawarans = DB::table('penawarans')
             ->select(
@@ -82,3 +92,4 @@ class RekapController extends Controller
         return $pdf->stream('REKAP STS.pdf');
     }
 }
+

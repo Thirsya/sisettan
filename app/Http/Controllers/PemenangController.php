@@ -216,8 +216,12 @@ class PemenangController extends Controller
         $winners = Penawaran::select('idfk_tkd', 'idfk_daftar', 'nilai_penawaran')
             ->whereNull('deleted_at')
             ->where('gugur', '=', false)
-            ->orderBy('nilai_penawaran', 'DESC')
             ->get()
+            ->transform(function ($item) {
+                $item->nilai_penawaran = intval($item->nilai_penawaran);
+                return $item;
+            })
+            ->sortByDesc('nilai_penawaran')
             ->groupBy('idfk_tkd')
             ->map(function ($group) {
                 return $group->take(5);
@@ -231,6 +235,7 @@ class PemenangController extends Controller
                 return $item;
             });
         });
+
         $pdf = PDF::loadview('pdf.pemenang.index', [
             'penawaran' => $penawaran,
             'daerahList' => $daerahList,
