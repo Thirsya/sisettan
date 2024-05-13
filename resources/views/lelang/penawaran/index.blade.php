@@ -200,6 +200,11 @@
                                                 @endforeach
                                             </select>
                                         </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="role">User</label>
+                                            <input type="text" name="nama" class="form-control" id="nama"
+                                                placeholder="Nama Pendaftar" value="{{ $nama }}">
+                                        </div>
                                     </div>
                                     <div class="text-right">
                                         <button class="btn btn-primary mr-1" type="submit">Submit</button>
