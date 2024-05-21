@@ -87,9 +87,9 @@ class RekapController extends Controller
 
         $pdf = PDF::loadview('pdf.rekap-sts.index', [
             'daerahList' => $daerahList,
-            'penawarans' => $penawarans
+            'penawarans' => $penawarans,
+            'tahunSelected' => $tahunSelected,
         ]);
         return $pdf->stream('REKAP STS.pdf');
     }
 }
-
