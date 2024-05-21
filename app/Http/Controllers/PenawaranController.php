@@ -521,40 +521,61 @@ LIMIT 1)
     {
         $cetakSekota = Tkd::select(
             'kelurahans.kelurahan',
-            DB::raw('COUNT(DISTINCT tkds.bidang) as total_bidang'),
+            DB::raw('COUNT(DISTINCT tkds.id) as total_bidang'),
             DB::raw('SUM(tkds.luas) as total_luas'),
             DB::raw('SUM(tkds.harga_dasar) as total_harga_dasar'),
-            DB::raw('SUM(penawarans.nilai_penawaran) as total_nilai_penawaran'),
-            DB::raw('COUNT(DISTINCT daftars.id) as total_daftar'),
-            DB::raw('COUNT(DISTINCT penawarans.id) as total_penawaran'),
+            DB::raw(
+                '(
+                    SELECT SUM(p.nilai_penawaran)
+                    FROM penawarans p
+                    LEFT JOIN tkds t ON t.id = p.idfk_tkd
+                    WHERE t.id_kelurahan = kelurahans.id
+                )
+            as total_nilai_penawaran'
+            ),
+            DB::raw(
+                '(
+                    SELECT count(p.id)
+                    FROM penawarans p
+                    LEFT JOIN tkds t ON t.id = p.idfk_tkd
+                    WHERE t.id_kelurahan = kelurahans.id
+                )
+            as total_penawaran'
+            ),
+            DB::raw(
+                '(
+                    SELECT COUNT(d.id)
+                    FROM daftars d
+                    WHERE d.id_kelurahan = kelurahans.id
+                )
+            as total_daftar'
+            ),
             DB::raw('(SELECT COUNT(DISTINCT t.id) FROM tkds t
-LEFT JOIN penawarans p ON t.id = p.idfk_tkd
-WHERE p.idfk_tkd IS NULL AND t.id_kelurahan = kelurahans.id) as total_tidak_laku')
+            LEFT JOIN penawarans p ON t.id = p.idfk_tkd
+            WHERE p.idfk_tkd IS NULL AND t.id_kelurahan = kelurahans.id) as total_tidak_laku')
         )
             ->leftJoin('kelurahans', 'tkds.id_kelurahan', '=', 'kelurahans.id')
-            ->leftJoin('penawarans', 'penawarans.idfk_tkd', '=', 'tkds.id')
-            ->leftJoin('daftars', 'daftars.id_kelurahan', '=', 'kelurahans.id')
-            ->groupBy('kelurahans.kelurahan')
+            ->groupBy('kelurahans.id')
             ->get();
 
         $cetakSekotaKecamatan = Tkd::select(
             'kecamatans.kecamatan',
             DB::raw('SUM(tkds.luas) as total_luas'),
             DB::raw('SUM(tkds.harga_dasar) as total_harga_dasar'),
-            DB::raw('SUM(penawarans.nilai_penawaran) as total_nilai_penawaran'),
-            // DB::raw('COUNT(DISTINCT daftars.id) as total_daftar'),
-            // DB::raw('COUNT(DISTINCT penawarans.id) as total_penawaran'),
-            // DB::raw('(SELECT COUNT(DISTINCT t.id) FROM tkds t
-            // LEFT JOIN penawarans p ON t.id = p.idfk_tkd
-            // WHERE p.idfk_tkd IS NULL AND t.id_kelurahan = kelurahans.id) as total_tidak_laku')
+            DB::raw(
+                '(
+                    SELECT SUM(p.nilai_penawaran)
+                    FROM penawarans p
+                    LEFT JOIN tkds t ON t.id = p.idfk_tkd
+                    LEFT JOIN kelurahans k ON t.id_kelurahan = k.id
+                    WHERE k.id_kecamatan = kecamatans.id
+                ) as total_nilai_penawaran'
+            )
         )
             ->leftJoin('kelurahans', 'tkds.id_kelurahan', '=', 'kelurahans.id')
             ->leftJoin('kecamatans', 'kelurahans.id_kecamatan', '=', 'kecamatans.id')
-            ->leftJoin('penawarans', 'penawarans.idfk_tkd', '=', 'tkds.id')
-            // ->leftJoin('daftars', 'daftars.id_kelurahan', '=', 'kelurahans.id')
             ->groupBy('kelurahans.id_kecamatan')
             ->get();
-
         $pdf = PDF::loadview(
             'lelang.penawaran.rekap-sekota',
             [

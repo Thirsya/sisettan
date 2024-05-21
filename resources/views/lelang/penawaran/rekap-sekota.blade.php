@@ -47,6 +47,31 @@
                     {{ number_format($listCetakSekota->total_tidak_laku, 0, ',', '.') }}
             </tr>
         @endforeach
+        @php
+            $totalBidang = $totalLuas = $totalHargaDasar = $totalNilaiPenawaran = $totalDaftar = $totalPenawaran = $totalTidakLaku = 0;
+        @endphp
+        @foreach ($cetakSekota as $listCetakSekota)
+            @php
+                $totalBidang += $listCetakSekota->total_bidang;
+                $totalLuas += $listCetakSekota->total_luas;
+                $totalHargaDasar += $listCetakSekota->total_harga_dasar;
+                $totalNilaiPenawaran += $listCetakSekota->total_nilai_penawaran;
+                $totalDaftar += $listCetakSekota->total_daftar;
+                $totalPenawaran += $listCetakSekota->total_penawaran;
+                $totalTidakLaku += $listCetakSekota->total_tidak_laku;
+            @endphp
+            <!-- ... -->
+        @endforeach
+        <tr>
+            <td colspan="2" style="text-align: left;font-weight:bold">Total:</td>
+            <td style="text-align: right">{{ number_format($totalBidang, 0, ',', '.') }}</td>
+            <td style="text-align: right">{{ number_format($totalLuas, 0, ',', '.') }}</td>
+            <td style="text-align: right">{{ number_format($totalHargaDasar, 0, ',', '.') }}</td>
+            <td style="text-align: right">{{ number_format($totalNilaiPenawaran, 0, ',', '.') }}</td>
+            <td style="text-align: right">{{ number_format($totalDaftar, 0, ',', '.') }}</td>
+            <td style="text-align: right">{{ number_format($totalPenawaran, 0, ',', '.') }}</td>
+            <td style="text-align: right">{{ number_format($totalTidakLaku, 0, ',', '.') }}</td>
+        </tr>
     </table>
     <br><br>
     <table style="float: left">
@@ -72,5 +97,22 @@
                     {{ number_format($listCetakSekotaKecamatan->total_nilai_penawaran, 0, ',', '.') }}
             </tr>
         @endforeach
+        @php
+            $totalLuas = $totalHargaDasar = $totalNilaiPenawaran = 0;
+        @endphp
+        @foreach ($cetakSekotaKecamatan as $listCetakSekotaKecamatan)
+            @php
+                $totalLuas += $listCetakSekotaKecamatan->total_luas;
+                $totalHargaDasar += $listCetakSekotaKecamatan->total_harga_dasar;
+                $totalNilaiPenawaran += $listCetakSekotaKecamatan->total_nilai_penawaran;
+            @endphp
+            <!-- ... -->
+        @endforeach
+        <tr>
+            <td style="text-align: left;font-weight:bold">Total:</td>
+            <td style="text-align: right">{{ number_format($totalLuas, 0, ',', '.') }}</td>
+            <td style="text-align: right">{{ number_format($totalHargaDasar, 0, ',', '.') }}</td>
+            <td style="text-align: right">{{ number_format($totalNilaiPenawaran, 0, ',', '.') }}</td>
+        </tr>
     </table>
 </center>
