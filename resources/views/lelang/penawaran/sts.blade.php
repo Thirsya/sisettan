@@ -293,6 +293,11 @@
 @endsection
 @push('customScript')
     <script src="/assets/js/select2.min.js"></script>
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- iziToast -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script> --}}
     <script>
         $(document).ready(function() {
@@ -360,42 +365,85 @@
     </script>
     <script>
         $('#modal-upload').on('show.bs.modal', function(event) {
-            var button = $(event.relatedTarget)
-            var id = button.data('id')
+            var button = $(event.relatedTarget);
+            var id = button.data('id');
             $('#id_penawaran').val(id);
         });
-    </script>
-    <script>
+
         $(document).ready(function() {
             $('#uploadForm').submit(function(e) {
                 e.preventDefault();
                 var formData = new FormData(this);
                 formData.append('id_penawaran', $('#id_penawaran').val());
 
-                $.ajax({
-                    url: $(this).attr('action'),
-                    type: 'POST',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function(response) {
-                        console.log(response);
-                        $('#modal-upload').modal('hide');
-                        $('#uploadForm').modal('hide');
-                        $('#successModal').modal('show');
+                Swal.fire({
+                    title: 'Apakah ingin upload file?',
+                    text: "Cek lagi file yang ingin diupload",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: $(this).attr('action'),
+                            type: 'POST',
+                            data: formData,
+                            processData: false,
+                            contentType: false,
+                            success: function(response) {
+                                console.log(response);
+                                $('#modal-upload').modal('hide');
+                                Swal.fire(
+                                    'Uploaded!',
+                                    'File Telah Diupload',
+                                    'success'
+                                );
 
-                        // Delay for 2 seconds (2000 milliseconds) before reloading
-                        setTimeout(function() {
-                            window.location.reload();
-                        }, 2000);
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(xhr.responseText);
+                                iziToast.success({
+                                    title: 'Success',
+                                    message: 'Upload successful. Halaman Akan Kerefesh Otomatis',
+                                    position: 'topRight'
+                                });
+
+                                setTimeout(function() {
+                                    window.location.reload();
+                                }, 3000);
+                            },
+                            error: function(xhr, status, error) {
+                                console.error(xhr.responseText);
+                                var errorMessage =
+                                    'Ada Error di Server, Silahkan Coba Lagi Nanti';
+
+                                // Extract error messages from the response
+                                if (xhr.responseJSON && xhr.responseJSON.errors) {
+                                    errorMessage = '<ul>';
+                                    $.each(xhr.responseJSON.errors, function(field,
+                                        errors) {
+                                        $.each(errors, function(index, error) {
+                                            errorMessage += '<li>' +
+                                                field + ': ' + error +
+                                                '</li>';
+                                        });
+                                    });
+                                    errorMessage += '</ul>';
+                                }
+
+                                Swal.fire({
+                                    title: 'Failed!',
+                                    html: errorMessage,
+                                    icon: 'error'
+                                });
+                            }
+                        });
                     }
                 });
             });
         });
     </script>
+
+
     <script>
         var detailStatus = {};
         $('.toggle-details').click(function() {
@@ -474,4 +522,5 @@
 
 @push('customStyle')
     <link rel="stylesheet" href="/assets/css/select2.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css" />
 @endpush

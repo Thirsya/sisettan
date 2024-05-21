@@ -446,45 +446,49 @@ class StsController extends Controller
             'id_penawaran' => 'required|integer',
         ]);
 
-        // Cek apakah Sts dengan id_penawaran yang diberikan sudah ada
-        $sts = Sts::where('id_penawaran', $request->id_penawaran)->first();
+        try {
+            // Cek apakah Sts dengan id_penawaran yang diberikan sudah ada
+            $sts = Sts::where('id_penawaran', $request->id_penawaran)->first();
 
-        // Jika tidak, buat yang baru
-        if (!$sts) {
-            $sts = new Sts();
-            $sts->id_penawaran = $request->id_penawaran;
+            // Jika tidak, buat yang baru
+            if (!$sts) {
+                $sts = new Sts();
+                $sts->id_penawaran = $request->id_penawaran;
+            }
+
+            // Generate random name for the files
+            $randomName = Str::random(10);
+
+            // Mendapatkan ekstensi file dan menyimpan file di storage
+            if ($request->hasFile('fileSts')) {
+                $extensionSts = $request->file('fileSts')->getClientOriginalExtension();
+                $request->file('fileSts')->storeAs('public/sts', $randomName . '.' . $extensionSts);
+                $sts->surat_tanda_setor = $randomName . '.' . $extensionSts;
+            }
+
+            if ($request->hasFile('filePernyataan')) {
+                $extensionPernyataan = $request->file('filePernyataan')->getClientOriginalExtension();
+                $request->file('filePernyataan')->storeAs('public/sts', $randomName . '.' . $extensionPernyataan);
+                $sts->surat_pernyataan = $randomName . '.' . $extensionPernyataan;
+            }
+
+            if ($request->hasFile('filePerjanjian')) {
+                $extensionPerjanjian = $request->file('filePerjanjian')->getClientOriginalExtension();
+                $request->file('filePerjanjian')->storeAs('public/sts', $randomName . '.' . $extensionPerjanjian);
+                $sts->surat_perjanjian = $randomName . '.' . $extensionPerjanjian;
+            }
+
+            if ($request->hasFile('fileBa')) {
+                $extensionBa = $request->file('fileBa')->getClientOriginalExtension();
+                $request->file('fileBa')->storeAs('public/sts', $randomName . '.' . $extensionBa);
+                $sts->berita_acara = $randomName . '.' . $extensionBa;
+            }
+
+            $sts->save();
+
+            return response()->json(['message' => 'Upload File Sukses']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Gagal Upload File', 'error' => $e->getMessage()], 500);
         }
-
-        // Generate random name for the files
-        $randomName = Str::random(10);
-
-        // Mendapatkan ekstensi file dan menyimpan file di storage
-        if ($request->hasFile('fileSts')) {
-            $extensionSts = $request->file('fileSts')->getClientOriginalExtension();
-            $request->file('fileSts')->storeAs('public/sts', $randomName . '.' . $extensionSts);
-            $sts->surat_tanda_setor = $randomName . '.' . $extensionSts;
-        }
-
-        if ($request->hasFile('filePernyataan')) {
-            $extensionPernyataan = $request->file('filePernyataan')->getClientOriginalExtension();
-            $request->file('filePernyataan')->storeAs('public/sts', $randomName . '.' . $extensionPernyataan);
-            $sts->surat_pernyataan = $randomName . '.' . $extensionPernyataan;
-        }
-
-        if ($request->hasFile('filePerjanjian')) {
-            $extensionPerjanjian = $request->file('filePerjanjian')->getClientOriginalExtension();
-            $request->file('filePerjanjian')->storeAs('public/sts', $randomName . '.' . $extensionPerjanjian);
-            $sts->surat_perjanjian = $randomName . '.' . $extensionPerjanjian;
-        }
-
-        if ($request->hasFile('fileBa')) {
-            $extensionBa = $request->file('fileBa')->getClientOriginalExtension();
-            $request->file('fileBa')->storeAs('public/sts', $randomName . '.' . $extensionBa);
-            $sts->berita_acara = $randomName . '.' . $extensionBa;
-        }
-
-        $sts->save();
-
-        return response()->json(['message' => 'Files uploaded successfully']);
     }
 }
