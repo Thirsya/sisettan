@@ -660,10 +660,10 @@ line-height:115%;font-family:"Cambria","serif";mso-ansi-language:EN-US'>/{{ $dae
             11 => 'November',
             12 => 'Desember',
         ];
-
+        
         $bulanLelang = $daerahList->bulan_lelang;
         $bulanLelangIndonesia = $bulanIndonesia[$bulanLelang];
-
+        $listPenawaranTotal = $listPenawaran->sum('nilai_penawaran');
         function terbilang($angka)
         {
             $angka = abs($angka);
@@ -692,9 +692,9 @@ line-height:115%;font-family:"Cambria","serif";mso-ansi-language:EN-US'>/{{ $dae
             }
             return $temp;
         }
-
+        
         $tahunLelangTerbilang = terbilang($daerahList->tahun_lelang);
-        $nilaiPenawaranTerbilang = terbilang($idDaftar->nilai_penawaran) . ' Rupiah';
+        $nilaiPenawaranTerbilang = terbilang($listPenawaranTotal) . ' Rupiah';
         ?>
 
         <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
@@ -871,7 +871,7 @@ mso-ansi-language:IN'>tanggal
 line-height:130%;font-family:"Cambria","serif";mso-ansi-language:IN'> tentang
                 Pelaksanaan Lelang Sewa Tanah Pertanian Desa {{ $daerahList->kelurahan }}, dengan
                 nilai penawaran&nbsp;
-                sebesar&nbsp;&nbsp;Rp.{{ number_format($idDaftar->nilai_penawaran, 0, ',', '.') }}</span><span lang=IN
+                sebesar&nbsp;&nbsp;Rp.{{ number_format($listPenawaranTotal, 0, ',', '.') }}</span><span lang=IN
                 style='font-size:12.0pt;
 line-height:130%;font-family:"Cambria","serif";mso-ansi-language:IN'>&nbsp;(
                 {{ $nilaiPenawaranTerbilang }}). </span>
@@ -951,8 +951,9 @@ line-height:130%;font-family:"Cambria","serif";mso-ansi-language:EN-US'>Obyek
 font-family:"Cambria","serif";mso-ansi-language:IN'>dimenangkan
                 Pihak KEDUA
                 dalam pelaksanaan lelang sewa adalah 6 bidang tanah pertanian&nbsp; seluas
-                {{ number_format($idDaftar->total_luas, 0, ',', '.') }} M<sup>2 </sup>dengan nilai penawaran sebesar
-                Rp.{{ number_format($idDaftar->nilai_penawaran, 0, ',', '.') }}</span><span lang=IN
+                {{ number_format($listPenawaran[0]->total_luas, 0, ',', '.') }} M<sup>2 </sup>dengan nilai penawaran
+                sebesar
+                Rp.{{ number_format($listPenawaranTotal, 0, ',', '.') }}</span><span lang=IN
                 style='font-size:12.0pt;line-height:130%;font-family:"Cambria","serif";
 mso-ansi-language:IN'>
                 ( {{ $nilaiPenawaranTerbilang }}) terdiri dari : </span>
@@ -980,7 +981,7 @@ height:16.5pt'>
                                 bidang {{ $dataPenawaran->bidang }} seluas
                                 {{ number_format($dataPenawaran->luas, 0, ',', '.') }} terletak
                                 di {{ $dataPenawaran->kelurahan }} dengan nilai penawaran
-                                Rp.{{ number_format($idDaftar->nilai_penawaran, 0, ',', '.') }},-</span></p>
+                                Rp.{{ number_format($dataPenawaran->nilai_penawaran, 0, ',', '.') }},-</span></p>
                     </td>
                 </tr>
             @endforeach

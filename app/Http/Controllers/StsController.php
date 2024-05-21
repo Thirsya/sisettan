@@ -218,10 +218,55 @@ class StsController extends Controller
         )
             ->where('penawarans.id', $id)
             ->first();
-        $sub = Penawaran::select('idfk_tkd', DB::raw('MAX(nilai_penawaran) as max_penawaran'))
-            ->whereNull('deleted_at')
-            ->where('gugur', '=', false)
+
+        $selectedTahunId = session('selected_tahun_id');
+        $tahunSelected = Tahun::where('id', $selectedTahunId)->value('tahun');
+        $daftarIdFromSession = (int) session('selected_kelurahan_id');
+
+        $kelurahanIdFromDaerah = Daerah::where('id_kelurahan', $daftarIdFromSession)
+            ->whereYear('tanggal_lelang', $tahunSelected)
+            ->pluck('id_kelurahan')->first();
+
+        $maxPenawaranByTkd = DB::table('penawarans')
+            ->select(
+                'idfk_tkd',
+                DB::raw('MAX(CAST(penawarans.nilai_penawaran AS UNSIGNED)) as max_penawaran')
+            )
             ->groupBy('idfk_tkd');
+
+        $maxPenawaranPerTkd = DB::table('penawarans')
+            ->select(
+                'penawarans.idfk_tkd',
+                'tkds.luas',
+                'penawarans.idfk_daftar',
+                DB::raw(
+                    'MAX(penawarans.nilai_penawaran) as max_nilai',
+                )
+            )
+            ->leftJoin('tkds', 'penawarans.idfk_tkd', '=', 'tkds.id')
+            ->where('tkds.id_kelurahan', $kelurahanIdFromDaerah)
+            ->groupBy('penawarans.idfk_tkd');
+
+        $daftarWithMaxPenawaran = DB::table('penawarans')
+            ->joinSub($maxPenawaranByTkd, 'sub_max', function ($join) {
+                $join->on('penawarans.idfk_tkd', '=', 'sub_max.idfk_tkd')
+                    ->whereColumn('penawarans.nilai_penawaran', 'sub_max.max_penawaran');
+            })
+            ->select('penawarans.idfk_daftar')
+            ->distinct();
+
+        $maxPenawaran = DB::table('penawarans')
+            ->select('idfk_daftar', 'idfk_tkd', DB::raw('MAX(nilai_penawaran) as max_nilai'))
+            ->groupBy('idfk_daftar', 'idfk_tkd');
+        $totalLuasByTkd = DB::table('penawarans')
+            ->select('penawarans.idfk_daftar', DB::raw('SUM(tkds.luas) as total_luas'))
+            ->join('tkds', 'penawarans.idfk_tkd', '=', 'tkds.id')
+            ->joinSub($maxPenawaranByTkd, 'sub_max', function ($join) {
+                $join->on('penawarans.idfk_tkd', '=', 'sub_max.idfk_tkd')
+                    ->whereColumn('penawarans.nilai_penawaran', 'sub_max.max_penawaran');
+            })
+            ->groupBy('penawarans.idfk_daftar');
+
         $listPenawaran = DB::table('penawarans')
             ->select(
                 'penawarans.id',
@@ -231,7 +276,7 @@ class StsController extends Controller
                 'penawarans.idfk_tkd',
                 'penawarans.nilai_penawaran',
                 'penawarans.keterangan',
-                'penawarans.total_luas',
+                DB::raw('COALESCE(total_luas_sub.total_luas, 0) as total_luas'),
                 'daftars.id_daftar',
                 'daftars.no_urut',
                 'daftars.nama',
@@ -250,9 +295,17 @@ class StsController extends Controller
                 'tkds.keterangan',
                 'tkds.nop',
             )
-            ->joinSub($sub, 'subquery', function ($join) {
-                $join->on('penawarans.idfk_tkd', '=', 'subquery.idfk_tkd')
-                    ->on('penawarans.nilai_penawaran', '=', 'subquery.max_penawaran');
+            ->mergeBindings($daftarWithMaxPenawaran)
+            ->joinSub($maxPenawaran, 'max_penawaran_daftar', function ($join) {
+                $join->on('penawarans.idfk_daftar', '=', 'max_penawaran_daftar.idfk_daftar')
+                    ->on('penawarans.idfk_tkd', '=', 'max_penawaran_daftar.idfk_tkd')
+                    ->on('penawarans.nilai_penawaran', '=', 'max_penawaran_daftar.max_nilai');
+            })
+            ->joinSub($maxPenawaranPerTkd, 'max_penawaran_tkd', function ($join) {
+                $join->on('penawarans.idfk_tkd', '=', 'max_penawaran_tkd.idfk_tkd');
+            })
+            ->leftJoinSub($totalLuasByTkd, 'total_luas_sub', function ($join) {
+                $join->on('penawarans.idfk_daftar', '=', 'total_luas_sub.idfk_daftar');
             })
             ->leftJoin('tkds', 'penawarans.idfk_tkd', '=', 'tkds.id')
             ->leftJoin('daftars', 'penawarans.idfk_daftar', '=', 'daftars.id')

@@ -26,7 +26,6 @@
                                         <th>Penawaran</th>
                                         <th style="width: 250px">Tanggal Perjanjian</th>
                                         <th>Menu</th>
-                                        <th>Aksi</th>
                                     </tr>
                                     @foreach ($penawaran as $key => $listPenawaran)
                                         <tr>
