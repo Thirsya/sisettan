@@ -37,7 +37,20 @@
         @php
             function angkaKeKata($nominal)
             {
-                $bilangan = ['', 'Satu', 'Dua', 'Tiga', 'Empat', 'Lima', 'Enam', 'Tujuh', 'Delapan', 'Sembilan', 'Sepuluh', 'Sebelas'];
+                $bilangan = [
+                    '',
+                    'Satu',
+                    'Dua',
+                    'Tiga',
+                    'Empat',
+                    'Lima',
+                    'Enam',
+                    'Tujuh',
+                    'Delapan',
+                    'Sembilan',
+                    'Sepuluh',
+                    'Sebelas',
+                ];
 
                 if ($nominal < 12) {
                     return $bilangan[$nominal];
@@ -61,23 +74,27 @@
                     return 'Angka terlalu besar';
                 }
             }
+            $listPenawaranTotal = $listPenawaran->sum('nilai_penawaran');
 
             $nominal = 15850000;
-            $outputKalimat = angkaKeKata($nominal) . ' Rupiah';
+            $outputKalimat = angkaKeKata($listPenawaranTotal) . ' Rupiah';
         @endphp
         <tr>
             <td>Harap diterima uang sebesar </td>
             <td>&nbsp;: </td>
-            <td>Rp {{ number_format($totalNilaiPenawaran, 0, ',', '.') }}</td>
+            <td>Rp {{ number_format($listPenawaranTotal, 0, ',', '.') }}</td>
         </tr>
         <tr>
             <td>Dengan Huruf </td>
             <td>&nbsp;: </td>
             <td>{{ $outputKalimat }}</td>
         </tr>
+        <tr>
+            <td>Dengan Perincian Sebagai Berikut :</td>
+        </tr>
     </table>
     <br><br><br>
-    <p style="float: left">Dengan Perincian Sebagai Berikut :</p><br><br>
+    <p></p><br><br>
     <table border="1" style="width:95%;border-color:black;">
         <tr style="font-size: 14px; font-weight: normal;">
             <th>Kode Rekening</th>
@@ -110,13 +127,18 @@
                     <tr>
                         <td class="colored-column">Bukti Hak </td>
                         <td class="colored-column">&nbsp;:</td>
-                        <td class="colored-column">{{ $daerahList->bukti }} bidang {{ $daerahList->bidang }} lokasi
-                            {{ $daerahList->letak }}</td>
+                        <td class="colored-column">
+                            @foreach ($listPenawaran as $dataPenawaran)
+                                {{ $dataPenawaran->bukti }} bidang {{ $dataPenawaran->bidang }} lokasi
+                                {{ $dataPenawaran->letak }} ;
+                            @endforeach
+                        </td>
                     </tr>
                     <tr>
                         <td class="colored-column">Luas </td>
                         <td class="colored-column">&nbsp;:</td>
-                        <td class="colored-column">{{ number_format($daerahList->luas, 0, ',', '.') }}m<sup>2</sup></td>
+                        <td class="colored-column">
+                            {{ number_format($listPenawaran[0]->total_luas, 0, ',', '.') }}m<sup>2</sup></td>
                     </tr>
                     <tr>
                         <td class="colored-column">Atas Nama </td>
@@ -130,12 +152,12 @@
                     </tr>
                 </table>
             </td>
-            <td>Rp {{ number_format($totalNilaiPenawaran, 0, ',', '.') }}</td>
+            <td>Rp {{ number_format($listPenawaranTotal, 0, ',', '.') }}</td>
         </tr>
         <tr>
             <td> </td>
             <td>Jumlah</td>
-            <td>Rp {{ number_format($totalNilaiPenawaran, 0, ',', '.') }}</td>
+            <td>Rp {{ number_format($listPenawaranTotal, 0, ',', '.') }}</td>
         </tr>
     </table><br>
     <table style="text-align: center; float: right; padding-right: 30px">
@@ -162,7 +184,8 @@
             <td class="colored-column">2. Kolom uraian rincian obyek diisi uraian nama rincian obyek pendapatan</td>
         </tr>
         <tr>
-            <td class="colored-column">3. Kolom jumlah diisi jumlah nilai nominal penerimaan setiap rincian obyek pendapatan</td>
+            <td class="colored-column">3. Kolom jumlah diisi jumlah nilai nominal penerimaan setiap rincian obyek
+                pendapatan</td>
         </tr>
     </table>
 </center>
