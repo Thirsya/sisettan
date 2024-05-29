@@ -30,8 +30,8 @@ class UpdateDaftarRequest extends FormRequest
             'nama' => 'required',
             'alamat' => 'required',
             'no_kk' => 'required',
-            'no_wp',
-            'tgl_perjanjian' => 'required',
+            'no_wp'=> 'nullable',
+            'tgl_perjanjian' => 'nullable',
         ];
     }
 }

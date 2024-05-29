@@ -112,8 +112,8 @@
                                             <th>Periode</th>
                                             <th>Tahun Sts</th>
                                             <th>Tanggal</th>
-                                            <th class="text-right" style="width: 150px">Preview BA</th>
-                                            <th class="text-right" style="width: 150px">Preview SHP</th>
+                                            {{-- <th class="text-right" style="width: 150px">Preview BA</th>
+                                            <th class="text-right" style="width: 150px">Preview Tidak Laku</th> --}}
                                             <th class="text-right">Action</th>
                                         </tr>
                                         @foreach ($daerahs as $key => $daerah)
@@ -126,26 +126,6 @@
                                                 <td>{{ $daerah->periode }}</td>
                                                 <td>{{ $daerah->tahun }}</td>
                                                 <td>{{ $daerah->tanggal_lelang }}</td>
-                                                <td class="text-left">
-                                                    @if ($daerah->surat)
-                                                        <?php $daerah->suratUrl = Storage::url('surat/' . $daerah->surat); ?>
-                                                        <button type="button" class="btn btn-primary preview-btn"
-                                                            data-key="{{ $key }}"
-                                                            data-daerah="{{ json_encode($daerah, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE) }}">
-                                                            Preview File
-                                                        </button>
-                                                    @endif
-                                                </td>
-                                                <td class="text-left">
-                                                    @if ($daerah->surat_shp)
-                                                        <?php $daerah->suratUrlSHP = Storage::url('surat/' . $daerah->surat_shp); ?>
-                                                        <button type="button" class="btn btn-primary preview-btn-shp"
-                                                            data-key="{{ $key }}"
-                                                            data-daerah-shp="{{ json_encode($daerah, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE) }}">
-                                                            Preview File
-                                                        </button>
-                                                    @endif
-                                                </td>
 
                                                 <td class="text-right">
                                                     <div class="d-flex justify-content-end">

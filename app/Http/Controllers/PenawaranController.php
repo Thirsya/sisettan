@@ -465,26 +465,26 @@ LIMIT 1 OFFSET 1), null) AS nilai_penawaran')
             'penawarans.idfk_tkd',
             'penawarans.idfk_daftar',
             DB::raw('
-(SELECT nilai_penawaran
-FROM penawarans AS subquery
-WHERE subquery.idfk_tkd = penawarans.idfk_tkd
-AND subquery.nilai_penawaran IS NOT NULL
-ORDER BY subquery.nilai_penawaran DESC
-LIMIT 1 OFFSET 1) AS nilai_penawaran2
-'),
+            (SELECT nilai_penawaran
+            FROM penawarans AS subquery
+            WHERE subquery.idfk_tkd = penawarans.idfk_tkd
+            AND subquery.nilai_penawaran IS NOT NULL
+            ORDER BY subquery.nilai_penawaran DESC
+            LIMIT 1 OFFSET 1) AS nilai_penawaran2
+            '),
             DB::raw('
-(SELECT idfk_daftar
-FROM penawarans AS subquery
-WHERE subquery.idfk_tkd = tkds.id
-AND subquery.nilai_penawaran =
-(SELECT nilai_penawaran
-FROM penawarans
-WHERE idfk_tkd = tkds.id
-AND nilai_penawaran IS NOT NULL
-ORDER BY nilai_penawaran DESC
-LIMIT 1 OFFSET 1)
-LIMIT 1) AS idfk_daftar2
-')
+            (SELECT idfk_daftar
+            FROM penawarans AS subquery
+            WHERE subquery.idfk_tkd = tkds.id
+            AND subquery.nilai_penawaran =
+            (SELECT nilai_penawaran
+            FROM penawarans
+            WHERE idfk_tkd = tkds.id
+            AND nilai_penawaran IS NOT NULL
+            ORDER BY nilai_penawaran DESC
+            LIMIT 1 OFFSET 1)
+            LIMIT 1) AS idfk_daftar2
+            ')
         )
             ->joinSub($sub, 'subquery', function ($join) {
                 $join->on('penawarans.idfk_tkd', '=', 'subquery.idfk_tkd')

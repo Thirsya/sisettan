@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class opd extends Model
+class Opd extends Model
 {
     use SoftDeletes;
     protected $table = 'opds';

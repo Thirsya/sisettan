@@ -178,12 +178,12 @@
                                 <a class="btn btn-info btn-warning active import bg-warning">
                                     <i class="fa fa-download" aria-hidden="true"></i>
                                     Import Penawaran</a>
-                                <a class="btn btn-info btn-warning active import-ba bg-warning">
+                                {{-- <a class="btn btn-info btn-warning active import-ba bg-warning">
                                     <i class="fa fa-download" aria-hidden="true"></i>
                                     Upload BA</a>
                                 <a class="btn btn-info btn-warning active import-shp bg-warning">
                                     <i class="fa fa-download" aria-hidden="true"></i>
-                                    Upload SHP Tidak Laku</a>
+                                    Upload SHP Tidak Laku</a> --}}
                             </div>
                             <div class="show-search mb-3" style="display: none">
                                 <form id="search" method="GET" action="{{ route('penawaran.index') }}">

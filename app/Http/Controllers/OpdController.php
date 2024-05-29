@@ -8,7 +8,7 @@ use App\Http\Requests\StoreopdRequest;
 use App\Http\Requests\UpdateopdRequest;
 use App\Imports\OpdsImport;
 use App\Models\Kecamatan;
-use App\Models\OPD;
+use App\Models\Opd;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
