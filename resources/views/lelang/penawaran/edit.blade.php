@@ -12,8 +12,9 @@
                     <h4>Validasi Tambah Data</h4>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('penawaran.store') }}" method="post">
+                    <form action="{{ route('penawaran.update', $penawaran) }}" method="post">
                         @csrf
+                        @method('PUT')
                         <div class="form-group">
                             <label>Pendaftar</label>
                             <select class="form-control select2 @error('idfk_daftar') is-invalid @enderror"

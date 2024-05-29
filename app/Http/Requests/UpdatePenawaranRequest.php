@@ -25,14 +25,17 @@ class UpdatePenawaranRequest extends FormRequest
     {
         $id = $this->route('penawaran')->id;
         return [
-            // 'total_luas' => 'required|unique:pejabats,nama_pejabat',
-            'id_penawaran' => 'required',
             'idfk_daftar' => 'required',
-            'id_daftar' => 'required',
             'idfk_tkd' => 'required',
-            'id_tkd' => 'required',
-            'nilai_penawarab' => 'required',
+            'nilai_penawaran' => 'required',
             'keterangan' => 'nullable'
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'nilai_penawaran' => str_replace(',', '', $this->nilai_penawaran),
+        ]);
     }
 }
