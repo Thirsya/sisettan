@@ -100,7 +100,7 @@
         <div><strong>Keterangan:</strong> ${response.keterangan}</div>
         <figure>
             ${
-                response.foto ? 
+                response.foto ?
                 `<img src="/storage/${response.foto}" alt="Foto" class="popup-image">
                                 <figcaption>Foto Lokasi</figcaption>` :
                 `<div class="no-photo">Tidak Ada Foto</div>`

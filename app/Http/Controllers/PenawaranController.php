@@ -209,10 +209,10 @@ class PenawaranController extends Controller
                 'tkds.keterangan',
                 'tkds.nop',
                 DB::raw('COALESCE((SELECT nilai_penawaran
-FROM penawarans
-WHERE idfk_tkd = tkds.id
-ORDER BY nilai_penawaran DESC
-LIMIT 1 OFFSET 1), null) AS nilai_penawaran')
+                FROM penawarans
+                WHERE idfk_tkd = tkds.id
+                ORDER BY nilai_penawaran DESC
+                LIMIT 1 OFFSET 1), null) AS nilai_penawaran')
             )
             ->where('id_kelurahan', $kelurahanIdFromDaerah)
             ->whereNull('tkds.deleted_at')
@@ -493,18 +493,18 @@ LIMIT 1 OFFSET 1), null) AS nilai_penawaran')
             ->leftJoin('tkds', 'tkds.id', '=', 'penawarans.idfk_tkd')
             ->leftJoin('daftars', 'daftars.id', '=', 'penawarans.idfk_daftar')
             ->leftJoin('daftars as daftar2', 'daftar2.id', '=', DB::raw('
-(SELECT idfk_daftar
-FROM penawarans AS subquery
-WHERE subquery.idfk_tkd = tkds.id
-AND subquery.nilai_penawaran =
-(SELECT nilai_penawaran
-FROM penawarans
-WHERE idfk_tkd = tkds.id
-AND nilai_penawaran IS NOT NULL
-ORDER BY nilai_penawaran DESC
-LIMIT 1 OFFSET 1)
-LIMIT 1)
-'))
+            (SELECT idfk_daftar
+            FROM penawarans AS subquery
+            WHERE subquery.idfk_tkd = tkds.id
+            AND subquery.nilai_penawaran =
+            (SELECT nilai_penawaran
+            FROM penawarans
+            WHERE idfk_tkd = tkds.id
+            AND nilai_penawaran IS NOT NULL
+            ORDER BY nilai_penawaran DESC
+            LIMIT 1 OFFSET 1)
+            LIMIT 1)
+            '))
             ->where('daftars.id_kelurahan', $kelurahanIdFromDaerah)
             ->orderBy('tkds.bukti', 'DESC')
             ->get();
