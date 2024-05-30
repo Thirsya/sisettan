@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="assetsLogin/css/fontawesome-all.min.css">
     <link rel="stylesheet" type="text/css" href="assetsLogin/css/iofrm-style.css">
     <link rel="stylesheet" type="text/css" href="assetsLogin/css/iofrm-theme6.css">
-    <script src="https://www.google.com/recaptcha/enterprise.js?render=6LeRfuwpAAAAAObmTOD9v_RilMP4yE7snTnd3npD"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 
 <body>
@@ -37,6 +37,7 @@
                             <a href="login6.html" class="active">Login</a>
                         </div>
                         <form method="POST" action="{{ route('login') }}">
+                            @csrf
                             <input class="form-control @error('username') is-invalid @enderror" type="text"
                                 name="username" placeholder="Username" required>
                             @error('username')
@@ -50,7 +51,12 @@
                                     <div>{{ $message }}</div>
                                 </div>
                             @enderror
-                            <input type="hidden" name="recaptcha_token" id="recaptchaToken">
+                            <div class="g-recaptcha" data-sitekey="6LeRfuwpAAAAAObmTOD9v_RilMP4yE7snTnd3npD"></div>
+                            @error('g-recaptcha-response')
+                                <div class="alert alert-danger mt-2">
+                                    <div>{{ $message }}</div>
+                                </div>
+                            @enderror
                             <div class="form-button">
                                 <button id="submit" type="submit" class="ibtn">Login</button>
                             </div>
@@ -64,16 +70,6 @@
     <script src="assetsLogin/js/popper.min.js"></script>
     <script src="assetsLogin/js/bootstrap.min.js"></script>
     <script src="assetsLogin/js/main.js"></script>
-    <script>
-        function onClick(e) {
-            e.preventDefault();
-            grecaptcha.enterprise.ready(async () => {
-                const token = await grecaptcha.enterprise.execute('6LeRfuwpAAAAAObmTOD9v_RilMP4yE7snTnd3npD', {
-                    action: 'LOGIN'
-                });
-            });
-        }
-    </script>
 </body>
 
 </html>
