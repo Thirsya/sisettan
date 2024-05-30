@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="assetsLogin/css/fontawesome-all.min.css">
     <link rel="stylesheet" type="text/css" href="assetsLogin/css/iofrm-style.css">
     <link rel="stylesheet" type="text/css" href="assetsLogin/css/iofrm-theme6.css">
+    <script src="https://www.google.com/recaptcha/enterprise.js?render=6LeRfuwpAAAAAObmTOD9v_RilMP4yE7snTnd3npD"></script>
 </head>
 
 <body>
@@ -49,6 +50,7 @@
                                     <div>{{ $message }}</div>
                                 </div>
                             @enderror
+                            <input type="hidden" name="recaptcha_token" id="recaptchaToken">
                             <div class="form-button">
                                 <button id="submit" type="submit" class="ibtn">Login</button>
                             </div>
@@ -62,6 +64,16 @@
     <script src="assetsLogin/js/popper.min.js"></script>
     <script src="assetsLogin/js/bootstrap.min.js"></script>
     <script src="assetsLogin/js/main.js"></script>
+    <script>
+        function onClick(e) {
+            e.preventDefault();
+            grecaptcha.enterprise.ready(async () => {
+                const token = await grecaptcha.enterprise.execute('6LeRfuwpAAAAAObmTOD9v_RilMP4yE7snTnd3npD', {
+                    action: 'LOGIN'
+                });
+            });
+        }
+    </script>
 </body>
 
 </html>
