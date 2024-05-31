@@ -51,7 +51,7 @@
                                 </div>
                             @enderror
                             <altcha-widget
-                                challengeurl="https://eu.altcha.org/api/v1/challenge?apiKey=ckey_01c88e5fadc5fc9a51c4767e0108"></altcha-widget>
+                                challengeurl="https://eu.altcha.org/api/v1/challenge?apiKey=ckey_01c88e5fadc5126e8b7d6ee2798b"></altcha-widget>
                             <div class="form-button">
                                 <button id="submit" type="submit" class="ibtn">Login</button>
                             </div>
@@ -65,6 +65,8 @@
     <script src="assetsLogin/js/popper.min.js"></script>
     <script src="assetsLogin/js/bootstrap.min.js"></script>
     <script src="assetsLogin/js/main.js"></script>
+    <script async defer src="proxy.php" type="module"></script>
+
 </body>
 
 </html>
