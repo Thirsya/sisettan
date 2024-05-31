@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="assetsLogin/css/fontawesome-all.min.css">
     <link rel="stylesheet" type="text/css" href="assetsLogin/css/iofrm-style.css">
     <link rel="stylesheet" type="text/css" href="assetsLogin/css/iofrm-theme6.css">
+    <script async defer src="https://eu.altcha.org/js/latest/altcha.min.js" type="module"></script>
 </head>
 
 <body>
@@ -49,6 +50,8 @@
                                     <div>{{ $message }}</div>
                                 </div>
                             @enderror
+                            <altcha-widget
+                                challengeurl="https://eu.altcha.org/api/v1/challenge?apiKey=ckey_01c88e5fadc5fc9a51c4767e0108"></altcha-widget>
                             <div class="form-button">
                                 <button id="submit" type="submit" class="ibtn">Login</button>
                             </div>
