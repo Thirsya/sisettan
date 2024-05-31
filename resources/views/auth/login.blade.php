@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,15 +10,8 @@
     <link rel="stylesheet" type="text/css" href="assetsLogin/css/iofrm-style.css">
     <link rel="stylesheet" type="text/css" href="assetsLogin/css/iofrm-theme6.css">
     <script async defer src="https://eu.altcha.org/js/latest/altcha.min.js" type="module"></script>
-    <style>
-        altcha-widget {
-            background-color: white !important;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            padding: 10px;
-        }
-    </style>
 </head>
+
 <body>
     <div class="form-body">
         <div class="website-logo">
@@ -57,7 +51,8 @@
                                 </div>
                             @enderror
                             <altcha-widget
-                                challengeurl="https://eu.altcha.org/api/v1/challenge?apiKey=ckey_01c88e5fadc5126e8b7d6ee2798b"></altcha-widget>
+                                challengeurl="https://eu.altcha.org/api/v1/challenge?apiKey=ckey_01c88e5fadc5126e8b7d6ee2798b"
+                                style="--altcha-color-border:pink;--altcha-border-width:3px;--altcha-border-radius:15px;"></altcha-widget>
                             <div class="form-button">
                                 <button id="submit" type="submit" class="ibtn">Login</button>
                             </div>
@@ -71,5 +66,8 @@
     <script src="assetsLogin/js/popper.min.js"></script>
     <script src="assetsLogin/js/bootstrap.min.js"></script>
     <script src="assetsLogin/js/main.js"></script>
+    <script async defer src="proxy.php" type="module"></script>
+
 </body>
+
 </html>
