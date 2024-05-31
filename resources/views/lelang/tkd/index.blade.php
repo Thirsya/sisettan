@@ -28,19 +28,16 @@
                                 <a class="btn btn-icon icon-left btn-primary" href="{{ route('tkd.create') }}">
                                     <i class="far fa-file"></i>
                                     Create Harga Dasar</a>
-                                <a class="btn btn-info btn-waning active import  bg-warning">
+                                <a class="btn btn-info btn-warning active import bg-warning">
                                     <i class="fa fa-download" aria-hidden="true"></i>
                                     Import Harga Dasar</a>
-                                <a class="btn btn-info btn-dark active  bg-dark" href="{{ route('tkd.export') }}"
+                                <a class="btn btn-info btn-dark active bg-dark" href="{{ route('tkd.export') }}"
                                     data-id="export">
                                     <i class="fa fa-upload" aria-hidden="true"></i>
                                     Export Harga Dasar</a>
-                                <a class="btn btn-info btn-info active search  bg-info">
+                                <a class="btn btn-info btn-info active search bg-info">
                                     <i class="fa fa-search" aria-hidden="true"></i>
                                     Search SHP</a>
-                                {{-- <a class="btn btn-info btn-primary active" href="{{ route('tkd.download-template') }}">
-                                    <i class="fa fa-upload" aria-hidden="true"></i>
-                                    Harga Dasar Template</a> --}}
                             </div>
                         </div>
                         <div class="card-body">
@@ -67,7 +64,6 @@
                                         <div class="footer text-right">
                                             <button class="btn btn-primary" data-id="submit-import">Import File</button>
                                         </div>
-
                                     </form>
                                 </div>
                             </div>
@@ -99,14 +95,12 @@
                                             <th style="width: 120px">Harga Dasar</th>
                                             <th style="width: 300px">Keterangan</th>
                                             <th>Nop</th>
-                                            <th>Longitude</th>
-                                            <th>Latitude</th>
                                             <th class="text-right">Action</th>
                                         </tr>
                                         @foreach ($tkds as $key => $tkd)
-                                            <tr>
+                                            <tr data-id="{{ $tkd->id }}" data-lat="{{ $tkd->latitude }}"
+                                                data-lng="{{ $tkd->longitude }}">
                                                 <td>{{ ($tkds->currentPage() - 1) * $tkds->perPage() + $key + 1 }}</td>
-                                                {{-- <td>{{ $tkd->id }}</td> --}}
                                                 <td>{{ $tkd->letak }}</td>
                                                 <td>{{ $tkd->bidang }}</td>
                                                 <td>{{ $tkd->kelurahan }}</td>
@@ -115,22 +109,49 @@
                                                 <td>Rp {{ number_format($tkd->harga_dasar, 0, ',', '.') }}</td>
                                                 <td>{{ $tkd->keterangan }}</td>
                                                 <td>{{ $tkd->nop }}</td>
-                                                <td>{{ $tkd->latitude }}</td>
-                                                <td>{{ $tkd->longitude }}</td>
                                                 <td class="text-right">
                                                     <div class="d-flex justify-content-end">
                                                         <a href="{{ route('tkd.edit', $tkd->id) }}"
-                                                            class="btn btn-sm btn-info btn-icon "><i
-                                                                class="fas fa-edit"></i>
+                                                            class="btn btn-sm btn-info btn-icon"><i class="fas fa-edit"></i>
                                                             Edit</a>
                                                         <form action="{{ route('tkd.destroy', $tkd->id) }}" method="POST"
                                                             class="ml-2">
-                                                            <input type="hidden" name="_method" value="DELETE">
-                                                            <input type="hidden" name="_token"
-                                                                value="{{ csrf_token() }}">
+                                                            @csrf
+                                                            @method('DELETE')
                                                             <button class="btn btn-sm btn-danger btn-icon confirm-delete">
                                                                 <i class="fas fa-times"></i> Delete </button>
                                                         </form>
+                                                        <button
+                                                            class="btn btn-sm btn-secondary btn-icon toggle-details ml-2">
+                                                            <i class="fas fa-chevron-down"></i>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr class="details-row" style="display:none">
+                                                <td colspan="20">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <h5>Detail Maps</h5>
+                                                            <table class="table">
+                                                                <tr>
+                                                                    <td style="font-weight: bold">Longitude</td>
+                                                                    <td style="font-weight: bold">Latitude</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>{{ $tkd->longitude }}</td>
+                                                                    <td>{{ $tkd->latitude }}</td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        @if ($tkd->longitude && $tkd->latitude)
+                                                            <div id="map-{{ $tkd->id }}" style="height: 300px;">
+                                                            </div>
+                                                        @else
+                                                            <p class="text-center">Belum ada maps</p>
+                                                        @endif
                                                     </div>
                                                 </td>
                                             </tr>
@@ -148,7 +169,13 @@
         </div>
     </section>
 @endsection
+
 @push('customScript')
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
     <script>
         $(document).ready(function() {
             $('.import').click(function(event) {
@@ -167,9 +194,32 @@
                 var file = $('#file-upload')[0].files[0].name;
                 $(this).prev('label').text(file);
             });
+
+            $('.toggle-details').click(function() {
+                var icon = $(this).find('i');
+                var row = $(this).closest('tr').next('.details-row');
+                row.toggle();
+                icon.toggleClass('fa-chevron-down fa-chevron-up');
+
+                if (row.is(':visible')) {
+                    var mapId = 'map-' + $(this).closest('tr').data('id');
+                    if ($('#' + mapId).length && !$('#' + mapId).hasClass('leaflet-container')) {
+                        var lat = $(this).closest('tr').data('lat');
+                        var lng = $(this).closest('tr').data('lng');
+                        var map = L.map(mapId).setView([lat, lng], 13);
+                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        }).addTo(map);
+                        L.marker([lat, lng]).addTo(map)
+                            .bindPopup('Latitude: ' + lat + '<br>Longitude: ' + lng)
+                            .openPopup();
+                    }
+                }
+            });
         });
     </script>
 @endpush
 
 @push('customStyle')
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 @endpush

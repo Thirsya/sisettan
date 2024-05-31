@@ -18,7 +18,7 @@ class VerifyRecaptcha
         $client = new Client();
         $response = $client->post('https://www.google.com/recaptcha/api/siteverify', [
             'form_params' => [
-                'secret' => 'YOUR_SECRET_KEY',
+                'secret' => '6LeRfuwpAAAAAObmTOD9v_RilMP4yE7snTnd3npD',
                 'response' => $recaptchaToken,
                 'remoteip' => $request->ip(),
             ],

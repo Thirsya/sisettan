@@ -9,7 +9,6 @@
     <link rel="stylesheet" type="text/css" href="assetsLogin/css/fontawesome-all.min.css">
     <link rel="stylesheet" type="text/css" href="assetsLogin/css/iofrm-style.css">
     <link rel="stylesheet" type="text/css" href="assetsLogin/css/iofrm-theme6.css">
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 
 <body>
@@ -37,7 +36,6 @@
                             <a href="login6.html" class="active">Login</a>
                         </div>
                         <form method="POST" action="{{ route('login') }}">
-                            @csrf
                             <input class="form-control @error('username') is-invalid @enderror" type="text"
                                 name="username" placeholder="Username" required>
                             @error('username')
@@ -47,12 +45,6 @@
                             @enderror
                             <input class="form-control" type="password" name="password" placeholder="Password" required>
                             @error('password')
-                                <div class="alert alert-danger mt-2">
-                                    <div>{{ $message }}</div>
-                                </div>
-                            @enderror
-                            <div class="g-recaptcha" data-sitekey="6LeRfuwpAAAAAObmTOD9v_RilMP4yE7snTnd3npD"></div>
-                            @error('g-recaptcha-response')
                                 <div class="alert alert-danger mt-2">
                                     <div>{{ $message }}</div>
                                 </div>
