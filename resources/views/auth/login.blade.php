@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,8 +9,15 @@
     <link rel="stylesheet" type="text/css" href="assetsLogin/css/iofrm-style.css">
     <link rel="stylesheet" type="text/css" href="assetsLogin/css/iofrm-theme6.css">
     <script async defer src="https://eu.altcha.org/js/latest/altcha.min.js" type="module"></script>
+    <style>
+        altcha-widget {
+            background-color: white !important;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 10px;
+        }
+    </style>
 </head>
-
 <body>
     <div class="form-body">
         <div class="website-logo">
@@ -65,8 +71,5 @@
     <script src="assetsLogin/js/popper.min.js"></script>
     <script src="assetsLogin/js/bootstrap.min.js"></script>
     <script src="assetsLogin/js/main.js"></script>
-    <script async defer src="proxy.php" type="module"></script>
-
 </body>
-
 </html>
