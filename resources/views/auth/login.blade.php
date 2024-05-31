@@ -50,9 +50,23 @@
                                     <div>{{ $message }}</div>
                                 </div>
                             @enderror
-                            <altcha-widget
-                                challengeurl="https://eu.altcha.org/api/v1/challenge?apiKey=ckey_01c88e5fadc5126e8b7d6ee2798b"
-                                style="--altcha-color-border:pink;--altcha-border-width:3px;--altcha-border-radius:15px;"></altcha-widget>
+                            <div
+                                style="background-color: #333;
+                            color: #fff;
+                            padding: 20px;
+                            border-radius: 15px;
+                            max-width: 300px;
+                            margin: auto;">
+                                <altcha-widget
+                                    challengeurl="https://eu.altcha.org/api/v1/challenge?apiKey=ckey_01c88e5fadc5126e8b7d6ee2798b"
+                                    style=" --altcha-color-border: pink;
+                                    --altcha-color-icon: pink;
+                                    --altcha-color-checkbox: pink;
+                                    --altcha-border-width: 3px;
+                                    --altcha-border-radius: 15px;
+                                    display: block;
+                                    margin: auto;"></altcha-widget>
+                            </div>
                             <div class="form-button">
                                 <button id="submit" type="submit" class="ibtn">Login</button>
                             </div>
