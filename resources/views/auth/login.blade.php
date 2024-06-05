@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="assetsLogin/css/fontawesome-all.min.css">
     <link rel="stylesheet" type="text/css" href="assetsLogin/css/iofrm-style.css">
     <link rel="stylesheet" type="text/css" href="assetsLogin/css/iofrm-theme6.css">
-    <script async defer src="https://eu.altcha.org/js/latest/altcha.min.js" type="module"></script>
+    <script async defer src="https://cdn.jsdelivr.net/npm/altcha/dist/altcha.min.js" type="module"></script>
 </head>
 
 <body>
@@ -52,7 +52,7 @@
                             @enderror
                             <div
                                 style="background-color: #333;
-                            color: #fff;
+                            color: #ed0c0c;
                             padding: 20px;
                             border-radius: 15px;
                             max-width: 300px;
